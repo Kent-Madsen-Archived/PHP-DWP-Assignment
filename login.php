@@ -6,7 +6,7 @@
         <?php include_once './areas/header.php'; ?>
     
         <main> 
-            <form class="form-signin" method="post" action="./backend/credentiels.php"> 
+            <form class="form-signin" method="post" action="./backend/credentiels_login.php"> 
                 <h1> Login </h1>
                 <p> Please type in your login information. </p>
                 
