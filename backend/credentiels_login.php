@@ -1,33 +1,21 @@
 <?php 
 
-$servername ="localhost";
-$username = "root";
-$password = "";
-$database = "dwp_assignment";
+const database_server_name = "localhost";
+const database_username_name = "root";
+const database_password_name = "";
+const database_database_name = "dwp_assignment";
 
-//
-$connection = new mysqli( $servername, 
-                          $username, $password, 
-                          $database );
-
-if( $connection->connect_error ) 
+function log_into_profile()
 {
-    die('Error occured');
+    $connection = new mysqli(database_server_name, database_username_name, database_password_name, database_database_name);
+
+    if($connection->connect_error)
+    {
+        die("connection failed: " . $connection->connect_error);
+    }
+
+    $connection->close();
 }
-
-$select_profile = "SELECT * from profiles_table_view;";
-
-$result = mysqli_query( $connection , $select_profile );
-
-if ( ($result->num_rows) > 0 )
-{
-    while( $row = $result->fetch_assoc() ) {
-        
-      }
-}
-
-// Done
-$connection->close();
 
 // header("Location: ../index.php");
 ?>
