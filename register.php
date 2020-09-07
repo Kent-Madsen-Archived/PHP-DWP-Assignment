@@ -6,7 +6,7 @@
         <?php include_once './areas/header.php'; ?>
     
         <main> 
-            <form class="form-signin" method="post" action="./backend/credentiels_login.php"> 
+            <form class="form-signin" method="post" action="./backend/credentiels_register.php"> 
                 <h1> Register </h1>
                 <p> Please type in your information to register an account. </p>
                 
@@ -24,6 +24,11 @@
 
                 <span> 
                     <label> Name </label>
+                    <input type="Text" placeholder="" name="" id="" required> 
+                </span>
+
+                <span> 
+                    <label> Age </label>
                     <input type="Text" placeholder="" name="" id="" required> 
                 </span>
 
