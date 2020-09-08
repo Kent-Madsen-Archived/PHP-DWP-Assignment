@@ -53,14 +53,6 @@ function log_into_profile( $username, $password )
     return false;
 }
 
-if(log_into_profile("test", 'test'))
-{
-    echo "i found you";
-}
-else 
-{
-    echo "error matching passwords";
-}
 
 // header("Location: ../index.php");
 ?>
