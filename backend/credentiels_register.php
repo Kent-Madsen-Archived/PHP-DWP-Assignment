@@ -61,6 +61,7 @@ function create_profile( $username, $password, $profile_type_identity )
     $connection->close();
 }
 
+create_profile('test', 'test', 2);
 
 
 // header("Location: ../index.php");
