@@ -23,7 +23,7 @@ class Articles
         return $this->profile_identity;
     }
 
-    function setProfileIdentity($var)
+    function setProfileIdentity( $var )
     {
         $this->profile_identity = $var;
     }
@@ -53,7 +53,7 @@ class Articles
         return $this->registered;
     }
 
-    function setRegistered($var)
+    function setRegistered( $var )
     {
         $this->registered = $var;
     }
