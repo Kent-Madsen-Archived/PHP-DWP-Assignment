@@ -7,6 +7,7 @@ class Products
     private $description;
     private $price;
 
+    //
     function getIdentity()
     {
         return $this->identity;
