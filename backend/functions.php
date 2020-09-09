@@ -177,7 +177,7 @@ function delete_profile_by_identity( $identity )
 // --------------------------------------------------------------------------------------------
 function create_articles()
 {
-
+    
 }
 
 function delete_articles()
@@ -236,6 +236,40 @@ function create_products()
 {
 
 }
+
+/*
+                    const database_server_name = "localhost";
+                    const database_username_name = "root";
+                    const database_password_name = "";
+                    const database_database_name = "dwp_assignment";
+
+                    $connection = new mysqli( database_server_name, 
+                                              database_username_name, 
+                                              database_password_name, 
+                                              database_database_name );
+                
+                    // Muligt at få forbindelse?
+                    if( $connection -> connect_error )
+                    {
+                        die( "connection failed: " . $connection->connect_error );
+                    }
+
+                    $sql = "select * from products";
+                    $result = $connection->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // output data of each row
+                        while($row = $result->fetch_assoc()) {
+                            echo $row['title'] . '</br>' . $row['description'] . "</br>";
+                        }
+                      } else {
+                        echo "0 results";
+                      }
+                
+                
+                    // luk forbindelsen
+                    $connection->close();
+                */
 
 
 
