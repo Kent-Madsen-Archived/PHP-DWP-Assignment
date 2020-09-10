@@ -112,13 +112,9 @@ class ProfileFactory
 
         $sql = "delete from profile where identity=" . $identity;
 
-        if( $connection->query($sql) === TRUE )
+        if( $connection->query( $sql ) === TRUE )
         {
             $retVal = true;
-        }
-        else 
-        {
-            $retVal = false;
         }
 
         // luk forbindelsen
@@ -128,6 +124,8 @@ class ProfileFactory
 
     public function updateProfilePassword( $identity, $topassword )
     {
+        $retval = false;
+
         $connection = new mysqli( database_server_name, 
                                   database_username_name, 
                                   database_password_name, 
@@ -141,17 +139,14 @@ class ProfileFactory
 
         $sql = "UPDATE Profile SET password='" . hash('sha512', $topassword)  . "' WHERE identity=$identity";
 
-        if($connection->query($sql) === TRUE)
+        if( $connection->query( $sql ) === TRUE )
         {
-        echo "successfull";
-        }
-        else 
-        {
-        echo "error";
+            $retval = true;
         }
 
         // luk forbindelsen
         $connection->close();
+        return $retval;
     }
 
     public function existProfile( $username )
