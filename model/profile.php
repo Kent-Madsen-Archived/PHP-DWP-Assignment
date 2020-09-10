@@ -1,8 +1,17 @@
-<?php
+<?php 
 
 class Profile
-{
+{ 
+    public function __construct( $identity, $username, $password, $profile_type ) 
+    {
+        $this->setIdentity($identity);
+        $this->setUsername($username);
+        $this->setPassword($password);
+        $this->setProfileType($profile_type);
+    }
+    
     private $identity = 0;
+
     private $username = 0;
     private $password = 0;
 
@@ -49,7 +58,7 @@ class Profile
         $this->profile_type = $var;
     }
     
-}
 
+}
 
 ?>

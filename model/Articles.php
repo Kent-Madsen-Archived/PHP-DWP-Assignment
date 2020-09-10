@@ -1,31 +1,36 @@
 <?php 
-class Articles
+class Article
 {
-    private $identity = 0;
-    private $profile_identity = 0;
+    public function __construct() 
+    {
+    
+    }
 
-    private $title = "";
-    private $content = "";
-    private $registered = NULL;
+    private $identity;
+    private $profileIdentity;
+
+    private $title;
+    private $content;
+    private $registered;
 
     function getIdentity()
     {
         return $this->identity;
     }
 
-    function setIdentity( $var )
+    function setIdentity($var)
     {
         $this->identity = $var;
     }
 
     function getProfileIdentity()
     {
-        return $this->profile_identity;
+        return $this->profileIdentity;
     }
 
-    function setProfileIdentity( $var )
+    function setProfileIdentity($var)
     {
-        $this->profile_identity = $var;
+        $this->profileIdentity = $var;
     }
 
     function getTitle()
@@ -33,7 +38,7 @@ class Articles
         return $this->title;
     }
 
-    function setTitle( $var )
+    function setTitle($var)
     {
         $this->title = $var;
     }
@@ -43,17 +48,17 @@ class Articles
         return $this->content;
     }
 
-    function setContent( $var )
+    function setContent($var)
     {
         $this->content = $var;
-    }
-
+    } 
+    
     function getRegistered()
     {
         return $this->registered;
     }
 
-    function setRegistered( $var )
+    function setRegistered($var)
     {
         $this->registered = $var;
     }
