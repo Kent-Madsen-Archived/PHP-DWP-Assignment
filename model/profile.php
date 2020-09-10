@@ -10,7 +10,6 @@ class Profile
         $this->setProfileType($profile_type);
     }
     
-    
     private $identity = 0;
 
     private $username = 0;

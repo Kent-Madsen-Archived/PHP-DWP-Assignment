@@ -1,5 +1,5 @@
 <?php 
-require './model/profile.php';
+require 'profile.php';
 
 const database_server_name = "localhost";
 const database_username_name = "root";
@@ -61,6 +61,34 @@ class ProfileFactory
         $connection->close();
         
         return $retObject;
+    }
+
+    public function createProfile( $username, $password, $profile_type_identity )
+    {
+        $connection = new mysqli( database_server_name, 
+                                  database_username_name, 
+                                  database_password_name, 
+                                  database_database_name );
+
+        if( $connection->connect_error )
+        {
+            die("connection failed: " . $connection->connect_error);
+        }
+
+        // Overvej at gøre brug af salts
+        $hashed = hash("sha512", $password);
+
+        $stmt = $connection->prepare("insert into profile(username, password, profile_type_identity) values(?, ?, ?)");
+        $stmt->bind_param("ssi", $stmt_username, $stmt_password, $stmt_profile_type_identity);
+
+        $stmt_username = $username;
+        $stmt_password = $hashed;
+        $stmt_profile_type_identity = $profile_type_identity;
+
+        $stmt->execute();
+        $stmt->close();
+
+        $connection->close();
     }
 }
 
