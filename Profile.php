@@ -1,5 +1,6 @@
-<?php
+<?php 
 
+// Objects
 class Profile
 {
     private $identity = 0;
@@ -29,27 +30,26 @@ class Profile
     }
 
     // Setters
-    function setIdentity($var)
+    function setIdentity( $var )
     {
         $this->identity = $var;
     }
 
-    function setUsername($var)
+    function setUsername( $var )
     {
         $this->username = $var;
     }
 
-    function setPassword($var)
+    function setPassword( $var )
     {
         $this->password = $var;
     }
 
-    function setProfileType($var)
+    function setProfileType( $var )
     {
         $this->profile_type = $var;
     }
     
 }
-
 
 ?>
