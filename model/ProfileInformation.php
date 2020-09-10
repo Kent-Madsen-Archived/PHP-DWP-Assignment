@@ -56,5 +56,35 @@ class ProfileInformation
     {
         $this->address = $var;
     }
+
+    function getPostZone()
+    {
+        return $this->postZone;
+    }
+
+    function setPostZone($var)
+    {
+        $this->postZone = $var;
+    }
+
+    function getCountry()
+    {
+        return $this->country;
+    }
+
+    function setCountry($var)
+    {
+        $this->country = $var;
+    }
+
+    function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    function setBirthday($var)
+    {
+        $this->birthday = $var;
+    }
 }
 ?>
