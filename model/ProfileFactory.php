@@ -13,7 +13,7 @@ class ProfileFactory
     
     }
 
-    public function findProfileByUsername( $username )
+    public function findByUsername( $username )
     {
         // Profile class
         $retObject = NULL;
@@ -59,15 +59,13 @@ class ProfileFactory
             // None
         }
 
-
-
         // luk forbindelsen
         $connection->close();
         
         return $retObject;
     }
 
-    public function createProfile( $username, $password, $profile_type_identity )
+    public function create( $username, $password, $profile_type_identity )
     {
         $connection = new mysqli( database_server_name, 
                                   database_username_name, 
@@ -95,7 +93,7 @@ class ProfileFactory
         $connection->close();
     }
 
-    public function deleteProfile( $identity )
+    public function delete( $identity )
     {
         $retVal = false;
 
@@ -122,7 +120,7 @@ class ProfileFactory
         return $retVal;
     }
 
-    public function updateProfilePassword( $identity, $topassword )
+    public function updatePassword( $identity, $topassword )
     {
         $retval = false;
 
@@ -149,7 +147,7 @@ class ProfileFactory
         return $retval;
     }
 
-    public function existProfile( $username )
+    public function exist( $username )
     {
         $retVal = false;
 
