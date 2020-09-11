@@ -1,6 +1,6 @@
 <?php 
-require_once '/objects/ProfileMail.php';
-require_once '/cfg/config.php';
+require_once 'objects/ProfileMail.php';
+require_once 'cfg/config.php';
 
 class ProfileMailFactory
 {
