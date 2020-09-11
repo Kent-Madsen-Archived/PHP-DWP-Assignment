@@ -8,10 +8,8 @@
 <body>
 
 <?php 
-require './model/ProfileMailFactory.php';
+require './model/ProfileInformationFactory.php';
 
-$test = new ProfileMailFactory;
-$test->update(5, 'fracturerdev@gmail.com');
 
 ?>
     

@@ -4,7 +4,12 @@ require 'config.php';
 
 class ProfileInformationFactory
 {
-    public function create()
+    public function create( $profile_id, 
+                            $person_name, 
+                            $address, 
+                            $post_zone, 
+                            $country, 
+                            $birthday )
     {
 
     }
@@ -19,7 +24,12 @@ class ProfileInformationFactory
 
     }
 
-    public function update()
+    public function update( $profile_id, 
+                            $person_name, 
+                            $address, 
+                            $post_zone, 
+                            $country, 
+                            $birthday )
     {
         
     }
