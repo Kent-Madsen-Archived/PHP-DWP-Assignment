@@ -1,6 +1,6 @@
 <?php 
-require 'profile.php';
-require 'config.php';
+require_once '/objects/profile.php';
+require_once '/cfg/config.php';
 
 class ProfileFactory
 {

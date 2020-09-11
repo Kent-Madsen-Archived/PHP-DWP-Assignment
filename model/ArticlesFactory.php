@@ -1,6 +1,6 @@
 <?php 
-require_once 'Articles.php';
-require 'config.php';
+require_once '/objects/Articles.php';
+require_once '/cfg/config.php';
 
 class ArticlesFactory
 {
