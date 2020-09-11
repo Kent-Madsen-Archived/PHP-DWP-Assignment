@@ -73,7 +73,7 @@ class ProfileMailFactory
             $found_primary_mail;
 
             // output data of each row
-            while($row = $result->fetch_assoc()) 
+            while( $row = $result->fetch_assoc() ) 
             {
                 $found_identity = $row['identity'];
                 $found_profile_id = $row['profile_id'];
@@ -98,9 +98,43 @@ class ProfileMailFactory
         return $retVal;
     }
 
-    public function findAllByProfileIdentity( $email )
+    public function findAllByProfileIdentity( $profileIdentity )
     {
-        $retVal = null;
+        $retVal = array();
+
+        $connection = new mysqli( database_server_name, 
+                                  database_username_name, 
+                                  database_password_name, 
+                                  database_database_name );
+
+        // Muligt at få forbindelse?
+        if( $connection -> connect_error )
+        {
+            die( "connection failed: " . $connection->connect_error );
+        }
+
+        
+        $sql = "SELECT * FROM profile_mail where profile_id=" . $profileIdentity . ";";
+        $result = $connection->query( $sql );
+
+        if ( $result->num_rows > 0 ) 
+        {
+            // output data of each row
+            while( $row = $result->fetch_assoc() ) 
+            {
+                $new_profile = new ProfileMail( $row['identity'], $row['profile_id'], 
+                                                $row['profile_email'], $row['profile_email_registered'],
+                                                $row['primary_mail']);
+
+                array_push( $retVal, $new_profile);
+            }
+          }
+          else
+          {
+            $retVal = null;
+          }
+        
+        $connection->close();
 
         return $retVal;
     }

@@ -11,7 +11,7 @@
 require './model/ProfileMailFactory.php';
 
 $test = new ProfileMailFactory;
-
+var_dump($test->findAllByProfileIdentity(10));
 
 
 ?>
