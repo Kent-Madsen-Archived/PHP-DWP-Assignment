@@ -15,13 +15,13 @@ class ProfileInformation
     private $country;
     private $birthday;
 
-            
+    // Get / Setter functions
     function getIdentity()
     {
         return $this->identity;
     }
 
-    function setIdentity($var)
+    function setIdentity( $var )
     {
         $this->identity = $var;
     }
@@ -31,7 +31,7 @@ class ProfileInformation
         return $this->profileIdentity;
     }
 
-    function setProfileIdentity($var)
+    function setProfileIdentity( $var )
     {
         $this->profileIdentity = $var;
     }
@@ -42,7 +42,7 @@ class ProfileInformation
         return $this->personName;
     }
 
-    function setPersonName($var)
+    function setPersonName( $var )
     {
         $this->personName = $var;
     }
@@ -52,7 +52,7 @@ class ProfileInformation
         return $this->address;
     }
 
-    function setAddress($var)
+    function setAddress( $var )
     {
         $this->address = $var;
     }
@@ -62,7 +62,7 @@ class ProfileInformation
         return $this->postZone;
     }
 
-    function setPostZone($var)
+    function setPostZone( $var )
     {
         $this->postZone = $var;
     }
@@ -72,7 +72,7 @@ class ProfileInformation
         return $this->country;
     }
 
-    function setCountry($var)
+    function setCountry( $var )
     {
         $this->country = $var;
     }
