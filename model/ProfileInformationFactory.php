@@ -1,5 +1,6 @@
 <?php 
 require 'ProfileInformation.php';
+require 'config.php';
 
 class ProfileInformationFactory
 {

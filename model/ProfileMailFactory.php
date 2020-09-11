@@ -1,10 +1,6 @@
 <?php 
 require 'ProfileMail.php';
-
-const database_server_name = "localhost";
-const database_username_name = "root";
-const database_password_name = "";
-const database_database_name = "dwp_assignment";
+require 'config.php';
 
 class ProfileMailFactory
 {
@@ -41,7 +37,25 @@ class ProfileMailFactory
 
     public function update( $identity, $email )
     {
-        
+        $connection = new mysqli( database_server_name, 
+                                  database_username_name, 
+                                  database_password_name, 
+                                  database_database_name );
+
+        // Muligt at få forbindelse?
+        if( $connection -> connect_error )
+        {
+            die( "connection failed: " . $connection->connect_error );
+        }
+
+        $sql = "UPDATE profile_mail SET profile_email = '" . $email . "' where identity=" . $identity . ";";
+
+        if ($connection->query($sql) === TRUE) {
+            echo "Record updated successfully";
+          }
+
+        // luk forbindelsen
+        $connection->close();
     }
 
     public function findByEmail( $email )
@@ -146,8 +160,11 @@ class ProfileMailFactory
         return $retVal;
     }
 
+    public function existEmail($email)
+    {
 
-    
+        return false;
+    }
 
     public function delete( $identity )
     {
