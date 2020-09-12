@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once "model/ProfileFactory.php";
 
 if( !( $_POST["form_username"] == null ) && !($_POST["form_username"] == "") )
@@ -15,7 +16,10 @@ if( !( $_POST["form_username"] == null ) && !($_POST["form_username"] == "") )
     if($password == $hashed_password)
     {
         // We got a match. made in heaven.
+        $_SESSION["id"] = $id;
+        $_SESSION["username"] = $username;
         
+        header("Location:./index.php");
     }
 }
 
