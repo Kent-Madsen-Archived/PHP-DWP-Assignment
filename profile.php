@@ -2,16 +2,23 @@
 session_start();
 
 require_once 'model/ProfileInformationFactory.php';
-$factory = new ProfileInformationFactory;
+require_once 'model/ProfileMailFactory.php';
 
-$information = $factory->find($_SESSION["id"]);
+$informationfactory = new ProfileInformationFactory;
+
+$information = $informationfactory->find($_SESSION["id"]);
+
+$mailFactory = new ProfileMailFactory;
+
+$allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>My Profile</title>
     </head>
     <body>
         <header> 
