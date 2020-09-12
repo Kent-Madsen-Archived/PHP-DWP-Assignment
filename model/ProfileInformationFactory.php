@@ -44,9 +44,48 @@ class ProfileInformationFactory
         $connection->close();
     }
 
-    public function find()
-    {
+    public function find( $profile_id )
+    { 
+        $retval = null;
 
+        $connection = new mysqli( database_server_name, 
+                                  database_username_name, 
+                                  database_password_name, 
+                                  database_database_name );
+
+        // Muligt at få forbindelse?
+        if( $connection -> connect_error )
+        {
+            die( "connection failed: " . $connection->connect_error );
+        }
+
+        $sql = "SELECT * FROM profile_information where profile_id=" . $profile_id . ";";
+        $result = $connection->query($sql);
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                $found_identity = $row['identity'];
+                $found_profile_id = $row['profile_id'];
+
+                $found_person_name = $row['person_name'];
+                $found_address = $row['address'];
+                $found_post_zone = $row['post_zone'];
+                $found_country = $row['country'];
+                $found_birthday = $row['birthday'];
+                
+                
+                $new = new ProfileInformation( $found_identity, $found_profile_id, 
+                                               $found_person_name, $found_address, 
+                                               $found_post_zone, $found_country, 
+                                               $found_birthday);
+                $retval = $new;
+            }
+        }
+
+        $connection->close();
+
+        return $retval;
     }
 
     public function delete()

@@ -1,9 +1,14 @@
 <?php 
 class ProfileInformation
 {
-    public function __construct() 
+    public function __construct($identity, $profileIdentity, $personName, $address, $postZone, $country, $birthday) 
     {
-    
+        $this->setIdentity($identity);
+        $this->setProfileIdentity($profileIdentity);
+        $this->setPersonName($personName);
+        $this->setPostZone($postZone);
+        $this->setCountry($country);
+        $this->setBirthday($birthday);
     }
 
     private $identity;
