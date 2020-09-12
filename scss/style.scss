@@ -27,7 +27,7 @@ footer
 
 #login
 {
-    max-width: 40%;
+    max-width: 30%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -39,12 +39,14 @@ footer
 
 #login h1
 {
+    @extend .my-4;
     text-align: center;
 }
 
 .input-area
 {
     @extend .form-control;
+    @extend .my-2;
 }
 
 .button 

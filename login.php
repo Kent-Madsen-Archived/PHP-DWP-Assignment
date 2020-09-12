@@ -9,9 +9,9 @@
     <body>
         <header> </header>
         <main> 
-            <form id="login" method="post" action="./login.php"> 
+            <form id="login" method="post" action="./login_form.php"> 
                 <h1> Login Form </h1>
-                
+
                 <span> 
                     <input class="input-area" type="text" name="form_username" placeholder="username">
                 </span>
