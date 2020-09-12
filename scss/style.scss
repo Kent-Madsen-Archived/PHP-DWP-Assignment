@@ -1,14 +1,58 @@
+body 
+{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto;
+    margin:0px;
+    grid-gap: 32px;
+}
+
 header 
 {
+    min-height: 70px;
     
 }
 
 main 
 {
+    min-height: 70px;
 
 }
 
 footer 
 {
+    min-height: 70px;
     
 }
+
+#login
+{
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#login span
+{
+    @extend .form-group;
+}
+
+#login h1
+{
+    @extend .my-4;
+    text-align: center;
+}
+
+.input-area
+{
+    @extend .form-control;
+    @extend .my-2;
+}
+
+.button 
+{
+    @extend .btn;
+    @extend .btn-primary;
+}
+
+@import './bootstrap/bootstrap.scss';
