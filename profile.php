@@ -42,12 +42,13 @@ $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
             <div> 
                 <!-- Information -->
                 <?php 
-                echo "</br>";
-                echo $information->getPersonName() . "</br>";
-                echo $information->getAddress() . "</br>";
-                echo $information->getPostZone() . "</br>";
-                echo $information->getCountry() . "</br>";
-                echo $information->getBirthday() . "</br>";
+                    echo "</br>";
+
+                    echo $information->getPersonName() . "</br>";
+                    echo $information->getAddress() . "</br>";
+                    echo $information->getPostZone() . "</br>";
+                    echo $information->getCountry() . "</br>";
+                    echo $information->getBirthday() . "</br>";
                 
                 ?>
             </div>

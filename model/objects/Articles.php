@@ -1,9 +1,14 @@
 <?php 
 class Article
 {
-    public function __construct() 
+    public function __construct( $identity, $profileIdentity, $title, $content, $registered ) 
     {
-    
+        $this->setIdentity( $identity );
+        $this->setProfileIdentity( $profileIdentity );
+
+        $this->setTitle( $title );
+        $this->setContent( $content );
+        $this->setRegistered( $registered );
     }
 
     private $identity;
