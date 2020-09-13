@@ -26,6 +26,32 @@ $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
         </header>
         
         <main> 
+            <h2> Hej <?php echo $_SESSION['username']; ?> </h2>
+
+            <div> 
+                <!-- Emaill's -->
+                <?php 
+                foreach( $allMails as $value )
+                {
+                    echo $value->getProfileEmail();
+                    echo "</br>";
+                }
+                ?>
+            </div>
+            
+            <div> 
+                <!-- Information -->
+                <?php 
+                echo "</br>";
+                echo $information->getPersonName() . "</br>";
+                echo $information->getAddress() . "</br>";
+                echo $information->getPostZone() . "</br>";
+                echo $information->getCountry() . "</br>";
+                echo $information->getBirthday() . "</br>";
+                
+                ?>
+            </div>
+
         </main>
         
         <footer> 

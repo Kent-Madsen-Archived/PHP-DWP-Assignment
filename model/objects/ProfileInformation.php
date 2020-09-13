@@ -6,6 +6,7 @@ class ProfileInformation
         $this->setIdentity($identity);
         $this->setProfileIdentity($profileIdentity);
         $this->setPersonName($personName);
+        $this->setAddress($address);
         $this->setPostZone($postZone);
         $this->setCountry($country);
         $this->setBirthday($birthday);
