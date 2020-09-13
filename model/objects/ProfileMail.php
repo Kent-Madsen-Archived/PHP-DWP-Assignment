@@ -1,18 +1,18 @@
 <?php 
 class ProfileMail
 {
-    public function __construct($identity, 
-    $profile_id, 
-    $profile_email, 
-    $profile_email_registered, 
-    $primary_mail) 
+    public function __construct( $identity, 
+                                 $profile_id, 
+                                 $profile_email, 
+                                 $profile_email_registered, 
+                                 $primary_mail ) 
     {
-        $this->setIdentity($identity);
-        $this->setProfileIdentity($profile_id);
+        $this->setIdentity( $identity );
+        $this->setProfileIdentity( $profile_id );
 
-        $this->setProfileEmail($profile_email);
-        $this->setProfileEmailRegistered($profile_email_registered);
-        $this->setProfilePrimaryEmail($primary_mail);
+        $this->setProfileEmail( $profile_email );
+        $this->setProfileEmailRegistered( $profile_email_registered );
+        $this->setProfilePrimaryEmail( $primary_mail );
     }
 
     private $identity = 0;
