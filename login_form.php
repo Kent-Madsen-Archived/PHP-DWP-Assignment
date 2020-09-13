@@ -1,5 +1,6 @@
+<?php require_once 'head.php'; ?>
+
 <?php 
-session_start();
 require_once "model/ProfileFactory.php";
 
 if( !( $_POST["form_username"] == null ) && !($_POST["form_username"] == "") )

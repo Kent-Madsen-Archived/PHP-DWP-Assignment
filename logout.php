@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php require_once 'head.php'; ?>
 
 <?php 
 // removal of all session variables

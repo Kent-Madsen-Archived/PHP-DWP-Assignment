@@ -1,5 +1,6 @@
+<?php require_once 'head.php'; ?>
+
 <?php 
-session_start();
 
 require_once 'model/ProfileInformationFactory.php';
 require_once 'model/ProfileMailFactory.php';
@@ -14,12 +15,13 @@ $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo getLanguage(); ?>">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>My Profile</title>
     </head>
+    
     <body>
         <?php require_once 'header.php'; ?>
         <main> 
