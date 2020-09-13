@@ -1,7 +1,11 @@
 <?php 
 class Article
 {
-    public function __construct( $identity, $profileIdentity, $title, $content, $registered ) 
+    public function __construct( $identity, 
+                                 $profileIdentity, 
+                                 $title, 
+                                 $content, 
+                                 $registered ) 
     {
         $this->setIdentity( $identity );
         $this->setProfileIdentity( $profileIdentity );

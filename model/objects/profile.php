@@ -2,12 +2,15 @@
 
 class Profile
 { 
-    public function __construct( $identity, $username, $password, $profile_type ) 
+    public function __construct( $identity, 
+                                 $username, 
+                                 $password, 
+                                 $profile_type ) 
     {
-        $this->setIdentity($identity);
-        $this->setUsername($username);
-        $this->setPassword($password);
-        $this->setProfileType($profile_type);
+        $this->setIdentity( $identity );
+        $this->setUsername( $username );
+        $this->setPassword( $password );
+        $this->setProfileType( $profile_type );
     }
     
     private $identity = 0;

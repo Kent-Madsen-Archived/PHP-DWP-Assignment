@@ -1,15 +1,21 @@
 <?php 
 class ProfileInformation
 {
-    public function __construct($identity, $profileIdentity, $personName, $address, $postZone, $country, $birthday) 
+    public function __construct( $identity, 
+                                 $profileIdentity, 
+                                 $personName, 
+                                 $address, 
+                                 $postZone, 
+                                 $country, 
+                                 $birthday ) 
     {
-        $this->setIdentity($identity);
-        $this->setProfileIdentity($profileIdentity);
-        $this->setPersonName($personName);
-        $this->setAddress($address);
-        $this->setPostZone($postZone);
-        $this->setCountry($country);
-        $this->setBirthday($birthday);
+        $this->setIdentity( $identity );
+        $this->setProfileIdentity( $profileIdentity );
+        $this->setPersonName( $personName );
+        $this->setAddress( $address );
+        $this->setPostZone( $postZone );
+        $this->setCountry( $country );
+        $this->setBirthday( $birthday );
     }
 
     private $identity;
