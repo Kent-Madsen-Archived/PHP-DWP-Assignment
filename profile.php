@@ -21,10 +21,7 @@ $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
         <title>My Profile</title>
     </head>
     <body>
-        <header> 
-        
-        </header>
-        
+        <?php require_once 'header.php'; ?>
         <main> 
             <h2> Hej <?php echo $_SESSION['username']; ?> </h2>
 
@@ -55,7 +52,6 @@ $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
 
         </main>
         
-        <footer> 
-        </footer>
+        <?php require_once 'footer.php'; ?>
     </body>
 </html>

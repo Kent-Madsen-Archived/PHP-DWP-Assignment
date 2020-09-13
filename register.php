@@ -8,8 +8,8 @@
         <title>Register</title>
     </head>
     <body>
-        <header> </header>
+        <?php require_once 'header.php'; ?>
         <main> </main>
-        <footer> </footer> 
+        <?php require_once 'footer.php'; ?> 
     </body>
 </html>

@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <header> </header>
+    <?php require_once 'header.php'; ?>
+
         <main> 
             <form id="login" method="post" action="./login_form.php"> 
                 <h1> Login Form </h1>
@@ -32,6 +33,7 @@
                 </span>
             </form>
         </main>
-        <footer> </footer>
+        
+        <?php require_once 'footer.php'; ?>
     </body>
 </html>
