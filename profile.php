@@ -14,7 +14,7 @@ $mailFactory = new ProfileMailFactory;
 $allMails = $mailFactory->findAllByProfileIdentity($_SESSION["id"]);
 
 ?>
-<!DOCTYPE html>
+
 <html lang="<?php echo getLanguage(); ?>">
     <head>
         <meta charset="UTF-8">

@@ -7,3 +7,6 @@ function getLanguage()
 }
 
 ?>
+
+
+<!DOCTYPE html>

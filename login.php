@@ -1,5 +1,5 @@
 <?php require_once 'head.php'; ?>
-<!DOCTYPE html>
+
 <html lang="<?php echo getLanguage(); ?>">
     <head>
         <meta charset="UTF-8">
