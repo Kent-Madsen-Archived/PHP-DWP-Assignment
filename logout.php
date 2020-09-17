@@ -1,5 +1,6 @@
 <?php require 'main.php'; ?>
 <?php
+
 // Unset current variables
 $_SESSION = array();
 

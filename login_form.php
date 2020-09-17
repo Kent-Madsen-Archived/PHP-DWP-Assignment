@@ -1,8 +1,7 @@
 <?php require 'main.php'; ?>
+
 <?php 
-
 include 'model/profileFactory.php';
-
 $factory = new ProfileFactory;
 
 $profile = $factory->read( $_POST['username_form'], $_POST['password_form'] );
@@ -16,7 +15,7 @@ if( isset( $profile ) )
 }
 else 
 {
-    echo "wrong password";
+    echo "wrong username or password";
 }
 
 ?>
