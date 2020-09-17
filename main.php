@@ -15,4 +15,9 @@ function is_current_user_owners()
     }
 }
 
+function redirect($topage)
+{
+    header('Location:' . $topage);
+};
+
 ?>

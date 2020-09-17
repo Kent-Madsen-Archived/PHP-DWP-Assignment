@@ -5,8 +5,7 @@ include 'model/profileFactory.php';
 
 $factory = new ProfileFactory;
 
-$profile = $factory->read($_POST['username_form'], $_POST['password_form']);
-
+$profile = $factory->read( $_POST['username_form'], $_POST['password_form'] );
 
 if( isset( $profile ) )
 {
