@@ -1,37 +1,23 @@
-<?php session_start(); ?>
+<?php require 'main.php'; ?>
+<?php 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
-        <link rel="stylesheet" href="style.css">
+        <title>Document</title>
     </head>
     <body>
-        <header> </header>
         <main> 
-            <form id="login" method="post" action="./login_form.php"> 
-                <h1> Login Form </h1>
-
-                <span> 
-                    <input class="input-area" type="text" name="form_username" placeholder="username">
-                </span>
+            <form action="login_form.php" method="post">
+                <input type="text" placeholder="username" name="username_form"> 
+                <input type="password" placeholder="password" name="password_form"> 
                 
-                <span>
-                    <input class="input-area" type="password" name="form_password" placeholder="password">
-                </span>
-
-                <span>
-                <!-- Forgot password? -->
-                    <p> </p>
-
-                </span>
-                
-                <span>
-                    <input class="button" type="submit" value="login">
-                </span>
+                <input type="submit" value="Login User">
             </form>
         </main>
-        <footer> </footer>
     </body>
 </html>

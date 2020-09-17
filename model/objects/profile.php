@@ -1,67 +1,73 @@
 <?php 
-
 class Profile
-{ 
-    public function __construct( $identity, 
-                                 $username, 
-                                 $password, 
-                                 $profile_type ) 
+{
+    function __construct( $identity, 
+                          $username, 
+                          $email, 
+                          $password, 
+                          $access_type ) 
     {
         $this->setIdentity( $identity );
         $this->setUsername( $username );
+        $this->setEmail( $email );
         $this->setPassword( $password );
-        $this->setProfileType( $profile_type );
+        $this->setAccessType( $access_type );
     }
-    
-    private $identity = 0;
 
-    private $username = 0;
-    private $password = 0;
+    private $identity    = null; 
+    private $username    = null; 
+    private $email       = null;
+    private $password    = null;
+    private $access_type = null;
 
-    private $profile_type = 0;
-        
-    function getIdentity()
+    public function getIdentity()
     {
         return $this->identity;
     }
 
-    function getUsername()
+    public function setIdentity( $idx )
+    {
+        $this->identity = $idx;
+    }
+
+    public function getUsername()
     {
         return $this->username;
     }
 
-    function getPassword()
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail( $email )
+    {
+        $this->email = $email;
+    }
+
+    public function getPassword()
     {
         return $this->password;
     }
 
-    function getProfileType()
+    public function setPassword( $newpassword )
     {
-        return $this->profile_type;
+        $this->password = $newpassword;
     }
 
-    // Setters
-    function setIdentity($var)
+    public function getAccessType()
     {
-        $this->identity = $var;
+        return $this->access_type;
     }
 
-    function setUsername($var)
+    public function setAccessType( $newType )
     {
-        $this->username = $var;
+        $this->access_type = $newType;
     }
-
-    function setPassword($var)
-    {
-        $this->password = $var;
-    }
-
-    function setProfileType($var)
-    {
-        $this->profile_type = $var;
-    }
-    
-
 }
-
 ?>
