@@ -35,8 +35,10 @@
                 foreach( $myPost as $value ):
             ?>
                 <div class="image"> 
-                    <img src="<?php echo $value->getSource(); ?>">
-
+                    <a href="image.php?identity=<?php echo $value->getIdentity(); ?>"> 
+                        <img src="<?php echo $value->getSource(); ?>">
+                    </a>
+                    <p class="title"> <?php echo $value->getTitle(); ?> </p>
                 </div>
             <?php endforeach; ?>
         

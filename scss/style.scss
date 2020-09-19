@@ -62,4 +62,12 @@ footer
     width: 100%;
 }
 
+.image .title 
+{
+    @extend .py-2;
+    @extend h4;
+    text-align: center;
+    text-transform: capitalize;
+}
+
 @import './bootstrap/bootstrap.scss';

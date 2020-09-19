@@ -20,7 +20,6 @@
                 require "model/imagePostFactory.php";
                 $post = new ImagePostFactory;
 
-                $varArgs = $post->read();
 
 
             ?>
