@@ -10,9 +10,7 @@
         </title>
     </head>
     <body>
-        <header> 
-        
-        </header>
+        <?php require "header.php"; ?>
 
         <main> 
             <?php 
@@ -21,12 +19,11 @@
 
                 $varArgs = $post->read();
 
-                
+
             ?>
         </main>
         
-        <footer> 
-        
-        </footer>
+        <?php require "footer.php"; ?>
+
     </body>
 </html>
