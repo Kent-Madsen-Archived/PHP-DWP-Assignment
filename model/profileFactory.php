@@ -5,7 +5,10 @@ class ProfileFactory
 {
     public function create( $username, $email, $password, $access_type )
     {
-        $connection = new mysqli('127.0.0.1', 'root', '', 'dwp_assignment');
+        $connection = new mysqli( databaseServerHostname, 
+                                  databaseServerUser, 
+                                  databaseServerPass, 
+                                  databaseServerDatabase );
         
         if ($connection->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -18,7 +21,7 @@ class ProfileFactory
         $stmt_email = $email;
         
         //
-        $stmt_password = password_hash($password, PASSWORD_BCRYPT, ['cost'=>15]);
+        $stmt_password = password_hash( $password, PASSWORD_BCRYPT, ['cost'=>15] );
         //
 
         $stmt_access_type_id = $access_type;
@@ -37,7 +40,10 @@ class ProfileFactory
     {
         $retVal = null;
 
-        $connection = new mysqli('127.0.0.1', 'root', '', 'dwp_assignment');
+        $connection = new mysqli( databaseServerHostname, 
+                                  databaseServerUser, 
+                                  databaseServerPass, 
+                                  databaseServerDatabase );
         
         if ($connection->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -50,7 +56,11 @@ class ProfileFactory
         {
             while( $row = $result->fetch_assoc() )
             {
-                $profile = new profile($row['identity'], $row['username'], $row['email'], $row['password'], $row['access_type_id']);
+                $profile = new profile( $row['identity'], 
+                                        $row['username'], 
+                                        $row['email'], 
+                                        $row['password'], 
+                                        $row['access_type_id']);
 
                 if( password_verify( $password, $profile->getPassword() ) )
                 {

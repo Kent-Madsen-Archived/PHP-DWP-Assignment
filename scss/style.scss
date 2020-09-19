@@ -13,6 +13,30 @@ header
     
 }
 
+header nav
+{
+    @extend .navbar;
+    @extend .navbar-expand-lg;
+    @extend .navbar-light;
+    @extend .bg-light;
+}
+
+header nav ul 
+{
+    @extend .navbar-nav;
+    @extend .mr-auto;
+}
+
+header nav ul li
+{
+    @extend .nav-item;
+}
+
+header nav ul li a
+{
+    @extend .nav-link;
+}
+
 main 
 {
     min-height: 70px;
@@ -25,47 +49,25 @@ footer
     
 }
 
-#login
+.gallery
 {
-    max-width: 30%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 64px;
 }
 
-#login span
+.image img 
 {
-    @extend .form-group;
+    width: 100%;
 }
 
-#login h1
+.image .title 
 {
-    @extend .my-4;
+    @extend .py-2;
+    @extend h4;
     text-align: center;
-}
-
-.input-area
-{
-    @extend .form-control;
-    @extend .my-2;
-}
-
-.button 
-{
-    @extend .btn;
-    @extend .btn-primary;
-}
-
-#news div
-{
-    @extend .my-4;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#news div p
-{
-    @extend .my-1;
+    text-transform: capitalize;
 }
 
 @import './bootstrap/bootstrap.scss';
