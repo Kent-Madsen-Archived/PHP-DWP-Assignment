@@ -1,15 +1,23 @@
 
 <?php 
+require 'model/objects/profile.php';
 require 'model/imagePostFactory.php';
+
+require 'main.php';
 
 if( isset( $_POST["submit"] ) )
 {
     $uploaddir = "images/";
-    $uploadfile = $uploaddir . basename($_FILES['fileImage']['name']);
     
     $is_ok = false;
-
+    
     // Skal implementer en enumurator for file navne
+    $files_without = array_diff(scandir($uploaddir), array('.', '..'));
+
+    $size = count($files_without);
+    
+
+    $uploadfile = $uploaddir . $size . ".jpg";
 
     // moves file to desired folder
     if ( $is_ok && !( file_exists( $uploadfile ) ) )
@@ -18,7 +26,9 @@ if( isset( $_POST["submit"] ) )
     }
 
     // File is at uploadfile
-    
+    $factory = new ImagePostFactory();
+
+    $factory->create($uploadfile, $_SESSION['current_profile']->getIdentity(), $_POST['fileTitle'], $_POST['description']);
 
 }
 ?>

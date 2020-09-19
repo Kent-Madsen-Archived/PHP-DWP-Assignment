@@ -1,6 +1,11 @@
 <?php 
 session_start();
 
+define("databaseServerHostname", "127.0.0.1");
+define("databaseServerUser", "root");
+define("databaseServerPass", "");
+define("databaseServerDatabase", "dwp_assignment");
+
 function is_logged_in()
 {
     return isset( $_SESSION[ 'current_profile' ] );
