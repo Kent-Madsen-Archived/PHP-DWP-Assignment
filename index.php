@@ -1,4 +1,4 @@
-<?php require 'main.php'; ?>
+<?php require_once 'main.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">

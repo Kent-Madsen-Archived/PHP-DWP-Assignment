@@ -1,4 +1,4 @@
-<?php require "model/imageLikeFactory.php"; ?>
+<?php require_once "model/imageLikeFactory.php"; ?>
 
 <?php
 

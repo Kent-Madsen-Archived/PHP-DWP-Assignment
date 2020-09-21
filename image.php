@@ -1,5 +1,5 @@
-<?php require 'main.php'; ?>
-<?php require 'model/imagePostFactory.php'; ?>
+<?php require_once 'main.php'; ?>
+<?php require_once 'model/imagePostFactory.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
