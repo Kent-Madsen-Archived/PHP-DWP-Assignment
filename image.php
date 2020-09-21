@@ -29,7 +29,11 @@
                     <?php require '_image_like_button.php'; ?>
                 </div>
             </div>
-            
+
+            <div> 
+                <!-- Comments -->
+                <?php require '_comment_.php'; ?>
+            </div>
         </div>
     </main>
 
