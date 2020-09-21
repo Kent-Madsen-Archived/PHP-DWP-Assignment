@@ -1,6 +1,3 @@
-<?php 
-    require 'model/objects/profile.php';
- ?>
 <?php require 'main.php'; ?>
 <!DOCTYPE html>
 <html lang="en">

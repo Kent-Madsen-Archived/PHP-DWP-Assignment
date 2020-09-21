@@ -70,4 +70,29 @@ footer
     text-transform: capitalize;
 }
 
+.onlyimage
+{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.onlyimage .title 
+{
+    @extend .py-2;
+    @extend h4;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.onlyimage p
+{
+    text-align: left;
+}
+
+.onlyimage img
+{
+    width: 100%;
+}
+
 @import './bootstrap/bootstrap.scss';
