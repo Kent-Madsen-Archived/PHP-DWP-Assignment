@@ -1,5 +1,6 @@
 <?php require 'main.php'; ?>
 <?php require 'model/imagePostFactory.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,20 @@
         <?php
         $test = new ImagePostFactory; 
         ?>
-        <?php print_r($test->readWith($_GET["identity"])) ?>
+        <div class="onlyimage"> 
+            <?php $obj = $test->readWith($_GET["identity"]); ?>
+            <img src="<?php echo $obj->getSource(); ?>" />
+            <div> 
+                <p class="title"> <?php echo $obj->getTitle(); ?> </p>
+                <p> <?php echo $obj->getSummary(); ?> </p>
+
+                <!--- Actions --->
+                <div> 
+                    <?php require '_image_like_button.php'; ?>
+                </div>
+            </div>
+            
+        </div>
     </main>
 
     <?php require "footer.php"; ?>

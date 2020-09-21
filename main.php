@@ -1,3 +1,4 @@
+<?php require 'model/objects/profile.php'; ?>
 <?php 
 session_start();
 
