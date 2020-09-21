@@ -1,5 +1,5 @@
 <?php 
-require 'objects/imagePost.php';
+require_once 'objects/imagePost.php';
 
 class ImagePostFactory
 {

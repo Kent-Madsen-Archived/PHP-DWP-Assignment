@@ -1,5 +1,5 @@
 <?php 
-require 'objects/profile.php';
+require_once 'objects/profile.php';
 
 class ProfileFactory
 {

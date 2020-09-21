@@ -1,7 +1,6 @@
 
 <?php 
-require 'model/objects/profile.php';
-require 'model/imagePostFactory.php';
+require_once 'model/imagePostFactory.php';
 
 require 'main.php';
 
