@@ -1,15 +1,5 @@
 body 
 {
-    display: grid;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto;
-    margin:0px;
-    grid-gap: 32px;
-}
-
-header 
-{
-    min-height: 70px;
     
 }
 
@@ -21,7 +11,7 @@ header nav
     @extend .bg-light;
 }
 
-header nav ul 
+header nav ul
 {
     @extend .navbar-nav;
     @extend .mr-auto;
@@ -30,69 +20,29 @@ header nav ul
 header nav ul li
 {
     @extend .nav-item;
+
 }
 
 header nav ul li a
 {
     @extend .nav-link;
+    cursor: pointer;
+}
+
+.view-active
+{
+    @extend .active;
 }
 
 main 
 {
-    min-height: 70px;
 
 }
 
 footer 
 {
-    min-height: 70px;
-    
+
 }
 
-.gallery
-{
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 64px;
-}
-
-.image img 
-{
-    width: 100%;
-}
-
-.image .title 
-{
-    @extend .py-2;
-    @extend h4;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.onlyimage
-{
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.onlyimage .title 
-{
-    @extend .py-2;
-    @extend h4;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.onlyimage p
-{
-    text-align: left;
-}
-
-.onlyimage img
-{
-    width: 100%;
-}
 
 @import './bootstrap/bootstrap.scss';
