@@ -3,36 +3,6 @@ body
     
 }
 
-header nav
-{
-    @extend .navbar;
-    @extend .navbar-expand-lg;
-    @extend .navbar-light;
-    @extend .bg-light;
-}
-
-header nav ul
-{
-    @extend .navbar-nav;
-    @extend .mr-auto;
-}
-
-header nav ul li
-{
-    @extend .nav-item;
-
-}
-
-header nav ul li a
-{
-    @extend .nav-link;
-    cursor: pointer;
-}
-
-.view-active
-{
-    @extend .active;
-}
 
 main 
 {
@@ -42,6 +12,32 @@ main
 footer 
 {
 
+}
+
+.register-form
+{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.register-form span
+{
+    @extend .form-group;
+    width: 100%;
+}
+
+.register-form span .input
+{
+    @extend .my-1;
+    @extend .form-control;
+
+}
+
+.register-form span .button
+{
+    @extend .btn;
+    @extend .btn-primary;
 }
 
 

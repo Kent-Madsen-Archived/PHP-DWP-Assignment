@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php require_once 'head.php'; ?>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -10,16 +10,10 @@
         </title>
     </head>
     <body>
-            <header> 
+        <?php require 'header.php'; ?>  
+        <main>
                 
-            </header>
-            
-            <main>
-                
-            </main>
-
-            <footer>
-                
-            </footer>
+        </main>
+        <?php require 'footer.php'; ?>  
     </body>
 </html>
