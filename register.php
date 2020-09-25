@@ -50,6 +50,9 @@
     ?>
 <?php endif; ?> 
 
+
+<?php if( !logged_in() ): ?>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -98,3 +101,4 @@
         <?php require 'footer.php'; ?>
     </body>
 </html>
+<?php endif; ?>

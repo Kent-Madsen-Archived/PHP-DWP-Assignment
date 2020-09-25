@@ -14,6 +14,35 @@ footer
 
 }
 
+header nav
+{
+    @extend .navbar;
+    @extend .navbar-expand-lg;
+    @extend .navbar-light;
+    @extend .bg-light;
+    
+}
+
+header nav ul 
+{
+    @extend .navbar-nav;
+    @extend .mr-auto;
+}
+
+header nav ul li 
+{
+    @extend .nav-item;
+
+}
+
+
+header nav ul li a 
+{
+    @extend .nav-link;
+
+}
+
+
 .register-form
 {
     width: 40%;
@@ -39,6 +68,33 @@ footer
     @extend .btn;
     @extend .btn-primary;
 }
+
+.login-form
+{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form span
+{
+    @extend .form-group;
+    width: 100%;
+}
+
+.login-form span .input
+{
+    @extend .my-1;
+    @extend .form-control;
+
+}
+
+.login-form span .button
+{
+    @extend .btn;
+    @extend .btn-primary;
+}
+
 
 
 @import './bootstrap/bootstrap.scss';
