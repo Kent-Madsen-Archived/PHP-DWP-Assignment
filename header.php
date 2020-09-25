@@ -3,13 +3,13 @@
         <ul> 
             <li> 
                 <a href="index.php"> 
-                    Frontpage
+                    Store
                 </a>
             </li>
             
             <li> 
                 <a href="index.php"> 
-                    Store
+                    Products
                 </a>
             </li>
 
@@ -18,18 +18,26 @@
                     News
                 </a>
             </li>
-
+            
             <li> 
                 <a href="index.php"> 
-                    Profile
+                    Contact
                 </a>
             </li>
 
-            <li> 
-                <a href="index.php"> 
-                    About us
-                </a>
-            </li>
+            <?php if( logged_in() ):?>
+                <li> 
+                    <a href="index.php"> 
+                        Backend
+                    </a>
+                </li>
+
+                <li> 
+                    <a href="__logout__.php"> 
+                        Logout
+                    </a>
+                </li>
+            <?php endif; ?>
         </ul>
     </nav>       
 </header>

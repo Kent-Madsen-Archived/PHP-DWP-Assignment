@@ -14,6 +14,11 @@ footer
 
 }
 
+.bold 
+{
+    font-weight: bold;
+}
+
 header nav
 {
     @extend .navbar;
@@ -68,6 +73,34 @@ header nav ul li a
     @extend .btn;
     @extend .btn-primary;
 }
+
+
+.contact-form
+{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form span
+{
+    @extend .form-group;
+    width: 100%;
+}
+
+.contact-form span .input
+{
+    @extend .my-1;
+    @extend .form-control;
+
+}
+
+.contact-form span .button
+{
+    @extend .btn;
+    @extend .btn-primary;
+}
+
 
 .login-form
 {
