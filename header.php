@@ -8,19 +8,19 @@
             </li>
             
             <li> 
-                <a href="index.php"> 
+                <a href="products.php"> 
                     Products
                 </a>
             </li>
 
             <li> 
-                <a href="index.php"> 
+                <a href="news.php"> 
                     News
                 </a>
             </li>
             
             <li> 
-                <a href="index.php"> 
+                <a href="contact.php"> 
                     Contact
                 </a>
             </li>

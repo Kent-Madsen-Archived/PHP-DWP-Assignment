@@ -22,6 +22,8 @@ if( isset( $_GET[ 'send_message' ] ) )
     <body>
         <?php require 'header.php'; ?>  
         <main>
+            <h2> Tak fordi at du vil bruge vores site </h2>
+            <p> Vi er åben overfor spørgsmål</p>
               <form class="contact-form"> 
                 <span> 
                     <input class="input" type="text" name="subject_matter" id ="contact_subject" placeholder="subject matter">
