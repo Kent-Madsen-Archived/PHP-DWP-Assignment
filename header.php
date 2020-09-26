@@ -25,6 +25,14 @@
                 </a>
             </li>
 
+            <?php if( !logged_in() ):?>
+            <li> 
+                <a href="login.php"> 
+                    Login
+                </a>
+            </li>
+            <?php endif; ?>
+
             <?php if( logged_in() ):?>
                 <li> 
                     <a href="index.php"> 
