@@ -1,4 +1,4 @@
-<?php require 'head.php'; ?>
+<?php require 'meta/main.php'; ?>
 
 <?php 
 

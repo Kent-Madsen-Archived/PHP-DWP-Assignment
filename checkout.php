@@ -74,7 +74,7 @@ if(isset($_POST['buy']))
                 <?php endforeach; ?>
 
                 <form method="post"> 
-                    <input type="submit" value="buy" name="buy"> 
+                    <input class="button" type="submit" value="buy" name="buy"> 
                 </form>
 
             <?php endif; ?>

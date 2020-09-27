@@ -1,4 +1,4 @@
-<?php require_once 'head.php'; ?>
+<?php require_once 'meta/main.php'; ?>
 
 <?php 
 if( !isset($_SESSION["profile_checkout_bag"]) ) 
