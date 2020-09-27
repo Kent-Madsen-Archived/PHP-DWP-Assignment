@@ -1,4 +1,4 @@
-<?php require_once 'head.php'; ?>
+<?php require_once 'meta/main.php'; ?>
 <?php 
 if(isset($_POST['buy']))
 {
@@ -42,13 +42,10 @@ if(isset($_POST['buy']))
 
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" href="style.css">
+        <?php require_once 'meta/head.php'; ?>
     </head>
     <body>
-        <?php require 'header.php'; ?>  
+        <?php require 'meta/header.php'; ?>  
         <main>
             <?php if(isset($_SESSION['profile_checkout_bag'])): ?>
                 <?php 
@@ -82,6 +79,6 @@ if(isset($_POST['buy']))
 
             <?php endif; ?>
         </main>
-        <?php require 'footer.php'; ?>
+        <?php require 'meta/footer.php'; ?>
     </body>
 </html>

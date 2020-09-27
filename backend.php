@@ -1,4 +1,4 @@
-<?php require_once 'head.php'; ?>
+<?php require_once 'meta/main.php'; ?>
 
 <html lang="en">
     <head>
@@ -9,10 +9,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <?php require 'header.php'; ?>  
+        <?php require 'meta/header.php'; ?>  
         <main>
             
         </main>
-        <?php require 'footer.php'; ?>
+        <?php require 'meta/footer.php'; ?>
     </body>
 </html>

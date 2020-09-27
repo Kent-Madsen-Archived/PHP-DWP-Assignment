@@ -1,3 +1,5 @@
+<?php require_once 'meta/main.php'; ?>
+
 <?php 
 if( isset( $_GET[ 'send_message' ] ) )
 {
@@ -8,17 +10,12 @@ if( isset( $_GET[ 'send_message' ] ) )
 }
 ?>
 
-<?php require_once 'head.php'; ?>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" href="style.css">
-
+        <?php require_once 'meta/head.php'; ?>
     </head>
     <body>
-        <?php require 'header.php'; ?>  
+        <?php require 'meta/header.php'; ?>  
         <main>
             <h2> Tak fordi at du vil bruge vores site </h2>
             <p> Vi er åben overfor spørgsmål</p>
@@ -33,6 +30,6 @@ if( isset( $_GET[ 'send_message' ] ) )
                 <span>
               </form>  
         </main>
-        <?php require 'footer.php'; ?>  
+        <?php require 'meta/footer.php'; ?>  
     </body>
 </html>
