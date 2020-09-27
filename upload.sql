@@ -82,3 +82,12 @@ create table brought_product_order(
     primary key (identity)
 );
 
+drop view product_view;
+
+create view product_view as
+select product.identity, product.title, product.description, pc.content as product_category, product.prices, product.registered
+from product
+left join product_category pc on product.category_id = pc.identity;
+
+alter table product
+	add registered datetime default now() not null;
