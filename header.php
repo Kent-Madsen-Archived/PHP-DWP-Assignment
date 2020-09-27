@@ -41,12 +41,6 @@
                 </li>
 
                 <li> 
-                    <a href="invoices.php"> 
-                        Invoices
-                    </a>
-                </li>
-
-                <li> 
                     <a href="checkout.php"> 
                         Checkout
                     </a>

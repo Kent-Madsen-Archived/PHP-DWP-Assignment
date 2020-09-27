@@ -7,9 +7,6 @@
         
         <link rel="stylesheet" href="style.css">
 
-        <title>
-            Webshop
-        </title>
     </head>
     <body>
         <?php require 'header.php'; ?>  

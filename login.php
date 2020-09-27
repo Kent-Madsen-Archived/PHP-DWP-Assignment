@@ -56,4 +56,6 @@
         <?php require 'footer.php'; ?>
     </body>
 </html>
+<?php else: ?>
+
 <?php endif; ?>

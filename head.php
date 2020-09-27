@@ -13,6 +13,11 @@ function logged_in()
     return isset( $_SESSION['profile_user_identity'] );
 }
 
+function go_back()
+{
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+}
+
 ?>
 
 <!DOCTYPE html>

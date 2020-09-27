@@ -6,4 +6,6 @@ unset($_SESSION);
 
 session_destroy(); 
 
+go_back();
+
 ?>
