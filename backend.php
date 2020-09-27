@@ -1,12 +1,8 @@
 <?php require_once 'meta/main.php'; ?>
 
-<html lang="en">
+<html <?php language('en'); ?>>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        
-        <link rel="stylesheet" href="style.css">
+        <?php require "meta/head.php" ?>
     </head>
     <body>
         <?php require 'meta/header.php'; ?>  

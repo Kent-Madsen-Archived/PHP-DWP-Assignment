@@ -15,7 +15,12 @@ function logged_in()
 
 function go_back()
 {
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header( 'Location: ' . $_SERVER['HTTP_REFERER'] );
+}
+
+function language( $lang )
+{
+    echo 'lang="' . $lang . '"';
 }
 
 ?>

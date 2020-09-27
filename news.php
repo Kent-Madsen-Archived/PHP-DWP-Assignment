@@ -1,5 +1,5 @@
 <?php require_once 'meta/main.php'; ?>
-<html lang="en">
+<html <?php language('en'); ?>>
     <head>
         <?php require_once 'meta/head.php'; ?>
     </head>
