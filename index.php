@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <link rel="stylesheet" href="style.css">
+
         <title>
             Webshop
         </title>
@@ -12,10 +13,12 @@
     <body>
         <?php require 'header.php'; ?>  
         <main>
+
+        <div id="frontpage-product-page"> 
         <?php 
         $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
 
-        $sql = "SELECT * FROM product_view;";
+        $sql = "SELECT * FROM product_view order by registered desc limit 3;";
         $result = $connection->query($sql);?>
 
         <?php
@@ -26,14 +29,15 @@
                 <p> <?php echo $row["product_category"] ?> </p>
                 <p> <?php echo $row["description"] ?> </p>
             </a>
-
             <?php endwhile; ?>
         <?php endif; ?>
 
         <?php
             $connection->close();
         ?>
+        </div>
 
+        <div> 
 <?php 
             $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
             
@@ -63,6 +67,8 @@
 
 
         <?php $connection->close(); ?> 
+        
+        </div>
 
         </main>
         <?php require 'footer.php'; ?>  

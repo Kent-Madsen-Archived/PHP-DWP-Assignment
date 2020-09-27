@@ -128,6 +128,50 @@ header nav ul li a
     @extend .btn-primary;
 }
 
+#frontpage-product-page
+{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    
+    grid-gap: 16px;
+}
 
+
+#frontpage-product-page a:first-child
+{
+    grid-column: span 6;
+    grid-row: span 3;
+}
+
+#frontpage-product-page a
+{
+    background-color: #333;
+    grid-column: span 3;
+    grid-row: span 3;
+    min-height: 400px;
+}
+
+.button 
+{
+    @extend .btn;
+    @extend .btn-primary;
+}
+
+@media only screen and (max-width: 1024px) 
+{
+    #frontpage-product-page
+    {    
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    #frontpage-product-page a
+    {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+  }
 
 @import './bootstrap/bootstrap.scss';

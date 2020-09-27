@@ -24,7 +24,7 @@
                 <p> <?php echo $row["title"] ?> </p>
                 <p> <?php echo $row["product_category"] ?> </p>
                 <p> <?php echo $row["description"] ?> </p>
-
+                <a class="button" href="__buy__.php?identity=<?php echo $_GET['identity'] ?>&quantity=1"> buy </a>
             <?php endwhile; ?>
         <?php endif; ?>
 

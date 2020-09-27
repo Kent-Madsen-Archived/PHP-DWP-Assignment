@@ -41,6 +41,12 @@
                 </li>
 
                 <li> 
+                    <a href="checkout.php"> 
+                        Checkout
+                    </a>
+                </li>
+
+                <li> 
                     <a href="__logout__.php"> 
                         Logout
                     </a>
