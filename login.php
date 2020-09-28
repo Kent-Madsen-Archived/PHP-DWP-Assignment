@@ -35,7 +35,7 @@
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>
-        <?php require 'header.php'; ?>  
+        <?php require 'meta/header.php'; ?>  
         <main>
             <form class="login-form" method="post"> 
                 <span> 
@@ -53,5 +53,5 @@
     </body>
 </html>
 <?php else: ?>
-
+<?php header('location:index.php'); ?>
 <?php endif; ?>

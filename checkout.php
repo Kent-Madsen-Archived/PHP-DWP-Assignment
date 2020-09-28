@@ -26,8 +26,8 @@ if(isset($_POST['buy']))
         $stmt_new->bind_param("iii", $invoice_id, $product_id, $quantity);
 
         $invoice_id = $invoice_query_id;
-        $product_id =  $value[0];
-        $quantity = $value[1];
+        $product_id =  $value->getIdentity();
+        $quantity = $value->getQuantity();
 
         $stmt_new->execute();
 
@@ -35,7 +35,7 @@ if(isset($_POST['buy']))
         $connection_new->close();
     }
 
-    unset($_SESSION['profile_checkout_bag']);
+    unset( $_SESSION['profile_checkout_bag'] );
 }
 ?>
 
@@ -47,21 +47,21 @@ if(isset($_POST['buy']))
     <body>
         <?php require 'meta/header.php'; ?>  
         <main>
-            <?php if(isset($_SESSION['profile_checkout_bag'])): ?>
+            <?php if( isset( $_SESSION['profile_checkout_bag'] ) ): ?>
                 <?php 
-                    foreach($_SESSION['profile_checkout_bag'] as $value):
+                    foreach( $_SESSION['profile_checkout_bag'] as $value ):
                 ?>
 
                 <?php 
                     $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
-                    $sql = "SELECT * FROM product_view where identity=". $value[0] . ";";
+                    $sql = "SELECT * FROM product_view where identity=". $value->getIdentity() . ";";
                     $result = $connection->query($sql);
                 ?>
 
                 <?php
                     if ( $result->num_rows > 0 ): ?>
                         <?php while($row = $result->fetch_assoc()): ?> 
-                            <p> <?php echo $value[1] ?> </p>
+                            <p> <?php echo $value->getQuantity() ?> </p>
                             <p> <?php echo $row["title"] ?> </p>
                             <p> <?php echo $row["product_category"] ?> </p>
                         <?php endwhile; ?>
@@ -77,7 +77,10 @@ if(isset($_POST['buy']))
                     <input class="button" type="submit" value="buy" name="buy"> 
                 </form>
 
+                <a class="button" href="__empty__.php"> Empty </a> 
+
             <?php endif; ?>
+            
         </main>
         <?php require 'meta/footer.php'; ?>
     </body>

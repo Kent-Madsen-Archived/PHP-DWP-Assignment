@@ -91,3 +91,8 @@ left join product_category pc on product.category_id = pc.identity;
 
 alter table product
 	add registered datetime default now() not null;
+
+    create view articles_use_of_images as
+select article_id, image_id, is_primary, i.src
+from article_use_image
+left join image i on article_use_image.identity = i.identity;

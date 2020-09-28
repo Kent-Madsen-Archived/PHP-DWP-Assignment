@@ -17,7 +17,7 @@
                 // output data of each row
                 while($row = $result->fetch_assoc()):
         ?>
-        <a href="article.php?identity=<?php echo $row['identity']; ?>""> 
+        <a href="article.php?identity=<?php echo $row['identity']; ?>"">
             <div> 
                 <h2> 
                     <?php echo $row['title']; ?>
