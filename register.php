@@ -55,6 +55,7 @@
 
 <html <?php language('en'); ?>>
     <head>
+        <?php $Title->insertAppendice('Register'); ?>
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>
@@ -94,6 +95,7 @@
                 </span>
             </form> 
         </main>
+        
         <?php require 'meta/footer.php'; ?>
     </body>
 </html>

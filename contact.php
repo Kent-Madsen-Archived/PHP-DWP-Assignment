@@ -12,6 +12,7 @@ if( isset( $_GET[ 'send_message' ] ) )
 
 <html <?php language('en'); ?> >
     <head>
+        <?php $Title->insertAppendice('Contact us'); ?>
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>

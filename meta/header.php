@@ -35,6 +35,12 @@
 
             <?php if( logged_in() ):?>
                 <li> 
+                    <a href="invoices.php"> 
+                        Invoices
+                    </a>
+                </li>
+
+                <li> 
                     <a href="backend.php"> 
                         Backend
                     </a>

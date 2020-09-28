@@ -1,6 +1,7 @@
 <?php require_once 'meta/main.php'; ?>
 <html <?php language('en'); ?>>
     <head>
+        <?php $Title->insertAppendice('Article'); ?>
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>

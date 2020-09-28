@@ -25,6 +25,8 @@ function language( $lang )
     echo 'lang="' . $lang . '"';
 }
 
+$Title= new TitleConstructor("Webshop");   
+
 ?>
 
 <!DOCTYPE html>

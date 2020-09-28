@@ -7,7 +7,9 @@ class Profile
 
     }
 
-    
+    private $username = null;
+    private $password = null;
+    private $email = null;
 }
 
 ?>

@@ -32,6 +32,7 @@
 
 <html <?php language('en'); ?> >
     <head>
+        <?php $Title->insertAppendice('Login'); ?>
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>

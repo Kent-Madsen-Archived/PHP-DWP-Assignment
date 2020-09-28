@@ -42,6 +42,7 @@ if(isset($_POST['buy']))
 
 <html <?php language('en'); ?> >
     <head>
+        <?php $Title->insertAppendice('Checkout'); ?>
         <?php require_once 'meta/head.php'; ?>
     </head>
     <body>
