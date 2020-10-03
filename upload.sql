@@ -104,3 +104,22 @@ create table product_use_image(
     is_primary boolean default false not null,
     primary key (identity)
 );
+
+create view products_use_of_images as
+select product_use_image.*, i.src
+from product_use_image
+left join image i on i.identity = product_use_image.image_id;
+
+create table image_size(
+    identity int not null auto_increment,
+    content_size varchar(256),
+    primary key (identity)
+);
+
+create table image_alternative(
+    identity int not null auto_increment,
+    image_id int not null,
+    image_size_type int not null,
+    image_src varchar(1024),
+    primary key (identity)
+);

@@ -1,9 +1,11 @@
 <?php require_once 'meta/main.php'; ?>
 
 <?php 
-
+if( !isset( $_GET['identity'] ) )
+{
+    header( 'location:profile.php?identity='. $_SESSION['profile_user_identity'] );
+}
 ?>
-
 
 <html <?php language('en'); ?> >
     <head>
@@ -13,7 +15,7 @@
     <body>
         <?php require 'meta/header.php'; ?>  
         <main>
-            <?php if(isset($_GET['identity'])): ?>
+            <?php if( isset( $_GET['identity'] ) ): ?>
                 <?php 
                     $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
 

@@ -35,6 +35,12 @@
 
             <?php if( logged_in() ):?>
                 <li> 
+                    <a href="profile.php"> 
+                        Profile
+                    </a>
+                </li>
+
+                <li> 
                     <a href="invoices.php"> 
                         Invoices
                     </a>

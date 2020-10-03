@@ -2,21 +2,17 @@
 
 <?php 
 
-if( !isset($_SESSION["profile_checkout_bag"]) ) 
+if( !isset( $_SESSION[ "profile_checkout_bag"] ) ) 
 {
     $_SESSION["profile_checkout_bag"] = array();
-}
-else 
-{
-    var_dump($_SESSION["profile_checkout_bag"]);
 }
 
 $already_exist = false;
 
-foreach($_SESSION["profile_checkout_bag"] as $value)
+foreach( $_SESSION["profile_checkout_bag"] as $value )
 {
     //if($value[0] == $_GET['identity'])
-    if($value->getIdentity() == $_GET['identity'])
+    if( $value->getIdentity() == $_GET['identity'] )
     {
         $already_exist = true;
 

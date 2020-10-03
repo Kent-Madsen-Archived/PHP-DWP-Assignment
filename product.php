@@ -15,7 +15,7 @@
 
         <?php
         if ( $result->num_rows > 0 ): ?>
-            <?php while($row = $result->fetch_assoc()): ?>
+            <?php while( $row = $result->fetch_assoc() ): ?>
                 <p> <?php echo $row["title"] ?> </p>
                 <p> <?php echo $row["product_category"] ?> </p>
                 <p> <?php echo $row["description"] ?> </p>
