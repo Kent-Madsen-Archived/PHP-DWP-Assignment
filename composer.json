@@ -6,9 +6,13 @@
     "authors": [
         {
             "name": "kent vejrup madsen",
-            "email": "kent.vejrup.madsen@outlook.com"
+            "email": "kent.vejrup.madsen@outlook.com",
+            "homepage":"https://www.designermadsen.com",
+            "role":"Developer"
         }
     ],
     "minimum-stability": "alpha",
-    "require": {}
+    "require": {
+        "symfony/yaml": "^5.2@beta"
+    }
 }
