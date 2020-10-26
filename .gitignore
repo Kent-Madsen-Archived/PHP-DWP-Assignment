@@ -1,6 +1,6 @@
 .idea
+.idea/*
 
-*.css
-*.map
-
-images/*
+/vendor/
+/old/
+/old/*
