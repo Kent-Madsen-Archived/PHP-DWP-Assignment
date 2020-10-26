@@ -14,6 +14,8 @@ Source code directory
   1. __SQL__     | *SQL*
 1. __Lib__       | *PHP library, contains classes that will be autoladed.*
 1. __Docs__      | *Contains documentation for the code.*
+1. __Old__
+1. __Vendor__
 
 ## Notice
 This document does not show the entire structure of the source code. instead it's meant to keep a overview of the
