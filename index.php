@@ -1,4 +1,5 @@
 <?php require 'load.php'; ?>
+<?php require 'functions.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
