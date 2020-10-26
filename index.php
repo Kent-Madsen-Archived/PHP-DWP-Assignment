@@ -9,17 +9,9 @@
 
     </head>
 
-    <body>
-        <header> 
-        
-        </header>
-        
+    <body>        
         <main> 
         
-        </main>
-        
-        <footer>
-        
-        </footer>        
+        </main>        
     </body>
 </html>
