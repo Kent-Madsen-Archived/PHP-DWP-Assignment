@@ -1,0 +1,88 @@
+<?php require_once 'meta/main.php'; ?>
+<?php 
+if(isset($_POST['buy']))
+{
+    $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
+
+    $stmt = $connection->prepare("INSERT INTO Invoice(profile_id) VALUES(?);");
+    $stmt->bind_param("i", $invoice_stmt_profile);
+    
+    $invoice_stmt_profile = $_SESSION['profile_user_identity'];
+    $stmt->execute();
+
+    $invoice_query_id = $connection->insert_id;
+
+    $stmt->close();
+
+    $connection->close();
+
+    foreach( $_SESSION['profile_checkout_bag'] as $value )
+    {
+        $connection_new = new mysqli('localhost', 'root', '', 'dwp_assignment');
+
+        $sql = "INSERT INTO brought_product_order( invoice_id, product_id, quantity ) VALUES(?, ?, ?);";
+
+        $stmt_new = $connection_new->prepare($sql);
+        $stmt_new->bind_param("iii", $invoice_id, $product_id, $quantity);
+
+        $invoice_id = $invoice_query_id;
+        $product_id =  $value->getIdentity();
+        $quantity = $value->getQuantity();
+
+        $stmt_new->execute();
+
+        $stmt_new->close();
+        $connection_new->close();
+    }
+
+    unset( $_SESSION['profile_checkout_bag'] );
+}
+?>
+
+
+<html <?php language('en'); ?> >
+    <head>
+        <?php $Title->insertAppendice('Checkout'); ?>
+        <?php require_once 'meta/head.php'; ?>
+    </head>
+    <body>
+        <?php require 'meta/header.php'; ?>  
+        <main>
+            <?php if( isset( $_SESSION['profile_checkout_bag'] ) ): ?>
+                <?php 
+                    foreach( $_SESSION['profile_checkout_bag'] as $value ):
+                ?>
+
+                <?php 
+                    $connection = new mysqli('localhost', 'root', '', 'dwp_assignment');
+                    $sql = "SELECT * FROM product_view where identity=". $value->getIdentity() . ";";
+                    $result = $connection->query($sql);
+                ?>
+
+                <?php
+                    if ( $result->num_rows > 0 ): ?>
+                        <?php while($row = $result->fetch_assoc()): ?> 
+                            <p> <?php echo $value->getQuantity() ?> </p>
+                            <p> <?php echo $row["title"] ?> </p>
+                            <p> <?php echo $row["product_category"] ?> </p>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
+
+                <?php 
+                    $connection->close();
+                ?>
+
+                <?php endforeach; ?>
+
+                <form method="post"> 
+                    <input class="button" type="submit" value="buy" name="buy"> 
+                </form>
+
+                <a class="button" href="__empty__.php"> Empty </a> 
+
+            <?php endif; ?>
+            
+        </main>
+        <?php require 'meta/footer.php'; ?>
+    </body>
+</html>
