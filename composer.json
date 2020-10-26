@@ -1,0 +1,14 @@
+{
+    "name": "madsen/php-dwp-assignment",
+    "description": "School assignment",
+    "type": "project",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "kent vejrup madsen",
+            "email": "kent.vejrup.madsen@outlook.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {}
+}
