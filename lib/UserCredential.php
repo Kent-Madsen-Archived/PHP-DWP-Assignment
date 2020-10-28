@@ -1,16 +1,25 @@
 <?php 
 
+    /**
+     * 
+     */
     class UserCredential
     {
+        // Constructors
+        /**
+         * 
+         */
         public function __construct( $username, $password )
         {
             $this->setUsername( $username );
             $this->setPassword( $password );
         }
 
+        // Variables
         private $username;
         private $password;
 
+        // Accessors
         /**
          * 
          */

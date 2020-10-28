@@ -1,21 +1,25 @@
 <?php 
 
+    /**
+     * 
+     */
     class NetworkAccess
     {
+        // Constructors
         /**
          * 
          */
         function __construct( $hostname, $port )
         {
             $this->setHostname( $hostname );
-            $this->setPort( $port );
-                
+            $this->setPort( $port );     
         }
 
-        //
+        // Internal Variables
         private $hostname;
         private $port;
 
+        // Accessors
         /**
          * 
          */

@@ -9,7 +9,7 @@
         /**
          * 
          */
-        function __construct()
+        public function __construct()
         {
             $this->update();
         }
@@ -17,7 +17,7 @@
         /**
          * 
          */
-        function update()
+        public function update()
         {
             $this->setCurrentRequest( $_SERVER['REQUEST_URI'] );
             $this->setCurrentRequestedHostname( $_SERVER['HTTP_HOST'] );   
@@ -111,7 +111,7 @@
         /**
          * 
          */
-        function getCurrentRequest()
+        public function getCurrentRequest()
         {
             return $this->current_request;
         }
@@ -119,7 +119,7 @@
         /**
          * 
          */
-        function getCurrentRequestedHostname()
+        public function getCurrentRequestedHostname()
         {
             return $this->current_requested_hostname;
         }
@@ -127,7 +127,7 @@
         /**
          * 
          */
-        function getArgs()
+        public function getArgs()
         {
             return $this->args;
         }
@@ -135,12 +135,12 @@
         /**
          * 
          */
-        function getRoutes()
+        public function getRoutes()
         {
             return $this->routes;
         }
 
-        function getLengthOfRoutes()
+        public function getLengthOfRoutes()
         {
             return sizeof( $this->routes );
         }
@@ -148,7 +148,7 @@
         /**
          * 
          */
-        function getSpecialPage404( )
+        public function getSpecialPage404( )
         {
             return $this->special_page_404;
         }
@@ -156,7 +156,7 @@
         /**
          * 
          */
-        function setCurrentRequest( $var )
+        public function setCurrentRequest( $var )
         {
             $this->current_request = $var;
         }
@@ -164,7 +164,7 @@
         /**
          * 
          */
-        function setCurrentRequestedHostname( $var )
+        public function setCurrentRequestedHostname( $var )
         {
             $this->current_requested_hostname = $var;
         }
@@ -172,7 +172,7 @@
         /**
          * 
          */
-        function setArgs( $var )
+        public function setArgs( $var )
         {
             $this->args = $var;
         }
@@ -180,7 +180,7 @@
         /**
          * 
          */
-        function setRoutes( $var )
+        public function setRoutes( $var )
         {
             $this->routes = $var;
         }
@@ -188,7 +188,7 @@
         /**
          * 
          */
-        function setSpecialPage404( $var )
+        public function setSpecialPage404( $var )
         {
             $this->special_page_404 = $var;
         }
@@ -196,7 +196,7 @@
         /**
          * 
          */
-        function isRoutesNull()
+        public function isRoutesNull()
         {
             return $this->getRoutes() == null;
         }
@@ -204,7 +204,7 @@
         /**
          * 
          */
-        function appendRoutes( $var )
+        public function appendRoutes( $var )
         {
             // if it's not present, create an array
             if( $this->isRoutesNull() )
