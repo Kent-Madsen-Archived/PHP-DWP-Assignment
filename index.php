@@ -4,6 +4,4 @@
 
     $router = new Router();
     $router->execute();
-
-
 ?>
