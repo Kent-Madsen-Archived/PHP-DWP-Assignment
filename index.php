@@ -1,7 +1,7 @@
 <?php 
-require 'load.php'; 
-require 'functions.php'; 
-    
+    require 'bootstrap.php'; 
+    require 'router.php'; 
 
-
+    $router = new Router();
+    $router->execute();
 ?>

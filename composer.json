@@ -14,5 +14,8 @@
     "minimum-stability": "alpha",
     "require": {
         "symfony/yaml": "^5.2@beta"
+    },
+    "autoload": {
+        "classmap": ["/lib"]
     }
 }
