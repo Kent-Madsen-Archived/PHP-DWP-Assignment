@@ -1,5 +1,10 @@
 <?php 
-    require 'vendor/autoload.php';
+    spl_autoload_register(
+        function ( $class_name ) 
+        {
+            include "lib/" . $class_name . '.php';
+        }
+    );
 
     require 'functions.php';
 ?>
