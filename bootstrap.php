@@ -5,4 +5,6 @@
             include "lib/" . $class_name . '.php';
         }
     );
+
+    require 'functions.php';
 ?>
