@@ -19,7 +19,6 @@
         private $route_domain = null;
         private $path_to_view = null;
 
-
         // Stages
         /**
          * 

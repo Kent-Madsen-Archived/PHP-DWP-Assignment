@@ -1,5 +1,4 @@
 <?php 
-
     /**
      * 
      */
@@ -9,7 +8,7 @@
         /**
          * 
          */
-        function __construct( $hostname, $port )
+        public function __construct( $hostname, $port )
         {
             $this->setHostname( $hostname );
             $this->setPort( $port );     
