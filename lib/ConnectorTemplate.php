@@ -1,11 +1,12 @@
 <?php 
+    /**
+     * 
+     */
+    interface ConnectorTemplate
+    {
+        public function connect();
+        public function disconnect();
 
-interface ConnectorTemplate
-{
-    public function connect();
-    public function disconnect();
-
-    public function ping();
-}
-
+        public function ping();
+    }
 ?>
