@@ -1,103 +1,219 @@
 <?php
 
-/**
- * 
- */
-class Router
-{
     /**
      * 
      */
-    function __constructor()
+    class Router
     {
-
-    }
-    
-    /**
-     * 
-     */
-    public function execute()
-    {
-        $request_uri = $this->current_request();
-
-        // Default to
-        if( $request_uri == '/' )
+        // Constructors
+        /**
+         * 
+         */
+        function __construct()
         {
-            require 'views/index.php';
-            return;
+            $this->update();
         }
 
-
-        $split_uri = explode( '/', $request_uri );
-        
-        $domain = $split_uri[1];
-        
-        // If domain exist
-        switch( $domain )
+        /**
+         * 
+         */
+        function update()
         {
-            case 'index.php':
+            $this->setCurrentRequest( $_SERVER['REQUEST_URI'] );
+            $this->setCurrentRequestedHostname( $_SERVER['HTTP_HOST'] );   
+        }
+
+        // Variables
+        private $current_request = null;
+        private $current_requested_hostname = null;
+
+        // Arguments
+        private $args = null;
+
+        // Hard Routes
+        private $routes = null;
+
+        // Special Routes
+        private $special_page_404 = null;
+        
+        // Stages
+        /**
+         * 
+         */
+        public function load_view()
+        {
+            // Retrieves the current request
+            $request_uri = $this->getCurrentRequest();
+
+            // Request is a shortcut
+            if( $this->is_shortcut() )
+            {
+                return;
+            }
+
+            // 
+            $this->split_request_into_arguments();        
+
+            //
+            $this->route_domain( $this->getArgs()[1] );
+        }
+
+        /**
+         * 
+         */
+        public function is_shortcut()
+        {
+            if( $this->getCurrentRequest() == '/' )
+            {
                 require 'views/index.php';
-            break;
-            
-            case 'homepage':
-                require 'views/index.php';
-            break;
+                return true;
+            }
 
-            case 'checkout':
-                require 'views/checkout.php';
-            break;
+            return false;
+        }
 
-            case 'shop':
-                require 'views/shop.php';
-            break;
+        /**
+         * 
+         */
+        public function split_request_into_arguments()
+        {
+            $split_uri = explode( '/', $this->getCurrentRequest() );
+            $this->setArgs( $split_uri );
+        }
 
-            case 'contact':
-                require 'views/contact.php';
-            break;
+        /**
+         * 
+         */
+        public function route_domain()
+        {
+            $idx = 0;
 
-            case 'about':
-                require 'views/about.php';
-            break;
+            //
+            for( $idx = 0; 
+                 $idx < $this->getLengthOfRoutes();
+                 $idx ++ )
+            {
+                $current = $this->getRoutes()[$idx];
 
-            case 'setup':
-                require 'views/setup.php';
-            break;
+                if( $this->getArgs()[1] == $current->getRouteDomain() )
+                {
+                    $current->load();
+                    return;
+                }
+            }
 
-            case 'profile':
-                require 'views/profile.php';
-            break;
-            
-            default:
-                require 'views/404.php';
-            break;
+            //
+            $page_404 = $this->getSpecialPage404();
+            $page_404->load();
+        }
+
+        // Accessors
+        /**
+         * 
+         */
+        function getCurrentRequest()
+        {
+            return $this->current_request;
+        }
+
+        /**
+         * 
+         */
+        function getCurrentRequestedHostname()
+        {
+            return $this->current_requested_hostname;
+        }
+
+        /**
+         * 
+         */
+        function getArgs()
+        {
+            return $this->args;
+        }
+
+        /**
+         * 
+         */
+        function getRoutes()
+        {
+            return $this->routes;
+        }
+
+        function getLengthOfRoutes()
+        {
+            return sizeof( $this->routes );
+        }
+
+        /**
+         * 
+         */
+        function getSpecialPage404( )
+        {
+            return $this->special_page_404;
+        }
+
+        /**
+         * 
+         */
+        function setCurrentRequest( $var )
+        {
+            $this->current_request = $var;
+        }
+
+        /**
+         * 
+         */
+        function setCurrentRequestedHostname( $var )
+        {
+            $this->current_requested_hostname = $var;
+        }
+
+        /**
+         * 
+         */
+        function setArgs( $var )
+        {
+            $this->args = $var;
+        }
+
+        /**
+         * 
+         */
+        function setRoutes( $var )
+        {
+            $this->routes = $var;
+        }
+
+        /**
+         * 
+         */
+        function setSpecialPage404( $var )
+        {
+            $this->special_page_404 = $var;
+        }
+
+        /**
+         * 
+         */
+        function isRoutesNull()
+        {
+            return $this->getRoutes() == null;
+        }
+
+        /**
+         * 
+         */
+        function appendRoutes( $var )
+        {
+            // if it's not present, create an array
+            if( $this->isRoutesNull() )
+            {
+                $this->setRoutes( array() );
+            }
+
+            // push element
+            array_push( $this->routes, $var );
         }
     }
-
-    /**
-     * 
-     */
-    private function current_request()
-    {
-        return $_SERVER['REQUEST_URI'];
-    }
-
-    /**
-     * 
-     */
-    private function current_hostname()
-    {
-        return $_SERVER['HTTP_HOST'];
-    }
-
-    /**
-     * 
-     */
-    public function print_request()
-    {
-        echo "current host: " . $this->current_hostname();
-        echo "</br>";
-        echo "current request: " . $this->current_request();
-    }
-}
-
 ?>
