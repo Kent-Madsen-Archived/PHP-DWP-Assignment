@@ -120,8 +120,14 @@ class Autoloader
 
 }
 
+/**
+ * 
+ */
 class LoadedPackage
 {
+    /**
+     * 
+     */
     public function __construct( $name, $path )
     {
         $this->setPackageName( $name );
@@ -131,26 +137,41 @@ class LoadedPackage
     private $package_name = null;
     private $package_path = null;
 
+    /**
+     * 
+     */
     public function getPackageName()
     {
         return $this->package_name;
     }
 
+    /**
+     * 
+     */
     public function setPackageName($var)
     {
         $this->package_name = $var;
     }
 
+    /**
+     * 
+     */
     public function getPackagePath()
     {
         return $this->package_path;
     }
 
+    /**
+     * 
+     */
     public function setPackagePath($var)
     {
         $this->package_path = $var;
     }
 
+    /**
+     * 
+     */
     public function debug()
     {
         var_dump( $this );

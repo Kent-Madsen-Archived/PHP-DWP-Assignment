@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php 
         $title = new PageTitle( null );
-        $title->appendToTitle('- Profile');
+        $title->appendToTitle(' - Profile');
 
         $title->printDocumentTitle();
     ?>
