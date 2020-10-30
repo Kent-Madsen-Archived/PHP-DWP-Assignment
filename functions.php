@@ -26,5 +26,19 @@
         return $retvar;
     }
 
+    /**
+     * 
+     */
+    function get_footer()
+    {
+        require './areas/footer.php';
+    }
 
+    /**
+     * 
+     */
+    function get_header()
+    {
+        require './areas/header.php';
+    }
 ?>
