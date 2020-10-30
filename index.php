@@ -37,6 +37,7 @@
 
     // Special Routes, like page 404.
     $special_404 = new Route( '404', 'views/404.php' );
+    
     $router->setSpecialPage404( $special_404 );
     $router->appendRoutes( $special_404 );
 

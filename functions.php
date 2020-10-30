@@ -41,13 +41,4 @@
     {
         require './areas/header.php';
     }
-
-    /**
-     * 
-     */
-    function get_sidebar()
-    {
-        require './areas/sidebar.php';
-    }
-
 ?>
