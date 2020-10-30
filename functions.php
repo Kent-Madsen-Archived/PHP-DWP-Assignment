@@ -41,4 +41,6 @@
     {
         require './areas/header.php';
     }
+
+    require './api_functions.php';
 ?>
