@@ -23,7 +23,7 @@
         /**
          * 
          */
-        public function getUsername()
+        final public function getUsername()
         {
             return $this->username;
         }
@@ -31,7 +31,7 @@
         /**
          * 
          */
-        public function getPassword()
+        final public function getPassword()
         {
             return $this->password;
         }
@@ -39,7 +39,7 @@
         /**
          * 
          */
-        public function setUsername( $var )
+        final public function setUsername( $var )
         {
             $this->username = $var;
         }
@@ -47,7 +47,7 @@
         /**
          * 
          */
-        public function setPassword( $var )
+        final public function setPassword( $var )
         {
             $this->password = $var;
         }
