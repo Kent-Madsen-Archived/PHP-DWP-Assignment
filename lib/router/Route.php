@@ -25,7 +25,7 @@
          */
         public function load()
         {
-            require $this->getPathToView();
+            require_once $this->getPathToView();
         }
 
         // Accessors

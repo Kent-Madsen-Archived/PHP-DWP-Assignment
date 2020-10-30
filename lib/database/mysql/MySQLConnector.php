@@ -22,7 +22,7 @@
         /**
          * 
          */
-        public function getInformation()
+        final public function getInformation()
         {
             return $this->information;
         }
@@ -30,23 +30,23 @@
         /**
          * 
          */
-        public function setInformation( $var )
+        final public function setInformation( $var )
         {
             $this->information = $var;
         }
 
         // implementations
-        public function connect()
+        final public function connect()
         {
 
         }
 
-        public function disconnect()
+        final public function disconnect()
         {
             
         }
 
-        public function ping()
+        final public function ping()
         {
 
         }
