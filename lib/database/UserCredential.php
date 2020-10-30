@@ -36,7 +36,7 @@
             return $this->password;
         }
 
-                /**
+        /**
          * 
          */
         public function setUsername( $var )

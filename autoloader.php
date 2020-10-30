@@ -148,7 +148,7 @@ class LoadedPackage
     /**
      * 
      */
-    public function setPackageName($var)
+    public function setPackageName( $var )
     {
         $this->package_name = $var;
     }
@@ -164,20 +164,10 @@ class LoadedPackage
     /**
      * 
      */
-    public function setPackagePath($var)
+    public function setPackagePath( $var )
     {
         $this->package_path = $var;
     }
-
-    /**
-     * 
-     */
-    public function debug()
-    {
-        var_dump( $this );
-        echo "</br>";
-    }
-
 }
 
 ?>
