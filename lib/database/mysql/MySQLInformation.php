@@ -13,6 +13,7 @@
         {
             $this->setAccess( $access );
             $this->setCredential( $credential );
+
             $this->setDatabase( $database );
         }
         

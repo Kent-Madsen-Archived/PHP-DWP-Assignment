@@ -21,8 +21,9 @@
     $router = new Router();
 
     // Adds predfined routes, to the router.
-    $router->appendRoutes( new Route( 'homepage', 'views/index.php' ) );
     $router->appendRoutes( new Route( 'setup', 'views/setup.php' ) );
+    
+    $router->appendRoutes( new Route( 'homepage', 'views/index.php' ) );
     
     $router->appendRoutes( new Route( 'product', 'views/product.php' ) );
     $router->appendRoutes( new Route( 'checkout', 'views/checkout.php' ) );

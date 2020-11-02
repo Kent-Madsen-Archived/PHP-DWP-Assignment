@@ -42,5 +42,37 @@
         require './areas/header.php';
     }
 
+    /**
+     * 
+     */
+    function redirect_to_local_page( $url )
+    {
+        header( ( 'Location: ' . $url ), true, 302 );
+    }
+
+    /**
+     * 
+     */
+    function redirect_to_external_page( $protocol, $url )
+    {
+        header( ('Location: ' . $protocol . '://' . $url) );
+    }
+
+    /**
+     * 
+     */
+    function redirect_to_external_page_insecure( $url )
+    {
+        redirect_to_external_page( 'http', $url );
+    }
+
+    /**
+     * 
+     */
+    function redirect_to_external_page_secure( $url )
+    {
+        redirect_to_external_page( 'https', $url );
+    }
+
     require './api_functions.php';
 ?>

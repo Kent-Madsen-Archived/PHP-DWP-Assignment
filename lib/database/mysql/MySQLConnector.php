@@ -13,10 +13,12 @@
         public function __construct( $mysql_information ) 
         {
             $this->information = $mysql_information;
+            $this->connector = null;
         }
 
         // Variables
         private $information;
+        private $connector;
 
         // Accessors
         /**
@@ -30,10 +32,27 @@
         /**
          * 
          */
+        final public function getConnector()
+        {
+            return $this->connector;
+        }
+
+        /**
+         * 
+         */
         final public function setInformation( $var )
         {
             $this->information = $var;
         }
+
+        /**
+         * 
+         */
+        final public function setConnector( $var )
+        {
+            return $this->$var;
+        }
+
 
         // implementations
         final public function connect()
