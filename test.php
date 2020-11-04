@@ -17,25 +17,8 @@
     require_once 'bootstrap.php'; 
     require_once 'router.php'; 
 
-    //
-    $access = new NetworkAccess( 'localhost', 3600 );
-    $user_credential = new UserCredential( 'admin', 'admin' );
+    require 'tests-cases/database.php';
 
-    $database = "dwp_assignment";
-
-    //
-    $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-
-    //
-    $connection = new MySQLConnector( $mysql_information );
-
-    $connection->connect();
-
-    
-
-    $connection->disconnect();
-
-    
 
 
 ?>

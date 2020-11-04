@@ -2,7 +2,7 @@
     /**
      * 
      */
-    interface ConnectorTemplate
+    interface MysqlConnectorTemplate
     {
         /**
          * 
@@ -14,5 +14,14 @@
          */
         public function disconnect();
 
+        /**
+         * 
+         */
+        public function undo_state();
+
+        /**
+         * 
+         */
+        public function finish();
     }
 ?>
