@@ -1,12 +1,12 @@
 <?php 
 
-class ProfileController
+class ArticleController
 {
     function __construct()
     {
         
     }
-      
+
 }
 
 ?>

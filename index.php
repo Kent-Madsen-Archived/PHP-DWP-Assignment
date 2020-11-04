@@ -15,19 +15,21 @@
 <?php 
     // Internal Libraries
     require_once 'bootstrap.php'; 
-    require_once 'router.php'; 
+    require_once 'RouterSingleton.php'; 
 
     // Variables
     $router = new Router();
+    RouterSingleton::setInstance( $router );
 
     // Adds predfined routes, to the router.
     $router->appendRoutes( new Route( 'setup', 'views/setup.php' ) );
     
     $router->appendRoutes( new Route( 'homepage', 'views/index.php' ) );
     
-    $router->appendRoutes( new Route( 'product', 'views/product.php' ) );
-    $router->appendRoutes( new Route( 'checkout', 'views/checkout.php' ) );
+    $router->appendRoutes( new Route( 'product', 'views/product.php') );
+
     $router->appendRoutes( new Route( 'shop', 'views/shop.php' ) );
+    $router->appendRoutes( new Route( 'checkout', 'views/checkout.php' ) );
     
     $router->appendRoutes( new Route( 'about', 'views/about.php' ) );
     $router->appendRoutes( new Route( 'contact', 'views/contact.php' ) );
@@ -35,6 +37,7 @@
     $router->appendRoutes( new Route( 'profile', 'views/profile.php' ) );
 
     $router->appendRoutes( new Route( 'login', 'views/login.php' ) );
+
     $router->appendRoutes( new Route( 'logout', 'views/logout.php' ) );
     $router->appendRoutes( new Route( 'register', 'views/register.php' ) );
 
@@ -44,7 +47,7 @@
     $router->setSpecialPage404( $special_404 );
     $router->appendRoutes( $special_404 );
 
-    // Load current page or domain
-    $router->load_view();
+    //
+    RouterSingleton::getInstance()->load_view();
 
 ?>

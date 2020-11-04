@@ -1,12 +1,12 @@
 <?php 
 
-class ProfileController
+class InvoiceController
 {
     function __construct()
     {
         
     }
-      
+
 }
 
 ?>

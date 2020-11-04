@@ -1,12 +1,11 @@
 <?php 
 
-class ProfileController
+class PersonAddressController
 {
     function __construct()
     {
         
     }
-      
-}
 
+}
 ?>

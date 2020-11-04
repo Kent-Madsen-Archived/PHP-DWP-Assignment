@@ -1,12 +1,11 @@
 <?php 
 
-class ProfileController
+class ProfileTypeController
 {
     function __construct()
     {
         
     }
-      
-}
 
+}
 ?>
