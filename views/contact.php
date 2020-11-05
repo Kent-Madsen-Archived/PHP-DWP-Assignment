@@ -2,6 +2,8 @@
     /**
      * 
      */
+    $title = PageTitleSingleton::getInstance();
+    $title->appendToTitle(' - Contact');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +14,8 @@
     <link rel="stylesheet" href="/assets/css/style.css">
         
     <?php 
-            $title->appendToTitle(' - Contact');
-
-            $title->printDocumentTitle();
-        ?>
+        $title->printDocumentTitle();
+    ?>
 </head>
 <body>
         <?php get_header(); ?>

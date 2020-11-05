@@ -3,6 +3,7 @@
      * 
      */
     $title = PageTitleSingleton::getInstance();
+    $title->appendToTitle(' - About us');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,6 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-            $title->appendToTitle(' - About us');
 
             $title->printDocumentTitle();
         ?>

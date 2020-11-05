@@ -3,6 +3,7 @@
      * 
      */
     $title = PageTitleSingleton::getInstance();
+    $title->appendToTitle(' - Profile');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +13,6 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-            $title->appendToTitle(' - Profile');
-
             $title->printDocumentTitle();
         ?>
     </head>

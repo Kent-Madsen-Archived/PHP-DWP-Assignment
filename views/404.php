@@ -3,6 +3,7 @@
      * 
      */
     $title = PageTitleSingleton::getInstance();
+    $title->appendToTitle( ' - 404 Page' );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,6 @@
         
         
         <?php 
-            $title->appendToTitle( ' - 404 Page' );
 
             $title->printDocumentTitle();
         ?>

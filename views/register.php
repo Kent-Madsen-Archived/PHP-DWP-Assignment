@@ -3,6 +3,7 @@
      * 
      */
     $title = PageTitleSingleton::getInstance();
+    $title->appendToTitle( ' - Register' );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +13,6 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-            $title->appendToTitle( ' - Register' );
-
             $title->printDocumentTitle();
         ?>
     </head>

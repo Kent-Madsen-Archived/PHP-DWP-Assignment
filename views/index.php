@@ -3,6 +3,7 @@
      * 
      */
      $title = PageTitleSingleton::getInstance();
+     $title->appendToTitle( ' - Homepage' );
      ?>
 
 <!DOCTYPE html>
@@ -15,7 +16,6 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-            $title->appendToTitle( ' - Homepage' );
             $title->printDocumentTitle();
         ?>
     </head>
