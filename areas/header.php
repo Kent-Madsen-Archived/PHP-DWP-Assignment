@@ -5,7 +5,7 @@
 ?>
 <header> 
     <div class="nav-wrapper"> 
-        <a href="#" class="brand-logo">
+        <a href="./homepage" class="brand-logo">
             Logo 
         </a>
         <ul class="right hide-on-med-and-down"> 

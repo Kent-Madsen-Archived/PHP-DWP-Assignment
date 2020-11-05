@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/assets/css/style.css">
         
     <?php 
-            $title = new PageTitle( null );
             $title->appendToTitle(' - Contact');
 
             $title->printDocumentTitle();

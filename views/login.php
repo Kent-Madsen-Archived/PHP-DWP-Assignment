@@ -2,6 +2,7 @@
     /**
      * 
      */
+    $title = PageTitleSingleton::getInstance();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
-        
-        <title>Document</title>
+        <?php 
+            $title->appendToTitle( ' - Login' );
+
+            $title->printDocumentTitle();
+        ?>
     </head>
     <body>
         <?php get_header(); ?>

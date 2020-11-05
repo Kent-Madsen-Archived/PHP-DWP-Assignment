@@ -2,6 +2,7 @@
     /**
      * 
      */
+    $title = PageTitleSingleton::getInstance();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,6 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-            $title = new PageTitle( null );
             $title->appendToTitle(' - Product');
 
             $title->printDocumentTitle();
