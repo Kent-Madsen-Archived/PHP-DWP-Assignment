@@ -1,10 +1,13 @@
 <?php 
-
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
     function validate_input_is_zero( $value )
     {
         return $value == 0;
     }
-
 
     function validate_input_is_null_or_zero_length( $value )
     {
@@ -15,6 +18,4 @@
     {
         return !isset( $value );
     }
-
-
 ?>

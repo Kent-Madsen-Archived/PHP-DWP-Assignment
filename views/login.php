@@ -1,4 +1,9 @@
-<?php 
+<?php
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
     require_once 'forms/login_validation.php';
     require_once 'forms/login_process_form.php';
 

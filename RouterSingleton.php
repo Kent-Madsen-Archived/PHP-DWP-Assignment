@@ -1,37 +1,39 @@
 <?php
-/**
- *  
- */ 
-require_once 'router.php';
-
-/**
- * 
- */
-class RouterSingleton
-{
-    //
-    private static $instance = null;
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
+    require_once 'router.php';
 
     /**
      * 
      */
-    public static function getInstance()
+    class RouterSingleton
     {
-        if( self::$instance == null )
+        //
+        private static $instance = null;
+
+        /**
+         * 
+         */
+        public static function getInstance()
         {
-            self::setInstance( new Router() );
+            if( self::$instance == null )
+            {
+                self::setInstance( new Router() );
+            }
+
+            return self::$instance;
         }
 
-        return self::$instance;
+        /**
+         * 
+         */
+        public static function setInstance( $var )
+        {
+            self::$instance = $var;
+        }
     }
-
-    /**
-     * 
-     */
-    public static function setInstance( $var )
-    {
-        self::$instance = $var;
-    }
-}
 
 ?>

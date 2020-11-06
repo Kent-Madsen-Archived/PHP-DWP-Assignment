@@ -1,4 +1,10 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
+
     //
     require 'globals.php';
     

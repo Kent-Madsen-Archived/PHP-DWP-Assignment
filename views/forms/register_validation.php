@@ -1,11 +1,10 @@
 <?php
-    require 'general.php';
-
     /**
      *  Title:
      *  Author:
      *  Type: PHP Script
      */
+    require_once 'general.php';
 
     //
     if( isset( $_POST[ 'form_register_submit' ] ) )

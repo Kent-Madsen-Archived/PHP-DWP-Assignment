@@ -1,6 +1,8 @@
 <?php 
     /**
-     * 
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
      */
      $title = PageTitleSingleton::getInstance();
      $title->appendToTitle( ' - Homepage' );

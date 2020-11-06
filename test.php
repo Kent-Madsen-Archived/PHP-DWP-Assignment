@@ -1,6 +1,8 @@
 <?php 
     /**
-     * 
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
      */
 
     // Set's it so, that sessions can only be used by cookies and disallows it's ussage in the url.

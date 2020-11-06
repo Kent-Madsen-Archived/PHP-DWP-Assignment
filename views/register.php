@@ -1,4 +1,9 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
     require_once 'forms/register_validation.php';
     require_once 'forms/register_process_form.php';
     
