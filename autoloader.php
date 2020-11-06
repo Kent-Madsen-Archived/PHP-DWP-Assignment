@@ -1,173 +1,178 @@
 <?php 
-
-class Autoloader
-{
     /**
-     * 
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
      */
-    public function __construct( $root_dir )
+
+    class Autoloader
     {
-        $this->setLibraryRoot( $root_dir );
-    }
-
-    // internal variables
-    private $library_root_directory = null;
-    private $packages = null;
-
-    // functions
-    /**
-     * 
-     */
-    public function load()
-    {
-        $this->load_dir( $this->getLibraryRoot() );   
-    }
-
-    /**
-     * 
-     */
-    public function load_dir( $directory )
-    {
-        $arr = scandir( $directory );
-
-        for( $idx = 0; 
-             $idx < sizeof( $arr ); 
-             $idx ++ )
+        /**
+         * 
+         */
+        public function __construct( $root_dir )
         {
-            if( $arr[$idx] == '.' ||  $arr[$idx] == '..' )
-            {
-                continue;
-            }
-
-            $selected = $arr[$idx];
-            $current = $directory . "/" . $selected;
-
-            if( is_dir( $current ) )
-            {
-                $this->load_dir( $current );
-            }
-
-            if( is_file( $current ) )
-            {
-                $this->append_class( $selected, $current );
-            }
-        }
-    }
-
-    /**
-     * 
-     */
-    public function append_class( $class_name, $class_path )
-    {
-        if( $this->packages == null )
-        {
-            $this->packages = array();
+            $this->setLibraryRoot( $root_dir );
         }
 
-        array_push( $this->packages, new LoadedPackage( $class_name, $class_path ) );        
-    }
+        // internal variables
+        private $library_root_directory = null;
+        private $packages = null;
 
-    /**
-     * 
-     */
-    public function extract_class( $class_name )
-    { 
-        for( $idx = 0; 
-             $idx < sizeof( $this->packages ); 
-             $idx++ )
+        // functions
+        /**
+         * 
+         */
+        public function load()
         {
-            $current = $this->packages[$idx];
+            $this->load_dir( $this->getLibraryRoot() );   
+        }
 
-            if( ( $current->getPackageName() == ( $class_name . '.php' ) ) && file_exists( $current->getPackagePath() ) )
+        /**
+         * 
+         */
+        public function load_dir( $directory )
+        {
+            $arr = scandir( $directory );
+
+            for( $idx = 0; 
+                $idx < sizeof( $arr ); 
+                $idx ++ )
             {
-                include $current->getPackagePath();
+                if( $arr[$idx] == '.' ||  $arr[$idx] == '..' )
+                {
+                    continue;
+                }
+
+                $selected = $arr[$idx];
+                $current = $directory . "/" . $selected;
+
+                if( is_dir( $current ) )
+                {
+                    $this->load_dir( $current );
+                }
+
+                if( is_file( $current ) )
+                {
+                    $this->append_class( $selected, $current );
+                }
             }
         }
-    }
 
-    // Accessors
-    /**
-     * 
-     */
-    public function getLibraryRoot()
-    {
-        return $this->library_root_directory;
-    }
+        /**
+         * 
+         */
+        public function append_class( $class_name, $class_path )
+        {
+            if( $this->packages == null )
+            {
+                $this->packages = array();
+            }
 
-    /**
-     * 
-     */
-    public function setLibraryRoot( $var )
-    {
-        $this->library_root_directory = $var;
-    }
+            array_push( $this->packages, new LoadedPackage( $class_name, $class_path ) );        
+        }
 
-    /**
-     * 
-     */
-    public function getPackages()
-    {
-        return $this->packages;
-    }
+        /**
+         * 
+         */
+        public function extract_class( $class_name )
+        { 
+            for( $idx = 0; 
+                $idx < sizeof( $this->packages ); 
+                $idx++ )
+            {
+                $current = $this->packages[$idx];
 
-    /**
-     * 
-     */
-    public function setPackages( $var )
-    {
-        $this->packages = $var;
-    }
+                if( ( $current->getPackageName() == ( $class_name . '.php' ) ) && file_exists( $current->getPackagePath() ) )
+                {
+                    include $current->getPackagePath();
+                }
+            }
+        }
 
-}
+        // Accessors
+        /**
+         * 
+         */
+        public function getLibraryRoot()
+        {
+            return $this->library_root_directory;
+        }
 
-/**
- * 
- */
-class LoadedPackage
-{
-    /**
-     * 
-     */
-    public function __construct( $name, $path )
-    {
-        $this->setPackageName( $name );
-        $this->setPackagePath( $path );
-    }
+        /**
+         * 
+         */
+        public function setLibraryRoot( $var )
+        {
+            $this->library_root_directory = $var;
+        }
 
-    private $package_name = null;
-    private $package_path = null;
+        /**
+         * 
+         */
+        public function getPackages()
+        {
+            return $this->packages;
+        }
 
-    /**
-     * 
-     */
-    public function getPackageName()
-    {
-        return $this->package_name;
-    }
+        /**
+         * 
+         */
+        public function setPackages( $var )
+        {
+            $this->packages = $var;
+        }
 
-    /**
-     * 
-     */
-    public function setPackageName( $var )
-    {
-        $this->package_name = $var;
     }
 
     /**
      * 
      */
-    public function getPackagePath()
+    class LoadedPackage
     {
-        return $this->package_path;
-    }
+        /**
+         * 
+         */
+        public function __construct( $name, $path )
+        {
+            $this->setPackageName( $name );
+            $this->setPackagePath( $path );
+        }
 
-    /**
-     * 
-     */
-    public function setPackagePath( $var )
-    {
-        $this->package_path = $var;
+        private $package_name = null;
+        private $package_path = null;
+
+        /**
+         * 
+         */
+        public function getPackageName()
+        {
+            return $this->package_name;
+        }
+
+        /**
+         * 
+         */
+        public function setPackageName( $var )
+        {
+            $this->package_name = $var;
+        }
+
+        /**
+         * 
+         */
+        public function getPackagePath()
+        {
+            return $this->package_path;
+        }
+
+        /**
+         * 
+         */
+        public function setPackagePath( $var )
+        {
+            $this->package_path = $var;
+        }
     }
-}
 
 ?>

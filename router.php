@@ -1,4 +1,9 @@
 <?php
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
     /**
      * 
@@ -27,13 +32,13 @@
         private $current_request = null;
         private $current_requested_hostname = null;
 
-        // Arguments
+            // Arguments
         private $args = null;
 
-        // Hard Routes
+            // Hard Routes
         private $routes = null;
 
-        // Special Routes
+            // Special Routes
         private $special_page_404 = null;
         
         // Stages
@@ -108,6 +113,7 @@
         }
 
         // Accessors
+            // Getters
         /**
          * 
          */
@@ -148,11 +154,12 @@
         /**
          * 
          */
-        public function getSpecialPage404( )
+        public function getSpecialPage404()
         {
             return $this->special_page_404;
         }
 
+            // Setters
         /**
          * 
          */
@@ -193,6 +200,7 @@
             $this->special_page_404 = $var;
         }
 
+        // States
         /**
          * 
          */
@@ -201,6 +209,7 @@
             return $this->getRoutes() == null;
         }
 
+        // Edit Accessors
         /**
          * 
          */

@@ -14,9 +14,5 @@
          */
         public function disconnect();
 
-        /**
-         * 
-         */
-        public function ping();
     }
 ?>

@@ -1,4 +1,10 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
+
     //
     require 'globals.php';
     
@@ -19,4 +25,6 @@
             $autoloader->extract_class( $class_name );
         }
     );
+
+    require 'vendor/autoload.php';
 ?>

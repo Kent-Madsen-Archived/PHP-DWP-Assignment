@@ -45,6 +45,8 @@
             return $this->path_to_view;
         }
 
+
+
         /**
          * 
          */
@@ -60,7 +62,6 @@
         {
             $this->path_to_view = $var;
         }
-
 
     }
 

@@ -13,7 +13,8 @@
     ],
     "minimum-stability": "alpha",
     "require": {
-        "symfony/yaml": "^5.2@beta"
+        "symfony/yaml": "^5.2@beta",
+        "stripe/stripe-php": "^7.61"
     },
     "autoload": {
         "classmap": ["/lib"]

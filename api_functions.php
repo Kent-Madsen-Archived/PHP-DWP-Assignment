@@ -1,4 +1,10 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
+
     function api_headers()
     {
         header("Content-type: application/json; charset=utf-8");
