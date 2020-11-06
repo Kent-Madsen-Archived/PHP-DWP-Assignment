@@ -36,6 +36,8 @@
                   onsubmit="validate_register();"
                   id="register_form">
 
+                <h3> Register new account </h3>
+
                 <h4> User credentials </h4>
                 <input type="text" 
                        name="form_register_username" 

@@ -13,6 +13,7 @@
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - Login' );
 ?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -30,8 +31,11 @@
         <?php get_header(); ?>
 
         <main> 
-            <form action="./login" method="post" onsubmit="validate_login();"> 
-                <h4> Login </h4>
+            <form action="./login" 
+                  method="post" 
+                  onsubmit="validate_login();">
+
+                <h3> Login </h3>
 
                 <input type="text" 
                        id="form_login_username_id" 
@@ -49,7 +53,7 @@
                        name="form_login_submit">
 
                 <a href="./register"> Register new account </a>
-                <a href="./forgot"> Forgot my password </a>
+                <a href="./forgot-my-password"> Forgot my password </a>
 
                 <script src="./assets/javascript/login-validate-form.js" 
                         type="application/javascript">      

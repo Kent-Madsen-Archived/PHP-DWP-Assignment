@@ -42,6 +42,7 @@
 
     $router->appendRoutes( new Route( 'logout', 'views/logout.php' ) );
     $router->appendRoutes( new Route( 'register', 'views/register.php' ) );
+    $router->appendRoutes( new Route( 'forgot-my-password', 'views/forgot_password.php' ) );
 
     // Special Routes, like page 404.
     $special_404 = new Route( '404', 'views/404.php' );
@@ -51,5 +52,4 @@
 
     //
     RouterSingleton::getInstance()->load_view();
-
 ?>
