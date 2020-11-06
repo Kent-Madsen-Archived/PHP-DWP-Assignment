@@ -14,6 +14,7 @@
     $title->appendToTitle( ' - Login' );
 ?>
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -27,6 +28,7 @@
     </head>
     <body>
         <?php get_header(); ?>
+
         <main> 
             <form action="./login" method="post" onsubmit="validate_login();"> 
                 <h4> Login </h4>
@@ -54,6 +56,7 @@
               </script>
             </form>
         </main>
+
         <?php get_footer(); ?>
     </body>
 </html>

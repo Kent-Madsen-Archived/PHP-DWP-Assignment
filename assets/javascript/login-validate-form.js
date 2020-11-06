@@ -43,11 +43,12 @@ function form_login_validate()
  */
 function validate_username()
 {
-    var username_id = document.getElementById('form_login_username_id');
+    var username_id = document.getElementById( 'form_login_username_id' );
     var username_value = username_id.value;
 
     if( length_is_zero( username_value ) )
     {
+        username_id.focus();
         return false;
     }
 
@@ -59,11 +60,12 @@ function validate_username()
  */
 function validate_password()
 {
-    var password_id = document.getElementById('form_login_password_id');
+    var password_id = document.getElementById( 'form_login_password_id' );
     var password_value = password_id.value;
 
     if( length_is_zero( password_value ) )
     {
+        password_id.focus();
         return false;
     }
 

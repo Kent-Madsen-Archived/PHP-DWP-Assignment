@@ -11,7 +11,9 @@
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle(' - Profile');
 ?>
+
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
