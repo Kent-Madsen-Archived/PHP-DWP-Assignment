@@ -1,5 +1,11 @@
 <?php 
     /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
+
+    /**
      * 
      */
     class NetworkAccess

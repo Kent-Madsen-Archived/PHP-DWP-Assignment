@@ -1,9 +1,13 @@
 <?php
     /**
-     *  
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
      */
 
-    //
+    /**
+     * 
+     */
     class PageTitle
     {
         // constructors
