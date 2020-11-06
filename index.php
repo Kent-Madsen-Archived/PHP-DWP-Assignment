@@ -16,8 +16,8 @@
 
 <?php 
     // Internal Libraries
-    require_once 'bootstrap.php'; 
-    require_once 'RouterSingleton.php'; 
+    require 'bootstrap.php'; 
+    require 'router_singleton.php'; 
 
     // Variables
     $router = new Router();
