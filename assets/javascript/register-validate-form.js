@@ -10,7 +10,7 @@
  */
 function validate_register()
 {
-    if( form_register_validate() )
+    if( !form_register_validate() )
     {
         console.log( "insuffient or invalid input" );
         block();
@@ -82,7 +82,7 @@ function form_register_validate_username()
     var id_username = document.getElementById( 'form_register_username_id' );
     var username_value = id_username.value;
 
-    if( username_value.length == 0 )
+    if( length_is_zero( username_value ) )
     {
         return false;
     }
@@ -98,7 +98,7 @@ function form_register_validate_password()
     var id_password = document.getElementById( 'form_register_password_id' );
     var password_value = id_password.value;
 
-    if( password_value.length == 0 )
+    if( length_is_zero( password_value ) )
     {
         id_password.focus();
         return false;
@@ -107,7 +107,7 @@ function form_register_validate_password()
     var id_password_again = document.getElementById( 'form_register_password_again_id' );
     var password_again_value = id_password_again.value;
 
-    if( password_again_value.length == 0 )
+    if( length_is_zero( password_again_value ) )
     {
         id_password_again.focus();
         return false;
@@ -129,7 +129,7 @@ function form_register_validate_phonenumber()
     var id_phonenumber = document.getElementById( 'form_register_phone_number_id' );
     var phonenumber_value = id_phonenumber.value;
     
-    if( phonenumber_value.length == 0 )
+    if( length_is_zero( phonenumber_value ) )
     {
         return false;
     }
@@ -145,7 +145,7 @@ function form_register_validate_email()
     var id_email = document.getElementById( 'form_register_email_id' );
     var email_value = id_email.value;
 
-    if( email_value.length == 0 )
+    if( length_is_zero( email_value ) )
     {
         return false;
     }
@@ -173,7 +173,7 @@ function form_register_validate_name()
     var id_firstname = document.getElementById( 'form_register_firstname_id' );
     var first_name_value = id_firstname.value;
 
-    if( first_name_value.length == 0 )
+    if( length_is_zero( first_name_value ) )
     {
         return false;
     }
@@ -182,7 +182,7 @@ function form_register_validate_name()
     var id_lastname = document.getElementById( 'form_register_lastname_id' );
     var last_name_value = id_lastname.value;
     
-    if( last_name_value.length == 0 )
+    if( length_is_zero( last_name_value ) )
     {
         return false;
     }
@@ -191,7 +191,7 @@ function form_register_validate_name()
     var id_middlename = document.getElementById( 'form_register_middlename_id' );
     var middle_name_value = id_middlename.value;
 
-    if( middle_name_value.length == 0 )
+    if( length_is_zero( middle_name_value ) )
     {
         return false;
     }
@@ -207,7 +207,7 @@ function form_register_validate_address()
     var id_street_name = document.getElementById( 'form_register_street_name_id' );
     var street_name_value = id_street_name.value;
 
-    if( street_name_value.length == 0 )
+    if( length_is_zero( street_name_value ) )
     {
         return false;
     }
@@ -231,7 +231,7 @@ function form_register_validate_address()
     var id_country = document.getElementById( 'form_register_country_id' );
     var country_value = id_country.value;
 
-    if( country_value.length == 0 )
+    if( length_is_zero( country_value ) )
     {
         return false;   
     }
@@ -243,4 +243,9 @@ function form_register_validate_address()
 function block()
 {
     event.preventDefault();
+};
+
+function length_is_zero( value )
+{
+    return ( value.length == 0 );
 };
