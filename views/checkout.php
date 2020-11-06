@@ -7,7 +7,9 @@
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle(' - Checkout');
 ?>
+
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">

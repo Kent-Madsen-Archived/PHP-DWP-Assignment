@@ -14,6 +14,7 @@
     $title->appendToTitle( ' - Login' );
 ?>
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -27,8 +28,9 @@
     </head>
     <body>
         <?php get_header(); ?>
+
         <main> 
-            <form action="./login" method="post"> 
+            <form action="./login" method="post" onsubmit="validate_login();"> 
                 <h4> Login </h4>
 
                 <input type="text" 
@@ -48,8 +50,13 @@
 
                 <a href="./register"> Register new account </a>
                 <a href="./forgot"> Forgot my password </a>
+
+                <script src="./assets/javascript/login-validate-form.js" 
+                        type="application/javascript">      
+              </script>
             </form>
         </main>
+
         <?php get_footer(); ?>
     </body>
 </html>

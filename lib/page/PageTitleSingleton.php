@@ -1,5 +1,13 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
+     /**
+      * 
+      */
 class PageTitleSingleton
 {
     private static $instance = null;
