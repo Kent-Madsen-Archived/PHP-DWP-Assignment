@@ -2,7 +2,7 @@
     /**
      *  Title:
      *  Author:
-     * 
+     *  Type: PHP Script
      */
 
     //

@@ -1,42 +1,47 @@
 <?php
+    require 'general.php';
+
     /**
      *  Title:
      *  Author:
-     * 
+     *  Type: PHP Script
      */
 
     //
     if( isset( $_POST[ 'form_register_submit' ] ) )
     {
-        print_r( $_POST );
-
         // Username
         if( !register_form_validate_username() )
         {
+            echo "Error in validation of username </br>";
             exit( 'forbidden: invalid data or illegal activity has been found.' );
         }
 
         // Password
         if( !register_form_validate_password() )
         {
+            echo "Error in validation of password </br>";
             exit( 'forbidden: invalid data or illegal activity has been found.' );
         }
 
         // Person Name
         if( !register_form_validate_personal_name() )
         {
+            echo "Error in validation of personal name </br>";
             exit( 'forbidden: invalid data or illegal activity has been found.' );
         }
 
         // Personal Information
         if( !register_form_validate_personal_information() )
         {
+            echo "Error in validation of personal information </br>";
             exit( 'forbidden: invalid data or illegal activity has been found.' );
         }
 
         // Address
         if( !register_form_validate_address() )
         {
+            echo "Error in validation of address </br>";
             exit( 'forbidden: invalid data or illegal activity has been found.' );   
         }
     }
@@ -236,22 +241,4 @@ function register_form_validate_address()
 
     return true;
 }
-
-// generalised functions
-function validate_input_is_null_or_zero_length( $value )
-{
-    return ( $value == null || ( strlen( $value ) == 0 ) );
-}
-
-function validate_input_is_zero( $value )
-{
-    return $value == 0;
-}
-
-function validate_input_is_not_set( $value )
-{
-    return !isset( $value );
-}
-
-
 ?>

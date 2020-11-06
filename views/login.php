@@ -27,12 +27,12 @@
                 <h4> Login </h4>
 
                 <input type="text" 
-                       name="username" 
+                       id="form_login_username_id" 
                        name="form_login_username">
                 <label> Username </label>
 
                 <input type="password" 
-                       name="password" 
+                       id="form_login_password_id" 
                        name="form_login_password">
                 <label> Password </label>
                 
