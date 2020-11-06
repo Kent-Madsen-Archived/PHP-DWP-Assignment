@@ -21,10 +21,13 @@
         $title->printDocumentTitle();
     ?>
 </head>
-<body>
+    <body>
         <?php get_header(); ?>
-        
+
+        <main> 
+            
+        </main>
+            
         <?php get_footer(); ?>
-    
-</body>
+    </body>
 </html>
