@@ -1,6 +1,7 @@
 <?php 
     require 'forms/contact_validation.php';
-
+    require 'forms/contact_process.php';
+    
     /**
      *  Title:
      *  Author:
@@ -68,6 +69,8 @@
                 </form>
             </div>
         </main>
+
+        <?php print_r($_POST); ?>
             
         <?php get_footer(); ?>
     </body>

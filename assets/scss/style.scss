@@ -8,6 +8,12 @@ header
     @extend nav;
 }
 
+header nav 
+{
+    @extend .nav-wrapper;
+    
+}
+
 main 
 {
 
