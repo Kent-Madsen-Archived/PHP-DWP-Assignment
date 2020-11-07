@@ -15,6 +15,8 @@
 
          public function getCreatedOn();
          public function getHasBeenSend();
+         
+         public function getIdentity();
      }
 
 ?>

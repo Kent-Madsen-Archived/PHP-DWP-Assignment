@@ -5,12 +5,9 @@
      *  Type: PHP Script
      */
 
-class InvoiceController
+interface InvoiceController
 {
-    function __construct()
-    {
-        
-    }
+    
 
 }
 

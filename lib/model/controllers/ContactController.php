@@ -16,6 +16,8 @@
         public function setHasBeenSend( $var );
         public function setCreatedOn( $var );
         
+        public function setIdentity( $var );
+        
     }
 
 ?>

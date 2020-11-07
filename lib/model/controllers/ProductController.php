@@ -5,12 +5,9 @@
      *  Type: PHP Script
      */
 
-class ProductController
+interface ProductController
 {
-    function __construct()
-    {
-        
-    }
+    
 
 }
 

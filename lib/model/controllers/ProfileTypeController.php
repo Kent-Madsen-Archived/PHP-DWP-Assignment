@@ -5,12 +5,9 @@
      *  Type: PHP Script
      */
 
-class ProfileTypeController
+interface ProfileTypeController
 {
-    function __construct()
-    {
-        
-    }
+    
 
 }
 ?>

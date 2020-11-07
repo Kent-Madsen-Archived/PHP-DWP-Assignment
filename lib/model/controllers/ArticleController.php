@@ -5,12 +5,8 @@
      *  Type: PHP Script
      */
 
-class ArticleController
+interface ArticleController
 {
-    function __construct()
-    {
-        
-    }
 
 }
 
