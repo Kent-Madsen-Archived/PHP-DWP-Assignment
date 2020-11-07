@@ -24,8 +24,8 @@
          */
         public function update()
         {
-            $this->setCurrentRequest( $_SERVER['REQUEST_URI'] );
-            $this->setCurrentRequestedHostname( $_SERVER['HTTP_HOST'] );   
+            $this->setCurrentRequest( $_SERVER[ 'REQUEST_URI' ] );
+            $this->setCurrentRequestedHostname( $_SERVER[ 'HTTP_HOST' ] );   
         }
 
         // Variables

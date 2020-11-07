@@ -19,8 +19,6 @@
     require_once 'bootstrap.php'; 
     require_once 'router.php'; 
 
-    require 'tests-cases/database.php';
-
 
 
 ?>

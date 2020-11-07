@@ -5,14 +5,12 @@
      *  Type: PHP Script
      */
 
-class ContactController
-{
-    public function __construct()
+    interface ContactController
     {
-
+        public function setFromMail( $var );
+        public function setSubject( $var );
+        public function setMessage( $var );
+        
     }
-
-    
-}
 
 ?>

@@ -13,6 +13,7 @@
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - Login' );
 ?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -30,31 +31,42 @@
         <?php get_header(); ?>
 
         <main> 
-            <form action="./login" method="post" onsubmit="validate_login();"> 
-                <h4> Login </h4>
+            <div id="login_form_boundary"> 
+                <form action="./login" 
+                    method="post" 
+                    onsubmit="validate_login();"
+                    id="">
 
-                <input type="text" 
-                       id="form_login_username_id" 
-                       name="form_login_username">
-                <label> Username </label>
+                    <h3> Login </h3>
+                    <div> 
+                        <input type="text" 
+                               id="form_login_username_id" 
+                               name="form_login_username">
+                        <label> Username </label>
 
-                <input type="password" 
-                       id="form_login_password_id" 
-                       name="form_login_password">
-                <label> Password </label>
-                
-                <input class="btn" 
-                       type="submit" 
-                       value="Login" 
-                       name="form_login_submit">
+                        <input type="password" 
+                               id="form_login_password_id" 
+                               name="form_login_password">
+                        <label> Password </label>
+                    </div>
+                    
+                    <div> 
+                        <input class="btn" 
+                            type="submit" 
+                            value="Login" 
+                            name="form_login_submit">
+                    </div>
 
-                <a href="./register"> Register new account </a>
-                <a href="./forgot"> Forgot my password </a>
+                    <div class="split"> 
+                        <a href="./register"> Register new account </a>
+                        <a href="./forgot-my-password"> Forgot my password </a>
+                    </div>
 
-                <script src="./assets/javascript/login-validate-form.js" 
-                        type="application/javascript">      
-              </script>
-            </form>
+                    <script src="./assets/javascript/login-validate-form.js" 
+                            type="application/javascript">      
+                </script>
+                </form>
+            </div>
         </main>
 
         <?php get_footer(); ?>
