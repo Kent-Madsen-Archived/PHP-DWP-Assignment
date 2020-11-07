@@ -11,7 +11,47 @@
 
         public function get()
         {
+            $retVal = array();
 
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            try
+            {
+                $sql = "select * from person_email;";
+
+                $result = $connection->query( $sql );
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = new PersonEmailModel( $this );
+                        
+                        $model->setIdentity( $row['identity'] );
+                        $model->setContent( $row['content'] );
+
+                        array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+            
+            return $retVal;
         }
 
         public function get_by_name( $email )
@@ -53,12 +93,13 @@
             }
             catch( Exception $ex )
             {
-
+                throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 $this->getConnector()->disconnect();
             }
+            
             return $retVal;
         }
 

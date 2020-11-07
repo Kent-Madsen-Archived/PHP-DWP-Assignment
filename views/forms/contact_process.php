@@ -28,7 +28,6 @@
         
         $to_value = $person_email_factory->get_by_name( WEBPAGE_DEFAULT_MAILTO )[0];
 
-
         // Create new ContactModel
         $model = new ContactModel( $contact_factory );
         
