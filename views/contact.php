@@ -7,7 +7,7 @@
      *  Type: PHP Script
      */
     $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Contact');
+    $title->appendToTitle( ' - Contact' );
 ?>
 
 <!DOCTYPE html>
@@ -28,27 +28,45 @@
         <?php get_header(); ?>
 
         <main> 
-            <form method="post" 
-                  action="./contact" 
-                  onsubmit=""> 
-                <h3> Contact us </h3>
+            <div id="contact_form_boundary"> 
+                <form method="post" 
+                      action="./contact" 
+                      onsubmit="validate_contact();">
 
-                <input type="text" 
-                       placeholder="E-mail">
-                <label> From </label>
+                    <h3> Contact us </h3>
 
-                <input type="text" 
-                       placeholder="Subject">
-                <label> Subject </label>
+                    <input type="text" 
+                           placeholder="E-mail"
+                           name="form_contact_from"
+                           id="form_contact_from_id">
+                    <label> From </label>
 
-                <input type="text" 
-                       placeholder="Message">
-                <label> Message </label>
+                    <div> 
+                        <input type="text" 
+                               placeholder="Subject"
+                               name="form_contact_subject"
+                               id="form_contact_subject_id">
+                        <label> Subject </label>
+                        
+                        <input type="text" 
+                               placeholder="Message"
+                               name="form_contact_message"
+                               id="form_contact_message_id">
+                        <label> Message </label>
+                    </div>
 
-                <input class="btn" 
-                       type="submit" 
-                       value="send">
-            </form>
+                    <div> 
+                        <input class="btn" 
+                               type="submit" 
+                               value="send" 
+                               name="form_contact_submit">
+                    </div>
+                    
+                    <script src="./assets/javascript/contact-validate-form.js" 
+                            type="application/javascript">      
+                    </script>
+                </form>
+            </div>
         </main>
             
         <?php get_footer(); ?>

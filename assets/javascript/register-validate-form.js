@@ -59,12 +59,14 @@ function form_register_validate()
         return false;
     }
     
+    //
     if( !form_register_validate_name() )
     {
         console.log( "validation of name failed" );
         return false;
     }
 
+    //
     if( !form_register_validate_address() )
     {
         console.log( "validation of address failed" );

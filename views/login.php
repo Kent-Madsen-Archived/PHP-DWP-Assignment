@@ -31,34 +31,42 @@
         <?php get_header(); ?>
 
         <main> 
-            <form action="./login" 
-                  method="post" 
-                  onsubmit="validate_login();">
+            <div id="login_form_boundary"> 
+                <form action="./login" 
+                    method="post" 
+                    onsubmit="validate_login();"
+                    id="">
 
-                <h3> Login </h3>
+                    <h3> Login </h3>
+                    <div> 
+                        <input type="text" 
+                               id="form_login_username_id" 
+                               name="form_login_username">
+                        <label> Username </label>
 
-                <input type="text" 
-                       id="form_login_username_id" 
-                       name="form_login_username">
-                <label> Username </label>
+                        <input type="password" 
+                               id="form_login_password_id" 
+                               name="form_login_password">
+                        <label> Password </label>
+                    </div>
+                    
+                    <div> 
+                        <input class="btn" 
+                            type="submit" 
+                            value="Login" 
+                            name="form_login_submit">
+                    </div>
 
-                <input type="password" 
-                       id="form_login_password_id" 
-                       name="form_login_password">
-                <label> Password </label>
-                
-                <input class="btn" 
-                       type="submit" 
-                       value="Login" 
-                       name="form_login_submit">
+                    <div class="split"> 
+                        <a href="./register"> Register new account </a>
+                        <a href="./forgot-my-password"> Forgot my password </a>
+                    </div>
 
-                <a href="./register"> Register new account </a>
-                <a href="./forgot-my-password"> Forgot my password </a>
-
-                <script src="./assets/javascript/login-validate-form.js" 
-                        type="application/javascript">      
-              </script>
-            </form>
+                    <script src="./assets/javascript/login-validate-form.js" 
+                            type="application/javascript">      
+                </script>
+                </form>
+            </div>
         </main>
 
         <?php get_footer(); ?>

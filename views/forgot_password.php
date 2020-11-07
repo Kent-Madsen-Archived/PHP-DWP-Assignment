@@ -30,20 +30,31 @@
         <?php get_header(); ?>
 
         <main> 
-            <form method="post" 
-                  action="./forgot-my-password" 
-                  onsubmit=""> 
-                  
-                <h3>Forgot my password</h3>
+            <div id="forgot_form_boundary"> 
+                <form method="post" 
+                      action="./forgot-my-password" 
+                      onsubmit="validate_forgot();"> 
+                    
+                    <h3>Forgot my password</h3>
+                    
+                    <div>
+                        <input type="email" 
+                               placeholder="E-mail"
+                               id="forgot_form_email_id"
+                               name="forgot_form_email">
 
-                <input type="text" 
-                       placeholder="E-mail"
-                       name="forgot_form_email">
-
-                <label> E-mail to your account </label>
-            
-                <input class="btn" type="submit" value="send"> </input>
-            </form>
+                        <label> E-mail to your account </label>
+                    </div>
+                
+                    <div> 
+                        <input class="btn" type="submit" value="send">
+                    </div>
+                    
+                    <script src="./assets/javascript/forgot-validate-form.js" 
+                                   type="application/javascript">      
+                    </script>
+                </form>
+            </div>
         </main>
 
         <?php get_footer(); ?>

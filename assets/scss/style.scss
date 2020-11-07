@@ -18,6 +18,61 @@ footer
 
 }
 
+%form_boundary
+{
+    max-width: 800px;
+}
+
+#forgot_form_boundary
+{
+    @extend %form_boundary;
+
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#login_form_boundary
+{
+    @extend %form_boundary;
+
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#login_form_boundary form .split 
+{
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+}
+
+
+#login_form_boundary form .split a:first-child
+{
+    text-align: left;
+}
+
+#login_form_boundary form .split a:last-child
+{
+    text-align: right;
+}
+
+#register_form_boundary
+{
+    @extend %form_boundary;
+
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#contact_form_boundary
+{
+    @extend %form_boundary;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 @media only screen and (max-width: 1024px) 
 {
