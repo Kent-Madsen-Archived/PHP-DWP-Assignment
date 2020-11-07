@@ -8,7 +8,7 @@ class ContactModel
                ContactView
 {
     //
-    function __construct()
+    function __construct( $Factory )
     {
 
     }
@@ -16,13 +16,22 @@ class ContactModel
     // Variables
     private $message = null;
     private $subject = null;
-    private $fromMail = null;
 
+    private $fromMail = null;
+    private $toMail = null;
+
+    private $has_been_send = null;
+    private $created_on = null;
 
     // Accessor
     public function getMessage()
     {
         return $this->message;
+    }
+
+    public function getToMail()
+    {
+        return $this->toMail;
     }
 
     public function getSubject()
@@ -35,9 +44,35 @@ class ContactModel
         return $this->fromMail;
     }
 
+
+    public function getCreatedOn()
+    {
+        return $this->created_on;
+    }
+
+    public function getHasBeenSend()
+    {
+        return $this->has_been_send;
+    }
+
+    public function setHasBeenSend( $var )
+    {
+        $this->has_been_send = $var;
+    }
+
+    public function setCreatedOn( $var )
+    {
+        $this->created_on = $var;
+    }
+
     public function setFromMail( $var )
     {
         $this->fromMail = $var;
+    }
+
+    public function setToMail( $var )
+    {
+        $this->toMail = $var;
     }
 
     public function setSubject( $var )

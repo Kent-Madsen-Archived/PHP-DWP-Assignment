@@ -111,3 +111,8 @@ alter table contact
 -- Set Default to's
 alter table profile alter column profile_type set default 1;
 
+-- Views
+create view profile_model_view as
+select profile.identity, profile.username, profile.password, profile_type.content as profile_type
+from profile
+left join profile_type on profile.profile_type = profile.profile_type;
