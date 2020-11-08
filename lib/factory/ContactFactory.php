@@ -8,7 +8,8 @@
     /**
       * 
       */
-    class ContactFactory
+    class ContactFactory 
+        extends Factory
     {
         //
         function __construct( $mysql_connector )

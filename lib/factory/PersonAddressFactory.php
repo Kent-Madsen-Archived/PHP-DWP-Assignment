@@ -1,30 +1,14 @@
 <?php 
 
-class PersonAddressFactory
-{
-    function __construct( $mysql_connector )
+    class PersonAddressFactory 
+        extends Factory
     {
-        $this->setConnector( $mysql_connector );
+        function __construct( $mysql_connector )
+        {
+            $this->setConnector( $mysql_connector );
+        }
+
+
     }
-
-
-    private $connector = null;
-
-    /**
-     * 
-     */
-     public function getConnector()
-     {
-        return $this->connector;
-     }
-
-    /**
-    * 
-    */
-    public function setConnector( $var )
-    {
-        $this->connector = $var;
-    }
-}
 
 ?>
