@@ -11,14 +11,13 @@
     class ContactFactory 
         extends Factory
     {
-        //
+        /**
+         * 
+         */
         function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
-
-        //
-        private $connector = null;
 
         // Useful when implementing pagination
         private $pagination_index = 0;
@@ -217,13 +216,6 @@
 
 
         // Accessors
-        /**
-         * 
-         */
-        public function getConnector()
-        {
-            return $this->connector;
-        }
 
         /**
          * 
@@ -239,14 +231,6 @@
         public function getLimit()
         {
             return $this->limit;
-        }
-
-        /**
-         * 
-         */
-        public function setConnector( $var )
-        {
-            $this->connector = $var;
         }
 
         /**
