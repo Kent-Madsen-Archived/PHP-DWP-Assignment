@@ -1,7 +1,9 @@
 <?php 
 
     class PersonAddressModel 
-        extends DatabaseModel
+        extends DatabaseModel 
+            implements PersonAddressView,
+                       PersonAddressController
     {
         /**
          * 

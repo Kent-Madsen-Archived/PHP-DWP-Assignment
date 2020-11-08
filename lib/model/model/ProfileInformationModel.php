@@ -1,6 +1,8 @@
 <?php 
     class ProfileInformationModel 
-        extends DatabaseModel
+        extends DatabaseModel 
+            implements ProfileInformationView, 
+                       ProfileInformationController
     {
         function __construct( $factory )
         {

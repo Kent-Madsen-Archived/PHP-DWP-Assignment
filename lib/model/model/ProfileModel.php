@@ -2,7 +2,8 @@
 
     class ProfileModel 
         extends DatabaseModel 
-            implements ProfileView, ProfileController 
+            implements ProfileView, 
+                       ProfileController 
                         
     {
         // Constructor

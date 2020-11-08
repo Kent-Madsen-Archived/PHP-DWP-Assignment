@@ -4,6 +4,9 @@
      *  Author:
      *  Type: PHP Script
      */
-
+    interface ProductView
+    {
+        
+    }
 
 ?>

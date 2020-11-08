@@ -1,7 +1,9 @@
 <?php 
 
     class PersonNameModel 
-        extends DatabaseModel
+        extends DatabaseModel 
+            implements PersonNameView, 
+                       PersonNameController
     {
         function __construct( $factory )
         {

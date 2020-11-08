@@ -4,6 +4,8 @@
      *  Author:
      *  Type: PHP Script
      */
-
-
+    interface ProfileInformationView
+    {
+        
+    }
 ?>

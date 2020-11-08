@@ -1,7 +1,9 @@
 <?php 
 
     class InvoiceModel 
-        extends DatabaseModel
+        extends DatabaseModel 
+            implements InvoiceView, 
+                       InvoiceController
     {
         function __construct( $factory )
         {

@@ -2,7 +2,8 @@
 
     class PersonEmailModel 
         extends DatabaseModel
-        implements PersonEmailController, PersonEmailView
+            implements PersonEmailController, 
+                       PersonEmailView
     {
         function __construct( $factory )
         {

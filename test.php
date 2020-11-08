@@ -31,7 +31,7 @@
     $connection = new MySQLConnector( $mysql_information );
 
     $person_address_factory = new PersonAddressFactory( $connection );
-    $person_address_model = new PersonAddressModel($person_address_factory);
+    $person_address_model = new PersonAddressModel( $person_address_factory );
     
 
 

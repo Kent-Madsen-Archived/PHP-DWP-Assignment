@@ -4,5 +4,9 @@
      *  Author:
      *  Type: PHP Script
      */
+    interface CheckoutController
+    {
+        
+    }
 
 ?>
