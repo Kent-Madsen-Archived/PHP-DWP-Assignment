@@ -1,5 +1,13 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
+    /**
+     * 
+     */
     class ContactDomain
     {
         // Construct
@@ -33,6 +41,9 @@
             $this->mysql_info = $var;
         }
 
+        /**
+         * 
+         */
         public function send( $model )
         {
             //
@@ -48,12 +59,13 @@
 
             $model = $this->convert_mail_to_id( $model, $connection );
 
-            
-
             // Upload model
             $contact_factory->create( $model );
         }
 
+        /**
+         * 
+         */
         protected function convert_mail_to_id( $model, $connection )
         {
             $person_email_factory = new PersonEmailFactory( $connection );
@@ -81,8 +93,6 @@
             
             return $model;
         }
-
-
 
     }
 
