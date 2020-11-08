@@ -7,6 +7,17 @@
 
     if( isset( $_POST[ 'form_contact_submit' ] ) )
     {
+        if( isset( $_SESSION[ 'fss_token' ] ) )
+        {   
+            // Compare strings
+            if( !( $_SESSION[ 'fss_token' ] == $_POST[ 'security_token' ] ) )
+            {
+                throw new Exception( 'Security Error: FSS Token does not match with its form' );
+            }
+        }
+
+
+
         $domain = new ContactDomain();
 
         // Create new ContactModel

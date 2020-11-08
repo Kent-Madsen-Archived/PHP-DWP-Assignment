@@ -12,6 +12,11 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - Register' );
+
+    // Makes sure when the user press login, that it is intentionally, also forces the user to
+    // relogin, if it's a refresh
+    $fss = new FormSpoofSecurity();
+    $fss->apply_to_session();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +41,8 @@
                             method="post" 
                             onsubmit="validate_register();"
                             id="register_form">
+                            
+                            <input type="hidden" name="security_token" value="<?php echo $_SESSION['fss_token']; ?>" >
 
                             <h3> Register new account </h3>
                             

@@ -1,4 +1,6 @@
 <?php 
+    header('Content-Type: text/html; charset=UTF-8');
+
     /**
      *  Title:
      *  Author:
@@ -6,7 +8,8 @@
      */
      $title = PageTitleSingleton::getInstance();
      $title->appendToTitle( ' - Homepage' );
-     ?>
+
+?>
 
 <!DOCTYPE html>
 
