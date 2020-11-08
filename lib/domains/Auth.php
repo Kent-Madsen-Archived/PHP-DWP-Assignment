@@ -51,7 +51,7 @@ ini_set('display_startup_errors', 1);
             $connection = new MySQLConnector( $this->getMysqlInformation() );
             $factory = new ProfileFactory( $connection );
 
-            $arr = $factory->get_by_username( 'madsen' );
+            $arr = $factory->get_by_username( $username );
 
             if( $this->verify( $password, $arr->getPassword() ) )
             {
@@ -165,6 +165,22 @@ ini_set('display_startup_errors', 1);
             return $retVal;
         }
 
+        /**
+         * 
+         */
+        public function hash_profile_password( $profile_model )
+        {
+            $password_not_hash = $profile_model->getPassword();
+
+            $profile_model->setPassword( $this->generate_password( $password_not_hash ) );
+            $profile_model->setIsPasswordHashed( TRUE );
+
+            return $profile_model;
+        }
+
+        /**
+         * 
+         */
         public function register_profile( $profile_variable )
         {
             //
@@ -173,9 +189,7 @@ ini_set('display_startup_errors', 1);
             $factory = new ProfileFactory( $connection );
             $profile_variable->setFactory( $factory );
 
-            $password = $profile_variable->getPassword();
-
-            $profile->setPassword( $this->generate_password( $password ) );
+            $profile = $this->hash_profile_password( $profile_variable );
 
             $profile->setProfileType( 1 );
 
