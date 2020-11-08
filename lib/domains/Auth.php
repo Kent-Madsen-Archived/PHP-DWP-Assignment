@@ -12,8 +12,20 @@ ini_set('display_startup_errors', 1);
          */
         function __construct()
         {
-            
+            $access = new NetworkAccess( 'localhost', 3600 );   
+            $user_credential = new UserCredential( 'development', 'Epc63gez' );
+            $database = "dwp_assignment";
+
+            $this->mysql_info = new MySQLInformation( $access, $user_credential, $database );
         }
+
+        private $mysql_info = null;
+
+        public function getMysqlInformation()
+        {
+            return $this->mysql_info;
+        }
+
 
         // Variables
         private $options = [ 'cost'=>15 , 
@@ -39,17 +51,9 @@ ini_set('display_startup_errors', 1);
          * 
          */
         public function login( $username, $password )
-        {            
-            $access = new NetworkAccess( 'localhost', 3600 );
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-
-            $database = "dwp_assignment";
-
+        {     
             //
-            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-
-            //
-            $connection = new MySQLConnector( $mysql_information );
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
             $factory = new ProfileFactory( $connection );
 
             $arr = $factory->get_by_username( 'madsen' );
@@ -98,13 +102,7 @@ ini_set('display_startup_errors', 1);
         {
             $retVal = null;
 
-            $access = new NetworkAccess( 'localhost', 3600 );
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-        
-            $database = "dwp_assignment";
-            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-
-            $connection = new MySQLConnector( $mysql_information );
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
             
             // retrieve or create name
             $person_name_factory = new PersonNameFactory( $connection );

@@ -21,7 +21,7 @@
         $person_email = new PersonEmailModel( null );
         $person_email->setContent( $_POST[ 'form_register_email' ] );
 
-        $person_birthday = '1994-11-08';
+        $person_birthday = $_POST[ 'form_register_birthday' ];
 
         $person_phone_number = $_POST[ 'form_register_phone_number' ];
 
