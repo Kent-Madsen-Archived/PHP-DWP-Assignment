@@ -5,13 +5,9 @@
      *  Type: PHP Script
      */
 
-class ArticleController
-{
-    function __construct()
+    interface ArticleController
     {
-        
-    }
 
-}
+    }
 
 ?>

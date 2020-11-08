@@ -5,13 +5,13 @@
      *  Type: PHP Script
      */
 
-class ProductController
-{
-    function __construct()
+     /**
+      * 
+      */
+    interface ProductController
     {
         
-    }
 
-}
+    }
 
 ?>

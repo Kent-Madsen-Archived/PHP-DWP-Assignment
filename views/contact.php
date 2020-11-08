@@ -30,6 +30,7 @@
 
         <main> 
             <div id="contact_form_boundary"> 
+
                 <form method="post" 
                       action="./contact" 
                       onsubmit="validate_contact();">
@@ -57,7 +58,7 @@
                     </div>
 
                     <div> 
-                        <input class="btn" 
+                        <input class="button" 
                                type="submit" 
                                value="send" 
                                name="form_contact_submit">
@@ -70,8 +71,6 @@
             </div>
         </main>
 
-        <?php print_r($_POST); ?>
-            
         <?php get_footer(); ?>
     </body>
 </html>

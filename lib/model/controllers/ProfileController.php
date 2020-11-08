@@ -5,13 +5,26 @@
      *  Type: PHP Script
      */
 
-class ProfileController
-{
-    function __construct()
+    /**
+     * 
+     */
+    interface ProfileController
     {
+        /**
+         * 
+         */
+        public function setUsername( $var );
+        
+        /**
+         * 
+         */
+        public function setPassword( $var );
+        
+        /**
+         * 
+         */
+        public function setIdentity( $var );    
         
     }
-      
-}
 
 ?>

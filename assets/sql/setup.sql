@@ -70,13 +70,16 @@ create table person_address
 );
 
 create table contact(
+    identity int not null auto_increment,
     subject_title varchar(1024) not null,
-    meesage text not null,
-    has_been_send bool,
-    createdOn datetime default now(),
+    message text not null,
+    has_been_send int default 0,
+    created_on datetime default now(),
     to_id int not null,
-    from_id int not null
+    from_id int not null,
+    primary key(identity)
 );
+
 
 
 -- Setup references
@@ -111,3 +114,19 @@ alter table contact
 -- Set Default to's
 alter table profile alter column profile_type set default 1;
 
+-- Views
+create view profile_model_view as
+select profile.identity, profile.username, profile.password, profile_type.content as profile_type
+from profile
+left join profile_type on profile.profile_type = profile.profile_type;
+
+create view contact_model_view as
+select contact.subject_title,
+       contact.meesage,
+       contact.has_been_send,
+       contact.created_on,
+       pe.content as from_email,
+       p2.content as to_email
+from contact
+left join person_email pe on contact.from_id = pe.identity
+left join person_email p2 on contact.to_id = p2.identity;

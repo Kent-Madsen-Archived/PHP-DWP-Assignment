@@ -5,12 +5,9 @@
      *  Type: PHP Script
      */
 
-class PersonAddressController
-{
-    function __construct()
+    interface PersonAddressController
     {
         
-    }
 
-}
+    }
 ?>
