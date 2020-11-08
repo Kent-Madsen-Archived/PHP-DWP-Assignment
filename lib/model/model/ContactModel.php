@@ -4,6 +4,7 @@
  * 
  */
 class ContactModel 
+    extends DatabaseModel
     implements ContactController, 
                ContactView
 {
@@ -25,18 +26,8 @@ class ContactModel
 
     private $identity  = 0;
 
-    private $factory = null;
-
     // Accessor
         // Getters
-
-    /**
-     * 
-     */
-    public function getFactory()
-    {
-        return $this->factory;
-    }
 
     /**
      * 
@@ -95,13 +86,6 @@ class ContactModel
     }
 
         // Setters
-    /**
-     * 
-     */
-    public function setFactory( $factory )
-    {
-        $this->factory = $factory;
-    }
 
     /**
      * 

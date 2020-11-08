@@ -1,6 +1,7 @@
 <?php 
 
     class PersonEmailModel 
+        extends DatabaseModel
         implements PersonEmailController, PersonEmailView
     {
         function __construct( $factory )
@@ -11,15 +12,8 @@
         private $identity = 0;
         
         private $content = null;
-        private $factory = null;
+        
 
-        /**
-         * 
-         */
-        public function getFactory()
-        {
-            return $this->factory;
-        }
         
         public function getIdentity()
         {
@@ -41,11 +35,6 @@
             $this->content = $var;
         }
 
-        public function setFactory( $factory )
-        {
-            $this->factory = $factory;
-        }
-    
     }
 
 ?>
