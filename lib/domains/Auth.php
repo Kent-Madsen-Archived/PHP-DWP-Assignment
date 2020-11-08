@@ -51,7 +51,13 @@ ini_set('display_startup_errors', 1);
             $connection = new MySQLConnector( $this->getMysqlInformation() );
             $factory = new ProfileFactory( $connection );
 
+            // Retrieves a user by their username
             $arr = $factory->get_by_username( $username );
+
+            if( $arr == null )
+            {
+                return null;
+            }
 
             if( $this->verify( $password, $arr->getPassword() ) )
             {
@@ -146,7 +152,6 @@ ini_set('display_startup_errors', 1);
             $address = $person_address_factory->create( $address );
             
             // 
-
             $profile_information_factory = new ProfileInformationFactory( $connection );
             $pi = new ProfileInformationModel( $profile_information_factory );
 

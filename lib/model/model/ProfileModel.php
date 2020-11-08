@@ -69,12 +69,18 @@
             $this->username = $var;
         }
 
+        /**
+         * 
+         */
         public function getIsPasswordHashed()
         {
             return $this->is_password_hashed;
         }
 
-        public function setIsPasswordHashed($var)
+        /**
+         * 
+         */
+        public function setIsPasswordHashed( $var )
         {
             $this->is_password_hashed = $var;
         }
