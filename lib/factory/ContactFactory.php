@@ -11,14 +11,13 @@
     class ContactFactory 
         extends Factory
     {
-        //
+        /**
+         * 
+         */
         function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
-
-        //
-        private $connector = null;
 
         // Useful when implementing pagination
         private $pagination_index = 0;
@@ -75,7 +74,7 @@
         /**
          * 
          */
-        public function createRequest( $model )
+        public function create( $model )
         {
             $retVal = null;
 
@@ -179,7 +178,7 @@
         /**
          * 
          */
-        public function deleteRequest( $model )
+        public function delete( $model )
         {
             $this->getConnector()->connect();
 
@@ -198,7 +197,7 @@
         /**
          * 
          */
-        public function updateRequest( $model )
+        public function update( $model )
         {
             $this->getConnector()->connect();
 
@@ -217,13 +216,6 @@
 
 
         // Accessors
-        /**
-         * 
-         */
-        public function getConnector()
-        {
-            return $this->connector;
-        }
 
         /**
          * 
@@ -239,14 +231,6 @@
         public function getLimit()
         {
             return $this->limit;
-        }
-
-        /**
-         * 
-         */
-        public function setConnector( $var )
-        {
-            $this->connector = $var;
         }
 
         /**

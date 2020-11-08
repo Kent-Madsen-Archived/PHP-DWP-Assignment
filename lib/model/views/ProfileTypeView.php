@@ -5,4 +5,12 @@
      *  Type: PHP Script
      */
 
+
+     /**
+      * 
+      */
+    interface ProfileTypeView
+    {
+        
+    }
 ?>

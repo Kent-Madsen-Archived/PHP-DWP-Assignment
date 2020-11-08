@@ -5,10 +5,13 @@
      */
     class ContactModel 
         extends DatabaseModel
-        implements ContactController, 
-                ContactView
+            implements ContactController, 
+                       ContactView
     {
-        //
+        // Constructors
+        /**
+         * 
+         */
         function __construct( $factory )
         {
             $this->setFactory( $factory );

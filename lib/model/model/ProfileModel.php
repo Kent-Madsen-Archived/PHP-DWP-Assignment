@@ -1,8 +1,12 @@
 <?php 
 
+    /**
+     * 
+     */
     class ProfileModel 
         extends DatabaseModel 
-            implements ProfileView, ProfileController 
+            implements ProfileView, 
+                       ProfileController 
                         
     {
         // Constructor
@@ -16,6 +20,8 @@
 
         private $username = null;
         private $password = null;
+
+        private $profile_type = 0;
 
         // Accessors
         // Getters
@@ -33,6 +39,14 @@
         public function getPassword()
         {
             return $this->password;
+        }
+
+        /**
+         * 
+         */
+        public function getProfileType()
+        {
+            return $this->profile_type;
         }
 
 
@@ -59,6 +73,14 @@
         public function setPassword( $var )
         {
             $this->password = $var;
+        }
+
+        /**
+         * 
+         */
+        public function setProfileType( $var )
+        {
+            $this->profile_type = $var;
         }
 
         /**

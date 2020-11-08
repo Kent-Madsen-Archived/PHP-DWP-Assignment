@@ -1,15 +1,75 @@
 <?php 
 
+    /**
+     * 
+     */
     class PersonEmailFactory 
         extends Factory
     {
+        /**
+         * 
+         */
         function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
 
-        private $connector = null;
+        /**
+         * 
+         */
+        public function create( $model )
+        {
+            $retVal = array();
 
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "INSERT INTO person_email( content ) VALUES( ? );";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+                
+                //
+                $stmt->bind_param( "s", 
+                                    $stmt_email );
+
+                //
+                $stmt_email = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $model->setIdentity( $stmt->insert_id );
+                $retVal = $model;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+            
+            return $retVal;
+        }
+
+
+        //
         public function get()
         {
             $retVal = array();
@@ -104,21 +164,6 @@
             return $retVal;
         }
 
-        /**
-         * 
-         */
-        public function getConnector()
-        {
-            return $this->connector;
-        }
-
-        /**
-         * 
-         */
-        public function setConnector( $var )
-        {
-            $this->connector = $var;
-        }
     }
 
 ?>

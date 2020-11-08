@@ -5,5 +5,11 @@
      *  Type: PHP Script
      */
 
-
+     /**
+      * 
+      */
+    interface ProductView
+    {
+        
+    }
 ?>
