@@ -47,7 +47,6 @@
                 $stmt_last_name = $model->getLastName();
                 $stmt_middle_name = $model->getMiddleName();
 
-
                 // Executes the query
                 $stmt->execute();
 
@@ -71,7 +70,6 @@
             }
             
             return $retVal;
-
         }
 
 

@@ -38,10 +38,27 @@
          * 
          */
         public function login( $username, $password )
-        {
-            $retVal = null;
+        {            
+            $access = new NetworkAccess( 'localhost', 3600 );
+            $user_credential = new UserCredential( 'development', 'Epc63gez' );
 
-            return $retVal;
+            $database = "dwp_assignment";
+
+            //
+            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
+
+            //
+            $connection = new MySQLConnector( $mysql_information );
+            $factory = new ProfileFactory( $connection );
+
+            $arr = $factory->get_by_username( 'madsen' );
+
+            if( $this->verify( $password, $arr->getPassword() ) )
+            {
+                return $arr;
+            }
+
+            return null;
         }
 
         /**
@@ -50,7 +67,7 @@
         public function forgot_my_password_by_email( $email )
         {
             $retVal = null;
-
+            
             return $retVal;   
         }
 
@@ -62,6 +79,30 @@
             $retVal = null;
 
             return $retVal;   
+        }
+
+        public function register_profile( $username, $password )
+        {
+            $access = new NetworkAccess( 'localhost', 3600 );
+            $user_credential = new UserCredential( 'development', 'Epc63gez' );
+        
+            $database = "dwp_assignment";
+        
+            //
+            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
+        
+            //
+            $connection = new MySQLConnector( $mysql_information );
+            
+            $factory = new ProfileFactory( $connection );
+            $profile = new ProfileModel( $factory );
+
+            $profile->setUsername( $username );
+            $profile->setPassword( $this->generate_password( $password ) );
+
+            $profile->setProfileType( 1 );
+
+            $factory->create( $profile );
         }
 
         

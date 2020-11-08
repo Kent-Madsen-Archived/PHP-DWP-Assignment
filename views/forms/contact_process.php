@@ -39,7 +39,7 @@
         $model->setHasBeenSend( FALSE );        
 
         // Upload model
-        $contact_factory->createRequest( $model );
+        $contact_factory->create( $model );
     }
 
 ?>

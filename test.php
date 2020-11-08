@@ -17,23 +17,19 @@
 <?php 
     // Internal Libraries
     require_once 'bootstrap.php'; 
-    require_once 'router.php'; 
+    require_once 'router.php';
 
-    $access = new NetworkAccess( 'localhost', 3600 );
-    $user_credential = new UserCredential( 'development', 'Epc63gez' );
+        // 
+        $access = new NetworkAccess( 'localhost', 3600 );
+        $user_credential = new UserCredential( 'development', 'Epc63gez' );
 
-    $database = "dwp_assignment";
+        $database = "dwp_assignment";
 
-    //
-    $mysql_information = new MySQLInformation( $access, $user_credential, $database );
+        //
+        $mysql_information = new MySQLInformation( $access, $user_credential, $database );
 
-    //
-    $connection = new MySQLConnector( $mysql_information );
-
-    $person_address_factory = new PersonAddressFactory( $connection );
-    $person_address_model = new PersonAddressModel( $person_address_factory );
-    
-
+        //
+        $connection = new MySQLConnector( $mysql_information );
 
 
 ?>

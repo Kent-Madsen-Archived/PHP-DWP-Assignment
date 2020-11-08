@@ -74,7 +74,7 @@
         /**
          * 
          */
-        public function createRequest( $model )
+        public function create( $model )
         {
             $retVal = null;
 
@@ -178,7 +178,7 @@
         /**
          * 
          */
-        public function deleteRequest( $model )
+        public function delete( $model )
         {
             $this->getConnector()->connect();
 
@@ -197,7 +197,7 @@
         /**
          * 
          */
-        public function updateRequest( $model )
+        public function update( $model )
         {
             $this->getConnector()->connect();
 

@@ -51,6 +51,7 @@
 
                 // Executes the query
                 $stmt->execute();
+                
 
                 // commits the statement
                 $this->getConnector()->finish();

@@ -14,7 +14,10 @@
             $this->setConnector( $mysql_connector );
         }
 
-
+        public function create( $model )
+        {
+            
+        }
 
     }
 

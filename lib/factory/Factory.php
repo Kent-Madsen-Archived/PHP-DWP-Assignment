@@ -4,6 +4,7 @@
      * 
      */
     abstract class Factory
+        implements CRUD
     {
         //
         private $connector = null;
