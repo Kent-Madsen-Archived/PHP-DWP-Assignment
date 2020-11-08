@@ -16,20 +16,15 @@ ini_set('display_startup_errors', 1);
             $user_credential = new UserCredential( 'development', 'Epc63gez' );
             $database = "dwp_assignment";
 
-            $this->mysql_info = new MySQLInformation( $access, $user_credential, $database );
+            $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
-
-        private $mysql_info = null;
-
-        public function getMysqlInformation()
-        {
-            return $this->mysql_info;
-        }
-
 
         // Variables
         private $options = [ 'cost'=>15 , 
                              'salt'=>WEBPAGE_DEFAULT_SALT ];
+
+        
+        private $mysql_info = null;
 
         /**
          * 
@@ -76,16 +71,21 @@ ini_set('display_startup_errors', 1);
             return $retVal;   
         }
 
+        public function forgot_my_password_by_username( $username )
+        {
+            return null;
+        }
+
         /**
          * 
          */
-        public function register( $username, $password, $name, $email, $birthday, $phone_number, $address )
+        public function register( $profile, $name, $email, $birthday, $phone_number, $address )
         {
             $retVal = null;
 
-            $v = $this->register_profile( $username, $password );
+            $profile = $this->register_profile( $profile );
 
-            $pi = $this->register_profile_information( $v, 
+            $pi = $this->register_profile_information(  $profile, 
                                                         $name, 
                                                         $email, 
                                                         $birthday, 
@@ -165,23 +165,16 @@ ini_set('display_startup_errors', 1);
             return $retVal;
         }
 
-        public function register_profile( $username, $password )
+        public function register_profile( $profile_variable )
         {
-            $access = new NetworkAccess( 'localhost', 3600 );
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-        
-            $database = "dwp_assignment";
-        
             //
-            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-        
-            //
-            $connection = new MySQLConnector( $mysql_information );
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
             
             $factory = new ProfileFactory( $connection );
-            $profile = new ProfileModel( $factory );
+            $profile_variable->setFactory( $factory );
 
-            $profile->setUsername( $username );
+            $password = $profile_variable->getPassword();
+
             $profile->setPassword( $this->generate_password( $password ) );
 
             $profile->setProfileType( 1 );
@@ -190,6 +183,25 @@ ini_set('display_startup_errors', 1);
 
             return $profile;
         }
+
+
+        // accessors
+        /**
+         * 
+         */
+        public function getMysqlInformation()
+        {
+            return $this->mysql_info;
+        }
+
+        /**
+         * 
+         */
+        public function setMysqlInformation( $var )
+        {
+            $this->mysql_info = $var;
+        }
+
 
         
 
