@@ -1,6 +1,7 @@
 <?php 
 
-    class PersonEmailFactory
+    class PersonEmailFactory 
+        extends Factory
     {
         function __construct( $mysql_connector )
         {

@@ -1,14 +1,11 @@
 <?php 
 
-    class CheckoutFactory
-        extends Factory
+    /**
+     * 
+     */
+    abstract class Factory
     {
-        function __construct( $mysql_connector )
-        {
-            $this->setConnector( $mysql_connector );
-        }
-
-
+        //
         private $connector = null;
 
         /**

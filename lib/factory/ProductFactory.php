@@ -1,30 +1,14 @@
 <?php 
 
-class ProductFactory
-{
-    function __construct( $mysql_connector )
+    class ProductFactory 
+        extends Factory
     {
-        $this->setConnector( $mysql_connector );
+        function __construct( $mysql_connector )
+        {
+            $this->setConnector( $mysql_connector );
+        }
+
+
     }
-
-
-    private $connector = null;
-
-    /**
-     * 
-     */
-     public function getConnector()
-     {
-        return $this->connector;
-     }
-
-    /**
-    * 
-    */
-    public function setConnector( $var )
-    {
-        $this->connector = $var;
-    }
-}
 
 ?>
