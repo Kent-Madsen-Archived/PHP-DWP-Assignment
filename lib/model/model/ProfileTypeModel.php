@@ -9,6 +9,10 @@
                        ProfileTypeView
     {
         // constructors
+        
+        /**
+         * 
+         */
         function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -50,8 +54,6 @@
         {
             return $this->content;
         }
-        
-
 
     }
 

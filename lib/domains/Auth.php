@@ -1,5 +1,6 @@
 <?php 
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
     /**
      * 
      */
@@ -11,12 +12,19 @@
          */
         function __construct()
         {
-            
+            $access = new NetworkAccess( 'localhost', 3600 );   
+            $user_credential = new UserCredential( 'development', 'Epc63gez' );
+            $database = "dwp_assignment";
+
+            $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
 
         // Variables
         private $options = [ 'cost'=>15 , 
                              'salt'=>WEBPAGE_DEFAULT_SALT ];
+
+        
+        private $mysql_info = null;
 
         /**
          * 
@@ -38,20 +46,18 @@
          * 
          */
         public function login( $username, $password )
-        {            
-            $access = new NetworkAccess( 'localhost', 3600 );
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-
-            $database = "dwp_assignment";
-
+        {     
             //
-            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-
-            //
-            $connection = new MySQLConnector( $mysql_information );
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
             $factory = new ProfileFactory( $connection );
 
-            $arr = $factory->get_by_username( 'madsen' );
+            // Retrieves a user by their username
+            $arr = $factory->get_by_username( $username );
+
+            if( $arr == null )
+            {
+                return null;
+            }
 
             if( $this->verify( $password, $arr->getPassword() ) )
             {
@@ -71,39 +77,150 @@
             return $retVal;   
         }
 
+        public function forgot_my_password_by_username( $username )
+        {
+            return null;
+        }
+
         /**
          * 
          */
-        public function register( $username, $password, $name, $email, $birthday, $phone_number, $address )
+        public function register( $profile, $name, $email, $birthday, $phone_number, $address )
         {
             $retVal = null;
+
+            $profile = $this->register_profile( $profile );
+
+            $pi = $this->register_profile_information(  $profile, 
+                                                        $name, 
+                                                        $email, 
+                                                        $birthday, 
+                                                        $phone_number, 
+                                                        $address );
 
             return $retVal;   
         }
 
-        public function register_profile( $username, $password )
+        /**
+         * 
+         */
+        public function register_profile_information( $profile, $name, $email, $birthday, $phone_number, $address )
         {
-            $access = new NetworkAccess( 'localhost', 3600 );
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-        
-            $database = "dwp_assignment";
-        
+            $retVal = null;
+
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            
+            // retrieve or create name
+            $person_name_factory = new PersonNameFactory( $connection );
+            
+            // if empty, insert factory
+            if( $name->getFactory() == null )
+            {
+                $name->setFactory( $person_name_factory );
+            }
+
+            $name = $person_name_factory->create( $name );
+
+
+            // retrieve or create email
+            $person_email_factory = new PersonEmailFactory( $connection );
+
+            if( $email->getFactory() == null )
+            {
+                $email->setFactory( $person_email_factory );
+            }
+
+            $email_found = $person_email_factory->get_by_name( $email->getContent() );
+
+            if( $email_found == null )
+            {
+                $email = $person_email_factory->create( $email );
+            }
+            else 
+            {
+                $email = $email_found[0];
+            }
+            
+            // retrieve or create address
+            $person_address_factory = new PersonAddressFactory( $connection );
+
+            if( $address->getFactory() == null )
+            {
+                $address->setFactory( $person_address_factory );
+            }
+
+            $address = $person_address_factory->create( $address );
+            
+            // 
+            $profile_information_factory = new ProfileInformationFactory( $connection );
+            $pi = new ProfileInformationModel( $profile_information_factory );
+
+            $pi->setProfileId( $profile->getIdentity() );
+            
+            $pi->setPersonNameId( $name->getIdentity() );
+            $pi->setPersonAddressId( $address->getIdentity() );
+            $pi->setPersonEmailId( $email->getIdentity() );
+
+            $pi->setPersonPhone( $phone_number );
+            $pi->setBirthday( $birthday );
+
             //
-            $mysql_information = new MySQLInformation( $access, $user_credential, $database );
-        
+            $profile_information_factory->create( $pi );
+
+            return $retVal;
+        }
+
+        /**
+         * 
+         */
+        public function hash_profile_password( $profile_model )
+        {
+            $password_not_hash = $profile_model->getPassword();
+
+            $profile_model->setPassword( $this->generate_password( $password_not_hash ) );
+            $profile_model->setIsPasswordHashed( TRUE );
+
+            return $profile_model;
+        }
+
+        /**
+         * 
+         */
+        public function register_profile( $profile_variable )
+        {
             //
-            $connection = new MySQLConnector( $mysql_information );
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
             
             $factory = new ProfileFactory( $connection );
-            $profile = new ProfileModel( $factory );
+            $profile_variable->setFactory( $factory );
 
-            $profile->setUsername( $username );
-            $profile->setPassword( $this->generate_password( $password ) );
+            $profile = $this->hash_profile_password( $profile_variable );
 
             $profile->setProfileType( 1 );
 
-            $factory->create( $profile );
+            $profile = $factory->create( $profile );
+
+            return $profile;
         }
+
+
+        // accessors
+        /**
+         * 
+         */
+        public function getMysqlInformation()
+        {
+            return $this->mysql_info;
+        }
+
+        /**
+         * 
+         */
+        public function setMysqlInformation( $var )
+        {
+            $this->mysql_info = $var;
+        }
+
 
         
 

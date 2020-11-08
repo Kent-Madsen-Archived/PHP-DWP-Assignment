@@ -27,4 +27,7 @@
     );
 
     require 'vendor/autoload.php';
+
+    // Setup Globals
+    PageTitleSingleton::getInstance();
 ?>

@@ -32,7 +32,7 @@ create table profile_information
 
     person_phone varchar(1024),
 
-    birthday datetime not null,
+    birthday date not null,
     registered datetime default now() not null,
 
     primary key (identity)
@@ -115,12 +115,13 @@ alter table contact
 alter table profile alter column profile_type set default 1;
 
 -- Views
-create view profile_model_view as
+create or replace view profile_model_view as
 select profile.identity, profile.username, profile.password, profile_type.content as profile_type
 from profile
-left join profile_type on profile.profile_type = profile.profile_type;
+left join profile_type on profile.profile_type = profile_type.identity;
 
-create view contact_model_view as
+
+create or replace view contact_model_view as
 select contact.subject_title,
        contact.meesage,
        contact.has_been_send,
@@ -130,3 +131,33 @@ select contact.subject_title,
 from contact
 left join person_email pe on contact.from_id = pe.identity
 left join person_email p2 on contact.to_id = p2.identity;
+
+create view profile_information_model_view as
+select profile_information.identity as profile_information_identity,
+       profile_information.profile_id as profile_id,
+       person_name.first_name as person_name_firstname,
+       person_name.last_name as person_name_lastname,
+       person_name.middle_name as person_name_middlename,
+
+       person_address.country as person_address_country,
+       person_address.street_name as person_address_street_name,
+       person_address.street_address_number as person_address_number,
+       person_address.zip_code as person_address_zip_code,
+
+       person_email.content as person_email
+from profile_information
+left join person_name on profile_information.person_name_id = person_name.identity
+left join person_address on person_address.identity = profile_information.person_address_id
+left join person_email on person_email.identity = profile_information.person_email_id;
+
+create or replace view  contact_model_view as
+select contact.identity,
+       contact.subject_title,
+       contact.message,
+       contact.has_been_send,
+       contact.created_on,
+       p1.content as from_mail,
+       p2.content as to_mail
+from contact
+left join person_email p1 on p1.identity = contact.from_id
+left join person_email p2 on p2.identity = contact.to_id;

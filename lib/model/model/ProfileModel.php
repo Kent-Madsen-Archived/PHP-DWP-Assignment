@@ -21,6 +21,8 @@
         private $username = null;
         private $password = null;
 
+        private $is_password_hashed = false;
+
         private $profile_type = 0;
 
         // Accessors
@@ -65,6 +67,22 @@
         public function setUsername( $var )
         {
             $this->username = $var;
+        }
+
+        /**
+         * 
+         */
+        public function getIsPasswordHashed()
+        {
+            return $this->is_password_hashed;
+        }
+
+        /**
+         * 
+         */
+        public function setIsPasswordHashed( $var )
+        {
+            $this->is_password_hashed = $var;
         }
 
         /**

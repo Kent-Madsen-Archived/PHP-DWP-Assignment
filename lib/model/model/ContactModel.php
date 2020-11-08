@@ -146,6 +146,9 @@
             $this->message = $var;
         }
 
+        /**
+         * 
+         */
         public function getHasBeenSendAsInt()
         {
             if( $this->getHasBeenSend() )

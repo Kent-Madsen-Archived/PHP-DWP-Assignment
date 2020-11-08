@@ -5,7 +5,7 @@
      *  Type: PHP Script
      */
     $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Checkout');
+    $title->appendToTitle( ' - Checkout' );
 ?>
 
 <!DOCTYPE html>
