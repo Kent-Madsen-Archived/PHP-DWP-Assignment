@@ -1,15 +1,20 @@
 <?php 
 
+    /**
+     * 
+     */
     class PersonNameModel 
         extends DatabaseModel 
             implements PersonNameView, 
                        PersonNameController
     {
+        // Constructors
         function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
 
+        // Variables
         private $first_name;
         private $last_name;
         private $middle_name;
@@ -17,6 +22,7 @@
         private $identity;
 
 
+        // accessors
         public function getIdentity()
         {
             return $this->identity;

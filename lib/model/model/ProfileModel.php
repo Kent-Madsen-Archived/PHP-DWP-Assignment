@@ -1,5 +1,8 @@
 <?php 
 
+    /**
+     * 
+     */
     class ProfileModel 
         extends DatabaseModel 
             implements ProfileView, 

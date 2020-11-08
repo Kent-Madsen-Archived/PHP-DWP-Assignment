@@ -1,10 +1,14 @@
 <?php 
 
+    /**
+     * 
+     */
     class PersonAddressModel 
         extends DatabaseModel 
             implements PersonAddressView,
                        PersonAddressController
     {
+        // constructors
         /**
          * 
          */
@@ -15,6 +19,7 @@
 
         //
         private $identity;
+        
         private $street_name;
         private $street_address_number;
         private $zip_code;

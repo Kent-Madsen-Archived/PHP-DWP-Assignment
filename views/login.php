@@ -32,12 +32,14 @@
 
         <main> 
             <div id="login_form_boundary"> 
+                
                 <form action="./login" 
                     method="post" 
                     onsubmit="validate_login();"
                     id="">
 
                     <h3> Login </h3>
+                    
                     <div> 
                         <input type="text" 
                                id="form_login_username_id" 

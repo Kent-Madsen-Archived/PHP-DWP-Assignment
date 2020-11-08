@@ -5,6 +5,9 @@
      *  Type: PHP Script
      */
 
+     /**
+      * 
+      */
     interface ContactController
     {
         public function setFromMail( $var );

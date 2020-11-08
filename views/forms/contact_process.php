@@ -25,7 +25,6 @@
 
         // to be changed, finds email models instanses
         $from_value = $person_email_factory->get_by_name( $_POST['form_contact_from'] )[0];
-        
         $to_value = $person_email_factory->get_by_name( WEBPAGE_DEFAULT_MAILTO )[0];
 
         // Create new ContactModel
