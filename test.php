@@ -30,11 +30,10 @@
     //
     $connection = new MySQLConnector( $mysql_information );
 
-    $person_email_factory = new PersonEmailFactory( $connection );
-    $person_email_model = new PersonEmailModel($person_email_factory);
-    $person_email_model->setContent('fracturer@outlook.com');
+    $person_address_factory = new PersonAddressFactory( $connection );
+    $person_address_model = new PersonAddressModel($person_address_factory);
     
-    $person_email_factory->create($person_email_model);
+
 
 
 ?>
