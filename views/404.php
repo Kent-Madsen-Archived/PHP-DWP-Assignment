@@ -19,7 +19,6 @@
         
         
         <?php 
-
             $title->printDocumentTitle();
         ?>
     </head>
