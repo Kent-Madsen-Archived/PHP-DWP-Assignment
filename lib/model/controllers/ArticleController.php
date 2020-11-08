@@ -5,9 +5,9 @@
      *  Type: PHP Script
      */
 
-interface ArticleController
-{
+    interface ArticleController
+    {
 
-}
+    }
 
 ?>

@@ -1,15 +1,15 @@
 <?php 
 
-class InvoiceModel 
-    extends DatabaseModel
-{
-    function __construct( $factory )
+    class InvoiceModel 
+        extends DatabaseModel
     {
-        $this->setFactory( $factory );
+        function __construct( $factory )
+        {
+            $this->setFactory( $factory );
+        }
+
+
     }
-
-
-}
 
 
 ?>

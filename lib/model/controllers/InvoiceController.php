@@ -5,10 +5,10 @@
      *  Type: PHP Script
      */
 
-interface InvoiceController
-{
-    
+    interface InvoiceController
+    {
+        
 
-}
+    }
 
 ?>

@@ -5,10 +5,13 @@
      *  Type: PHP Script
      */
 
-interface ProductController
-{
-    
+     /**
+      * 
+      */
+    interface ProductController
+    {
+        
 
-}
+    }
 
 ?>

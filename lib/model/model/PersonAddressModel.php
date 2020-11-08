@@ -1,15 +1,15 @@
 <?php 
 
-class PersonAddressModel 
-    extends DatabaseModel
-{
-    function __construct( $factory )
+    class PersonAddressModel 
+        extends DatabaseModel
     {
-        $this->setFactory( $factory );
+        function __construct( $factory )
+        {
+            $this->setFactory( $factory );
+        }
+
+
     }
-
-
-}
 
 
 ?>

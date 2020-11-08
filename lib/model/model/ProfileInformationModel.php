@@ -1,15 +1,12 @@
 <?php 
-
-class ProfileInformationModel 
-    extends DatabaseModel
-{
-    function __construct( $factory )
+    class ProfileInformationModel 
+        extends DatabaseModel
     {
-        $this->setFactory( $factory );
+        function __construct( $factory )
+        {
+            $this->setFactory( $factory );
+        }
+
+
     }
-
-
-}
-
-
 ?>

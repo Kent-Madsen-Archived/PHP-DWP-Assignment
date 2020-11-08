@@ -5,9 +5,12 @@
      *  Type: PHP Script
      */
 
-interface ProfileTypeController
-{
-    
+     /**
+      * 
+      */
+    interface ProfileTypeController
+    {
+        
 
-}
+    }
 ?>

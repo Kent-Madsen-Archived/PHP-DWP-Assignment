@@ -1,15 +1,21 @@
 <?php 
 
-class ProductModel 
-    extends DatabaseModel
-{
-    function __construct( $factory )
+    /**
+     * 
+     */
+    class ProductModel 
+        extends DatabaseModel
     {
-        $this->setFactory( $factory );
+        /**
+         * 
+         */
+        function __construct( $factory )
+        {
+            $this->setFactory( $factory );
+        }
+
+
     }
-
-
-}
 
 
 ?>
