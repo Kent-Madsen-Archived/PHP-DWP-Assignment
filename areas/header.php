@@ -49,7 +49,7 @@
                 </li>
             <?php endif; ?>
             
-            <?php if( !$access->is_logged_in() ): ?>
+            <?php if( $access->is_logged_in() ): ?>
                 <li> 
                     <a href="./login"> 
                         Login 

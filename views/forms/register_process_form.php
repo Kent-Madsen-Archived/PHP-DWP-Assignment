@@ -17,6 +17,12 @@
             }
         }
 
+        $recaptcha_v2 = new ReCaptchaV2( GOOGLE_V2_RECAPTCHA_PRIVATE, GOOGLE_V2_RECAPTCHA_PUBLIC );
+        $recaptcha_v2->setResponseKey( $_POST['g-recaptcha-response'] );
+        
+        $recaptcha_v2->retrieve_response();
+        $recaptcha_v2->validate();
+
 
         $auth = new Auth();
 

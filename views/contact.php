@@ -45,13 +45,19 @@
 
                     <h3> Contact us </h3>
 
-                    <input type="hidden" name="security_token" value="<?php echo $_SESSION['fss_token']; ?>" >
-                    <input type="hidden" name="security_empty" value="">
+                    <input type="hidden" 
+                           name="security_token" 
+                           value="<?php echo $_SESSION['fss_token']; ?>" >
+
+                    <input type="hidden" 
+                           name="security_empty" 
+                           value="">
 
                     <input type="text" 
                            placeholder="E-mail"
                            name="form_contact_from"
                            id="form_contact_from_id">
+                           
                     <label> From </label>
 
                     <div> 
@@ -59,16 +65,20 @@
                                placeholder="Subject"
                                name="form_contact_subject"
                                id="form_contact_subject_id">
+
                         <label> Subject </label>
                         
                         <input type="text" 
                                placeholder="Message"
                                name="form_contact_message"
                                id="form_contact_message_id">
+
                         <label> Message </label>
                     </div>
                     
-                    <div class="g-recaptcha" data-sitekey="<?php ReCaptchaV2::PrintPublicKey(); ?>"></div>
+                    <div class="g-recaptcha" 
+                         data-sitekey="<?php ReCaptchaV2::PrintPublicKey(); ?>">
+                    </div>
 
                     <div> 
                         <input class="button" 
@@ -76,7 +86,6 @@
                                value="send" 
                                name="form_contact_submit">
                     </div>
-
                     
                     <script src="./assets/javascript/contact-validate-form.js" 
                             type="application/javascript">      
