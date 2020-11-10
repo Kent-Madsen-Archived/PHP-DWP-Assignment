@@ -22,7 +22,15 @@
 
         if( !( $credentials == null ) )
         {
-            echo "insert login functionality";
+            $session = new UserSession( $credentials );
+
+            $_SESSION['user_session_object_identity'] = $session->getIdentity();
+
+            $_SESSION['user_session_object_username'] = $session->getUsername();
+            $_SESSION['user_session_object_profile_type'] = $session->getProfileType();
+            
+            //
+            redirect_to_local_page( 'homepage' );
         }
     }
 ?>

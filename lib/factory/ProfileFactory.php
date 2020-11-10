@@ -113,9 +113,10 @@
                     {
                         $model = new ProfileModel( $this );
 
-                        $model->setIdentity($row['identity']);
-                        $model->setUsername($row['username']);
-                        $model->setPassword($row['password']);
+                        $model->setIdentity( $row['identity'] );
+                        $model->setUsername( $row['username'] );
+                        $model->setPassword( $row['password'] );
+                        $model->setProfileType( $row['profile_type'] );
                         
                         array_push( $retVal, $model );
                     }

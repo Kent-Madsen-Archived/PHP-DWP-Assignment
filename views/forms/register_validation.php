@@ -240,4 +240,5 @@ function register_form_validate_address()
 
     return true;
 }
+
 ?>

@@ -4,7 +4,17 @@
      *  Author:
      *  Type: PHP Script
      */
+    $access = new AccessPrivileges();
+
+    if( $access->is_logged_in() )
+    {
+        redirect_to_local_page( 'homepage' );
+    }
+
+        // First validate the users input
     require_once 'forms/login_validation.php';
+
+        // Then process the form and upload it to the database
     require_once 'forms/login_process_form.php';
 
     /**

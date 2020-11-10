@@ -1,12 +1,21 @@
 <?php
-    require 'forms/forgot_my_password_process.php';
-    require 'forms/forgot_my_password_validation.php';
-
     /**
      *  Title:
      *  Author:
      *  Type: PHP Script
      */
+    $access = new AccessPrivileges();
+
+    if( $access->is_logged_in() )
+    {
+        redirect_to_local_page( 'homepage' );
+    }
+    
+    // First validate the users input
+    require 'forms/forgot_my_password_validation.php';
+
+    // Then process the form and upload it to the database
+    require 'forms/forgot_my_password_process.php';
 
     /**
      * 
@@ -53,8 +62,6 @@
                                id="forgot_form_email_id"
                                name="forgot_form_email" >
                         
-
-
                         <label> E-mail to your account </label>
                     </div>
                 
