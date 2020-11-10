@@ -55,7 +55,7 @@
                     <div>
                         <input type="hidden" 
                                name="security_token" 
-                               value="<?php echo $_SESSION['fss_token']; ?>" >
+                               value="<?php echo $_SESSION[ 'fss_token' ]; ?>" >
                         
                         <input type="email" 
                                placeholder="E-mail"
@@ -66,7 +66,10 @@
                     </div>
                 
                     <div> 
-                        <input class="btn" type="submit" value="send" name="submit_forgot_form">
+                        <input class="btn" 
+                               type="submit" 
+                               value="send" 
+                               name="submit_forgot_form">
                     </div>
                     
                     <script src="./assets/javascript/forgot-validate-form.js" 
