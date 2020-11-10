@@ -6,6 +6,44 @@ create database dwp_assignment_database;
 use dwp_assignment_database;
 
 -- Tables
+create table article
+(
+    identity int not null auto_increment,
+    title varchar(256) not null,
+    article_content text,
+    created_on datetime default now(),
+    last_update datetime default now(),
+    primary key (identity)
+);
+
+create table product_attribute(
+    identity int not null auto_increment,
+    content varchar(256) not null,
+    primary key (identity)
+);
+
+create table product_category(
+    identity int not null auto_increment,
+    content varchar(256) not null,
+    primary key (identity)
+);
+
+create table associated_category(
+    identity int not null auto_increment,
+    product_attribute_id int not null,
+    product_category_id int not null,
+    product_id int not null,
+    primary key (identity)
+);
+
+create table product(
+    identity int not null auto_increment,
+    title varchar(256) not null,
+    product_description text not null,
+    product_price double not null default 0.0,
+    primary key (identity)
+);
+
 create table profile
 (
     identity int not null auto_increment,
