@@ -54,6 +54,14 @@
                 </li>
             <?php endif; ?>
 
+            <?php if( $access->is_logged_in() ): ?>
+                <li> 
+                    <a href="./invoice"> 
+                        Invoice
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <?php if( $access->is_admin() ): ?>
                 <li> 
                     <a href="./admin"> 
