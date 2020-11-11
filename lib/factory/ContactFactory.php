@@ -23,6 +23,11 @@
         private $pagination_index = 0;
         private $limit = 5;
 
+        public function get()
+        {
+            
+        }
+
         /**
          * 
          */

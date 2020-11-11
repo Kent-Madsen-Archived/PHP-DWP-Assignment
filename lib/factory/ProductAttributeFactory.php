@@ -1,15 +1,6 @@
-<?php 
-    /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
-     */
+<?php
 
-
-    /**
-     * 
-     */
-    class InvoiceFactory 
+    class ProductAttributeFactory 
         extends Factory
     {
         /**
@@ -39,9 +30,6 @@
         {
 
         }
-
-
-
     }
 
 ?>

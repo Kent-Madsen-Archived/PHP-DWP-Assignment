@@ -20,6 +20,11 @@
             $this->setConnector( $mysql_connector );
         }
 
+        public function get( )
+        {
+            
+        }
+
         public function create( $model )
         {
             $retVal = array();
@@ -79,6 +84,17 @@
             }
             
             return $retVal;
+        }
+
+
+        public function update( $model )
+        {
+
+        }
+
+        public function delete( $model )
+        {
+
         }
 
     }
