@@ -118,14 +118,6 @@ create table contact(
     primary key(identity)
 );
 
-create table product_entity(
-    identity int not null auto_increment,
-    arrived datetime default now() not null,
-    brought_id int default null,
-    product_id int not null,
-    primary key (identity)
-);
-
 create table product_invoice(
     identity int not null auto_increment,
     total_price double not null default 0.0,
@@ -143,6 +135,13 @@ create table brought_product(
     primary key (identity)
 );
 
+create table product_entity(
+    identity int not null auto_increment primary key,
+    arrived datetime default now() not null,
+    entity_code varchar(1024) not null,
+    product_id int not null,
+    brought_id int default null
+);
 
 
 -- Setup references
@@ -193,6 +192,16 @@ alter table brought_product
 alter table brought_product
 	add constraint brought_product_product_identity_fk
 		foreign key (product_id) references product (identity);
+
+alter table product_entity
+	add constraint product_entity_brought_product_identity_fk
+		foreign key (brought_id) references brought_product (identity);
+
+alter table product_entity
+	add constraint product_entity_product_identity_fk
+		foreign key (product_id) references product (identity);
+
+
 
 
 -- Set Default to's
