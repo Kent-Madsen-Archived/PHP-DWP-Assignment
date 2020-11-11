@@ -101,8 +101,8 @@
                     {
                         $model = new PersonEmailModel( $this );
                         
-                        $model->setIdentity( $row['identity'] );
-                        $model->setContent( $row['content'] );
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setContent( $row[ 'content' ] );
 
                         array_push( $retVal, $model );
                     }
@@ -151,8 +151,8 @@
                     {
                         $model = new PersonEmailModel( $this );
                         
-                        $model->setIdentity( $row['identity'] );
-                        $model->setContent( $row['content'] );
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setContent( $row[ 'content' ] );
 
                         array_push( $retVal, $model );
                     }

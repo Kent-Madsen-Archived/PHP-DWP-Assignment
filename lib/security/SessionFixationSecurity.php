@@ -23,7 +23,7 @@
                 $_SESSION[ 'session_generated' ] = time();
             }
 
-            if( $_SESSION[ 'session_generated' ] < ( time() - 300 ) )
+            if( $_SESSION[ 'session_generated' ] < ( time() - 1440 ) )
             {
                 session_regenerate_id();
                 $_SESSION[ 'session_generated' ] = time();
