@@ -35,10 +35,6 @@
 
             $information = new MySQLInformation( $access, $user_credential, $database );
 
-            $Factory = new ArticleFactory( new MySQLConnector( $information ) );
-            
-            $article = new ArticleModel( $Factory );
-            
 
             ?>
 

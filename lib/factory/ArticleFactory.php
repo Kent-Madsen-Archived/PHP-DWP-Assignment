@@ -150,9 +150,41 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            //
+            $sql = "update article set title = ?, article_content = ? where identity = ?";
 
-            $this->getConnector()->disconnect();
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ssi", 
+                                    $stmt_title, 
+                                    $stmt_content, 
+                                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+                $stmt_title    = $model->getTitle();
+                $stmt_content  = $model->getContent();
+
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
+
+            return $model;
         }
 
         /**
@@ -169,9 +201,35 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            //
+            $sql = "delete from article where identity = ?;";
 
-            $this->getConnector()->disconnect();
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i", 
+                                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();   
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
         }
 
         // Accessors
