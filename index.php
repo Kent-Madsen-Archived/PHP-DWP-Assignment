@@ -13,7 +13,6 @@
     // in php.ini set session.auto_start to 1
     session_start();
 ?>
-
 <?php 
     // Internal Libraries
     require 'bootstrap.php'; 

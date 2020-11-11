@@ -38,7 +38,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "INSERT INTO profile(username, password, profile_type) VALUES(?, ?, ?);";
+            $sql = "INSERT INTO profile( username, password, profile_type ) VALUES( ?, ?, ? );";
 
             try
             {
@@ -91,7 +91,7 @@
 
         }
 
-        public function get_by_username($username)
+        public function get_by_username( $username )
         {
 
             $retVal = array();
@@ -128,10 +128,10 @@
                     {
                         $model = new ProfileModel( $this );
 
-                        $model->setIdentity( $row['identity'] );
-                        $model->setUsername( $row['username'] );
-                        $model->setPassword( $row['password'] );
-                        $model->setProfileType( $row['profile_type'] );
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setUsername( $row[ 'username' ] );
+                        $model->setPassword( $row[ 'password' ] );
+                        $model->setProfileType( $row[ 'profile_type' ] );
                         
                         array_push( $retVal, $model );
                     }

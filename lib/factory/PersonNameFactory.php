@@ -36,7 +36,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "INSERT INTO person_name(first_name, last_name, middle_name) VALUES(?, ?, ?);";
+            $sql = "INSERT INTO person_name( first_name, last_name, middle_name ) VALUES( ?, ?, ? );";
 
             try
             {
