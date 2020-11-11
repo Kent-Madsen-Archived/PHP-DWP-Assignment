@@ -4,7 +4,17 @@
      *  Author:
      *  Type: PHP Script
      */
+    $access = new AccessPrivileges();
+
+    if( $access->is_logged_in() )
+    {
+        redirect_to_local_page( 'homepage' );
+    }
+
+        // First validate the users input
     require_once 'forms/login_validation.php';
+
+        // Then process the form and upload it to the database
     require_once 'forms/login_process_form.php';
 
     /**
@@ -39,11 +49,13 @@
             <div id="login_form_boundary"> 
                 
                 <form action="./login" 
-                    method="post" 
-                    onsubmit="validate_login();"
-                    id="">
+                      method="post" 
+                      onsubmit="validate_login();"
+                      id="">
 
-                    <input type="hidden" name="security_token" value="<?php echo $_SESSION['fss_token']; ?>" >
+                    <input type="hidden" 
+                           name="security_token" 
+                           value="<?php echo $_SESSION[ 'fss_token' ]; ?>" >
 
                     <h3> Login </h3>
                     
@@ -61,9 +73,9 @@
                     
                     <div> 
                         <input class="btn" 
-                            type="submit" 
-                            value="Login" 
-                            name="form_login_submit">
+                               type="submit" 
+                               value="Login" 
+                               name="form_login_submit">
                     </div>
 
                     <div class="split"> 

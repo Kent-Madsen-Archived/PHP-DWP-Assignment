@@ -38,15 +38,20 @@
     
     $router->appendRoutes( new Route( 'about', 'views/about.php' ) );
     $router->appendRoutes( new Route( 'contact', 'views/contact.php' ) );
-
+    
     $router->appendRoutes( new Route( 'profile', 'views/profile.php' ) );
-
+    
     $router->appendRoutes( new Route( 'login', 'views/login.php' ) );
-
+    
     $router->appendRoutes( new Route( 'logout', 'views/logout.php' ) );
     $router->appendRoutes( new Route( 'register', 'views/register.php' ) );
     $router->appendRoutes( new Route( 'forgot-my-password', 'views/forgot_password.php' ) );
+    
+    $router->appendRoutes( new Route( 'news', 'views/news.php' ) );
+    $router->appendRoutes( new Route( 'invoice', 'views/invoices.php' ) );
 
+    $router->appendRoutes( new Route( 'admin', 'views/admin.php' ) );
+    
     // Special Routes, like page 404.
     $special_404 = new Route( '404', 'views/404.php' );
     

@@ -9,7 +9,7 @@
      * 
      */
     $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Setup');
+    $title->appendToTitle( ' - News' );
 ?>
 
 <!DOCTYPE html>
@@ -21,12 +21,12 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-                $title->printDocumentTitle();
+            $title->printDocumentTitle();
         ?>
     </head>
     <body>
         <?php get_header(); ?>
-
+        
         <main> 
         
         </main>

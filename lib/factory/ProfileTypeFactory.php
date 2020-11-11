@@ -20,6 +20,11 @@
             $this->setConnector( $mysql_connector );
         }
 
+        public function get( )
+        {
+            
+        }
+
         // CRUD implementation
         public function create( $model )
         {
@@ -71,6 +76,18 @@
             
             return $retVal;
         }
+
+
+        public function update( $model )
+        {
+
+        }
+
+        public function delete( $model )
+        {
+
+        }
+
 
     }
 

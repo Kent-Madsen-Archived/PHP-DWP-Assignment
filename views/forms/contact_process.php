@@ -16,7 +16,17 @@
             }
         }
 
-
+        $recaptcha_v2 = new ReCaptchaV2( GOOGLE_V2_RECAPTCHA_PRIVATE, GOOGLE_V2_RECAPTCHA_PUBLIC );
+        $recaptcha_v2->setResponseKey( $_POST['g-recaptcha-response'] );
+        
+        $recaptcha_v2->retrieve_response();
+        $recaptcha_v2->validate();
+        
+        // Honeypot trap
+        if( !strlen( $_POST[ 'security_empty' ] ) == 0 )
+        {
+            throw new Exception( 'Empty field is not empty' );
+        }
 
         $domain = new ContactDomain();
 

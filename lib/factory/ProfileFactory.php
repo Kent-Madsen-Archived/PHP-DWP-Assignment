@@ -20,6 +20,11 @@
             $this->setConnector( $mysql_connector );
         }
 
+        public function get( )
+        {
+            
+        }
+
         public function create( $model )
         {
             $retVal = array();
@@ -76,6 +81,16 @@
             return $retVal;
         }
 
+        public function update( $model )
+        {
+
+        }
+
+        public function delete( $model )
+        {
+
+        }
+
         public function get_by_username($username)
         {
 
@@ -113,9 +128,10 @@
                     {
                         $model = new ProfileModel( $this );
 
-                        $model->setIdentity($row['identity']);
-                        $model->setUsername($row['username']);
-                        $model->setPassword($row['password']);
+                        $model->setIdentity( $row['identity'] );
+                        $model->setUsername( $row['username'] );
+                        $model->setPassword( $row['password'] );
+                        $model->setProfileType( $row['profile_type'] );
                         
                         array_push( $retVal, $model );
                     }

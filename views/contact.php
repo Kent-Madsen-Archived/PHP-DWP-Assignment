@@ -17,19 +17,21 @@
 ?>
 
 <!DOCTYPE html>
-
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/style.css">
-        
-    <?php 
-        $title->printDocumentTitle();
-    ?>
-</head>
+        <link rel="stylesheet" href="/assets/css/style.css">
+
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+            
+        <?php 
+            $title->printDocumentTitle();
+        ?>
+    </head>
+
     <body>
         <?php get_header(); ?>
 
@@ -42,12 +44,19 @@
 
                     <h3> Contact us </h3>
 
-                    <input type="hidden" name="security_token" value="<?php echo $_SESSION['fss_token']; ?>" >
+                    <input type="hidden" 
+                           name="security_token" 
+                           value="<?php echo $_SESSION['fss_token']; ?>" >
+
+                    <input type="hidden" 
+                           name="security_empty" 
+                           value="">
 
                     <input type="text" 
                            placeholder="E-mail"
                            name="form_contact_from"
                            id="form_contact_from_id">
+                           
                     <label> From </label>
 
                     <div> 
@@ -55,13 +64,19 @@
                                placeholder="Subject"
                                name="form_contact_subject"
                                id="form_contact_subject_id">
+
                         <label> Subject </label>
                         
                         <input type="text" 
                                placeholder="Message"
                                name="form_contact_message"
                                id="form_contact_message_id">
+
                         <label> Message </label>
+                    </div>
+                    
+                    <div class="g-recaptcha" 
+                         data-sitekey="<?php ReCaptchaV2::PrintPublicKey(); ?>">
                     </div>
 
                     <div> 

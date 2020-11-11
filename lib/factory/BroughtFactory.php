@@ -5,11 +5,10 @@
      *  Type: PHP Script
      */
 
-
     /**
      * 
      */
-    class InvoiceFactory 
+    class BroughtFactory
         extends Factory
     {
         /**
@@ -39,7 +38,6 @@
         {
 
         }
-
 
 
     }

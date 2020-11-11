@@ -170,6 +170,18 @@
             return $retVal;
         }
 
+
+        public function update( $model )
+        {
+
+        }
+
+        public function delete( $model )
+        {
+
+        }
+
+
     }
 
 ?>

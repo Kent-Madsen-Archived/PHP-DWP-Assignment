@@ -4,12 +4,8 @@
      *  Author:
      *  Type: PHP Script
      */
-
-    /**
-     * 
-     */
     $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Setup');
+    $title->appendToTitle( ' - Admin Panel' );
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +17,7 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php 
-                $title->printDocumentTitle();
+            $title->printDocumentTitle();
         ?>
     </head>
     <body>

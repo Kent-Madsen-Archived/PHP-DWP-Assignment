@@ -6,6 +6,44 @@ create database dwp_assignment_database;
 use dwp_assignment_database;
 
 -- Tables
+create table article
+(
+    identity int not null auto_increment,
+    title varchar(256) not null,
+    article_content text,
+    created_on datetime default now(),
+    last_update datetime default now(),
+    primary key (identity)
+);
+
+create table product_attribute(
+    identity int not null auto_increment,
+    content varchar(256) not null,
+    primary key (identity)
+);
+
+create table product_category(
+    identity int not null auto_increment,
+    content varchar(256) not null,
+    primary key (identity)
+);
+
+create table associated_category(
+    identity int not null auto_increment,
+    product_attribute_id int not null,
+    product_category_id int not null,
+    product_id int not null,
+    primary key (identity)
+);
+
+create table product(
+    identity int not null auto_increment,
+    title varchar(256) not null,
+    product_description text not null,
+    product_price double not null default 0.0,
+    primary key (identity)
+);
+
 create table profile
 (
     identity int not null auto_increment,
@@ -80,6 +118,30 @@ create table contact(
     primary key(identity)
 );
 
+create table product_invoice(
+    identity int not null auto_increment,
+    total_price double not null default 0.0,
+    invoice_registered datetime default now(),
+    primary key (identity)
+);
+
+create table brought_product(
+    identity int not null auto_increment,
+    invoice_id int not null,
+    number_of_products int not null default 0,
+    price double not null default 0.0,
+    product_id int not null,
+    registered datetime not null default now(),
+    primary key (identity)
+);
+
+create table product_entity(
+    identity int not null auto_increment primary key,
+    arrived datetime default now() not null,
+    entity_code varchar(1024) not null,
+    product_id int not null,
+    brought_id int default null
+);
 
 
 -- Setup references
@@ -110,6 +172,37 @@ alter table contact
 alter table contact
 	add constraint contact_person_email_identity_fk_2
 		foreign key (from_id) references person_email (identity);
+
+alter table associated_category
+	add constraint associated_category_product_attribute_identity_fk
+		foreign key (product_attribute_id) references product_attribute (identity);
+
+alter table associated_category
+	add constraint associated_category_product_category_identity_fk
+		foreign key (product_category_id) references product_category (identity);
+
+alter table associated_category
+	add constraint associated_category_product_identity_fk
+		foreign key (product_id) references product (identity);
+
+alter table brought_product
+	add constraint brought_product_product_invoice_identity_fk
+		foreign key (invoice_id) references product_invoice (identity);
+
+alter table brought_product
+	add constraint brought_product_product_identity_fk
+		foreign key (product_id) references product (identity);
+
+alter table product_entity
+	add constraint product_entity_brought_product_identity_fk
+		foreign key (brought_id) references brought_product (identity);
+
+alter table product_entity
+	add constraint product_entity_product_identity_fk
+		foreign key (product_id) references product (identity);
+
+
+
 
 -- Set Default to's
 alter table profile alter column profile_type set default 1;
@@ -161,3 +254,97 @@ select contact.identity,
 from contact
 left join person_email p1 on p1.identity = contact.from_id
 left join person_email p2 on p2.identity = contact.to_id;
+
+-- Triggers
+create trigger person_name_insert_nomalise
+before insert on person_name
+    for each row
+    set NEW.middle_name = lower(NEW.middle_name),
+        NEW.last_name = lower(NEW.last_name),
+        NEW.first_name = lower(NEW.first_name);
+
+create trigger person_name_update_nomalise
+before update on person_name
+    for each row
+    set NEW.middle_name = lower(NEW.middle_name),
+        NEW.last_name = lower(NEW.last_name),
+        NEW.first_name = lower(NEW.first_name);
+
+create trigger person_email_insert_nomalise
+before insert on person_email
+    for each row
+    set NEW.content = lower(NEW.content);
+
+create trigger person_email_update_nomalise
+before update on person_email
+    for each row
+    set NEW.content = lower(NEW.content);
+
+create trigger person_address_insert_nomalise
+before insert on person_address
+    for each row
+    set NEW.zip_code = lower(NEW.zip_code),
+        NEW.street_address_number = lower(NEW.street_address_number),
+        NEW.street_name = lower(NEW.street_name),
+        NEW.country = lower(NEW.country);
+
+create trigger person_address_update_nomalise
+before update on person_address
+    for each row
+    set NEW.zip_code = lower(NEW.zip_code),
+        NEW.street_address_number = lower(NEW.street_address_number),
+        NEW.street_name = lower(NEW.street_name),
+        NEW.country = lower(NEW.country);
+
+
+create trigger profile_type_insert_nomalise
+before insert on profile_type
+    for each row
+    set NEW.content = lower(NEW.content);
+
+create trigger profile_type_update_nomalise
+before update on profile_type
+    for each row
+    set NEW.content = lower(NEW.content);
+
+
+create trigger product_attribute_insert_nomalise
+before insert on product_attribute
+    for each row
+    set NEW.content = lower(NEW.content);
+
+create trigger product_attribute_update_nomalise
+before update on product_attribute
+    for each row
+    set NEW.content = lower(NEW.content);
+
+
+create trigger product_category_insert_nomalise
+before insert on product_category
+    for each row
+    set NEW.content = lower(NEW.content);
+
+create trigger product_category_update_nomalise
+before update on product_category
+    for each row
+    set NEW.content = lower(NEW.content);
+
+
+
+-- Insert Values
+insert into product_attribute(content)
+values('ukendt'),
+      ('farve'),
+      ('tema'),
+      ('form');
+
+insert into product_category(content)
+values('ukendt'),
+      ('rød'),
+      ('gul'),
+      ('orange'),
+      ('blå'),
+      ('halloween'),
+      ('jul'),
+      ('forår'),
+      ('sommer');

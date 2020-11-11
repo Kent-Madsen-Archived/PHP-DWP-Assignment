@@ -78,6 +78,4 @@
     {
         redirect_to_external_page( 'https', $url );
     }
-
-    require './api_functions.php';
 ?>
