@@ -35,7 +35,17 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
-                $factory = new ContactFactory( new MySQLConnector( $information ) );
+                $factory = new ProductFactory( new MySQLConnector( $information ) );
+
+                $model = new ProductModel( $factory );
+
+                $model->setIdentity(2);
+
+                $model->setTitle('abc');
+                $model->setDescription('der');
+                $model->setPrice(200);
+
+                $factory->update( $model );
 
             ?>
 
