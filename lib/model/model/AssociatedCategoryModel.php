@@ -1,6 +1,6 @@
 <?php 
 
-    class AssociatedProductCategoryModel 
+    class AssociatedCategoryModel 
         extends DatabaseModel
     {
         // Constructors
