@@ -94,7 +94,59 @@
          */
         final public function update( $model )
         {
+            $retVal = array();
 
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "UPDATE person_name SET first_name = ?, last_name = ?, middle_name = ? WHERE identity = ?;";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "sssi",
+                                    $stmt_first_name,
+                                    $stmt_last_name,
+                                    $stmt_middle_name,
+                                    $stmt_identity );
+
+                //
+                $stmt_first_name = $model->getFirstName();
+                $stmt_last_name = $model->getLastName();
+                $stmt_middle_name = $model->getMiddleName();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = $model;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
 
@@ -152,8 +204,6 @@
 
             return $retVal;
         }
-
-
 
     }
 
