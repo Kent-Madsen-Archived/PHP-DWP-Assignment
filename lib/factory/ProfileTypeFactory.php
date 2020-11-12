@@ -20,12 +20,18 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
         final public function get( )
         {
             
         }
 
         // CRUD implementation
+        /**
+         * 
+         */
         final public function create( $model )
         {
             $retVal = array();
@@ -77,12 +83,17 @@
             return $retVal;
         }
 
-
+        /**
+         * 
+         */
         final public function update( $model )
         {
 
         }
 
+        /**
+         * 
+         */
         final public function delete( $model )
         {
 

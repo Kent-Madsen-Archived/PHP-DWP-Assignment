@@ -20,6 +20,10 @@
             $this->setConnector( $mysql_connector );
         }
 
+        private $pagination_index = 0;
+        private $limit = 5;
+
+
         /**
          * 
          */
@@ -75,7 +79,9 @@
         }
 
 
-        //
+        /**
+         * 
+         */
         final public function get()
         {
             $retVal = array();
@@ -121,6 +127,9 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
         public function get_by_name( $email )
         {
             $retVal = array();
@@ -171,11 +180,17 @@
         }
 
 
+        /**
+         * 
+         */
         final public function update( $model )
         {
 
         }
 
+        /**
+         * 
+         */
         final public function delete( $model )
         {
 

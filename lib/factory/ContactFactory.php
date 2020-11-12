@@ -19,9 +19,6 @@
             $this->setConnector( $mysql_connector );
         }
 
-        // Useful when implementing pagination
-        private $pagination_index = 0;
-        private $limit = 5;
 
         final public function get()
         {
@@ -140,6 +137,9 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
         public function deleteRequestById( $identity )
         {
             $this->getConnector()->connect();
@@ -217,41 +217,6 @@
 
             
             $this->getConnector()->disconnect();
-        }
-
-
-        // Accessors
-
-        /**
-         * 
-         */
-        final public function getPaginationIndex()
-        {
-            return $this->pagination_index;
-        }
-
-        /**
-         * 
-         */
-        final public function getLimit()
-        {
-            return $this->limit;
-        }
-
-        /**
-         * 
-         */
-        final public function setPaginationIndex( $idx )
-        {
-            $this->pagination_index = $idx;
-        }
-
-        /**
-         * 
-         */
-        final public function setLimit($var)
-        {
-            $this->limit = $var;
         }
 
     }

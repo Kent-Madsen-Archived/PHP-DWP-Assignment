@@ -19,10 +19,6 @@
             $this->setConnector( $mysql_connector );
         }
 
-        // Variables
-        private $pagination_index = 0;
-        private $limit = 5;
-
         /**
          * 
          */
@@ -49,7 +45,7 @@
                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->getLimit() * $this->getPaginationIndex();
+                $stmt_offset = $this->calculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -231,42 +227,6 @@
                 $this->getConnector()->disconnect();
             }
         }
-
-        // Accessors
-            // Getters
-        /**
-         * 
-         */
-        final public function getPaginationIndex()
-        {
-            return $this->pagination_index;
-        }
-
-        /**
-         * 
-         */
-        final public function getLimit()
-        {
-            return $this->limit;
-        }
-
-            // Setters
-        /**
-         * 
-         */
-        final public function setPaginationIndex( $idx )
-        {
-            $this->pagination_index = $idx;
-        }
-
-        /**
-         * 
-         */
-        final public function setLimit( $var )
-        {
-            $this->limit = $var;
-        }
-
 
     }
 
