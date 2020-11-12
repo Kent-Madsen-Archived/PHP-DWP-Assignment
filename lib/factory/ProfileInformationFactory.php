@@ -58,7 +58,7 @@
                                     $stmt_person_name_id,
                                     $stmt_person_address_id,
                                     $stmt_person_email_id,
-                                    $stmt_person_phone,
+                                    $stmt_person_phwhereone,
                                     $stmt_birthday );
 
                 //
@@ -112,7 +112,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? where identity = ?;";
+            $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? WHERE identity = ?;";
 
             try
             {

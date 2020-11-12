@@ -20,9 +20,6 @@
             $this->setConnector( $mysql_connector );
         }
 
-        private $pagination_index = 0;
-        private $limit = 5;
-
 
         /**
          * 
@@ -159,7 +156,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "select * from person_email where content = ?;";
+            $sql = "SELECT * FROM person_email WHERE content = ?;";
 
             try
             {

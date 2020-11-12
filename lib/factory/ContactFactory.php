@@ -104,7 +104,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "INSERT INTO contact(subject_title, message, has_been_send, to_id, from_id) VALUES(?, ?, ?, ?, ?);";
+            $sql = "INSERT INTO contact( subject_title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
 
             try 
             {
