@@ -18,9 +18,9 @@
         }
 
         // Variables
-        private $identity = 0;
+        private $identity = null;
         
-        private $content = null;
+        private $content  = null;
         
 
         // accessors

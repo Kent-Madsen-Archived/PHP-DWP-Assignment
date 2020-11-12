@@ -3,13 +3,15 @@
     class ProductAttributeModel 
         extends DatabaseModel
     {
+        // Constructors
         function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
 
+        // Variables
         private $identity = null;
-        private $content = null;
+        private $content  = null;
 
         // accessors
         /**

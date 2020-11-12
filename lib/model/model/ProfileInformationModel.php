@@ -20,13 +20,13 @@
         // variables
         private $identity = 0;
 
-        private $profile_id = 0;
-        private $person_name_id = 0;
-        private $person_address_id = 0;
-        private $person_email_id = 0;
+        private $profile_id         = 0;
+        private $person_name_id     = 0;
+        private $person_address_id  = 0;
+        private $person_email_id    = 0;
 
-        private $person_phone = null;
-        private $birthday = null;
+        private $person_phone   = null;
+        private $birthday       = null;
 
         private $registered = null;
         

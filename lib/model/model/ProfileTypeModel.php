@@ -20,6 +20,7 @@
 
         // variables
         private $identity = 0;
+        
         private $content = null;
         
         // accessors

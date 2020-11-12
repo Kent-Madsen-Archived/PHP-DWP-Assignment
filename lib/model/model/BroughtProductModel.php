@@ -3,19 +3,20 @@
     class BroughtProductModel 
         extends DatabaseModel
     {
+        // Constructors
         function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
 
         // Variables
-        private $identity = null;
+        private $identity   = null;
         private $invoice_id = null;
+        private $product_id = null;
         
         private $number_of_products = null;
-        private $price = null;
+        private $price              = null;
 
-        private $product_id = null;
         private $registered = null;
 
         // Accessors

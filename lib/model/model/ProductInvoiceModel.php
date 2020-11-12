@@ -3,15 +3,19 @@
     class ProductInvoiceModel 
         extends DatabaseModel
     {
+        // Constructors
         function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
 
+        // Variables
         private $identity = null;
-        private $total_price = null;
+
+        private $total_price        = null;
         private $invoice_registered = null;
 
+        // Accessors
         /**
          * 
          */

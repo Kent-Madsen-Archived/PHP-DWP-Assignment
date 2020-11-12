@@ -22,10 +22,10 @@
         private $subject = null;
 
         private $fromMail = null;
-        private $toMail = null;
+        private $toMail   = null;
 
         private $has_been_send = null;
-        private $created_on = null;
+        private $created_on    = null;
 
         private $identity  = 0;
 

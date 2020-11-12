@@ -18,11 +18,11 @@
         }
 
         // Variables
-        private $first_name;
-        private $last_name;
-        private $middle_name;
+        private $first_name     = null;
+        private $last_name      = null;
+        private $middle_name    = null;
 
-        private $identity;
+        private $identity       = null;
 
 
         // accessors

@@ -8,6 +8,7 @@
             implements ArticleController, 
                        ArticleView
     {
+        // Constructors
         /**
          * 
          */
@@ -16,13 +17,16 @@
             $this->setFactory( $factory );
         }
 
+        // Variables
         private $identity = null;
-        private $title = null;
-        private $content = null;
-        private $created_on = null;
-        private $last_updated = null;
 
+        private $title      = null;
+        private $content    = null;
 
+        private $created_on     = null;
+        private $last_updated   = null;
+
+        // Accessors
         /**
          * 
          */

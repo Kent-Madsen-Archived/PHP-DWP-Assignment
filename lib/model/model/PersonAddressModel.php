@@ -18,14 +18,14 @@
         }
 
         // Variables
-        private $identity;
+        private $identity = null;
         
-        private $street_name;
-        private $street_address_number;
-        private $zip_code;
-        private $country;
+        private $street_name            = null;
+        private $street_address_number  = null;
+        private $zip_code               = null;
+        private $country                = null;
 
-        //
+        // Accessors
         /**
          * 
          */
