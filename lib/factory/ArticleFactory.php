@@ -19,14 +19,11 @@
             $this->setConnector( $mysql_connector );
         }
 
-        // Variables
-        private $pagination_index = 0;
-        private $limit = 5;
-
+        
         /**
          * 
          */
-        public function get()
+        final public function get()
         {
             $this->getConnector()->connect();
 
@@ -49,7 +46,7 @@
                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->getLimit() * $this->getPaginationIndex();
+                $stmt_offset = $this->calculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -82,10 +79,11 @@
             return $retVal;
         }
 
+
         /**
          * 
          */
-        public function create( $model )
+        final public function create( $model )
         {
             $this->getConnector()->connect();
 
@@ -136,10 +134,11 @@
             return $retVal;
         }
 
+
         /**
          * 
          */
-        public function update( $model )
+        final public function update( $model )
         {
             $this->getConnector()->connect();
 
@@ -187,10 +186,11 @@
             return $model;
         }
 
+
         /**
          * 
          */
-        public function delete( $model )
+        final public function delete( $model )
         {
             $this->getConnector()->connect();
 
@@ -231,42 +231,6 @@
                 $this->getConnector()->disconnect();
             }
         }
-
-        // Accessors
-            // Getters
-        /**
-         * 
-         */
-        public function getPaginationIndex()
-        {
-            return $this->pagination_index;
-        }
-
-        /**
-         * 
-         */
-        public function getLimit()
-        {
-            return $this->limit;
-        }
-
-            // Setters
-        /**
-         * 
-         */
-        public function setPaginationIndex( $idx )
-        {
-            $this->pagination_index = $idx;
-        }
-
-        /**
-         * 
-         */
-        public function setLimit( $var )
-        {
-            $this->limit = $var;
-        }
-
 
     }
 

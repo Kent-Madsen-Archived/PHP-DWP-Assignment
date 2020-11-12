@@ -143,6 +143,16 @@ create table product_entity(
     brought_id int default null
 );
 
+create table page_element(
+    identity int not null auto_increment,
+    area_key varchar(256) not null unique,
+    title varchar(256) not null ,
+    content text not null,
+    created_on datetime default now(),
+    last_update datetime default now(),
+    primary key (identity)
+);
+
 
 -- Setup references
 alter table profile

@@ -19,19 +19,11 @@
             $this->setConnector( $mysql_connector );
         }
 
-        // Useful when implementing pagination
-        private $pagination_index = 0;
-        private $limit = 5;
-
-        public function get()
-        {
-            
-        }
 
         /**
          * 
          */
-        public function getRequest()
+        final public function get()
         {
             $retVal = array();
 
@@ -44,42 +36,62 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "select * from contact;";
+            $sql = "select * from contact LIMIT ? OFFSET ?;";
 
-            $result = $connection->query( $sql );
-
-            if( $result->num_rows > 0 )
+            try 
             {
-                while( $row = $result->fetch_assoc() )
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii", 
+                                   $stmt_limit, 
+                                   $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
                 {
-                    $model = null;
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = null;
 
-                    $model = new ContactModel( $this );
+                        $model = new ContactModel( $this );
 
-                    $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ 'identity' ] );
 
-                    $model->setSubject( $row[ 'subject_title' ] );
-                    $model->setMessage( $row[ 'message' ] );
+                        $model->setSubject( $row[ 'subject_title' ] );
+                        $model->setMessage( $row[ 'message' ] );
 
-                    $model->setToMail( $row[ 'to_id' ] );
-                    $model->setFromMail( $row[ 'from_id' ] );
+                        $model->setToMail( $row[ 'to_id' ] );
+                        $model->setFromMail( $row[ 'from_id' ] );
 
-                    $model->setCreatedOn( $row[ 'created_on' ] );
-                    $model->setHasBeenSend( $row[ 'has_been_send' ] );
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
 
-                    array_push( $retVal, $model );
+                        array_push( $retVal, $model );
+                    }
                 }
+            }
+            catch( Exception $ex )
+            {
+                
             }
 
             $this->getConnector()->disconnect();
 
-            return $retVal;
+            return $retVal;   
         }
+
 
         /**
          * 
          */
-        public function create( $model )
+        final public function create( $model )
         {
             $retVal = null;
 
@@ -140,8 +152,14 @@
             return $retVal;
         }
 
-        public function deleteRequestById( $identity )
+
+        /**
+         * 
+         */
+        final public function delete( $model )
         {
+            $retVal = null;
+
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -151,58 +169,50 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "delete from contact where identity = ?;";
+            $sql = "DELETE FROM contact WHERE identity = ?;";
 
-            try 
+            try
             {
-                //
                 $stmt = $connection->prepare( $sql );
-                $stmt->bind_param( 'i', $identity );
+                
+                //
+                $stmt->bind_param( "i",  
+                                    $stmt_identity );
 
+                //
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
                 $stmt->execute();
 
                 // commits the statement
                 $this->getConnector()->finish();
-                
+
+                $retVal = TRUE;
             }
             catch( Exception $ex )
-            {                
+            {
+                $retVal = FALSE;
+
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo "Ex: " . $ex;
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 $this->getConnector()->disconnect();
             }
 
-            //
+            return $retVal;
         }
 
+        
         /**
          * 
          */
-        public function delete( $model )
-        {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            //
-
-            $this->getConnector()->disconnect();
-        }
-
-        /**
-         * 
-         */
-        public function update( $model )
+        final public function update( $model )
         {
             $this->getConnector()->connect();
 
@@ -217,41 +227,6 @@
 
             
             $this->getConnector()->disconnect();
-        }
-
-
-        // Accessors
-
-        /**
-         * 
-         */
-        public function getPaginationIndex()
-        {
-            return $this->pagination_index;
-        }
-
-        /**
-         * 
-         */
-        public function getLimit()
-        {
-            return $this->limit;
-        }
-
-        /**
-         * 
-         */
-        public function setPaginationIndex( $idx )
-        {
-            $this->pagination_index = $idx;
-        }
-
-        /**
-         * 
-         */
-        public function setLimit($var)
-        {
-            $this->limit = $var;
         }
 
     }
