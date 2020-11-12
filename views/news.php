@@ -35,15 +35,15 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
-                $factory = new ProductFactory( new MySQLConnector( $information ) );
+                $factory = new ProfileFactory( new MySQLConnector( $information ) );
 
-                $model = new ProductModel( $factory );
+                $model = new ProfileModel( $factory );
+                $model->setIdentity(14);
 
-                $model->setIdentity(2);
+                $model->setUsername('s');
+                $model->setPassword('test');
 
-                $model->setTitle('abc');
-                $model->setDescription('der');
-                $model->setPrice(200);
+                $model->setProfileType(2);
 
                 $factory->update( $model );
 

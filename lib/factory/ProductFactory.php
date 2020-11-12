@@ -26,7 +26,6 @@
          */
         final public function get( )
         {
-
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -223,6 +222,7 @@
             }
 
             $sql = "DELETE FROM product WHERE identity = ?;";
+            $stmt_identity = null;
 
             try
             {
@@ -232,7 +232,7 @@
                 $stmt->bind_param( "i",  
                                     $stmt_identity );
 
-                //
+                // Sets Statement Variables
                 $stmt_identity = $model->getIdentity();
 
                 // Executes the query
@@ -260,8 +260,6 @@
 
             return $retVal;
         }
-
-
 
     }
 

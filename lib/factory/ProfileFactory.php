@@ -95,6 +95,69 @@
          */
         final public function update( $model )
         {
+            $retVal = null;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "UPDATE profile SET username = ?, password = ?, profile_type = ? WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $stmt_username = null;
+            $stmt_password = null;
+
+            $stmt_profile_type = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "ssii",
+                    $stmt_username,
+                    $stmt_password,
+                    $stmt_profile_type,
+                    $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                $stmt_username = $model->getUsername();
+                $stmt_password = $model->getPassword();
+
+                $stmt_profile_type = $model->getProfileType();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = TRUE;
+            }
+            catch( Exception $ex )
+            {
+                $retVal = FALSE;
+
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
 
         }
 
