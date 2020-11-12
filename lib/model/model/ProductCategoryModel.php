@@ -3,9 +3,9 @@
     class ProductCategoryModel 
         extends DatabaseModel
     {
-        function __construct()
+        function __construct( $factory )
         {
-            
+            $this->setFactory( $factory );
         }
 
         private $identity = null;
