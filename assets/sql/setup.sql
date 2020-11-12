@@ -9,209 +9,305 @@ use dwp_assignment_database;
 create table article
 (
     identity int not null auto_increment,
-    title varchar(256) not null,
+    
+    title varchar( 256 ) not null,
     article_content text,
+    
     created_on datetime default now(),
     last_update datetime default now(),
-    primary key (identity)
+    
+    primary key ( identity )
 );
 
-create table product_attribute(
+create table product_attribute
+(
     identity int not null auto_increment,
-    content varchar(256) not null,
-    primary key (identity)
+    
+    content varchar( 256 ) not null,
+    
+    primary key ( identity )
 );
 
-create table product_category(
+create table product_category
+(
     identity int not null auto_increment,
-    content varchar(256) not null,
-    primary key (identity)
+    
+    content varchar( 256 ) not null,
+    
+    primary key ( identity )
 );
 
-create table associated_category(
+create table associated_category
+(
     identity int not null auto_increment,
+
     product_attribute_id int not null,
     product_category_id int not null,
     product_id int not null,
-    primary key (identity)
+    
+    primary key ( identity )
 );
 
-create table product(
+create table product
+(
     identity int not null auto_increment,
-    title varchar(256) not null,
+    
+    title varchar( 256 ) not null,
+
     product_description text not null,
     product_price double not null default 0.0,
-    primary key (identity)
+    
+    primary key ( identity )
 );
 
 create table profile
 (
     identity int not null auto_increment,
-    username varchar(1024) not null unique,
-    password varchar(1024),
+    
+    username varchar( 1024 ) not null unique,
+    password varchar( 1024 ),
+
     profile_type int not null,
-    primary key (identity)
+    
+    primary key ( identity )
 );
 
-create table profile_type(
+create table profile_type
+(
     identity int not null auto_increment,
-    content varchar(1024),
-    primary key (identity)
+    
+    content varchar( 1024 ),
+
+    primary key ( identity )
 );
 
 create table profile_information
 (
     identity int not null auto_increment,
+
     profile_id int not null,
 
     person_name_id int not null,
     person_address_id int not null,
     person_email_id int not null,
 
-    person_phone varchar(1024),
+    person_phone varchar( 1024 ),
 
     birthday date not null,
     registered datetime default now() not null,
 
-    primary key (identity)
+    primary key ( identity )
 );
 
 create table person_email
 (
     identity int not null auto_increment,
-    content varchar(1024) not null,
-    primary key (identity)
+    content varchar( 1024 ) not null,
+    primary key ( identity )
 );
 
 create table person_name
 (
     identity int not null auto_increment,
 
-    first_name varchar(1024),
-    last_name varchar(1024),
-    middle_name varchar(1024),
+    first_name varchar( 1024 ),
+    last_name varchar( 1024 ),
+    middle_name varchar( 1024 ),
 
-    primary key (identity)
+    primary key ( identity )
 );
 
 create table person_address
 (
     identity int not null auto_increment,
 
-    street_name varchar(1024),
+    street_name varchar( 1024 ),
     street_address_number int default 0,
 
     zip_code int,
-    country varchar(1024),
+    country varchar( 1024 ),
 
-    primary key (identity)
+    primary key ( identity )
 );
 
-create table contact(
+create table contact
+(
     identity int not null auto_increment,
-    subject_title varchar(1024) not null,
+
+    subject_title varchar( 1024 ) not null,
     message text not null,
+    
     has_been_send int default 0,
-    created_on datetime default now(),
+    
     to_id int not null,
     from_id int not null,
-    primary key(identity)
+    
+    created_on datetime default now(),
+
+    primary key( identity )
 );
 
-create table product_invoice(
+create table product_invoice
+(
     identity int not null auto_increment,
+
     total_price double not null default 0.0,
     invoice_registered datetime default now(),
-    primary key (identity)
+
+    primary key ( identity )
 );
 
-create table brought_product(
+create table brought_product
+(
     identity int not null auto_increment,
+    
     invoice_id int not null,
     number_of_products int not null default 0,
     price double not null default 0.0,
     product_id int not null,
+    
     registered datetime not null default now(),
-    primary key (identity)
+
+    primary key ( identity )
 );
 
-create table product_entity(
-    identity int not null auto_increment primary key,
-    arrived datetime default now() not null,
-    entity_code varchar(1024) not null,
-    product_id int not null,
-    brought_id int default null
-);
-
-create table page_element(
+create table product_entity
+(
     identity int not null auto_increment,
-    area_key varchar(256) not null unique,
-    title varchar(256) not null ,
+    arrived datetime default now() not null,
+    
+    entity_code varchar( 1024 ) not null,
+
+    product_id int not null,
+    brought_id int default null,
+
+    primary key ( identity )
+);
+
+create table page_element
+(
+    identity int not null auto_increment,
+
+    area_key varchar( 256 ) not null unique,
+    title varchar( 256 ) not null,
     content text not null,
+    
     created_on datetime default now(),
     last_update datetime default now(),
-    primary key (identity)
+    
+    primary key ( identity )
 );
 
+create table image_type
+(
+    identity int not null auto_increment,
+    
+    content varchar( 256 ) not null,
+    
+    primary key ( identity )
+);
+
+create table image
+(
+    identity int not null auto_increment,
+
+    image_src varchar( 512 ) not null,
+    image_type_id int not null default 1,
+
+    title varchar( 256 ) not null default 'no name',
+    alt varchar( 1024 ) not null default 'no alt text has been inserted',
+
+    parent_id int not null,
+
+    registered datetime default now() not null,
+    last_updated datetime default now() not null,
+
+    primary key ( identity )
+);
+
+create table product_used_images
+(
+    identity int not null auto_increment,
+    
+    image_preview_id int not null,
+    image_full_id int not null,
+    is_profil_image int not null,
+
+    primary key ( identity )
+);
 
 -- Setup references
 alter table profile
 	add constraint profile_profile_type_identity_fk
-		foreign key (profile_type) references profile_type (identity);
+		foreign key ( profile_type ) references profile_type ( identity );
 
 alter table profile_information
 	add constraint profile_information_profile_identity_fk
-		foreign key (profile_id) references profile (identity);
+		foreign key ( profile_id ) references profile ( identity );
 
 alter table profile_information
 	add constraint profile_information_person_name_identity_fk
-		foreign key (person_name_id) references person_name (identity);
+		foreign key ( person_name_id ) references person_name ( identity );
 
 alter table profile_information
 	add constraint profile_information_person_address_identity_fk
-		foreign key (person_address_id) references person_address (identity);
+		foreign key ( person_address_id ) references person_address ( identity );
 
 alter table profile_information
 	add constraint profile_information_person_email_identity_fk
-		foreign key (person_email_id) references person_email (identity);
+		foreign key ( person_email_id ) references person_email( identity );
 
 alter table contact
 	add constraint contact_person_email_identity_fk
-		foreign key (to_id) references person_email (identity);
+		foreign key ( to_id ) references person_email ( identity );
         
 alter table contact
 	add constraint contact_person_email_identity_fk_2
-		foreign key (from_id) references person_email (identity);
+		foreign key ( from_id ) references person_email ( identity );
 
 alter table associated_category
 	add constraint associated_category_product_attribute_identity_fk
-		foreign key (product_attribute_id) references product_attribute (identity);
+		foreign key ( product_attribute_id ) references product_attribute ( identity );
 
 alter table associated_category
 	add constraint associated_category_product_category_identity_fk
-		foreign key (product_category_id) references product_category (identity);
+		foreign key ( product_category_id ) references product_category ( identity );
 
 alter table associated_category
 	add constraint associated_category_product_identity_fk
-		foreign key (product_id) references product (identity);
+		foreign key ( product_id ) references product ( identity );
 
 alter table brought_product
 	add constraint brought_product_product_invoice_identity_fk
-		foreign key (invoice_id) references product_invoice (identity);
+		foreign key ( invoice_id ) references product_invoice ( identity );
 
 alter table brought_product
 	add constraint brought_product_product_identity_fk
-		foreign key (product_id) references product (identity);
+		foreign key ( product_id ) references product ( identity );
 
 alter table product_entity
 	add constraint product_entity_brought_product_identity_fk
-		foreign key (brought_id) references brought_product (identity);
+		foreign key ( brought_id ) references brought_product ( identity );
 
 alter table product_entity
 	add constraint product_entity_product_identity_fk
-		foreign key (product_id) references product (identity);
+		foreign key ( product_id ) references product ( identity );
 
+alter table image
+	add constraint image_image_identity_fk
+		foreign key ( parent_id ) references image ( identity );
 
+alter table image
+	add constraint image_image_type_identity_fk
+		foreign key ( image_type_id ) references image_type ( identity );
+
+alter table product_used_images
+	add constraint product_used_images_image_identity_fk
+		foreign key ( image_preview_id ) references image ( identity );
+
+alter table product_used_images
+	add constraint product_used_images_image_identity_fk_2
+		foreign key ( image_full_id ) references image ( identity );
 
 
 -- Set Default to's
@@ -235,6 +331,7 @@ from contact
 left join person_email pe on contact.from_id = pe.identity
 left join person_email p2 on contact.to_id = p2.identity;
 
+
 create view profile_information_model_view as
 select profile_information.identity as profile_information_identity,
        profile_information.profile_id as profile_id,
@@ -253,6 +350,7 @@ left join person_name on profile_information.person_name_id = person_name.identi
 left join person_address on person_address.identity = profile_information.person_address_id
 left join person_email on person_email.identity = profile_information.person_email_id;
 
+
 create or replace view  contact_model_view as
 select contact.identity,
        contact.subject_title,
@@ -269,92 +367,92 @@ left join person_email p2 on p2.identity = contact.to_id;
 create trigger person_name_insert_nomalise
 before insert on person_name
     for each row
-    set NEW.middle_name = lower(NEW.middle_name),
-        NEW.last_name = lower(NEW.last_name),
-        NEW.first_name = lower(NEW.first_name);
+    set NEW.middle_name = lower( NEW.middle_name ),
+        NEW.last_name   = lower( NEW.last_name ),
+        NEW.first_name  = lower( NEW.first_name );
 
 create trigger person_name_update_nomalise
 before update on person_name
     for each row
-    set NEW.middle_name = lower(NEW.middle_name),
-        NEW.last_name = lower(NEW.last_name),
-        NEW.first_name = lower(NEW.first_name);
+    set NEW.middle_name = lower( NEW.middle_name ),
+        NEW.last_name   = lower( NEW.last_name ),
+        NEW.first_name  = lower( NEW.first_name );
 
 create trigger person_email_insert_nomalise
 before insert on person_email
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 create trigger person_email_update_nomalise
 before update on person_email
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 create trigger person_address_insert_nomalise
 before insert on person_address
     for each row
-    set NEW.zip_code = lower(NEW.zip_code),
-        NEW.street_address_number = lower(NEW.street_address_number),
-        NEW.street_name = lower(NEW.street_name),
-        NEW.country = lower(NEW.country);
+    set NEW.zip_code                = lower( NEW.zip_code ),
+        NEW.street_address_number   = lower( NEW.street_address_number ),
+        NEW.street_name             = lower( NEW.street_name ),
+        NEW.country                 = lower( NEW.country );
 
 create trigger person_address_update_nomalise
 before update on person_address
     for each row
-    set NEW.zip_code = lower(NEW.zip_code),
-        NEW.street_address_number = lower(NEW.street_address_number),
-        NEW.street_name = lower(NEW.street_name),
-        NEW.country = lower(NEW.country);
+    set NEW.zip_code              = lower( NEW.zip_code ),
+        NEW.street_address_number = lower( NEW.street_address_number ),
+        NEW.street_name           = lower( NEW.street_name ),
+        NEW.country               = lower( NEW.country );
 
 
 create trigger profile_type_insert_nomalise
 before insert on profile_type
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 create trigger profile_type_update_nomalise
 before update on profile_type
     for each row
-    set NEW.content = lower(NEW.content);
-
+    set NEW.content = lower( NEW.content );
 
 create trigger product_attribute_insert_nomalise
 before insert on product_attribute
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 create trigger product_attribute_update_nomalise
 before update on product_attribute
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 
 create trigger product_category_insert_nomalise
 before insert on product_category
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 create trigger product_category_update_nomalise
 before update on product_category
     for each row
-    set NEW.content = lower(NEW.content);
+    set NEW.content = lower( NEW.content );
 
 
 
 -- Insert Values
-insert into product_attribute(content)
-values('ukendt'),
-      ('farve'),
-      ('tema'),
-      ('form');
+insert into product_attribute( content )
+    values  ( 'ukendt' ),
+            ( 'farve' ),
+            ( 'tema' ),
+            ( 'form' );
 
-insert into product_category(content)
-values('ukendt'),
-      ('rød'),
-      ('gul'),
-      ('orange'),
-      ('blå'),
-      ('halloween'),
-      ('jul'),
-      ('forår'),
-      ('sommer');
+
+insert into product_category( content )
+    values  ( 'ukendt' ),
+            ( 'rød' ),
+            ( 'gul' ),
+            ( 'orange' ),
+            ( 'blå' ),
+            ( 'halloween' ),
+            ( 'jul' ),
+            ( 'forår' ),
+            ( 'sommer' );

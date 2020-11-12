@@ -26,7 +26,65 @@
          */
         final public function get( )
         {
-            
+            $retVal = array();
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT * FROM profile LIMIT ? OFFSET ?;";
+
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                                    $stmt_limit,
+                                    $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $Model = new ProfileModel( $this );
+
+                        $Model->setIdentity( $row[ 'identity' ] );
+
+                        $Model->setUsername( $row[ 'username' ] );
+
+                        $Model->setPassword( $row[ 'password' ] );
+                        $Model->setIsPasswordHashed(TRUE );
+
+                        $Model->setProfileType( $row[ 'profile_type' ] );
+
+                        array_push( $retVal, $Model );
+                    }
+                }
+            }
+            catch ( Exception $ex )
+            {
+
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
 
@@ -47,6 +105,11 @@
             }
 
             $sql = "INSERT INTO profile( username, password, profile_type ) VALUES( ?, ?, ? );";
+
+            $stmt_username = null;
+            $stmt_password = null;
+
+            $stmt_profile_type = null;
 
             try
             {
@@ -95,6 +158,69 @@
          */
         final public function update( $model )
         {
+            $retVal = null;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "UPDATE profile SET username = ?, password = ?, profile_type = ? WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $stmt_username = null;
+            $stmt_password = null;
+
+            $stmt_profile_type = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "ssii",
+                                    $stmt_username,
+                                    $stmt_password,
+                                    $stmt_profile_type,
+                                    $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                $stmt_username = $model->getUsername();
+                $stmt_password = $model->getPassword();
+
+                $stmt_profile_type = $model->getProfileType();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = TRUE;
+            }
+            catch( Exception $ex )
+            {
+                $retVal = FALSE;
+
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
 
         }
 
@@ -154,9 +280,9 @@
             return $retVal;
         }
 
+
         public function get_by_username( $username )
         {
-
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -183,6 +309,7 @@
             
                 // Executes the query
                 $stmt->execute();
+
                 $result = $stmt->get_result();
 
                 if( $result->num_rows > 0 )
@@ -193,7 +320,11 @@
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setUsername( $row[ 'username' ] );
+
                         $model->setPassword( $row[ 'password' ] );
+                        $model->setIsPasswordHashed(TRUE );
+
+
                         $model->setProfileType( $row[ 'profile_type' ] );
                         
                         array_push( $retVal, $model );

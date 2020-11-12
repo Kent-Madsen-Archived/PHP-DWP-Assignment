@@ -17,11 +17,14 @@
             $this->setFactory( $factory );
         }
 
+        // Variables
         private $identity = null;
-        private $title = null;
-        private $description = null;
-        private $price = null;
 
+        private $title          = null;
+        private $description    = null;
+        private $price          = null;
+
+        // Accessors
         public function getIdentity()
         {
             return $this->identity;

@@ -34,8 +34,15 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
+            // return array
             $retVal = array();
+
+            // sql, that the prepared statement uses
             $sql = "select * from article limit ? offset ?;";
+
+            // prepare statement variables
+            $stmt_limit = null;
+            $stmt_offset = null;
 
             try 
             {

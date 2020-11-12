@@ -1,20 +1,20 @@
-<?php 
+<?php
 
-    class AssociatedProductCategoryModel 
+    class ProductEntityModel 
         extends DatabaseModel
     {
         // Constructors
-        public function __construct( $factory )
+        function __construct( $factory )
         {
             $this->setFactory( $factory );
-        }   
+        }
 
         // Variables
         private $identity = null;
-        
-        private $product_attribute_id = null;
-        private $product_category_id  = null;
-        private $product_id           = null;
+        private $arrived = null;
+        private $entity_code = null;
+        private $product_id = null;
+        private $brought_id = null;
 
 
         // Accessors
@@ -26,7 +26,7 @@
             return $this->identity;
         }
 
-
+        
         /**
          * 
          */
@@ -39,36 +39,36 @@
         /**
          * 
          */
-        public function getProductAttributeId()
+        public function getArrived()
         {
-            return $this->product_attribute_id;
+            return $this->arrived;
         }
 
 
         /**
          * 
          */
-        public function setProductAttributeId( $var )
+        public function setArrived( $var )
         {
-            $this->product_attribute_id = $var;
+            $this->arrived = $var;
         }
 
 
         /**
          * 
          */
-        public function getProductCategoryId()
+        public function getEntityCode()
         {
-            return $this->product_category_id;
+            return $this->entity_code;
         }
 
 
         /**
          * 
          */
-        public function setProductCategoryId( $var )
+        public function setEntityCode( $var )
         {
-            $this->product_category_id = $var;
+            $this->entity_code = $var;
         }
 
 
@@ -80,13 +80,30 @@
             return $this->product_id;
         }
 
-
+        
         /**
          * 
          */
         public function setProductId( $var )
         {
             $this->product_id = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function getBrougth()
+        {
+            return $this->brought_id;
+        }
+
+        /**
+         * 
+         */
+        public function setBrought( $var )
+        {
+            $this->brought_id = $var;
         }
     }
 

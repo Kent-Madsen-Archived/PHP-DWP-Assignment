@@ -101,6 +101,65 @@
         final public function update( $model )
         {
 
+            $retVal = array();
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? where identity = ?;";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "iiiissi",
+                                    $stmt_profile_id,
+                                    $stmt_person_name_id,
+                                    $stmt_person_address_id,
+                                    $stmt_person_email_id,
+                                    $stmt_person_phone,
+                                    $stmt_birthday,
+                                    $stmt_identity );
+
+                //
+                $stmt_profile_id        = $model->getProfileId();
+                $stmt_person_name_id    = $model->getPersonNameId();
+                $stmt_person_address_id = $model->getPersonAddressId();
+                $stmt_person_email_id   = $model->getPersonEmailId();
+                $stmt_person_phone      = $model->getPersonPhone();
+                $stmt_birthday          = $model->getBirthday();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = $model;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
 
