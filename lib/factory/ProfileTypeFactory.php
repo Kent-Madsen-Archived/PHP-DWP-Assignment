@@ -91,6 +91,56 @@
         final public function update( $model )
         {
 
+            $retVal = array();
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "UPDATE profile_type SET content = ? WHERE identity = ?;";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "si",
+                                    $stmt_profile_type_content,
+                                    $stmt_identity );
+
+                //
+                $stmt_profile_type_content = $model->getContent();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $model->setIdentity( $stmt->insert_id );
+                $retVal = $model;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
 
