@@ -23,7 +23,7 @@
         private $pagination_index = 0;
         private $limit = 5;
 
-        public function get()
+        final public function get()
         {
             
         }
@@ -79,7 +79,7 @@
         /**
          * 
          */
-        public function create( $model )
+        final public function create( $model )
         {
             $retVal = null;
 
@@ -183,7 +183,7 @@
         /**
          * 
          */
-        public function delete( $model )
+        final public function delete( $model )
         {
             $this->getConnector()->connect();
 
@@ -202,7 +202,7 @@
         /**
          * 
          */
-        public function update( $model )
+        final public function update( $model )
         {
             $this->getConnector()->connect();
 
@@ -225,7 +225,7 @@
         /**
          * 
          */
-        public function getPaginationIndex()
+        final public function getPaginationIndex()
         {
             return $this->pagination_index;
         }
@@ -233,7 +233,7 @@
         /**
          * 
          */
-        public function getLimit()
+        final public function getLimit()
         {
             return $this->limit;
         }
@@ -241,7 +241,7 @@
         /**
          * 
          */
-        public function setPaginationIndex( $idx )
+        final public function setPaginationIndex( $idx )
         {
             $this->pagination_index = $idx;
         }
@@ -249,7 +249,7 @@
         /**
          * 
          */
-        public function setLimit($var)
+        final public function setLimit($var)
         {
             $this->limit = $var;
         }

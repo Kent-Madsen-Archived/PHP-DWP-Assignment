@@ -29,12 +29,11 @@
         
         <main>
             <?php 
-            $access = new NetworkAccess( 'localhost', 3600 );   
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-            $database = "dwp_assignment";
+                $access = new NetworkAccess( 'localhost', 3600 );   
+                $user_credential = new UserCredential( 'development', 'Epc63gez' );
+                $database = "dwp_assignment";
 
-            $information = new MySQLInformation( $access, $user_credential, $database );
-
+                $information = new MySQLInformation( $access, $user_credential, $database );
 
             ?>
 
