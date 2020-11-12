@@ -35,7 +35,8 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
-                $factory = new PersonEmailFactory( new MySQLConnector( $information ) );
+                $factory = new ContactFactory( new MySQLConnector( $information ) );
+
             ?>
 
         </main>

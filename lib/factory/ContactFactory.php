@@ -22,14 +22,6 @@
 
         final public function get()
         {
-            
-        }
-
-        /**
-         * 
-         */
-        public function getRequest()
-        {
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -41,36 +33,55 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "select * from contact;";
+            $sql = "select * from contact LIMIT ? OFFSET ?;";
 
-            $result = $connection->query( $sql );
-
-            if( $result->num_rows > 0 )
+            try 
             {
-                while( $row = $result->fetch_assoc() )
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii", 
+                                   $stmt_limit, 
+                                   $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
                 {
-                    $model = null;
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = null;
 
-                    $model = new ContactModel( $this );
+                        $model = new ContactModel( $this );
 
-                    $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ 'identity' ] );
 
-                    $model->setSubject( $row[ 'subject_title' ] );
-                    $model->setMessage( $row[ 'message' ] );
+                        $model->setSubject( $row[ 'subject_title' ] );
+                        $model->setMessage( $row[ 'message' ] );
 
-                    $model->setToMail( $row[ 'to_id' ] );
-                    $model->setFromMail( $row[ 'from_id' ] );
+                        $model->setToMail( $row[ 'to_id' ] );
+                        $model->setFromMail( $row[ 'from_id' ] );
 
-                    $model->setCreatedOn( $row[ 'created_on' ] );
-                    $model->setHasBeenSend( $row[ 'has_been_send' ] );
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
 
-                    array_push( $retVal, $model );
+                        array_push( $retVal, $model );
+                    }
                 }
+            }
+            catch(Exception $ex)
+            {
+                
             }
 
             $this->getConnector()->disconnect();
 
-            return $retVal;
+            return $retVal;   
         }
 
         /**
@@ -135,49 +146,6 @@
             }
 
             return $retVal;
-        }
-
-        /**
-         * 
-         */
-        public function deleteRequestById( $identity )
-        {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "delete from contact where identity = ?;";
-
-            try 
-            {
-                //
-                $stmt = $connection->prepare( $sql );
-                $stmt->bind_param( 'i', $identity );
-
-                $stmt->execute();
-
-                // commits the statement
-                $this->getConnector()->finish();
-                
-            }
-            catch( Exception $ex )
-            {                
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
-                echo "Ex: " . $ex;
-            }
-            finally
-            {
-                $this->getConnector()->disconnect();
-            }
-
-            //
         }
 
         /**
