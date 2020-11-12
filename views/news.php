@@ -37,15 +37,6 @@
 
                 $factory = new ProfileFactory( new MySQLConnector( $information ) );
 
-                $model = new ProfileModel( $factory );
-                $model->setIdentity(14);
-
-                $model->setUsername('s');
-                $model->setPassword('test');
-
-                $model->setProfileType(2);
-
-                $factory->update( $model );
 
             ?>
 
