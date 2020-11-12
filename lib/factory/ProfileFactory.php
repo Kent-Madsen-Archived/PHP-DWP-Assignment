@@ -37,7 +37,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "SELECT * FROM profile limit ? offset ?;";
+            $sql = "SELECT * FROM profile LIMIT ? OFFSET ?;";
 
             $stmt_limit = null;
             $stmt_offset = null;
@@ -280,9 +280,9 @@
             return $retVal;
         }
 
+
         public function get_by_username( $username )
         {
-
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -309,6 +309,7 @@
             
                 // Executes the query
                 $stmt->execute();
+
                 $result = $stmt->get_result();
 
                 if( $result->num_rows > 0 )
@@ -319,7 +320,11 @@
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setUsername( $row[ 'username' ] );
+
                         $model->setPassword( $row[ 'password' ] );
+                        $model->setIsPasswordHashed(TRUE );
+
+
                         $model->setProfileType( $row[ 'profile_type' ] );
                         
                         array_push( $retVal, $model );
