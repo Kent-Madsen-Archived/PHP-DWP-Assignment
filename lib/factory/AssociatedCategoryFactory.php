@@ -24,6 +24,19 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof AssociatedCategoryModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         /**
          * 

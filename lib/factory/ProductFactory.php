@@ -29,6 +29,20 @@
         /**
          * 
          */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof ProductModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        /**
+         * 
+         */
         final public function get( )
         {
             $this->getConnector()->connect();

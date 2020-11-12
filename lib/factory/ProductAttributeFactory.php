@@ -16,6 +16,20 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof ProductAttributeModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         
         /**
          * 

@@ -25,6 +25,19 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof ProfileInformationModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         
         /**
          * 
