@@ -214,6 +214,8 @@
          */
         final public function update( $model )
         {
+            $retVal = null;
+
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -223,10 +225,53 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            //
+            $sql = "UPDATE contact SET subject_title = ?, message = ?, has_been_send = ?, to_id = ?, from_id = ? WHERE identity = ?;";
 
-            
-            $this->getConnector()->disconnect();
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ssiiii",
+                                    $stmt_subject,
+                                    $stmt_message,
+                                    $stmt_has_been_send,
+                                    $stmt_to_id,
+                                    $stmt_from_id,
+                                    $stmt_identity );
+
+                // Setup variables
+                $stmt_subject = $model->getSubject();
+                $stmt_message = $model->getMessage();
+
+                $stmt_has_been_send = $model->getHasBeenSend();
+
+                $stmt_to_id = $model->getToMail();
+                $stmt_from_id = $model->getFromMail();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = $model;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
     }
