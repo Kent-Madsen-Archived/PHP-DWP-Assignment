@@ -156,7 +156,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "update article set title = ?, article_content = ? where identity = ?";
+            $sql = "UPDATE article SET title = ?, article_content = ? WHERE identity = ?";
 
             try 
             {
