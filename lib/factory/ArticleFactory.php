@@ -38,7 +38,7 @@
             $retVal = array();
 
             // sql, that the prepared statement uses
-            $sql = "select * from article limit ? offset ?;";
+            $sql = "SELECT * FROM article LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit = null;
@@ -103,7 +103,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "insert into article( title, article_content ) VALUES( ?, ? )";
+            $sql = "INSERT INTO article( title, article_content ) VALUES( ?, ? )";
 
             try 
             {
@@ -208,7 +208,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "delete from article where identity = ?;";
+            $sql = "DELETE FROM article WHERE identity = ?;";
 
             try 
             {

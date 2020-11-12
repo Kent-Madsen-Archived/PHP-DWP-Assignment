@@ -104,7 +104,7 @@
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "insert into product( title, product_description, product_price ) values( ?, ?, ? );";
+            $sql = "INSERT INTO product( title, product_description, product_price ) VALUES( ?, ?, ? );";
 
             // prepare statement variables
             $stmt_title         = null;
@@ -163,7 +163,7 @@
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "update product set title = ?, product_description = ?, product_price = ? where identity = ?;";
+            $sql = "UPDATE product SET title = ?, product_description = ?, product_price = ? WHERE identity = ?;";
 
             // prepare statement variables
             $stmt_identity      = null;
