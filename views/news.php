@@ -35,18 +35,7 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
-                $factory = new PersonAddressFactory( new MySQLConnector( $information ) );
-                
-                $model = new PersonAddressModel( $factory );
-                $model->setIdentity(41);
-                $model->setStreetName('Stengårdsvej');
-                $model->setStreetAddressNumber(80);
-                $model->setZipCode('6705');
-                $model->setCountry('Danmark');
-
-                $factory->delete($model);
-                
-                
+                $factory = new PersonEmailFactory( new MySQLConnector( $information ) );
             ?>
 
         </main>

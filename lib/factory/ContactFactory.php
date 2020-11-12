@@ -185,6 +185,8 @@
          */
         final public function delete( $model )
         {
+            $retVal = null;
+
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -194,9 +196,43 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            //
+            $sql = "DELETE FROM contact WHERE identity = ?;";
 
-            $this->getConnector()->disconnect();
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+                
+                //
+                $stmt->bind_param( "i",  
+                                    $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getConnector()->finish();
+
+                $retVal = TRUE;
+            }
+            catch( Exception $ex )
+            {
+                $retVal = FALSE;
+
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
         /**
