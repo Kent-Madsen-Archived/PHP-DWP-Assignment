@@ -21,11 +21,18 @@
         }
 
 
+        /**
+         * 
+         */
         final public function get( )
         {
             
         }
 
+
+        /**
+         * 
+         */
         final public function create( $model )
         {
             $retVal = array();
@@ -82,11 +89,19 @@
             return $retVal;
         }
 
+
+        /**
+         * 
+         */
         final public function update( $model )
         {
 
         }
 
+
+        /**
+         * 
+         */
         final public function delete( $model )
         {
             $retVal = null;

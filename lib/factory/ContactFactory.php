@@ -20,6 +20,9 @@
         }
 
 
+        /**
+         * 
+         */
         final public function get()
         {
             $retVal = array();
@@ -74,7 +77,7 @@
                     }
                 }
             }
-            catch(Exception $ex)
+            catch( Exception $ex )
             {
                 
             }
@@ -83,6 +86,7 @@
 
             return $retVal;   
         }
+
 
         /**
          * 
@@ -148,6 +152,7 @@
             return $retVal;
         }
 
+
         /**
          * 
          */
@@ -203,6 +208,7 @@
             return $retVal;
         }
 
+        
         /**
          * 
          */
