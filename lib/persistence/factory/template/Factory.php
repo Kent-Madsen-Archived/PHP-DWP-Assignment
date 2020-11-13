@@ -11,7 +11,8 @@
      */
     abstract class Factory
         implements CRUD, 
-                   SetupFactory
+                   SetupFactory, 
+                   StateFactory
     {
         //
         private $connector = null;

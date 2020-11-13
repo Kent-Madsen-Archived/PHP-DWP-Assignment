@@ -41,6 +41,11 @@
             
         }
 
+        final public function exist_database()
+        {
+            
+        }
+
         /**
          * 
          */

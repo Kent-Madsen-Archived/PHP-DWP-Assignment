@@ -34,6 +34,11 @@
         {
             
         }
+        
+        final public function exist_database()
+        {
+            
+        }
 
         final public function createModel()
         {
