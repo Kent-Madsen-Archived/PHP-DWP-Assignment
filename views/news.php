@@ -35,9 +35,6 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
-                $factory = new ProfileInformationFactory( new MySQLConnector( $information ) );
-
-
             ?>
 
         </main>
