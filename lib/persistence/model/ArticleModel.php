@@ -76,9 +76,9 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !( $this->identityValidation( $var ) ) )
             {
-                throw new Exception( 'ArticleModel - setIdentity: null or numeric number is allowed' );
+                throw new Exception( 'ArticleModel - setIdentity: null or integer number is allowed' );
             }
             
             $this->identity = $var;
@@ -118,7 +118,6 @@
          */
         public function setCreatedOn( $var )
         {
-
             $this->created_on = $var;
         }
 
@@ -128,7 +127,6 @@
          */
         public function setLastUpdated( $var )
         {
-            
             $this->last_updated = $var;
         }
 

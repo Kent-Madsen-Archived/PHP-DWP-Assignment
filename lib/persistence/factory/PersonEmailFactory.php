@@ -25,6 +25,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+        
+        final public function exist_database()
+        {
+            
+        }
+
+        final public function createModel()
+        {
+            $model = new PersonEmailModel( $this );
+
+            return $model;
+        }
+
         /**
          * 
          */
@@ -97,6 +119,9 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
         final public function validate_if_mail_exist( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -198,7 +223,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new PersonEmailModel( $this );
+                        $model = $this->createModel();
                         
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setContent( $row[ 'content' ] );

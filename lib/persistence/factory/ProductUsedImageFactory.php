@@ -24,6 +24,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+
+        final public function exist_database()
+        {
+            
+        }
+
+        final public function createModel()
+        {
+            $model = new ProductUsedImageModel( $this );
+
+            return $model;
+        }
+
         /**
          * 
          */

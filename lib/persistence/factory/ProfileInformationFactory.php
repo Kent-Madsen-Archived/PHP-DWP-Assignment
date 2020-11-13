@@ -24,6 +24,28 @@
 
             $this->setConnector( $mysql_connector );
         }
+        
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+
+        final public function exist_database()
+        {
+            
+        }
+
+        final public function createModel()
+        {
+            $model = new ProfileInformationModel( $this );
+
+            return $model;
+        }
 
         /**
          * 
@@ -42,9 +64,73 @@
         /**
          * 
          */
-        final public function read( )
+        final public function read()
         {
-            
+            $retVal = array();
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT * FROM profile_information LIMIT ? OFFSET ?;";
+
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                                    $stmt_limit,
+                                    $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModel();
+
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setProfileId( $row[ 'profile_id' ] );
+
+                        $model->setPersonNameId( $row[ 'person_name_id' ] );
+                        $model->setPersonAddressId( $row[ 'person_address_id' ] );
+                        $model->setPersonEmailId( $row[ 'person_email_id' ] );
+
+                        $model->setPersonPhone( $row[ 'person_phone' ] );
+                        $model->setBirthday( $row[ 'birthday' ] );
+
+                        $model->setRegistered( $row[ 'registered' ] );
+
+                        array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
 

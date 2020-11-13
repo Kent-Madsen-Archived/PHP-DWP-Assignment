@@ -46,17 +46,27 @@
         
         public function setImagePreviewId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->image_preview_id = $var;
         }
 
         public function setImageFullId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->image_full_id = $var;
         }
         
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'ProductUsedImageModel - setIdentity: null or numeric number is allowed' );
             }

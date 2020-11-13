@@ -59,7 +59,7 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setIdentity: null or numeric number is allowed' );
             }
@@ -73,7 +73,7 @@
         */
         public function setProductAttributeId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductAttributeId: null or numeric number is allowed' );
             }
@@ -87,7 +87,7 @@
          */
         public function setProductCategoryId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductCategoryId: null or numeric number is allowed' );
             }
@@ -101,7 +101,7 @@
          */
         public function setProductId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductId: null or numeric number is allowed' );
             }

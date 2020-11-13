@@ -25,6 +25,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+        
+        final public function exist_database()
+        {
+            
+        }
+
+        final public function createModel()
+        {
+            $model = new ProductModel( $this );
+
+            return $model;
+        }
+
 
         /**
          * 
@@ -82,9 +104,10 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $productModel = new ProductModel( $this );
+                        $productModel = $this->createModel();
 
                         $productModel->setIdentity( $row[ 'identity' ] );
+                        
                         $productModel->setTitle( $row[ 'title' ] );
                         $productModel->setDescription( $row[ 'product_description' ] );
                         $productModel->setPrice( $row[ 'product_price' ] );

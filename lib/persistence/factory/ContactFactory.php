@@ -24,6 +24,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new ContactModel( $this );
+
+            return $model;
+        }
+        
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+
+        final public function exist_database()
+        {
+            
+        }
+
         /**
          * 
          */
@@ -54,7 +76,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "select * from contact LIMIT ? OFFSET ?;";
+            $sql = "SELECT * FROM contact LIMIT ? OFFSET ?;";
 
             try 
             {
@@ -76,9 +98,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = null;
-
-                        $model = new ContactModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
 

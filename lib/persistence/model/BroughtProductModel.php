@@ -80,7 +80,7 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
@@ -107,7 +107,7 @@
          */
         public function setInvoiceId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'BroughtProductModel - setInvoiceId: null or numeric number is allowed' );
             }
@@ -128,7 +128,7 @@
          */
         public function setProductId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'BroughtProductModel - setProductId: null or numeric number is allowed' );
             }

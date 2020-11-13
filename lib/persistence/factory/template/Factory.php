@@ -10,7 +10,9 @@
      * 
      */
     abstract class Factory
-        implements CRUD
+        implements CRUD, 
+                   SetupFactory, 
+                   StateFactory
     {
         //
         private $connector = null;
@@ -57,6 +59,8 @@
 
             return false;
         }
+
+        public abstract function createModel();
 
         // Accessors
             // Getters

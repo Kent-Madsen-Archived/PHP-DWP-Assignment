@@ -94,7 +94,7 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'ContactModel - setIdentity: null or numeric number is allowed' );
             }
@@ -128,6 +128,11 @@
          */
         public function setFromMail( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->fromMail = $var;
         }
 
@@ -136,6 +141,11 @@
          */
         public function setToMail( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->toMail = $var;
         }
 

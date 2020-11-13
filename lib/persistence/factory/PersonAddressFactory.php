@@ -25,6 +25,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function setup()
+        {
+            
+        }
+        
+        final public function setupSecondaries()
+        {
+            
+        }
+
+        final public function exist_database()
+        {
+            
+        }
+
+        final public function createModel()
+        {
+            $model = new PersonAddressModel( $this );
+
+            return $model;
+        }
+
         /**
          * 
          */
@@ -77,7 +99,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $personAddressModel = new PersonAddressModel( $this );
+                        $personAddressModel = $this->createModel();
 
                         $personAddressModel->setIdentity( $row[ 'identity' ] );
     

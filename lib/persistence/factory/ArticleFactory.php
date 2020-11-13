@@ -24,6 +24,28 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new ArticleModel( $this );
+
+            return $model;
+        }
+
+        final public function setup()
+        {
+            
+        }
+
+        final public function setupSecondaries()
+        {
+            
+        }
+
+        final public function exist_database()
+        {
+            
+        }
+
         /**
          * 
          */
@@ -79,11 +101,13 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $articleModel = new ArticleModel( $this );
+                        $articleModel = $this->createModel();
                         
                         $articleModel->setIdentity( $row[ 'identity' ] );
+                        
                         $articleModel->setTitle( $row[ 'title' ] );
                         $articleModel->setContent( $row[ 'article_content' ] );
+
                         $articleModel->setCreatedOn( $row[ 'created_on' ] );
                         $articleModel->setLastUpdated( $row[ 'last_update' ] );
     

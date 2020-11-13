@@ -58,5 +58,15 @@
 
             return false;
         }
+
+        protected function identityValidation( $value )
+        {
+            if( genericNumberValidation( $value ) && is_int( $value ) )
+            {
+                return true;
+            }
+            
+            return false;
+        }
     }
 ?>
