@@ -50,7 +50,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable('dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;      
         }
