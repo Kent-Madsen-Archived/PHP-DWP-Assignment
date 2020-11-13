@@ -24,6 +24,13 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new ProductCategoryModel(this);
+
+            return $model;
+        }
+
         /**
          * 
          */

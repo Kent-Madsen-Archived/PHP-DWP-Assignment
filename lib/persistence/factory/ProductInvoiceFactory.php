@@ -28,6 +28,13 @@
             return false;
         }
 
+        final public function createModel()
+        {
+            $model = new ProductInvoiceModel(this);
+
+            return $model;
+        }
+
         final public function read()
         {
 

@@ -25,6 +25,13 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new PersonAddressModel(this);
+
+            return $model;
+        }
+
         /**
          * 
          */

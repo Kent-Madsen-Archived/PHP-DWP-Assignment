@@ -24,6 +24,13 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new ContactModel(this);
+
+            return $model;
+        }
+
         /**
          * 
          */
@@ -54,7 +61,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "select * from contact LIMIT ? OFFSET ?;";
+            $sql = "SELECT * FROM contact LIMIT ? OFFSET ?;";
 
             try 
             {

@@ -58,6 +58,8 @@
             return false;
         }
 
+        public abstract function createModel();
+
         // Accessors
             // Getters
         final public function calculateOffset()

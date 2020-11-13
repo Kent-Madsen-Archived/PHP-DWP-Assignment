@@ -19,6 +19,13 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function createModel()
+        {
+            $model = new BroughtProductModel(this);
+
+            return $model;
+        }
+
         /**
          * 
          */
