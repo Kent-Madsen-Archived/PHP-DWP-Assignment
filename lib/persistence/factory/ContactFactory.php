@@ -141,7 +141,7 @@
                                    $stmt_from_id );
 
                 // Setup variables
-                $stmt_subject = $model->getSubject();
+                $stmt_subject = $model->getSubject() ;
                 $stmt_message = $model->getMessage();
                 
                 $stmt_has_been_send = $model->getHasBeenSend();

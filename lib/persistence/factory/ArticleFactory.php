@@ -111,7 +111,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $this->getConnector()->connect();
@@ -195,6 +195,7 @@
                                     $stmt_identity );
 
                 $stmt_identity = $model->getIdentity();
+
                 $stmt_title    = $model->getTitle();
                 $stmt_content  = $model->getContent();
 

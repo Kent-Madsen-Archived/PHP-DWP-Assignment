@@ -211,7 +211,9 @@
 
                 $stmt_title         = $model->getTitle();
                 $stmt_description   = $model->getDescription();
+                
                 $stmt_price         = $model->getPrice();
+
                 $stmt_identity      = $model->getIdentity();
 
                 $stmt->execute();

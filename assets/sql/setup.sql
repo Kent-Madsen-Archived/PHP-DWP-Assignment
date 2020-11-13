@@ -309,6 +309,9 @@ alter table product_used_images
 	add constraint product_used_images_image_identity_fk_2
 		foreign key ( image_full_id ) references image ( identity );
 
+-- Index
+create unique index person_email_content_uindex
+	on person_email (content);
 
 -- Set Default to's
 alter table profile alter column profile_type set default 1;
@@ -437,7 +440,6 @@ before update on product_category
     set NEW.content = lower( NEW.content );
 
 
-
 -- Insert Values
 insert into product_attribute( content )
     values  ( 'ukendt' ),
@@ -456,3 +458,35 @@ insert into product_category( content )
             ( 'jul' ),
             ( 'forår' ),
             ( 'sommer' );
+
+-- functions
+create or replace function exists_email( mail varchar( 1024 ) ) returns int
+begin
+    declare mail_content varchar(1024) default null;
+    declare mail_id int default 0;
+
+    declare finished int default 0;
+    declare found int default 0;
+
+    declare cursor_for_person_emails cursor for select * from person_email where content = lower(mail);
+    declare continue handler for not found set finished=1;
+
+    open cursor_for_person_emails;
+
+    getMails: LOOP
+        fetch cursor_for_person_emails into mail_id, mail_content;
+
+        if finished = 1 then
+            leave getMails;
+        end if;
+
+        if mail_content = mail then
+            set found = 1;
+        end if;
+
+    end loop;
+
+    close cursor_for_person_emails;
+
+    return found;
+end;
