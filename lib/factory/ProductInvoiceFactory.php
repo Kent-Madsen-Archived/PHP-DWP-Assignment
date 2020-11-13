@@ -1,5 +1,13 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
+    /**
+     * 
+     */
     class ProductInvoiceFactory
     {
         public function __construct( $mysql_connector )

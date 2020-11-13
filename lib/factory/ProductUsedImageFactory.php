@@ -1,5 +1,13 @@
 <?php 
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
+    /**
+     * 
+     */
     class ProductUsedImageFactory
         extends Factory
     {

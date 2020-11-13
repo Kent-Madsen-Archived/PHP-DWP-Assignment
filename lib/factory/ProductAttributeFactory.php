@@ -1,5 +1,13 @@
 <?php
+    /**
+     *  Title:
+     *  Author:
+     *  Type: PHP Script
+     */
 
+    /**
+     * 
+     */
     class ProductAttributeFactory 
         extends Factory
     {
