@@ -11,6 +11,7 @@
 
         // Variables
         private $identity   = null;
+
         private $invoice_id = null;
         private $product_id = null;
         
@@ -23,27 +24,9 @@
         /**
          * 
          */
-        public function setProductId( $var )
-        {
-            $this->product_id = $var;
-        }
-
-
-        /**
-         * 
-         */
         public function getProductId()
         {
             return $this->product_id;
-        }
-        
-
-        /**
-         * 
-         */
-        public function setPrice( $var )
-        {
-            $this->price = $var;
         }
 
         /**
@@ -62,6 +45,32 @@
         {
             return $this->number_of_products;
         }
+
+        /**
+         * 
+         */
+        public function getRegistered()
+        {
+            return $this->registered;
+        }
+        
+        /**
+         * 
+         */
+        public function getIdentity()
+        {
+            return $this->identity;
+        }
+        
+
+        /**
+         * 
+         */
+        public function getInvoiceId()
+        {
+            return $this->invoice_id;
+        }
+        
 
 
         /**
@@ -85,29 +94,10 @@
         /**
          * 
          */
-        public function getIdentity()
-        {
-            return $this->identity;
-        }
-        
-
-        /**
-         * 
-         */
         public function setInvoiceId( $var )
         {
             $this->invoice_id = $var;
         }
-
-
-        /**
-         * 
-         */
-        public function getInvoiceId()
-        {
-            return $this->invoice_id;
-        }
-        
 
         /**
          * 
@@ -117,13 +107,21 @@
             $this->registered = $var;
         }
 
+        /**
+         * 
+         */
+        public function setProductId( $var )
+        {
+            $this->product_id = $var;
+        }
+
 
         /**
          * 
          */
-        public function getRegistered()
+        public function setPrice( $var )
         {
-            return $this->registered;
+            $this->price = $var;
         }
 
     }

@@ -12,7 +12,9 @@
         // Variables
         private $identity = null;
         private $arrived = null;
+        
         private $entity_code = null;
+
         private $product_id = null;
         private $brought_id = null;
 

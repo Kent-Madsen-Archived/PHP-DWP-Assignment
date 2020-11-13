@@ -34,91 +34,12 @@
         /**
          * 
          */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
-
-        /**
-         * 
-         */
         public function getIdentity()
         {
             return $this->identity;
         }
 
-        /**
-         * 
-         */
-        public function setProfileId( $var )
-        {
-            $this->profile_id = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getProfileId()
-        {
-            return $this->profile_id;
-        }
-
-        /**
-         * 
-         */
-        public function setPersonNameId( $var )
-        {
-            $this->person_name_id = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getPersonNameId()
-        {
-            return $this->person_name_id;
-        }
-
-        /**
-         * 
-         */
-        public function setPersonAddressId( $var )
-        {
-            $this->person_address_id = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getPersonAddressId()
-        {
-            return $this->person_address_id;
-        }
-
-        /**
-         * 
-         */
-        public function setPersonEmailId( $var )
-        {
-            $this->person_email_id = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getPersonEmailId()
-        {
-            return $this->person_email_id;
-        }
-
-        /**
-         * 
-         */
-        public function setPersonPhone( $var )
-        {
-            $this->person_phone = $var;
-        }
-
+        
         /**
          * 
          */
@@ -127,13 +48,6 @@
             return $this->person_phone;
         }
 
-        /**
-         * 
-         */
-        public function setBirthday( $var )
-        {
-            $this->birthday = $var;
-        }
 
         /**
          * 
@@ -143,13 +57,6 @@
             return $this->birthday;
         }
 
-        /**
-         * 
-         */
-        public function setRegistered( $var )
-        {
-            $this->registered = $var;
-        }
 
         /**
          * 
@@ -157,6 +64,114 @@
         public function getRegistered()
         {
             return $this->registered;
+        }
+
+        
+        /**
+         * 
+         */
+        public function getProfileId()
+        {
+            return $this->profile_id;
+        }
+
+
+        /**
+         * 
+         */
+        public function getPersonNameId()
+        {
+            return $this->person_name_id;
+        }
+
+
+        /**
+         * 
+         */
+        public function getPersonAddressId()
+        {
+            return $this->person_address_id;
+        }
+
+
+        /**
+         * 
+         */
+        public function getPersonEmailId()
+        {
+            return $this->person_email_id;
+        }
+
+
+        /**
+         * 
+         */
+        public function setProfileId( $var )
+        {
+            $this->profile_id = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setPersonNameId( $var )
+        {
+            $this->person_name_id = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setPersonAddressId( $var )
+        {
+            $this->person_address_id = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setPersonEmailId( $var )
+        {
+            $this->person_email_id = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setPersonPhone( $var )
+        {
+            $this->person_phone = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setBirthday( $var )
+        {
+            $this->birthday = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setIdentity( $var )
+        {
+            $this->identity = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setRegistered( $var )
+        {
+            $this->registered = $var;
         }
         
     }
