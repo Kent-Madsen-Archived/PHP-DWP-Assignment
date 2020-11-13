@@ -128,7 +128,6 @@
          */
         public function setFromMail( $var )
         {
-            
             $this->fromMail = $var;
         }
 

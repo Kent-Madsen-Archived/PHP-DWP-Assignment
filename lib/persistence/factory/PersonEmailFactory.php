@@ -97,6 +97,65 @@
             return $retVal;
         }
 
+        final public function validate_if_mail_exist( $model )
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            $retVal = false;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT exists_email( ? ) as validation;";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "s",
+                                    $stmt_mail );
+                
+                $stmt_mail = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        if( $row[ 'validation' ] )
+                        {
+                            $retVal = true;
+                        }
+                    }
+                }
+
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
+        }
+
 
         /**
          * 
@@ -165,9 +224,14 @@
         /**
          * 
          */
-        public function get_by_name( $email )
+        public function read_by_name( $model )
         {
-            $retVal = array();
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            $retVal = $model;
 
             $this->getConnector()->connect();
 
@@ -185,7 +249,9 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "s",
-                                    $email );
+                                   $stmt_mail );
+
+                $stmt_mail = $model->getContent();
 
                 $stmt->execute();
 
@@ -194,13 +260,8 @@
                 if( $result->num_rows > 0 )
                 {
                     while( $row = $result->fetch_assoc() )
-                    {
-                        $model = new PersonEmailModel( $this );
-                        
+                    {   
                         $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
-
-                        array_push( $retVal, $model );
                     }
                 }
             }

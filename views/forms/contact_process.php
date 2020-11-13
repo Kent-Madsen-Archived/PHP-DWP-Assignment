@@ -28,20 +28,8 @@
             throw new Exception( 'Empty field is not empty' );
         }
 
-        $domain = new ContactDomain();
-
-        // Create new ContactModel
-        $model = new ContactModel( null );
-        
-        $model->setSubject( $_POST[ 'form_contact_subject' ] );
-        $model->setMessage( $_POST[ 'form_contact_message' ] );
-
-        $model->setFromMail( $_POST['form_contact_from'] );
-        $model->setToMail( WEBPAGE_DEFAULT_MAILTO );
-
-        $model->setHasBeenSend( 0 );        
-
-        $domain->send( $model );
+        $domain = new ContactDomain();  
+        $domain->send();
     }
 
 ?>
