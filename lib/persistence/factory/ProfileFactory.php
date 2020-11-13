@@ -30,6 +30,11 @@
             
         }
 
+        final public function setupSecondaries()
+        {
+            
+        }
+
         final public function createModel()
         {
             $model = new ProfileModel(this);
