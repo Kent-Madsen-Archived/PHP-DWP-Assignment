@@ -315,6 +315,9 @@
         }
 
 
+        /**
+         * 
+         */
         public function get_by_username( $username )
         {
             $retVal = array();
@@ -380,6 +383,63 @@
                 $this->getConnector()->disconnect();
             }
             
+            return $retVal;
+        }
+
+        /**
+         * 
+         */
+        public function validate_if_profile_type_is_admin( $value_int )
+        {
+            $retVal = false;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT is_admin( ? ) as validation;";
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                                    $stmt_profile_type_idx );
+                
+                $stmt_profile_type_idx = $value_int;
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        if( $row[ 'validation' ] )
+                        {
+                            $retVal = true;
+                        }
+                    }
+                }
+
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
             return $retVal;
         }
     }

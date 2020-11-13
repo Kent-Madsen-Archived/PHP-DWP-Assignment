@@ -118,7 +118,6 @@
          */
         public function setCreatedOn( $var )
         {
-
             $this->created_on = $var;
         }
 
@@ -128,7 +127,6 @@
          */
         public function setLastUpdated( $var )
         {
-            
             $this->last_updated = $var;
         }
 
