@@ -98,8 +98,6 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = null;
-
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
