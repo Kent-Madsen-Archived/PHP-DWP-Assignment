@@ -30,6 +30,11 @@
 
             return $model;
         }
+        
+        final public function setup()
+        {
+            
+        }
 
         /**
          * 

@@ -14,6 +14,11 @@
         {
             
         }
+        
+        final public function setup()
+        {
+            
+        }
 
         /**
          * 

@@ -25,6 +25,11 @@
             $this->setConnector( $mysql_connector );
         }
 
+        final public function setup()
+        {
+            
+        }
+
         final public function createModel()
         {
             $model = new ImageModel(this);
