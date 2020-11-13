@@ -101,7 +101,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $articleModel = new ArticleModel( $this );
+                        $articleModel = $this->createModel();
                         
                         $articleModel->setIdentity( $row[ 'identity' ] );
                         $articleModel->setTitle( $row[ 'title' ] );

@@ -102,7 +102,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProfileInformationModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setProfileId( $row['profile_id'] );

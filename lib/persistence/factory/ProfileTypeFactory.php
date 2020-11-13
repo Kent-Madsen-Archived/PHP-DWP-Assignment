@@ -102,7 +102,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProfileTypeModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setContent( $row['content'] );

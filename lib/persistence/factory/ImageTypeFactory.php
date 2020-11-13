@@ -98,7 +98,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $brought = new ImageTypeModel( $this );
+                        $brought = $this->createModel();
 
                         $brought->setIdentity( $row['identity'] );
                         $brought->setContent( $row['content'] );

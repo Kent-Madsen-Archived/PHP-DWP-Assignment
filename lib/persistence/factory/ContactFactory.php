@@ -100,7 +100,7 @@
                     {
                         $model = null;
 
-                        $model = new ContactModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
 

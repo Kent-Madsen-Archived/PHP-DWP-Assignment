@@ -89,7 +89,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProductInvoiceModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setTotalPrice( $row['total_price'] );

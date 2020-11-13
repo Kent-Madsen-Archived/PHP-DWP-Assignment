@@ -100,7 +100,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $brought = new ImageModel( $this );
+                        $brought = $this->createModel();
 
                         $brought->setIdentity($row['identity']);
                         $brought->setImageSrc($row['image_src']);

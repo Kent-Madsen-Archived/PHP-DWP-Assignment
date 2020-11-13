@@ -99,7 +99,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $brought = new PageElementModel( $this );
+                        $brought = $this->createModel();
 
                         $brought->setIdentity($row['identity']);
                         $brought->setAreaKey($row['area_key']);

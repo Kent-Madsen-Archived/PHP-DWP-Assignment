@@ -102,7 +102,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProductAttributeModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setContent( $row['content'] );

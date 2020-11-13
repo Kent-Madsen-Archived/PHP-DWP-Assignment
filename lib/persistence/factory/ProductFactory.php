@@ -104,7 +104,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $productModel = new ProductModel( $this );
+                        $productModel = $this->createModel();
 
                         $productModel->setIdentity( $row[ 'identity' ] );
                         $productModel->setTitle( $row[ 'title' ] );

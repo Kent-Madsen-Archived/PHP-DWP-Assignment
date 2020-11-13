@@ -97,7 +97,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProductEntityModel( $this );
+                        $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
                         $model->setArrived( $row['arrived'] );

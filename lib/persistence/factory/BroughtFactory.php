@@ -99,13 +99,17 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $brought = new BroughtProductModel( $this );
-                        $brought->setIdentity($row['identity']);
-                        $brought->setInvoiceId($row['invoice_id']);
-                        $brought->setNumberOfProducts($row['number_of_products']);
-                        $brought->setPrice($row['price']);
-                        $brought->setProductId($row['product_id']);
-                        $brought->setRegistered($row['registered']);
+                        $brought = $this->createModel();
+
+                        $brought->setIdentity( $row[ 'identity' ] );
+                        $brought->setInvoiceId( $row[ 'invoice_id' ] );
+                        
+                        $brought->setNumberOfProducts( $row[ 'number_of_products' ] );
+                        
+                        $brought->setPrice( $row[ 'price' ] );
+
+                        $brought->setProductId( $row[ 'product_id' ] );
+                        $brought->setRegistered( $row[ 'registered' ] );
 
                         array_push( $retVal, $brought );
                     }

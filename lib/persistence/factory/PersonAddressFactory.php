@@ -99,7 +99,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $personAddressModel = new PersonAddressModel( $this );
+                        $personAddressModel = $this->createModel();
 
                         $personAddressModel->setIdentity( $row[ 'identity' ] );
     
