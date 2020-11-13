@@ -4,6 +4,7 @@
      */
     class UserSession
     {
+
         /**
          * 
          */
@@ -18,8 +19,9 @@
             }
         }
 
-        //
+        // Variables
         private $identity = 0;
+
         private $username = null;
         private $profile_type = 0;
 
