@@ -1,6 +1,6 @@
 <?php 
 
-    class PageElement 
+    class PageElementModel 
         extends DatabaseModel
     {
         // Constructors

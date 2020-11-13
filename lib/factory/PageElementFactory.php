@@ -1,10 +1,19 @@
 <?php 
 
-    class ProductInvoiceFactory
+    class PageElementFactory 
+        extends Factory
     {
-        public function __construct( $mysql_connector )
+        /**
+         * 
+         */
+        function __construct( $mysql_connector )
         {
+            if( !$this->validateAsValidConnector( $mysql_connector ) )
+            {
+                throw new Exception( 'Not a valid connector' );
+            }
             
+            $this->setConnector( $mysql_connector );
         }
 
         /**
@@ -12,7 +21,7 @@
          */
         final public function validateAsValidModel( $var )
         {
-            if( $var instanceof ProductInvoiceModel )
+            if( $var instanceof PageElementModel )
             {
                 return true;
             }
@@ -20,20 +29,13 @@
             return false;
         }
 
-        final public function get()
+        
+        public function get()
         {
-            
+
         }
 
-        final public function create( $model )
-        {
-            if( !$this->validateAsValidModel( $model ) )
-            {
-                throw new Exception('Not accepted model');
-            }
-        }
-
-        final public function update( $model )
+        public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -42,13 +44,22 @@
 
         }
 
-        final public function delete( $model )
+        public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception('Not accepted model');
-            }
+            }   
         }
+
+        public function update( $model )
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }   
+        }
+
     }
 
 ?>

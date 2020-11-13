@@ -1,0 +1,17 @@
+<?php 
+
+    class ImageModel 
+        extends DatabaseModel
+    {
+        /**
+         * 
+         */
+        function __construct( $factory )
+        {
+            $this->setFactory( $factory );   
+        }
+
+
+    }
+
+?>

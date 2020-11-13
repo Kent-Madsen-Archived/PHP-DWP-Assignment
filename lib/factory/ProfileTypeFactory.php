@@ -53,6 +53,11 @@
          */
         final public function create( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -108,6 +113,10 @@
          */
         final public function update( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
 
             $retVal = array();
 
@@ -167,6 +176,11 @@
          */
         final public function delete( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+            
             $retVal = null;
 
             $this->getConnector()->connect();

@@ -43,6 +43,11 @@
          */
         final public function create( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -162,6 +167,11 @@
          */
         public function get_by_name( $email )
         {
+            if( !$this->validateAsValidModel( $email ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -217,6 +227,11 @@
          */
         final public function update( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $retVal = false;
 
             $this->getConnector()->connect();
@@ -274,6 +289,11 @@
          */
         final public function delete( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $retVal = null;
 
             $this->getConnector()->connect();
