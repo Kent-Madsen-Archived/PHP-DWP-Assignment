@@ -106,6 +106,9 @@
             $this->information = $var;
         }
 
+        /**
+         * 
+         */
         final protected function validateAsMySQLInformation( $var )
         {
             if( is_null( $var ) )
@@ -134,6 +137,9 @@
             $this->connector = $var;
         }
 
+        /**
+         * 
+         */
         final protected function validateAsMysqli( $var )
         {
             if( is_null( $var ) )

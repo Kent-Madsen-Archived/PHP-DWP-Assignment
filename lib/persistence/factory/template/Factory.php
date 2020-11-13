@@ -32,14 +32,24 @@
         */
         public function setConnector( $var )
         {
+            if( !$this->validateAsValidConnector( $var ) )
+            {
+                throw new Exception( "Factory - setConnector: Only class MySQLConnector or null is allowed" );
+            }
+
             $this->connector = $var;
         }
 
         /**
          * 
          */
-        public function validateAsValidConnector( $var )
+        protected function validateAsValidConnector( $var )
         {
+            if( is_null( $var ) )
+            {
+                return true;
+            }
+
             if( $var instanceof MySQLConnector )
             {
                 return true;
@@ -77,7 +87,14 @@
          */
         final public function setPaginationIndex( $idx )
         {
-            $this->pagination_index = $idx;
+            if( $idx == null || is_numeric( $idx ) )
+            {
+                $this->pagination_index = $idx;
+            }
+            else
+            {
+                throw new Exception( 'Factory - setPaginationIndex: only numeric characters or null is allowed' );
+            }
         }
 
         /**
@@ -85,7 +102,14 @@
          */
         final public function setLimit( $var )
         {
-            $this->limit = $var;
+            if( is_null( $var ) || is_numeric( $var ) )
+            {
+                $this->limit = $var;
+            }
+            else 
+            {
+                throw new Exception( 'Factory - setLimit: only numeric characters or null is allowed' );   
+            }
         }
     }
 
