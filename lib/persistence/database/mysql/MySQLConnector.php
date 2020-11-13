@@ -41,6 +41,9 @@
                                             $information->retrieve_username(), $information->retrieve_password(), 
                                             $information->retrieve_database(), $information->retrieve_port() );
             
+            // by default is true. it's set to false so it won't update the mysql state automaticly
+            // consequence is that factory classes have to call commit. inorder for change to 
+            // be updated.
             $local_connection->autocommit( FALSE );
 
             // 
