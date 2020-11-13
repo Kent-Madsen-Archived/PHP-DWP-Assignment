@@ -162,7 +162,7 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'ProfileInformationModel - setIdentity: null or numeric number is allowed' );
             }

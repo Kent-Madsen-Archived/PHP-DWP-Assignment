@@ -106,6 +106,11 @@
          */
         public function setIdentity( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'ProfileModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->identity = $var;
         }
         

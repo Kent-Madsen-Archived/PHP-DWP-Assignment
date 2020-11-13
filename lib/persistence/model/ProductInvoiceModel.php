@@ -43,7 +43,7 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
             }
