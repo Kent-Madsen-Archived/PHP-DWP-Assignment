@@ -24,6 +24,9 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ArticleModel( $this );
@@ -31,19 +34,32 @@
             return $model;
         }
 
+        /**
+         * 
+         */
         final public function setup()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function setupSecondaries()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function exist_database()
         {
+            $status_factory = new StatusFactory( $this->getConnector() );
             
+            $value = $status_factory->getStatusOnTable('dwp_assignment', 'article');
+            
+            return $value;
         }
 
         /**

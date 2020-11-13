@@ -35,6 +35,10 @@
 
                 $information = new MySQLInformation( $access, $user_credential, $database );
 
+                $articleFactory = new ArticleFactory(new MySQLConnector($information));
+
+                var_dump($articleFactory->exist_database());
+
             ?>
 
         </main>

@@ -37,7 +37,11 @@
 
         final public function exist_database()
         {
+            $status_factory = new StatusFactory( $this->getConnector() );
             
+            $value = $status_factory->getStatusOnTable('dwp_assignment', 'person_address');
+            
+            return $value;   
         }
 
         final public function createModel()
