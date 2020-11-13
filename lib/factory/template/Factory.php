@@ -35,6 +35,19 @@
             $this->connector = $var;
         }
 
+        /**
+         * 
+         */
+        public function validateAsValidConnector( $var )
+        {
+            if( $var instanceof MySQLConnector )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
             // Getters
         final public function calculateOffset()

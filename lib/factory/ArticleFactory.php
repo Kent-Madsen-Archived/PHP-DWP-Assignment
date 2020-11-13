@@ -16,9 +16,26 @@
          */
         function __construct( $mysql_connector )
         {
+            if( !$this->validateAsValidConnector( $mysql_connector ) )
+            {
+                throw new Exception( 'Not a valid connector' );
+            }
+            
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof ArticleModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
         
         /**
          * 
@@ -92,6 +109,11 @@
          */
         final public function create( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -147,6 +169,11 @@
          */
         final public function update( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -199,6 +226,11 @@
          */
         final public function delete( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception('Not accepted model');
+            }
+            
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();

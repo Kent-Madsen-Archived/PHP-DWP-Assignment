@@ -6,7 +6,25 @@
          */
         function __construct( $mysql_connector )
         {
+            if( !$this->validateAsValidConnector( $mysql_connector ) )
+            {
+                throw new Exception( 'Not a valid connector' );
+            }
+
             $this->setConnector( $mysql_connector );
+        }
+
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof ProductCategoryModel )
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

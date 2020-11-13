@@ -19,6 +19,20 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
+        final public function validateAsValidModel( $var )
+        {
+            if( $var instanceof BroughtProductModel )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
 
         /**
          * 
@@ -101,9 +115,7 @@
 
             return $retVal;
         }
-
-
-
+        
     }
 
 ?>
