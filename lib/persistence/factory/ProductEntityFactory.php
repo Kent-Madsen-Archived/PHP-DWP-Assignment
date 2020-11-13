@@ -18,6 +18,10 @@
         {
             return 'product_entity';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

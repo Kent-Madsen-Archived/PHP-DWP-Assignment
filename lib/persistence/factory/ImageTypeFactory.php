@@ -18,6 +18,10 @@
         {
             return 'image_type';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
         
         /**
          * 

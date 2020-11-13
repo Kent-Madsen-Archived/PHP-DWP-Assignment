@@ -18,6 +18,10 @@
         {
             return 'brought_product';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

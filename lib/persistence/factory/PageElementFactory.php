@@ -18,6 +18,10 @@
         {
             return 'page_element';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

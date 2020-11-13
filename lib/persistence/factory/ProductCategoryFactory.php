@@ -19,6 +19,10 @@
         {
             return 'product_category';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

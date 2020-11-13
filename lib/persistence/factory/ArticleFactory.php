@@ -18,6 +18,10 @@
         {
             return 'article';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
         
         /**
          * 

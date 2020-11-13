@@ -19,6 +19,10 @@
         {
             return 'person_name';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

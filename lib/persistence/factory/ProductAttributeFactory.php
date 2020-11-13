@@ -18,6 +18,10 @@
         {
             return 'product_attribute';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

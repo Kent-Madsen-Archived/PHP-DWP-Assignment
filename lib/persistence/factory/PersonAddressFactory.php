@@ -19,6 +19,10 @@
         {
             return 'person_address';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
         
         /**
          * 

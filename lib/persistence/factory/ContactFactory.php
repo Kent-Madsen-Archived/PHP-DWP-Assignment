@@ -18,6 +18,10 @@
         {
             return 'contact';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

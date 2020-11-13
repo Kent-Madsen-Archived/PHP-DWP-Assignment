@@ -18,6 +18,10 @@
         {
             return 'associated_category';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

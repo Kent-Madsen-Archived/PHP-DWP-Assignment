@@ -19,6 +19,10 @@
         {
             return 'product';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 

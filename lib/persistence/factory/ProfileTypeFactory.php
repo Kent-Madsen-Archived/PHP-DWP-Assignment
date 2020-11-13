@@ -20,6 +20,11 @@
             return 'profile_type';
         }
 
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
+
         /**
          * 
          */
