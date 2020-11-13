@@ -29,6 +29,8 @@
             return $this->connector;
         }
 
+        public abstract function getFactoryTableName();
+
         /**
         * 
         */

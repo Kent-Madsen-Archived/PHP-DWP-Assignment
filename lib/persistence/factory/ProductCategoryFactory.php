@@ -19,11 +19,15 @@
         {
             return 'product_category';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -61,7 +65,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable( 'dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;         
         }
@@ -228,6 +233,14 @@
             }
 
             return $retVal;
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
     }
 

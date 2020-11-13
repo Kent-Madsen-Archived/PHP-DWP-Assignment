@@ -11,16 +11,22 @@
     class PageElementFactory 
         extends Factory
     {
+        /**
+         * 
+         */
         final public static function getTableName()
         {
             return 'page_element';
         }
-        
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -48,7 +54,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable('dwp_assignment', self::getTableName());
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;
         }
@@ -76,8 +83,10 @@
             return false;
         }
 
-        
-        public function read()
+        /**
+         * 
+         */
+        final public function read()
         {
             $this->getConnector()->connect();
 
@@ -118,15 +127,15 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity($row['identity']);
+                        $brought->setIdentity( $row[ 'identity' ] );
 
-                        $brought->setAreaKey($row['area_key']);
+                        $brought->setAreaKey( $row[ 'area_key' ] );
                         
-                        $brought->setTitle($row['title']);
-                        $brought->setContent($row['content']);
+                        $brought->setTitle( $row[ 'title' ] );
+                        $brought->setContent( $row[ 'content' ] );
                         
-                        $brought->setCreatedOn($row['created_on']);
-                        $brought->setLastUpdate($row['last_update']);
+                        $brought->setCreatedOn( $row[ 'created_on' ] );
+                        $brought->setLastUpdate( $row[ 'last_update' ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -143,7 +152,7 @@
             return $retVal;
         }
 
-        public function create( $model )
+        final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -152,7 +161,7 @@
 
         }
 
-        public function delete( $model )
+        final public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -160,12 +169,17 @@
             }   
         }
 
-        public function update( $model )
+        final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }   
+        }
+
+        final public function length()
+        {
+            return 0;
         }
 
     }

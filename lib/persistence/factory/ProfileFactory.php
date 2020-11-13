@@ -19,11 +19,16 @@
         {
             return 'profile';
         }
+        
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -51,7 +56,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable( 'dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;     
         }
@@ -282,7 +288,7 @@
                 $this->getConnector()->undo_state();
 
                 echo $ex;
-                throw new Exception( 'Error:' . $ex );
+                throw new Exception( 'Error :' . $ex );
             }
             finally
             {
@@ -358,7 +364,7 @@
         /**
          * 
          */
-        public function get_by_username( $username )
+        final public function get_by_username( $username )
         {
             $retVal = array();
 
@@ -371,7 +377,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "Select * from profile where username = ?;";
+            $sql = "SELECT * FROM profile WHERE username = ?;";
 
             try
             {
@@ -429,7 +435,7 @@
         /**
          * 
          */
-        public function validate_if_profile_type_is_admin( $value_int )
+        final public function validate_if_profile_type_is_admin( $value_int )
         {
             $retVal = false;
 
@@ -442,7 +448,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "SELECT is_admin( ? ) as validation;";
+            $sql = "SELECT is_admin( ? ) AS validation;";
 
             try
             {
@@ -481,6 +487,14 @@
             }
 
             return $retVal;
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
     }
 

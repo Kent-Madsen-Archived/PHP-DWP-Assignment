@@ -12,15 +12,22 @@
     class ProductFactory 
         extends Factory
     {
+        /**
+         * 
+         */
         final public static function getTableName()
         {
             return 'product';
+        }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
         }
 
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -48,7 +55,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable( 'dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;         
         }
@@ -96,7 +104,7 @@
             $retVal = array();
 
             // sql, that the prepared statement uses
-            $sql = "select * from product limit ? offset ?;";
+            $sql = "SELECT * FROM product LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit = null;
@@ -333,6 +341,14 @@
             }
 
             return $retVal;
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
 
     }

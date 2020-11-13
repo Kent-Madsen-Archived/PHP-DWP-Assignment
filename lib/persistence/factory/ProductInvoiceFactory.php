@@ -18,6 +18,10 @@
         {
             return 'product_invoice';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 
@@ -50,7 +54,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable('dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;      
         }
@@ -68,6 +73,9 @@
             return false;
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ProductInvoiceModel( $this );
@@ -75,6 +83,9 @@
             return $model;
         }
 
+        /**
+         * 
+         */
         final public function read()
         {
 
@@ -138,6 +149,9 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
         final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -146,6 +160,9 @@
             }
         }
 
+        /**
+         * 
+         */
         final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -155,12 +172,23 @@
 
         }
 
+        /**
+         * 
+         */
         final public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
     }
 

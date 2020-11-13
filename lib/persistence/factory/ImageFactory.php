@@ -19,11 +19,15 @@
         {
             return 'image';
         }
+        public function getFactoryTableName()
+        {
+            return self::getTableName();
+        }
 
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -51,7 +55,8 @@
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
-            $value = $status_factory->getStatusOnTable( 'dwp_assignment', self::getTableName() );
+            $database = $this->getConnector()->getInformation()->getDatabase();
+            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return $value;
         }
@@ -121,18 +126,18 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity($row['identity']);
+                        $brought->setIdentity( $row[ 'identity' ] );
                         
-                        $brought->setImageSrc($row['image_src']);
-                        $brought->setImageTypeId($row['image_type_id']);
+                        $brought->setImageSrc( $row[ 'image_src' ] );
+                        $brought->setImageTypeId( $row[ 'image_type_id' ] );
                         
-                        $brought->setTitle($row['title']);
-                        $brought->setAlt($row['alt']);
+                        $brought->setTitle( $row[ 'title' ] );
+                        $brought->setAlt( $row[ 'alt' ] );
                         
-                        $brought->setParentId($row['parent_id']);
+                        $brought->setParentId( $row[ 'parent_id' ] );
 
-                        $brought->setRegistered($row['registered']);
-                        $brought->setLastUpdated($row['last_updated']);
+                        $brought->setRegistered( $row[ 'registered' ] );
+                        $brought->setLastUpdated( $row[ 'last_updated' ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -174,6 +179,11 @@
                 throw new Exception( 'Not accepted model' );
             }
             
+        }
+
+        final public function length()
+        {
+            return 0;
         }
     }
 
