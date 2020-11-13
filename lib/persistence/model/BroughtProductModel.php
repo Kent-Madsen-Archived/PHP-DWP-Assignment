@@ -70,17 +70,8 @@
          */
         public function getInvoiceId()
         {
+
             return $this->invoice_id;
-        }
-        
-
-
-        /**
-         * 
-         */
-        public function setNumberOfProducts( $var )
-        {
-            $this->identity = $number_of_products;
         }
 
 
@@ -89,7 +80,25 @@
          */
         public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->identity = $var;
+        }
+
+        /**
+         * 
+         */
+        public function setNumberOfProducts( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setNumberOfProducts: null or numeric number is allowed' );
+            }
+
+            $this->identity = $number_of_products;
         }
 
 
@@ -98,6 +107,11 @@
          */
         public function setInvoiceId( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setInvoiceId: null or numeric number is allowed' );
+            }
+
             $this->invoice_id = $var;
         }
 
@@ -114,6 +128,11 @@
          */
         public function setProductId( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setProductId: null or numeric number is allowed' );
+            }
+
             $this->product_id = $var;
         }
 
@@ -123,6 +142,11 @@
          */
         public function setPrice( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'BroughtProductModel - setPrice: null or numeric number is allowed' );
+            }
+
             $this->price = $var;
         }
 

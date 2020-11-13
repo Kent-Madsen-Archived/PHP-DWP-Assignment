@@ -34,13 +34,6 @@
             return $this->identity;
         }
 
-        /**
-         * 
-         */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
 
         /**
          * 
@@ -49,15 +42,7 @@
         {
             return $this->street_name;
         }
-
-        /**
-         * 
-         */
-        public function setStreetName( $var )
-        {
-            $this->street_name = $var;
-        }
-
+        
         /**
          * 
          */
@@ -66,13 +51,6 @@
             return $this->street_address_number;
         }
 
-        /**
-         * 
-         */
-        public function setStreetAddressNumber( $var )
-        {
-            $this->street_address_number = $var;
-        }
 
         /**
          * 
@@ -80,6 +58,28 @@
         public function getZipCode()
         {
             return $this->zip_code;
+        }
+
+        /**
+         * 
+         */
+        public function getCountry()
+        {
+            return $this->country;
+        }
+
+
+        /**
+         * 
+         */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setIdentity: null or numeric number is allowed' );
+            }
+            
+            $this->identity = $var;
         }
 
         /**
@@ -93,17 +93,31 @@
         /**
          * 
          */
-        public function getCountry()
+        public function setCountry( $var )
         {
-            return $this->country;
+            $this->country = $var;
         }
 
         /**
          * 
          */
-        public function setCountry( $var )
+        public function setStreetName( $var )
         {
-            $this->country = $var;
+            $this->street_name = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setStreetAddressNumber( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
+            $this->street_address_number = $var;
         }
 
     }

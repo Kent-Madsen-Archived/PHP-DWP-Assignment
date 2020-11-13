@@ -55,7 +55,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = array();
@@ -125,7 +125,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = array();
@@ -197,7 +197,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
             
             $retVal = null;

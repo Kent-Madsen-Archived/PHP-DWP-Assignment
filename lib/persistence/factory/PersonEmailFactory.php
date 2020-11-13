@@ -45,7 +45,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = array();
@@ -167,11 +167,6 @@
          */
         public function get_by_name( $email )
         {
-            if( !$this->validateAsValidModel( $email ) )
-            {
-                throw new Exception('Not accepted model');
-            }
-
             $retVal = array();
 
             $this->getConnector()->connect();
@@ -229,7 +224,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = false;
@@ -291,7 +286,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = null;

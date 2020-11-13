@@ -47,6 +47,11 @@
          */
         public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'PersonEmailModel - setIdentity: null or numeric number is allowed' );
+            }
+            
             $this->identity = $var;
         }
         

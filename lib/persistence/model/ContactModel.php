@@ -89,12 +89,16 @@
         }
 
             // Setters
-
         /**
          * 
          */
         public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->identity = $var;
         }
 
@@ -103,6 +107,11 @@
          */
         public function setHasBeenSend( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setHasBeenSend: null or numeric number is allowed' );
+            }
+
             $this->has_been_send = $var;
         }
 
@@ -119,6 +128,7 @@
          */
         public function setFromMail( $var )
         {
+            
             $this->fromMail = $var;
         }
 
@@ -135,6 +145,11 @@
          */
         public function setSubject( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setSubject: null or string is allowed' );
+            }
+
             $this->subject = $var;
         }
 
@@ -143,22 +158,12 @@
          */
         public function setMessage( $var )
         {
-            $this->message = $var;
-        }
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setMessage: null or string is allowed' );
+            }
 
-        /**
-         * 
-         */
-        public function getHasBeenSendAsInt()
-        {
-            if( $this->getHasBeenSend() )
-            {
-                return 1;
-            }
-            else 
-            {
-                return 0;
-            }
+            $this->message = $var;
         }
 
     }

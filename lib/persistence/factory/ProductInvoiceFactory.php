@@ -18,7 +18,7 @@
         /**
          * 
          */
-        final public function validateAsValidModel( $var )
+        final protected function validateAsValidModel( $var )
         {
             if( $var instanceof ProductInvoiceModel )
             {
@@ -37,7 +37,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
         }
 
@@ -45,7 +45,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
         }
@@ -54,7 +54,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
         }
     }

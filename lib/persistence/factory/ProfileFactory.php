@@ -114,7 +114,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = array();
@@ -184,7 +184,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = null;
@@ -261,7 +261,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
             
             $retVal = null;
@@ -356,7 +356,7 @@
                         $model->setUsername( $row[ 'username' ] );
 
                         $model->setPassword( $row[ 'password' ] );
-                        $model->setIsPasswordHashed(TRUE );
+                        $model->setIsPasswordHashed( TRUE );
 
 
                         $model->setProfileType( $row[ 'profile_type' ] );

@@ -28,16 +28,6 @@
             return $this->identity;
         }
 
-
-        /**
-         * 
-         */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
-
-
         /**
          * 
          */
@@ -46,16 +36,7 @@
             return $this->product_attribute_id;
         }
 
-
-        /**
-         * 
-         */
-        public function setProductAttributeId( $var )
-        {
-            $this->product_attribute_id = $var;
-        }
-
-
+        
         /**
          * 
          */
@@ -68,18 +49,50 @@
         /**
          * 
          */
-        public function setProductCategoryId( $var )
+        public function getProductId()
         {
-            $this->product_category_id = $var;
+            return $this->product_id;
+        }
+
+        /**
+         * 
+         */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'AssociatedCategoryModel - setIdentity: null or numeric number is allowed' );
+            }
+
+            $this->identity = $var;
+        }
+  
+        
+        /**
+        * 
+        */
+        public function setProductAttributeId( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'AssociatedCategoryModel - setProductAttributeId: null or numeric number is allowed' );
+            }
+        
+            $this->product_attribute_id = $var;
         }
 
 
         /**
          * 
          */
-        public function getProductId()
+        public function setProductCategoryId( $var )
         {
-            return $this->product_id;
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'AssociatedCategoryModel - setProductCategoryId: null or numeric number is allowed' );
+            }
+
+            $this->product_category_id = $var;
         }
 
 
@@ -88,6 +101,11 @@
          */
         public function setProductId( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'AssociatedCategoryModel - setProductId: null or numeric number is allowed' );
+            }
+
             $this->product_id = $var;
         }
     }

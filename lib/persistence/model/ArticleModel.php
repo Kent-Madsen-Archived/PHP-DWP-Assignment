@@ -53,7 +53,9 @@
             return $this->content;
         }
 
-        
+        /**
+         * 
+         */
         public function getCreatedOn()
         {
             return $this->created_on;
@@ -74,6 +76,11 @@
          */
         public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ArticleModel - setIdentity: null or numeric number is allowed' );
+            }
+            
             $this->identity = $var;
         }
 
@@ -83,6 +90,11 @@
          */
         public function setTitle( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ArticleModel - setTitle: null or string is allowed' );
+            }
+
             $this->title = $var;
         }
 
@@ -92,6 +104,11 @@
          */
         public function setContent( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ArticleModel - setContent: null or string is allowed' );
+            }
+
             $this->content = $var;
         }
 
@@ -101,6 +118,7 @@
          */
         public function setCreatedOn( $var )
         {
+
             $this->created_on = $var;
         }
 
@@ -110,6 +128,7 @@
          */
         public function setLastUpdated( $var )
         {
+            
             $this->last_updated = $var;
         }
 

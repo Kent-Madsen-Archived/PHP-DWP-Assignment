@@ -37,41 +37,18 @@
         /**
          * 
          */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
-
-        /**
-         * 
-         */
         public function getFirstName()
         {
             return $this->first_name;
         }
 
-        /**
-         * 
-         */
-        public function setFirstName( $var )
-        {
-            $this->first_name = $var;
-        }
-
+    
         /**
          * 
          */
         public function getLastName()
         {
             return $this->last_name;
-        }
-
-        /**
-         * 
-         */
-        public function setLastName( $var )
-        {
-            $this->last_name = $var;
         }
 
         /**
@@ -85,9 +62,38 @@
         /**
          * 
          */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'PersonNameModel - setIdentity: null or numeric number is allowed' );
+            }
+            
+            $this->identity = $var;
+        }
+
+        /**
+         * 
+         */
+        public function setFirstName( $var )
+        {
+            $this->first_name = $var;
+        }
+
+        /**
+         * 
+         */
         public function setMiddleName( $var )
         {
             $this->middle_name = $var;
+        }
+
+        /**
+         * 
+         */
+        public function setLastName( $var )
+        {
+            $this->last_name = $var;
         }
 
     }

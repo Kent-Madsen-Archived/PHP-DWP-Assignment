@@ -18,14 +18,7 @@
         private $invoice_registered = null;
 
         // Accessors
-        /**
-         * 
-         */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
-
+            // getters
         /**
          * 
          */
@@ -39,19 +32,33 @@
             return $this->total_price;
         }
 
-        public function setTotalPrice( $var )
-        {
-            $this->total_price = $var;
-        }
-
         public function getRegistered()
         {
             return $this->invoice_registered;
         }
 
+            // Setters
+        /**
+         * 
+         */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
+            }
+            
+            $this->identity = $var;
+        }
+
         public function setRegistered( $var )
         {
             $this->invoice_registered = $var;
+        }
+
+        public function setTotalPrice( $var )
+        {
+            $this->total_price = $var;
         }
 
     }

@@ -30,16 +30,6 @@
             return $this->identity;
         }
 
-        
-        /**
-         * 
-         */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
-
-
         /**
          * 
          */
@@ -47,16 +37,6 @@
         {
             return $this->arrived;
         }
-
-
-        /**
-         * 
-         */
-        public function setArrived( $var )
-        {
-            $this->arrived = $var;
-        }
-
 
         /**
          * 
@@ -70,29 +50,10 @@
         /**
          * 
          */
-        public function setEntityCode( $var )
-        {
-            $this->entity_code = $var;
-        }
-
-
-        /**
-         * 
-         */
         public function getProductId()
         {
             return $this->product_id;
         }
-
-        
-        /**
-         * 
-         */
-        public function setProductId( $var )
-        {
-            $this->product_id = $var;
-        }
-
 
         /**
          * 
@@ -105,10 +66,49 @@
         /**
          * 
          */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ProductEntityModel - setIdentity: null or numeric number is allowed' );
+            }
+            
+            $this->identity = $var;
+        }
+
+
+        /**
+         * 
+         */
+        public function setEntityCode( $var )
+        {
+            $this->entity_code = $var;
+        }
+
+        /**
+         * 
+         */
+        public function setProductId( $var )
+        {
+            $this->product_id = $var;
+        }
+
+        /**
+         * 
+         */
         public function setBrought( $var )
         {
             $this->brought_id = $var;
         }
+
+        /**
+         * 
+         */
+        public function setArrived( $var )
+        {
+            $this->arrived = $var;
+        }
+
     }
 
 ?>

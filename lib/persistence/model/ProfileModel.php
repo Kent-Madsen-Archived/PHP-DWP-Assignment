@@ -90,6 +90,11 @@
          */
         public function setPassword( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ProfileModel - setIdentity: null or numeric number is allowed' );
+            }
+            
             $this->password = $var;
         }
 
