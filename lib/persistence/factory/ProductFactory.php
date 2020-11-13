@@ -12,6 +12,9 @@
     class ProductFactory 
         extends Factory
     {
+        /**
+         * 
+         */
         final public static function getTableName()
         {
             return 'product';
@@ -20,7 +23,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }

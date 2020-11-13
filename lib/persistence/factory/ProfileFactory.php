@@ -23,7 +23,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -359,7 +359,7 @@
         /**
          * 
          */
-        public function get_by_username( $username )
+        final public function get_by_username( $username )
         {
             $retVal = array();
 
@@ -430,7 +430,7 @@
         /**
          * 
          */
-        public function validate_if_profile_type_is_admin( $value_int )
+        final public function validate_if_profile_type_is_admin( $value_int )
         {
             $retVal = false;
 

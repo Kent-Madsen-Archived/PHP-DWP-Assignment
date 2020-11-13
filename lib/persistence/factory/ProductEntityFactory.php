@@ -22,7 +22,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {   
             $this->setConnector( $mysql_connector );
         }
