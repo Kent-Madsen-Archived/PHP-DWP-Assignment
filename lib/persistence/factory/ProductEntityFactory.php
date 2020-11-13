@@ -11,19 +11,22 @@
     class ProductEntityFactory
         extends Factory
     {
+        final public static function getTableName()
+        {
+            return 'product_entity';
+        }
+
         /**
          * 
          */
         function __construct( $mysql_connector )
-        {
-            if( !$this->validateAsValidConnector( $mysql_connector ) )
-            {
-                throw new Exception( 'Not a valid connector' );
-            }
-            
+        {   
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ProductEntityModel( $this );
@@ -31,19 +34,32 @@
             return $model;
         }
         
+        /**
+         * 
+         */
         final public function setup()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function setupSecondaries()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function exist_database()
         {
+            $status_factory = new StatusFactory( $this->getConnector() );
             
+            $value = $status_factory->getStatusOnTable( 'dwp_assignment', self::getTableName() );
+            
+            return $value;      
         }
 
         /**

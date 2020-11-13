@@ -9,25 +9,50 @@
      * 
      */
     class ProductInvoiceFactory
+        extends Factory
     {
+        /**
+         * 
+         */
+        final public static function getTableName()
+        {
+            return 'product_invoice';
+        }
+
+        /**
+         * 
+         */
         public function __construct( $mysql_connector )
         {
-            
+            $this->setConnector( $mysql_connector );    
         }
         
+        /**
+         * 
+         */
         final public function setup()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function setupSecondaries()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function exist_database()
         {
+            $status_factory = new StatusFactory( $this->getConnector() );
             
+            $value = $status_factory->getStatusOnTable('dwp_assignment', self::getTableName() );
+            
+            return $value;      
         }
 
         /**
