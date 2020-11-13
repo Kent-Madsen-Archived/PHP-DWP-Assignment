@@ -112,7 +112,7 @@
          */
         public function setStreetAddressNumber( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !$this->identityValidation( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }

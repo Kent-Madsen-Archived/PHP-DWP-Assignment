@@ -90,6 +90,11 @@
          */
         public function setProductId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->product_id = $var;
         }
 
@@ -98,6 +103,11 @@
          */
         public function setBrought( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+            
             $this->brought_id = $var;
         }
 

@@ -26,7 +26,7 @@
         private $profile_type = 0;
 
         // Accessors
-        // Getters
+            // Getters
         /**
          * 
          */
@@ -60,6 +60,14 @@
             return $this->identity;
         }
 
+        /**
+         * 
+         */
+        public function getIsPasswordHashed()
+        {
+            return $this->is_password_hashed;
+        }
+
         // Setters
         /**
          * 
@@ -69,13 +77,6 @@
             $this->username = $var;
         }
 
-        /**
-         * 
-         */
-        public function getIsPasswordHashed()
-        {
-            return $this->is_password_hashed;
-        }
 
         /**
          * 
@@ -98,6 +99,11 @@
          */
         public function setProfileType( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->profile_type = $var;
         }
 

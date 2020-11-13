@@ -108,6 +108,11 @@
          */
         public function setProfileId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+            
             $this->profile_id = $var;
         }
 
@@ -117,6 +122,11 @@
          */
         public function setPersonNameId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->person_name_id = $var;
         }
 
@@ -126,6 +136,11 @@
          */
         public function setPersonAddressId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->person_address_id = $var;
         }
 
@@ -135,6 +150,11 @@
          */
         public function setPersonEmailId( $var )
         {
+            if( !$this->identityValidation( $var ) )
+            {
+                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+            }
+
             $this->person_email_id = $var;
         }
 
