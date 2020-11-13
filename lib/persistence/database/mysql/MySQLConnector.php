@@ -18,9 +18,9 @@
          */
         public function __construct( $mysql_information ) 
         {
-            $this->information = $mysql_information;
+            $this->setInformation( $mysql_information );
 
-            $this->connector = null;
+            $this->setConnector( null );
         }
 
         // Variables
