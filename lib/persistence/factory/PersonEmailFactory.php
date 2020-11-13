@@ -57,6 +57,9 @@
             return $value;      
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new PersonEmailModel( $this );
@@ -440,6 +443,14 @@
             }
 
             return $retVal;
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
 
     }

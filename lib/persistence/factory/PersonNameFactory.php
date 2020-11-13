@@ -338,6 +338,14 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
+        }
+
     }
 
 ?>

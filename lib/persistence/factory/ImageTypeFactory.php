@@ -22,7 +22,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -56,6 +56,9 @@
             return $value;
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ImageTypeModel( $this );
@@ -76,7 +79,10 @@
             return false;
         }
 
-        public function read()
+        /**
+         * 
+         */
+        final public function read()
         {
             $this->getConnector()->connect();
 
@@ -135,7 +141,10 @@
             return $retVal;
         }
 
-        public function create( $model )
+        /**
+         * 
+         */
+        final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -144,7 +153,10 @@
 
         }
 
-        public function delete( $model )
+        /**
+         * 
+         */
+        final public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -153,13 +165,24 @@
 
         }
 
-        public function update( $model )
+        /**
+         * 
+         */
+        final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
             
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
     }
 

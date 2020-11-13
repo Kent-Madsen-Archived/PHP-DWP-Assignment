@@ -22,7 +22,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -314,6 +314,11 @@
                 //
                 $this->getConnector()->disconnect();
             }
+        }
+
+        final public function length()
+        {
+            return 0;
         }
 
     }

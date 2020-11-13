@@ -122,6 +122,14 @@
             }
             
         }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
+        }
     }
 
 ?>

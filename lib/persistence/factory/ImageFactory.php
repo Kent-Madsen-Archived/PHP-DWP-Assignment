@@ -23,7 +23,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -175,6 +175,11 @@
                 throw new Exception( 'Not accepted model' );
             }
             
+        }
+
+        final public function length()
+        {
+            return 0;
         }
     }
 

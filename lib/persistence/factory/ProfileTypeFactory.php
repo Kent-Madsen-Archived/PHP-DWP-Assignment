@@ -23,7 +23,7 @@
         /**
          * 
          */
-        function __construct( $mysql_connector )
+        public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
         }
@@ -326,6 +326,14 @@
             }
 
             return $retVal;
+        }
+
+        /**
+         * 
+         */
+        final public function length()
+        {
+            return 0;
         }
 
 
