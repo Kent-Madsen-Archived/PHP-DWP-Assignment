@@ -25,5 +25,38 @@
         {
             $this->factory = $factory;
         }
+
+        /**
+         * 
+         */
+        protected function genericNumberValidation( $value )
+        {
+            if( is_null( $value ) )
+            {
+                return true;
+            }
+
+            if( is_numeric( $value ) )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected function genericStringValidation( $value )
+        {
+            if( is_null( $value ) )
+            {
+                return true;
+            }
+
+            if( is_string( $value ) )
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 ?>

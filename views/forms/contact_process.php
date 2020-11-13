@@ -39,7 +39,7 @@
         $model->setFromMail( $_POST['form_contact_from'] );
         $model->setToMail( WEBPAGE_DEFAULT_MAILTO );
 
-        $model->setHasBeenSend( FALSE );        
+        $model->setHasBeenSend( 0 );        
 
         $domain->send( $model );
     }

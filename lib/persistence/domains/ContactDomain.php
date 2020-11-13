@@ -69,6 +69,7 @@
         protected function convert_mail_to_id( $model, $connection )
         {
             $person_email_factory = new PersonEmailFactory( $connection );
+
             $from_mail = $person_email_factory->get_by_name( $model->getFromMail() )[0];
 
             if( $from_mail == null )
@@ -81,6 +82,7 @@
             }
 
             $to_mail = $person_email_factory->get_by_name( $model->getToMail() )[0];
+
 
             if( $to_mail == null )
             {

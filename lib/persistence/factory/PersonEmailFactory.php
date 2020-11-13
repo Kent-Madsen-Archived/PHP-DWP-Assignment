@@ -167,11 +167,6 @@
          */
         public function get_by_name( $email )
         {
-            if( !$this->validateAsValidModel( $email ) )
-            {
-                throw new Exception( 'Not accepted model' );
-            }
-
             $retVal = array();
 
             $this->getConnector()->connect();

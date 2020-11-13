@@ -95,6 +95,11 @@
          */
         public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setIdentity: null or numeric number is allowed' );
+            }
+
             $this->identity = $var;
         }
 
@@ -103,6 +108,11 @@
          */
         public function setHasBeenSend( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setHasBeenSend: null or numeric number is allowed' );
+            }
+
             $this->has_been_send = $var;
         }
 
@@ -144,21 +154,6 @@
         public function setMessage( $var )
         {
             $this->message = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getHasBeenSendAsInt()
-        {
-            if( $this->getHasBeenSend() )
-            {
-                return 1;
-            }
-            else 
-            {
-                return 0;
-            }
         }
 
     }
