@@ -37,8 +37,6 @@
                 
                 $connection = new MySQLConnector($information);
 
-                $factory = new SetupInstallationFactory($connection);
-                $factory->installation();
 
 
             ?>

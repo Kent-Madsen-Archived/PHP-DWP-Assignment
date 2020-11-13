@@ -1,5 +1,8 @@
 <?php 
 
+    /**
+     * 
+     */
     class StatusFactory
     {
         /**
@@ -8,6 +11,69 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
+        }
+
+
+        // Variables
+        private $connector = null;
+
+        /**
+         * 
+         */
+        final public function getDatabaseStatus( $name )
+        {
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            $retVal = false;
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT SCHEMA_NAME = ? AS validation FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ?;";
+
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ss",
+                                    $stmt_compare_name,
+                                    $stmt_where_schema_name_is );
+
+                $stmt_compare_name = $name;
+                $stmt_where_schema_name_is = $name;
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        if( $row[ 'validation' ] == 1 )
+                        {
+                            $retVal = true;
+                        }
+                    }
+                }
+
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
         /**
@@ -141,14 +207,19 @@
             return $retVal;
         }
 
-        private $connector = null;
-
-        public function getConnector()
+        // Accessors
+        /**
+         * 
+         */
+        final public function getConnector()
         {
             return $this->connector;
         }
 
-        public function setConnector( $connector )
+        /**
+         * 
+         */
+        final public function setConnector( $connector )
         {
             $this->connector = $connector;
         }
