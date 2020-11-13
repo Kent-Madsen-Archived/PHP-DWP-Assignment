@@ -2,6 +2,8 @@
 
     class ProductCategoryModel 
         extends DatabaseModel
+        implements ProductCategoryController,
+                   ProductCategoryView
     {
         // Constructors
         function __construct( $factory )

@@ -2,6 +2,8 @@
 
     class ProductInvoiceModel 
         extends DatabaseModel
+        implements ProductInvoiceView,
+                   ProductInvoiceController
     {
         // Constructors
         function __construct( $factory )

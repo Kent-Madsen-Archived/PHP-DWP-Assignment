@@ -2,6 +2,8 @@
 
     class AssociatedCategoryModel 
         extends DatabaseModel
+        implements AssociatedCategoryView,
+                   AssociatedCategoryController
     {
         // Constructors
         public function __construct( $factory )

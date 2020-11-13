@@ -2,6 +2,8 @@
 
     class ProductEntityModel 
         extends DatabaseModel
+        implements ProductEntityController,
+                   ProductEntityView
     {
         // Constructors
         function __construct( $factory )

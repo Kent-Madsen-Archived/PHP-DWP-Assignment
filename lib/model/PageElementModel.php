@@ -2,6 +2,8 @@
 
     class PageElementModel 
         extends DatabaseModel
+        implements PageElementController,
+                   PageElementView
     {
         // Constructors
         function __construct( $factory )

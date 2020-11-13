@@ -1,6 +1,9 @@
 <?php 
 
     class ProductUsedImageModel
+        extends DatabaseModel
+        implements ProductUsedImageController,
+                   ProductUsedImageView
     {
         /**
          * 

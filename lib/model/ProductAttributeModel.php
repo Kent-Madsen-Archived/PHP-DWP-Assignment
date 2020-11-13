@@ -2,6 +2,8 @@
 
     class ProductAttributeModel 
         extends DatabaseModel
+        implements ProductAttributeController,
+                   ProductAttributeView
     {
         // Constructors
         function __construct( $factory )

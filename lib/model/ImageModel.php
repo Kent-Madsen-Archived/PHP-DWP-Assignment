@@ -2,6 +2,8 @@
 
     class ImageModel 
         extends DatabaseModel
+        implements ImageController,
+                   ImageView
     {
         /**
          * 

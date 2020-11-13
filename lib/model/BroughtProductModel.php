@@ -2,6 +2,8 @@
 
     class BroughtProductModel 
         extends DatabaseModel
+        implements BroughtProductController,
+                   BroughtProductView
     {
         // Constructors
         function __construct( $factory )
