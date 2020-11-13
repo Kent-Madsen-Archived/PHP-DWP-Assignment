@@ -142,10 +142,10 @@
                                     $stmt_country );
 
                 //
-                $stmt_name                  = $model->getStreetName();
-                $stmt_street_address_number = $model->getStreetAddressNumber();
-                $stmt_zip_code              = $model->getZipCode();
-                $stmt_country               = $model->getCountry();
+                $stmt_name                  =  $model->getStreetName();
+                $stmt_street_address_number =  $model->getStreetAddressNumber();
+                $stmt_zip_code              =  $model->getZipCode();
+                $stmt_country               =  $model->getCountry();
 
                 // Executes the query
                 $stmt->execute();
@@ -180,7 +180,7 @@
         {
             if( !$this->validateAsValidModel( $model ) )
             {
-                throw new Exception('Not accepted model');
+                throw new Exception( 'Not accepted model' );
             }
 
             $retVal = array();

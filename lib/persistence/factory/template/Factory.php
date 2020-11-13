@@ -111,6 +111,7 @@
                 throw new Exception( 'Factory - setLimit: only numeric characters or null is allowed' );   
             }
         }
+
     }
 
 ?>

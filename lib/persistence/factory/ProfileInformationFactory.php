@@ -89,6 +89,7 @@
                 $stmt_person_name_id    = $model->getPersonNameId();
                 $stmt_person_address_id = $model->getPersonAddressId();
                 $stmt_person_email_id   = $model->getPersonEmailId();
+
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
 
@@ -157,9 +158,11 @@
 
                 //
                 $stmt_profile_id        = $model->getProfileId();
+                
                 $stmt_person_name_id    = $model->getPersonNameId();
                 $stmt_person_address_id = $model->getPersonAddressId();
                 $stmt_person_email_id   = $model->getPersonEmailId();
+
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
 

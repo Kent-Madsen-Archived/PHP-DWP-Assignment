@@ -52,6 +52,9 @@
             $contact_factory->create( $contact_model );
         }
 
+        /**
+         * 
+         */
         protected function getFromMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
@@ -71,6 +74,9 @@
             return $fromMail;
         }
 
+        /**
+         * 
+         */
         protected function getToMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
@@ -90,11 +96,17 @@
             return $toMail;
         }
 
+        /**
+         * 
+         */
         protected function getSubject()
         {
             return $_POST[ 'form_contact_subject' ];
         }
 
+        /**
+         * 
+         */
         protected function getMessage()
         {
             return $_POST[ 'form_contact_message' ];
