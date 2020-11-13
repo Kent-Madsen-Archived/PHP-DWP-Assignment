@@ -17,6 +17,19 @@
         private $total_price        = null;
         private $invoice_registered = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductInvoiceFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
             // getters
         /**

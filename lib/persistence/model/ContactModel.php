@@ -29,6 +29,19 @@
 
         private $identity  = 0;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ContactFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessor
             // Getters
 

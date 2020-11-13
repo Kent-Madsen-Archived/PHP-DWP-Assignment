@@ -25,6 +25,19 @@
 
         private $profile_type = 0;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProfileFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
             // Getters
         /**

@@ -23,6 +23,19 @@
         
         private $content = null;
         
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProfileTypeFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // accessors
         /**
          * 

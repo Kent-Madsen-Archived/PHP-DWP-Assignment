@@ -22,6 +22,19 @@
 
         private $registered = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof BroughtFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
         /**
          * 

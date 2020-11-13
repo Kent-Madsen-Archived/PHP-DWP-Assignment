@@ -12,7 +12,7 @@
         /**
          * 
          */
-        public function getFactory()
+        final public function getFactory()
         {
             return $this->factory;
         }
@@ -21,15 +21,25 @@
         /**
          * 
          */
-        public function setFactory( $factory )
+        final public function setFactory( $factory )
         {
+            if( !$this->validateFactory( $factory ) )
+            {
+                throw new Exception( 'Error: Factory instance is of the wrong type. ' );
+            }
+            
             $this->factory = $factory;
         }
 
         /**
          * 
          */
-        protected function genericNumberValidation( $value )
+        protected abstract function validateFactory( $factory );
+
+        /**
+         * 
+         */
+        final protected function genericNumberValidation( $value )
         {
             if( is_null( $value ) )
             {
@@ -44,7 +54,10 @@
             return false;
         }
 
-        protected function genericStringValidation( $value )
+        /**
+         * 
+         */
+        final protected function genericStringValidation( $value )
         {
             if( is_null( $value ) )
             {
@@ -59,9 +72,12 @@
             return false;
         }
 
-        protected function identityValidation( $value )
+        /**
+         * 
+         */
+        final protected function identityValidation( $value )
         {
-            if( genericNumberValidation( $value ) && is_int( $value ) )
+            if( $this->genericNumberValidation( $value ) && is_int( $value ) )
             {
                 return true;
             }

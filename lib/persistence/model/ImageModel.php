@@ -27,6 +27,19 @@
         private $registered   = null;
         private $last_updated = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ImageFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         //
         public function getIdentity()
         {

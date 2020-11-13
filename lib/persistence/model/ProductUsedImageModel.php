@@ -21,6 +21,19 @@
 
         private $is_profile_image = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductUsedImageFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessor
         public function getIdentity()
         {

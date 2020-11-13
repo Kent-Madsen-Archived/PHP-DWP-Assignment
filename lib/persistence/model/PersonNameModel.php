@@ -24,6 +24,18 @@
 
         private $identity       = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof PersonNameFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         // accessors
         /**

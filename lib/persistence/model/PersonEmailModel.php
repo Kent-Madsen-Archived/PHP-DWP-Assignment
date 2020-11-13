@@ -22,6 +22,18 @@
         
         private $content  = null;
         
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof PersonEmailFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         // accessors
             // getters

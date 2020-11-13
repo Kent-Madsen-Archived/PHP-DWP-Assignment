@@ -25,6 +25,19 @@
         private $zip_code               = null;
         private $country                = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof PersonAddressFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
         /**
          * 

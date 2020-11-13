@@ -20,6 +20,19 @@
         /**
          * 
          */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ImageTypeFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /**
+         * 
+         */
         public function getIdentity()
         {
             return $this->identity;

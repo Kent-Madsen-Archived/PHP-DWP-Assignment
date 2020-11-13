@@ -26,6 +26,19 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ArticleFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
         /**
          * 

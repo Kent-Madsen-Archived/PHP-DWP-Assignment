@@ -21,6 +21,19 @@
         private $created_on     = null;
         private $last_update    = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof PageElementFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // accessors
         /**
          * 

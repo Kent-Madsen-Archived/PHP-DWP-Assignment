@@ -20,6 +20,18 @@
         private $product_id = null;
         private $brought_id = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductEntityFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         // Accessors
         /**

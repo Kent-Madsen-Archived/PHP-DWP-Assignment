@@ -30,6 +30,19 @@
 
         private $registered = null;
         
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProfileInformationFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // accessors
         /**
          * 

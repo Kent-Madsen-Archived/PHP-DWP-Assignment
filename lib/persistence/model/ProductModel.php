@@ -24,6 +24,19 @@
         private $description    = null;
         private $price          = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Accessors
             // Getters
         final public function getIdentity()

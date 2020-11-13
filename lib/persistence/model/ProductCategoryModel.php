@@ -15,6 +15,19 @@
         private $identity = null;
         private $content  = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductCategoryFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // accessors
         /**
          * 

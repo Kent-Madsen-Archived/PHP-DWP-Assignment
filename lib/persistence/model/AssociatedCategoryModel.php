@@ -18,6 +18,18 @@
         private $product_category_id  = null;
         private $product_id           = null;
 
+        /**
+         * 
+         */
+        protected function validateFactory( $factory )
+        {
+            if( $factory instanceof AssociatedCategoryFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         // Accessors
         /**
