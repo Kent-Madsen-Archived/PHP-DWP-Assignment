@@ -11,6 +11,7 @@
             $this->setFactory( $factory );   
         }
 
+        // Variables
         private $identity = null;
 
         private $image_src     = null;

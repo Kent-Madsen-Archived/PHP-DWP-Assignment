@@ -40,7 +40,7 @@
         /**
          * 
          */
-        final public function get()
+        final public function read()
         {
             $this->getConnector()->connect();
 

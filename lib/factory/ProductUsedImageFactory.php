@@ -29,7 +29,7 @@
             return false;
         }
 
-        public function get()
+        public function read()
         {
 
         }

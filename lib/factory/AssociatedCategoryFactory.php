@@ -41,7 +41,7 @@
         /**
          * 
          */
-        final public function get()
+        final public function read()
         {
             
         }

@@ -20,7 +20,7 @@
             return false;
         }
 
-        final public function get()
+        final public function read()
         {
             
         }

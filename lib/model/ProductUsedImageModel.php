@@ -18,14 +18,10 @@
 
         private $is_profile_image = null;
 
+        // Accessor
         public function getIdentity()
         {
             return $this->identity;
-        }
-
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
         }
 
         public function getImagePreviewId()
@@ -33,24 +29,31 @@
             return $this->image_preview_id;
         }
 
-        public function setImagePreviewId( $var )
-        {
-            $this->image_preview_id = $var;
-        }
-
+        
         public function getImageFullId()
         {
             return $this->image_full_id;
+        }
+        
+        
+        public function getIsProfileImage()
+        {
+            return $this->is_profile_image;
+        }
+        
+        public function setImagePreviewId( $var )
+        {
+            $this->image_preview_id = $var;
         }
 
         public function setImageFullId( $var )
         {
             $this->image_full_id = $var;
         }
-
-        public function getIsProfileImage()
+        
+        public function setIdentity( $var )
         {
-            return $this->is_profile_image;
+            $this->identity = $var;
         }
 
         public function setIsProfileImage( $var )

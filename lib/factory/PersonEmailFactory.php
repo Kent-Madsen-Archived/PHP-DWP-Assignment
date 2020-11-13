@@ -101,7 +101,7 @@
         /**
          * 
          */
-        final public function get()
+        final public function read()
         {
             $retVal = array();
 
