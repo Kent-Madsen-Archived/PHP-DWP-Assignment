@@ -19,6 +19,10 @@
         {
             return 'image';
         }
+
+        /**
+         * 
+         */
         public function getFactoryTableName()
         {
             return self::getTableName();

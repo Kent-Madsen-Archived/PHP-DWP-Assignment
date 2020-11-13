@@ -18,7 +18,11 @@
         {
             return 'product_invoice';
         }
-        public function getFactoryTableName()
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }

@@ -20,7 +20,10 @@
             return 'profile_information';
         }
         
-        public function getFactoryTableName()
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }

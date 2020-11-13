@@ -19,7 +19,10 @@
             return 'product_used_images';
         }
 
-        public function getFactoryTableName()
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }

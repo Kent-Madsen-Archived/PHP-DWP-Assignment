@@ -5,7 +5,9 @@
      */
     class SetupInstallationFactory
     {
-        //
+        /**
+         * 
+         */
         public function __construct( $connection )
         {
             $this->setConnector( $connection );

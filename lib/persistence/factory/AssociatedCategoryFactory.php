@@ -18,7 +18,11 @@
         {
             return 'associated_category';
         }
-        public function getFactoryTableName()
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }
