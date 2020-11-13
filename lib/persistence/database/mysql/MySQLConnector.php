@@ -95,7 +95,27 @@
          */
         final public function setInformation( $var )
         {
+            if( !$this->validateAsMySQLInformation( $var ) )
+            {
+                throw new Exception( 'MySQLConnector - setInformation : Only class MySQLInformation or null is allowed' );
+            }
+
             $this->information = $var;
+        }
+
+        final protected function validateAsMySQLInformation( $var )
+        {
+            if( is_null( $var ) )
+            {
+                return true;
+            }
+
+            if( $var instanceof MySQLInformation )
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -103,7 +123,27 @@
          */
         final public function setConnector( $var )
         {
+            if( !$this->validateAsMysqli( $var ) ) 
+            {
+                throw new Exception( 'MySQLConnector - setConnector : Only class mysqli or null is allowed' );
+            }
+
             $this->connector = $var;
+        }
+
+        final protected function validateAsMysqli( $var )
+        {
+            if( is_null( $var ) )
+            {
+                return true;
+            }
+
+            if( $var instanceof mysqli )
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }

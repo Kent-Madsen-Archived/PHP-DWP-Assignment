@@ -23,6 +23,7 @@
             }
             
             $this->setConnector( $mysql_connector );
+
         }
 
         /**
