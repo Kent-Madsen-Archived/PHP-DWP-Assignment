@@ -97,7 +97,7 @@
             $retVal = array();
 
             // sql, that the prepared statement uses
-            $sql = "select * from product limit ? offset ?;";
+            $sql = "SELECT * FROM product LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit = null;

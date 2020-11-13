@@ -122,18 +122,18 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity($row['identity']);
+                        $brought->setIdentity( $row[ 'identity' ] );
                         
-                        $brought->setImageSrc($row['image_src']);
-                        $brought->setImageTypeId($row['image_type_id']);
+                        $brought->setImageSrc( $row[ 'image_src' ] );
+                        $brought->setImageTypeId( $row[ 'image_type_id' ] );
                         
-                        $brought->setTitle($row['title']);
-                        $brought->setAlt($row['alt']);
+                        $brought->setTitle( $row[ 'title' ] );
+                        $brought->setAlt( $row[ 'alt' ] );
                         
-                        $brought->setParentId($row['parent_id']);
+                        $brought->setParentId( $row[ 'parent_id' ] );
 
-                        $brought->setRegistered($row['registered']);
-                        $brought->setLastUpdated($row['last_updated']);
+                        $brought->setRegistered( $row[ 'registered' ] );
+                        $brought->setLastUpdated( $row[ 'last_updated' ] );
 
                         array_push( $retVal, $brought );
                     }

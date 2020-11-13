@@ -11,6 +11,9 @@
     class ProductAttributeFactory 
         extends Factory
     {
+        /**
+         * 
+         */
         final public static function getTableName()
         {
             return 'product_attribute';
@@ -24,6 +27,9 @@
             $this->setConnector( $mysql_connector );
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ProductAttributeModel( $this );
@@ -31,16 +37,25 @@
             return $model;
         }
 
+        /**
+         * 
+         */
         final public function setup()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function setupSecondaries()
         {
             
         }
 
+        /**
+         * 
+         */
         final public function exist_database()
         {
             $status_factory = new StatusFactory( $this->getConnector() );

@@ -283,7 +283,7 @@
                 $this->getConnector()->undo_state();
 
                 echo $ex;
-                throw new Exception( 'Error:' . $ex );
+                throw new Exception( 'Error :' . $ex );
             }
             finally
             {
@@ -372,7 +372,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "Select * from profile where username = ?;";
+            $sql = "SELECT * FROM profile WHERE username = ?;";
 
             try
             {
@@ -443,7 +443,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "SELECT is_admin( ? ) as validation;";
+            $sql = "SELECT is_admin( ? ) AS validation;";
 
             try
             {

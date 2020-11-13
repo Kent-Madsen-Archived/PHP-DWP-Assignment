@@ -56,6 +56,9 @@
             return $value;         
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new ProductUsedImageModel( $this );
@@ -76,11 +79,17 @@
             return false;
         }
 
+        /**
+         * 
+         */
         public function read()
         {
 
         }
 
+        /**
+         * 
+         */
         public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -90,6 +99,9 @@
 
         }
 
+        /**
+         * 
+         */
         public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -99,6 +111,9 @@
             
         }
 
+        /**
+         * 
+         */
         public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )

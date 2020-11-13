@@ -119,15 +119,15 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity($row['identity']);
+                        $brought->setIdentity( $row[ 'identity' ] );
 
-                        $brought->setAreaKey($row['area_key']);
+                        $brought->setAreaKey( $row[ 'area_key' ] );
                         
-                        $brought->setTitle($row['title']);
-                        $brought->setContent($row['content']);
+                        $brought->setTitle( $row[ 'title' ] );
+                        $brought->setContent( $row[ 'content' ] );
                         
-                        $brought->setCreatedOn($row['created_on']);
-                        $brought->setLastUpdate($row['last_update']);
+                        $brought->setCreatedOn( $row[ 'created_on' ] );
+                        $brought->setLastUpdate( $row[ 'last_update' ] );
 
                         array_push( $retVal, $brought );
                     }

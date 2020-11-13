@@ -57,6 +57,9 @@
             return $value;   
         }
 
+        /**
+         * 
+         */
         final public function createModel()
         {
             $model = new PersonAddressModel( $this );
