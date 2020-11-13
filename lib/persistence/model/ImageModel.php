@@ -68,44 +68,76 @@
             return $this->identity;
         }
 
-        public function setRegistered( $var )
+        public function setIdentity( $var )
         {
-            $this->registered = $var;
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setIdentity: null or numeric number is allowed' );
+            }
+
+            $this->identity = $var;
         }
 
-        public function setLastUpdated( $var )
+        public function setTitle( $var )
         {
-            $this->identity = $var;
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setTitle: null or string is allowed' );
+            }
+
+            $this->title = $var;
+        }
+
+        
+        public function setAlt( $var )
+        {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setAlt: null or string is allowed' );
+            }
+
+            $this->alt = $var;
         }
 
 
         public function setImageTypeId( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setImageTypeId: null or numeric number is allowed' );
+            }
+
             $this->image_type_id = $var;
         }
 
 
         public function setImageSrc( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setImageSrc: null or string is allowed' );
+            }
+
             $this->image_src = $var;
         }
 
         public function setParentId( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ImageModel - setParentId: null or numeric number is allowed' );
+            }
+
             $this->parent_id = $var;
         }
 
-        public function setAlt( $var )
+        public function setRegistered( $var )
         {
-            $this->alt = $var;
+            $this->registered = $var;
         }
 
-        public function setTitle( $var )
-        {
-            $this->title = $var;
-        }
 
-        public function setIdentity( $var )
+        public function setLastUpdated( $var )
         {
             $this->identity = $var;
         }

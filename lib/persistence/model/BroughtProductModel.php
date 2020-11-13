@@ -70,6 +70,7 @@
          */
         public function getInvoiceId()
         {
+
             return $this->invoice_id;
         }
 

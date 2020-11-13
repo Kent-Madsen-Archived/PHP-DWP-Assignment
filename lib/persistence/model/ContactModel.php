@@ -89,7 +89,6 @@
         }
 
             // Setters
-
         /**
          * 
          */
@@ -129,6 +128,7 @@
          */
         public function setFromMail( $var )
         {
+            
             $this->fromMail = $var;
         }
 
@@ -145,6 +145,11 @@
          */
         public function setSubject( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setSubject: null or string is allowed' );
+            }
+
             $this->subject = $var;
         }
 
@@ -153,6 +158,11 @@
          */
         public function setMessage( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ContactModel - setMessage: null or string is allowed' );
+            }
+
             $this->message = $var;
         }
 

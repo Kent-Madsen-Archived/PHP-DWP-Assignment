@@ -25,6 +25,7 @@
         private $price          = null;
 
         // Accessors
+            // Getters
         final public function getIdentity()
         {
             return $this->identity;
@@ -45,8 +46,14 @@
             return $this->title;
         }
 
+            // Setters
         final public function setIdentity( $var )
         {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ProductModel - setIdentity: null or numeric number is allowed' );
+            }
+            
             $this->identity = $var;
         }
 

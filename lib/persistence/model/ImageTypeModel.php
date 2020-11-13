@@ -25,13 +25,6 @@
             return $this->identity;
         }
 
-        /**
-         * 
-         */
-        public function setIdentity( $var )
-        {
-            $this->identity = $var;
-        }
 
         /**
          * 
@@ -44,8 +37,27 @@
         /**
          * 
          */
+        public function setIdentity( $var )
+        {
+            if( !$this->genericNumberValidation( $var ) )
+            {
+                throw new Exception( 'ImageTypeModel - setIdentity: null or numeric number is allowed' );
+            }
+            
+            $this->identity = $var;
+        }
+
+
+        /**
+         * 
+         */
         public function setContent( $var )
         {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'ImageTypeModel - setContent: null or string is allowed' );
+            }
+
             $this->content = $var;
         }
     }
