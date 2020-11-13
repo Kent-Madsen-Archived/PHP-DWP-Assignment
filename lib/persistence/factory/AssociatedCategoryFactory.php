@@ -43,7 +43,67 @@
          */
         final public function read()
         {
-            
+
+            $retVal = array();
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT * FROM associated_category LIMIT ? OFFSET ?;";
+
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                    $stmt_limit,
+                    $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = new AssociatedCategoryModel( $this );
+
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setProductAttributeId( $row[ 'product_attribute_id' ] );
+                        $model->setProductCategoryId( $row[ 'product_category_id' ] );
+                        $model->setProductId( $row[ 'product_id' ] );
+
+
+                        array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
         

@@ -97,6 +97,9 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
         final public function validate_if_mail_exist( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
