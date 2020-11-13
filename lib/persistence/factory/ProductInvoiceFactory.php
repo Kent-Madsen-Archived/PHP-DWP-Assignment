@@ -92,8 +92,9 @@
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
-                        $model->setTotalPrice( $row['total_price'] );
-                        $model->setRegistered( $row['invoice_registered'] );
+                        
+                        $model->setTotalPrice( $row[ 'total_price' ] );
+                        $model->setRegistered( $row[ 'invoice_registered' ] );
 
                         array_push( $retVal, $model );
                     }

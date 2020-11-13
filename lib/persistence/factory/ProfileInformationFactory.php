@@ -105,16 +105,16 @@
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
-                        $model->setProfileId( $row['profile_id'] );
+                        $model->setProfileId( $row[ 'profile_id' ] );
 
-                        $model->setPersonNameId( $row['person_name_id'] );
-                        $model->setPersonAddressId( $row['person_address_id'] );
-                        $model->setPersonEmailId( $row['person_email_id'] );
+                        $model->setPersonNameId( $row[ 'person_name_id' ] );
+                        $model->setPersonAddressId( $row[ 'person_address_id' ] );
+                        $model->setPersonEmailId( $row[ 'person_email_id' ] );
 
-                        $model->setPersonPhone( $row['person_phone'] );
-                        $model->setBirthday( $row['birthday'] );
+                        $model->setPersonPhone( $row[ 'person_phone' ] );
+                        $model->setBirthday( $row[ 'birthday' ] );
 
-                        $model->setRegistered( $row['registered'] );
+                        $model->setRegistered( $row[ 'registered' ] );
 
                         array_push( $retVal, $model );
                     }

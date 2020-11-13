@@ -105,7 +105,7 @@
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row['content'] );
+                        $model->setContent( $row[ 'content' ] );
 
                         array_push( $retVal, $model );
                     }

@@ -107,6 +107,7 @@
                         $productModel = $this->createModel();
 
                         $productModel->setIdentity( $row[ 'identity' ] );
+                        
                         $productModel->setTitle( $row[ 'title' ] );
                         $productModel->setDescription( $row[ 'product_description' ] );
                         $productModel->setPrice( $row[ 'product_price' ] );

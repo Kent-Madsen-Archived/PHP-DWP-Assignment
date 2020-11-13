@@ -104,8 +104,10 @@
                         $articleModel = $this->createModel();
                         
                         $articleModel->setIdentity( $row[ 'identity' ] );
+                        
                         $articleModel->setTitle( $row[ 'title' ] );
                         $articleModel->setContent( $row[ 'article_content' ] );
+
                         $articleModel->setCreatedOn( $row[ 'created_on' ] );
                         $articleModel->setLastUpdated( $row[ 'last_update' ] );
     

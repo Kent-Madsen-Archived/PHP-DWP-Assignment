@@ -108,6 +108,7 @@
 
                         $model->setProductAttributeId( $row[ 'product_attribute_id' ] );
                         $model->setProductCategoryId( $row[ 'product_category_id' ] );
+                        
                         $model->setProductId( $row[ 'product_id' ] );
 
 

@@ -100,11 +100,12 @@
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
-                        $model->setArrived( $row['arrived'] );
-                        $model->setEntityCode( $row['entity_code'] );
 
-                        $model->setProductId( $row['product_id'] );
-                        $model->setBrought( $row['brought_id'] );
+                        $model->setArrived( $row[ 'arrived' ] );
+                        $model->setEntityCode( $row[ 'entity_code' ] );
+
+                        $model->setProductId( $row[ 'product_id' ] );
+                        $model->setBrought( $row[ 'brought_id' ] );
 
                         array_push( $retVal, $model );
                     }

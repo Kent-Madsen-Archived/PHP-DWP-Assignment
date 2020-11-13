@@ -100,8 +100,8 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity( $row['identity'] );
-                        $brought->setContent( $row['content'] );
+                        $brought->setIdentity( $row[ 'identity' ] );
+                        $brought->setContent( $row[ 'content' ] );
 
                         array_push( $retVal, $brought );
                     }

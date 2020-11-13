@@ -107,7 +107,7 @@
                         $Model->setUsername( $row[ 'username' ] );
 
                         $Model->setPassword( $row[ 'password' ] );
-                        $Model->setIsPasswordHashed(TRUE );
+                        $Model->setIsPasswordHashed( TRUE );
 
                         $Model->setProfileType( $row[ 'profile_type' ] );
 

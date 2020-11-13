@@ -103,10 +103,13 @@
                         $brought = $this->createModel();
 
                         $brought->setIdentity($row['identity']);
+                        
                         $brought->setImageSrc($row['image_src']);
                         $brought->setImageTypeId($row['image_type_id']);
+                        
                         $brought->setTitle($row['title']);
                         $brought->setAlt($row['alt']);
+                        
                         $brought->setParentId($row['parent_id']);
 
                         $brought->setRegistered($row['registered']);
