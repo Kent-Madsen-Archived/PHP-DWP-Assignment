@@ -17,8 +17,9 @@
          */
         function __construct()
         {
-            $access = new NetworkAccess( 'localhost', 3600 );   
+            $access = new NetworkAccess( null, null );   
             $user_credential = new UserCredential( 'development', 'Epc63gez' );
+            
             $database = "dwp_assignment";
 
             $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );

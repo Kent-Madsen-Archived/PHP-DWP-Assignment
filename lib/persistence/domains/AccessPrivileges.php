@@ -44,7 +44,7 @@
                 return FALSE;
             }
 
-            if( $_SESSION['user_session_object_profile_type'] == 3 )
+            if( $_SESSION[ 'user_session_object_profile_type' ] == 3 )
             {
                 return TRUE;
             }

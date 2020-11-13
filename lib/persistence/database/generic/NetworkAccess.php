@@ -16,8 +16,23 @@
          */
         public function __construct( $hostname, $port )
         {
-            $this->setHostname( $hostname );
-            $this->setPort( $port );     
+            if( is_null( $hostname ) )
+            {
+                $this->setHostname( self::getDefaultServer() );
+            }
+            else 
+            {
+                $this->setHostname( $hostname );
+            }
+            
+            if( is_null( $port ) )
+            {
+                $this->setPort( self::getDefaultPort() );
+            }
+            else 
+            {
+                $this->setPort( $port );
+            }
         }
 
         // Internal Variables
@@ -36,6 +51,20 @@
         /**
          * 
          */
+        final public function setHostname( $var )
+        {
+            if( !is_string( $var ) )
+            {
+                throw new Exception( 'Network Access - setHostname: Only string are allowed' );
+            }
+
+            $this->hostname = $var;
+        }
+
+
+        /**
+         * 
+         */
         final public function getPort()
         {
             return $this->port;
@@ -46,15 +75,28 @@
          */
         final public function setPort( $var )
         {
+            if( !is_numeric( $var ) )
+            {
+                throw new Exception( 'Network Access - setPort: Only numeric character are allowed' );
+            }
+
             $this->port = $var;
         }
 
         /**
          * 
          */
-        final public function setHostname( $var )
+        final static public function getDefaultPort()
         {
-            $this->hostname = $var;
+            return 3600;
+        }
+
+        /**
+         * 
+         */
+        final static public function getDefaultServer()
+        {
+            return "localhost";
         }
 
     }

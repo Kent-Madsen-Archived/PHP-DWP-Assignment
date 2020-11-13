@@ -28,23 +28,18 @@
         private $connector;
 
         // implementations
+        /**
+         * 
+         */
         final public function connect()
         {
             $information = $this->getInformation();
 
-            $hostname = $information->getAccess()->getHostname();
-
-            $username = $information->getCredential()->getUsername();
-            $password = $information->getCredential()->getPassword();
-
-            $database = $information->getDatabase();
-
-            $port = $information->getAccess()->getPort();
 
             // 
-            $local_connection = new mysqli( $hostname, 
-                                            $username, $password, 
-                                            $database, $port );
+            $local_connection = new mysqli( $information->retrieve_hostname(), 
+                                            $information->retrieve_username(), $information->retrieve_password(), 
+                                            $information->retrieve_database(), $information->retrieve_port() );
             
             $local_connection->autocommit( FALSE );
 
