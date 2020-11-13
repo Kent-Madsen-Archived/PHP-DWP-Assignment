@@ -41,7 +41,7 @@
 
         final public function createModel()
         {
-            $model = new AssociatedCategoryModel(this);
+            $model = new AssociatedCategoryModel( $this );
 
             return $model;
         }

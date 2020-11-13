@@ -26,7 +26,7 @@
 
         final public function createModel()
         {
-            $model = new ArticleModel(this);
+            $model = new ArticleModel( $this );
 
             return $model;
         }

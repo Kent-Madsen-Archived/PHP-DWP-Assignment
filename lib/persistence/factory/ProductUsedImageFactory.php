@@ -41,7 +41,7 @@
 
         final public function createModel()
         {
-            $model = new ProductUsedImageModel(this);
+            $model = new ProductUsedImageModel( $this );
 
             return $model;
         }

@@ -21,7 +21,7 @@
 
         final public function createModel()
         {
-            $model = new BroughtProductModel(this);
+            $model = new BroughtProductModel( $this );
 
             return $model;
         }

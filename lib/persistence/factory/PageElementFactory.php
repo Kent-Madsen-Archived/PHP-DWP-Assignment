@@ -41,7 +41,7 @@
 
         final public function createModel()
         {
-            $model = new PageElementModel(this);
+            $model = new PageElementModel( $this );
 
             return $model;
         }

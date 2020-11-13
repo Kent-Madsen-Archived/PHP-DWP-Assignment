@@ -42,7 +42,7 @@
 
         final public function createModel()
         {
-            $model = new ImageModel(this);
+            $model = new ImageModel( $this );
 
             return $model;
         }

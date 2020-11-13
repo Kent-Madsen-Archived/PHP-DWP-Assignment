@@ -26,7 +26,7 @@
 
         final public function createModel()
         {
-            $model = new ContactModel(this);
+            $model = new ContactModel( $this );
 
             return $model;
         }

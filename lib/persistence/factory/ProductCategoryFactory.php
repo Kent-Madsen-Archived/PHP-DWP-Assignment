@@ -26,7 +26,7 @@
 
         final public function createModel()
         {
-            $model = new ProductCategoryModel(this);
+            $model = new ProductCategoryModel( $this );
 
             return $model;
         }

@@ -42,7 +42,7 @@
 
         final public function createModel()
         {
-            $model = new ProfileInformationModel(this);
+            $model = new ProfileInformationModel( $this );
 
             return $model;
         }

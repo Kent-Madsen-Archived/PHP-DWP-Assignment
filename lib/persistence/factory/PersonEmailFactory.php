@@ -42,7 +42,7 @@
 
         final public function createModel()
         {
-            $model = new PersonEmailModel(this);
+            $model = new PersonEmailModel( $this );
 
             return $model;
         }

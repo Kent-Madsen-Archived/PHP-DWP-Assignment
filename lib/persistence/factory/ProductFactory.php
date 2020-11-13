@@ -42,7 +42,7 @@
 
         final public function createModel()
         {
-            $model = new ProductModel(this);
+            $model = new ProductModel( $this );
 
             return $model;
         }

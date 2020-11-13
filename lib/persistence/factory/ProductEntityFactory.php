@@ -26,7 +26,7 @@
 
         final public function createModel()
         {
-            $model = new ProductEntityModel(this);
+            $model = new ProductEntityModel( $this );
 
             return $model;
         }

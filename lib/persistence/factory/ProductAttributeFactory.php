@@ -26,7 +26,7 @@
 
         final public function createModel()
         {
-            $model = new ProductAttributeModel(this);
+            $model = new ProductAttributeModel( $this );
 
             return $model;
         }
