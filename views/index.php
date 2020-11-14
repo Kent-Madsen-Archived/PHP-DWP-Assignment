@@ -9,6 +9,7 @@
      $title = PageTitleSingleton::getInstance();
      $title->appendToTitle( ' - Homepage' );
 
+     $domain = new NewsDomain();
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +28,24 @@
         <?php get_header(); ?>
 
         <main> 
-        
+
+            <?php $arrNews = $domain->frontpage_news(); ?>
+
+            <section class="news"> 
+                <?php 
+                    foreach( $arrNews as $value ):
+                ?>
+                    <div> 
+                        <p> <?php echo $value->getTitle(); ?> </p>
+                        <p> <?php echo $value->getContent(); ?> </p>
+                        <p> <?php echo $value->getCreatedOn(); ?></p>
+
+                        <a href="<?php echo "./news/" . $value->getIdentity(); ?>">Read more</a>
+                    </div>
+                <?php 
+                    endforeach;
+                ?>
+            </section>
         </main>
         
         <?php get_footer(); ?>

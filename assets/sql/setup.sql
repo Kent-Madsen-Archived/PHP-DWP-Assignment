@@ -249,6 +249,15 @@ create table product_used_images
     primary key ( identity )
 );
 
+create table security_access_forms(
+    identity int not null auto_increment,
+    address varchar(256) not null,
+    registered datetime default now() not null,
+    form_name varchar(256) not null,
+    index (address, form_name),
+    primary key (identity)
+);
+
 -- Setup references
 alter table profile
 	add constraint profile_profile_type_identity_fk
@@ -385,7 +394,6 @@ left join person_name on profile_information.person_name_id = person_name.identi
 left join person_address on person_address.identity = profile_information.person_address_id
 left join person_email on person_email.identity = profile_information.person_email_id;
 
-
 create or replace view  contact_model_view as
 select contact.identity,
        contact.subject_title,
@@ -420,6 +428,12 @@ from product_invoice
 left join person_address pa on product_invoice.address_id = pa.identity
 left join person_email pe on product_invoice.mail_id = pe.identity
 left join person_name pn on product_invoice.owner_name_id = pn.identity;
+
+create view product_available_units as
+select product.identity, product.title, product.product_description, product.product_price, count(pe.product_id) as available_unit
+from product
+left join product_entity pe on product.identity = pe.product_id
+group by product_id;
 
 -- Triggers
 create trigger person_name_insert_nomalise

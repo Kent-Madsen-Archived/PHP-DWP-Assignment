@@ -172,6 +172,74 @@
             return $retVal;
         }
 
+        /**
+         * 
+         */
+        final public function read_ordered_by_creation_date()
+        {
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            // return array
+            $retVal = array();
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM article ORDER BY created_on DESC LIMIT ? OFFSET ?;";
+
+            // prepare statement variables
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii", 
+                                   $stmt_limit, 
+                                   $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->calculateOffset();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $articleModel = $this->createModel();
+                        
+                        $articleModel->setIdentity( $row[ 'identity' ] );
+                        
+                        $articleModel->setTitle( $row[ 'title' ] );
+                        $articleModel->setContent( $row[ 'article_content' ] );
+
+                        $articleModel->setCreatedOn( $row[ 'created_on' ] );
+                        $articleModel->setLastUpdated( $row[ 'last_update' ] );
+    
+                        array_push( $retVal, $articleModel );
+                    }
+                }    
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+
+            //
+
+            $this->getConnector()->disconnect();   
+
+            return $retVal;
+        }
+
 
         /**
          * 
