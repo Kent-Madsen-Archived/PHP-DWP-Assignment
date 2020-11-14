@@ -104,7 +104,7 @@
                                     $stmt_table_type, 
                                     $stmt_table_name );
 
-                $stmt_table_schema = 'dwp_assignment';
+                $stmt_table_schema = $schema;
                 $stmt_table_type = 'BASE TABLE';
 
                 $stmt_table_name = $table;
@@ -170,7 +170,7 @@
                                     $stmt_table_type, 
                                     $stmt_table_name );
 
-                $stmt_table_schema = 'dwp_assignment';
+                $stmt_table_schema = $schema;
                 $stmt_table_type = 'VIEW';
 
                 $stmt_table_name = $view;

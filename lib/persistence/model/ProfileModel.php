@@ -43,7 +43,15 @@
         /**
          * 
          */
-        public function getUsername()
+        final public function getIdentity()
+        {
+            return $this->identity;
+        }
+        
+        /**
+         * 
+         */
+        final public function getUsername()
         {
             return $this->username;
         }
@@ -51,7 +59,7 @@
         /**
          * 
          */
-        public function getPassword()
+        final public function getPassword()
         {
             return $this->password;
         }
@@ -59,24 +67,15 @@
         /**
          * 
          */
-        public function getProfileType()
+        final public function getProfileType()
         {
             return $this->profile_type;
         }
 
-
         /**
          * 
          */
-        public function getIdentity()
-        {
-            return $this->identity;
-        }
-
-        /**
-         * 
-         */
-        public function getIsPasswordHashed()
+        final public function getIsPasswordHashed()
         {
             return $this->is_password_hashed;
         }
@@ -85,16 +84,15 @@
         /**
          * 
          */
-        public function setUsername( $var )
+        final public function setUsername( $var )
         {
             $this->username = $var;
         }
 
-
         /**
          * 
          */
-        public function setIsPasswordHashed( $var )
+        final public function setIsPasswordHashed( $var )
         {
             $this->is_password_hashed = $var;
         }
@@ -102,7 +100,7 @@
         /**
          * 
          */
-        public function setPassword( $var )
+        final public function setPassword( $var )
         {   
             $this->password = $var;
         }
@@ -110,7 +108,7 @@
         /**
          * 
          */
-        public function setProfileType( $var )
+        final public function setProfileType( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -123,7 +121,7 @@
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {

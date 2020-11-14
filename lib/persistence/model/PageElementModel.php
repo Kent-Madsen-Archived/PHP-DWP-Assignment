@@ -6,7 +6,7 @@
                    PageElementView
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
@@ -24,7 +24,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof PageElementFactory )
             {
@@ -35,10 +35,11 @@
         }
 
         // accessors
+            // getters
         /**
          * 
          */
-        public function getTitle()
+        final public function getTitle()
         {
             return $this->title;
         }
@@ -47,7 +48,7 @@
         /**
          * 
          */
-        public function getContent()
+        final public function getContent()
         {
             return $this->content;
         }
@@ -56,7 +57,7 @@
         /**
          * 
          */
-        public function getAreaKey()
+        final public function getAreaKey()
         {
             return $this->area_key;
         }
@@ -65,7 +66,7 @@
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -73,7 +74,7 @@
         /**
          * 
          */
-        public function getCreatedOn()
+        final public function getCreatedOn()
         {
             return $this->created_on;
         }
@@ -82,16 +83,16 @@
         /**
          * 
          */
-        public function getLastUpdate()
+        final public function getLastUpdate()
         {
             return $this->last_update;
         }
 
-
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -104,7 +105,7 @@
         /**
          * 
          */
-        public function setCreatedOn( $var )
+        final public function setCreatedOn( $var )
         {
             $this->created_on = $var;
         }
@@ -112,16 +113,15 @@
         /**
          * 
          */
-        public function setLastUpdate( $var )
+        final public function setLastUpdate( $var )
         {
             $this->last_update = $var;
         }
 
-
         /**
          * 
          */
-        public function setAreaKey( $var )
+        final public function setAreaKey( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -131,11 +131,10 @@
             $this->area_key = $var;
         }
 
-
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -148,7 +147,7 @@
         /**
          * 
          */
-        public function setTitle( $var )
+        final public function setTitle( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -157,9 +156,6 @@
             
             $this->title = $var;
         }
-
-
-
 
     }
 

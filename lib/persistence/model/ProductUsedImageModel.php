@@ -8,7 +8,7 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
@@ -24,7 +24,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof ProductUsedImageFactory )
             {
@@ -35,29 +35,44 @@
         }
 
         // Accessor
-        public function getIdentity()
+            // Getters
+       /**
+        * 
+        */
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
-        public function getImagePreviewId()
+        /**
+         * 
+         */
+        final public function getImagePreviewId()
         {
             return $this->image_preview_id;
         }
 
-        
-        public function getImageFullId()
+        /**
+         * 
+         */
+        final public function getImageFullId()
         {
             return $this->image_full_id;
         }
         
-        
-        public function getIsProfileImage()
+        /**
+         * 
+         */
+        final public function getIsProfileImage()
         {
             return $this->is_profile_image;
         }
-        
-        public function setImagePreviewId( $var )
+
+            // Setters
+        /**
+         * 
+         */
+        final public function setImagePreviewId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -67,7 +82,10 @@
             $this->image_preview_id = $var;
         }
 
-        public function setImageFullId( $var )
+        /**
+         * 
+         */
+        final public function setImageFullId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -77,7 +95,10 @@
             $this->image_full_id = $var;
         }
         
-        public function setIdentity( $var )
+        /**
+         * 
+         */
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -87,7 +108,10 @@
             $this->identity = $var;
         }
 
-        public function setIsProfileImage( $var )
+        /**
+         * 
+         */
+        final public function setIsProfileImage( $var )
         {
             $this->is_profile_image = $var;
         }

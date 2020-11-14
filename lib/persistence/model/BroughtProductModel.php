@@ -6,7 +6,7 @@
                    BroughtProductView
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
@@ -25,7 +25,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof BroughtFactory )
             {
@@ -36,10 +36,11 @@
         }
 
         // Accessors
+            // Getters
         /**
          * 
          */
-        public function getProductId()
+        final public function getProductId()
         {
             return $this->product_id;
         }
@@ -47,7 +48,7 @@
         /**
          * 
          */
-        public function getPrice()
+        final public function getPrice()
         {
             return $this->price;
         }
@@ -56,7 +57,7 @@
         /**
          * 
          */
-        public function getNumberOfProducts()
+        final public function getNumberOfProducts()
         {
             return $this->number_of_products;
         }
@@ -64,7 +65,7 @@
         /**
          * 
          */
-        public function getRegistered()
+        final public function getRegistered()
         {
             return $this->registered;
         }
@@ -72,7 +73,7 @@
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -81,17 +82,17 @@
         /**
          * 
          */
-        public function getInvoiceId()
+        final public function getInvoiceId()
         {
 
             return $this->invoice_id;
         }
 
-
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -104,7 +105,7 @@
         /**
          * 
          */
-        public function setNumberOfProducts( $var )
+        final public function setNumberOfProducts( $var )
         {
             if( !$this->genericNumberValidation( $var ) )
             {
@@ -118,7 +119,7 @@
         /**
          * 
          */
-        public function setInvoiceId( $var )
+        final public function setInvoiceId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -131,7 +132,7 @@
         /**
          * 
          */
-        public function setRegistered( $var )
+        final public function setRegistered( $var )
         {
             $this->registered = $var;
         }
@@ -139,7 +140,7 @@
         /**
          * 
          */
-        public function setProductId( $var )
+        final public function setProductId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -153,7 +154,7 @@
         /**
          * 
          */
-        public function setPrice( $var )
+        final public function setPrice( $var )
         {
             if( !$this->genericNumberValidation( $var ) )
             {

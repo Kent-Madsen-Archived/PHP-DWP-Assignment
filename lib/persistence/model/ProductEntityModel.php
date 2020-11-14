@@ -6,7 +6,7 @@
                    ProductEntityView
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
@@ -23,7 +23,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof ProductEntityFactory )
             {
@@ -34,10 +34,11 @@
         }
 
         // Accessors
+            // Getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -45,7 +46,7 @@
         /**
          * 
          */
-        public function getArrived()
+        final public function getArrived()
         {
             return $this->arrived;
         }
@@ -53,7 +54,7 @@
         /**
          * 
          */
-        public function getEntityCode()
+        final public function getEntityCode()
         {
             return $this->entity_code;
         }
@@ -62,7 +63,7 @@
         /**
          * 
          */
-        public function getProductId()
+        final public function getProductId()
         {
             return $this->product_id;
         }
@@ -70,15 +71,16 @@
         /**
          * 
          */
-        public function getBrougth()
+        final public function getBrougth()
         {
             return $this->brought_id;
         }
 
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -92,7 +94,7 @@
         /**
          * 
          */
-        public function setEntityCode( $var )
+        final public function setEntityCode( $var )
         {
             $this->entity_code = $var;
         }
@@ -100,7 +102,7 @@
         /**
          * 
          */
-        public function setProductId( $var )
+        final public function setProductId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -113,7 +115,7 @@
         /**
          * 
          */
-        public function setBrought( $var )
+        final public function setBrought( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -126,7 +128,7 @@
         /**
          * 
          */
-        public function setArrived( $var )
+        final public function setArrived( $var )
         {
             $this->arrived = $var;
         }

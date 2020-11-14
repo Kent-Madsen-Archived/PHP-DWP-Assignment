@@ -12,7 +12,7 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
@@ -28,7 +28,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof PersonAddressFactory )
             {
@@ -39,10 +39,11 @@
         }
 
         // Accessors
+            // getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -51,7 +52,7 @@
         /**
          * 
          */
-        public function getStreetName()
+        final public function getStreetName()
         {
             return $this->street_name;
         }
@@ -59,16 +60,15 @@
         /**
          * 
          */
-        public function getStreetAddressNumber()
+        final public function getStreetAddressNumber()
         {
             return $this->street_address_number;
         }
 
-
         /**
          * 
          */
-        public function getZipCode()
+        final public function getZipCode()
         {
             return $this->zip_code;
         }
@@ -76,16 +76,16 @@
         /**
          * 
          */
-        public function getCountry()
+        final public function getCountry()
         {
             return $this->country;
         }
 
-
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -98,7 +98,7 @@
         /**
          * 
          */
-        public function setZipCode( $var )
+        final public function setZipCode( $var )
         {
             $this->zip_code = $var;
         }
@@ -106,7 +106,7 @@
         /**
          * 
          */
-        public function setCountry( $var )
+        final public function setCountry( $var )
         {
             $this->country = $var;
         }
@@ -114,7 +114,7 @@
         /**
          * 
          */
-        public function setStreetName( $var )
+        final public function setStreetName( $var )
         {
             $this->street_name = $var;
         }
@@ -123,7 +123,7 @@
         /**
          * 
          */
-        public function setStreetAddressNumber( $var )
+        final public function setStreetAddressNumber( $var )
         {
             if( !$this->identityValidation( $var ) )
             {

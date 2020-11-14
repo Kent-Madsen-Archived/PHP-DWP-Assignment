@@ -12,7 +12,7 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
@@ -27,7 +27,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof PersonNameFactory )
             {
@@ -38,10 +38,11 @@
         }
 
         // accessors
+            // getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -49,7 +50,7 @@
         /**
          * 
          */
-        public function getFirstName()
+        final public function getFirstName()
         {
             return $this->first_name;
         }
@@ -58,7 +59,7 @@
         /**
          * 
          */
-        public function getLastName()
+        final public function getLastName()
         {
             return $this->last_name;
         }
@@ -66,15 +67,16 @@
         /**
          * 
          */
-        public function getMiddleName()
+        final public function getMiddleName()
         {
             return $this->middle_name;
         }
 
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -87,7 +89,7 @@
         /**
          * 
          */
-        public function setFirstName( $var )
+        final public function setFirstName( $var )
         {
             $this->first_name = $var;
         }
@@ -95,7 +97,7 @@
         /**
          * 
          */
-        public function setMiddleName( $var )
+        final public function setMiddleName( $var )
         {
             $this->middle_name = $var;
         }
@@ -103,7 +105,7 @@
         /**
          * 
          */
-        public function setLastName( $var )
+        final public function setLastName( $var )
         {
             $this->last_name = $var;
         }

@@ -37,10 +37,11 @@
         }
 
         // accessors
+            // getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -48,15 +49,16 @@
         /**
          * 
          */
-        public function getContent()
+        final public function getContent()
         {
             return $this->content;
         }
         
+            // setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -69,12 +71,10 @@
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             $this->content = $var;
         }
 
     }
-
-
 ?>

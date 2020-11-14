@@ -21,7 +21,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof AssociatedCategoryFactory )
             {
@@ -32,10 +32,11 @@
         }
 
         // Accessors
+            // Getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -43,7 +44,7 @@
         /**
          * 
          */
-        public function getProductAttributeId()
+        final public function getProductAttributeId()
         {
             return $this->product_attribute_id;
         }
@@ -52,7 +53,7 @@
         /**
          * 
          */
-        public function getProductCategoryId()
+        final public function getProductCategoryId()
         {
             return $this->product_category_id;
         }
@@ -61,15 +62,16 @@
         /**
          * 
          */
-        public function getProductId()
+        final public function getProductId()
         {
             return $this->product_id;
         }
 
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -83,7 +85,7 @@
         /**
         * 
         */
-        public function setProductAttributeId( $var )
+        final public function setProductAttributeId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -97,7 +99,7 @@
         /**
          * 
          */
-        public function setProductCategoryId( $var )
+        final public function setProductCategoryId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -111,7 +113,7 @@
         /**
          * 
          */
-        public function setProductId( $var )
+        final public function setProductId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {

@@ -12,7 +12,7 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
@@ -32,7 +32,7 @@
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof ContactFactory )
             {
@@ -48,7 +48,7 @@
         /**
          * 
          */
-        public function getMessage()
+        final public function getMessage()
         {
             return $this->message;
         }
@@ -56,7 +56,7 @@
         /**
          * 
          */
-        public function getToMail()
+        final public function getToMail()
         {
             return $this->toMail;
         }
@@ -64,7 +64,7 @@
         /**
          * 
          */
-        public function getSubject()
+        final public function getSubject()
         {
             return $this->subject;
         }
@@ -72,7 +72,7 @@
         /**
          * 
          */
-        public function getFromMail()
+        final public function getFromMail()
         {
             return $this->fromMail;
         }
@@ -80,7 +80,7 @@
         /**
          * 
          */
-        public function getCreatedOn()
+        final public function getCreatedOn()
         {
             return $this->created_on;
         }
@@ -88,7 +88,7 @@
         /**
          * 
          */
-        public function getHasBeenSend()
+        final public function getHasBeenSend()
         {
             return $this->has_been_send;
         }
@@ -96,7 +96,7 @@
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -105,7 +105,7 @@
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -118,7 +118,7 @@
         /**
          * 
          */
-        public function setHasBeenSend( $var )
+        final public function setHasBeenSend( $var )
         {
             if( !$this->genericNumberValidation( $var ) )
             {
@@ -131,7 +131,7 @@
         /**
          * 
          */
-        public function setCreatedOn( $var )
+        final public function setCreatedOn( $var )
         {
             $this->created_on = $var;
         }
@@ -139,7 +139,7 @@
         /**
          * 
          */
-        public function setFromMail( $var )
+        final public function setFromMail( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -152,7 +152,7 @@
         /**
          * 
          */
-        public function setToMail( $var )
+        final public function setToMail( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -165,7 +165,7 @@
         /**
          * 
          */
-        public function setSubject( $var )
+        final public function setSubject( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -178,7 +178,7 @@
         /**
          * 
          */
-        public function setMessage( $var )
+        final public function setMessage( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
