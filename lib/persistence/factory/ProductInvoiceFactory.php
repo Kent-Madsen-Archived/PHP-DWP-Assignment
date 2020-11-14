@@ -175,6 +175,11 @@
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;

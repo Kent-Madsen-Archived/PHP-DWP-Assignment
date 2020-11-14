@@ -164,10 +164,10 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
-
-            //
-
-            $this->getConnector()->disconnect();   
+            finally
+            {
+                $this->getConnector()->disconnect();   
+            }
 
             return $retVal;
         }
@@ -178,6 +178,11 @@
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;
@@ -205,7 +210,7 @@
             $sql = "SELECT * FROM article ORDER BY created_on DESC LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try 
@@ -244,8 +249,10 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
-
-            $this->getConnector()->disconnect();   
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }   
 
             return $retVal;
         }
@@ -359,7 +366,6 @@
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
 
@@ -411,7 +417,6 @@
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
         }

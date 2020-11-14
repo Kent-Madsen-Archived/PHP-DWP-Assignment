@@ -123,7 +123,7 @@
 
             $sql = "SELECT * FROM associated_category LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -131,10 +131,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 // Executes the query
@@ -178,6 +178,11 @@
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;

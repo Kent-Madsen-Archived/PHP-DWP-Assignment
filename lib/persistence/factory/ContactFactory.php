@@ -161,10 +161,13 @@
             }
             catch( Exception $ex )
             {
-                
+                throw new Exception('Error: ' . $ex );   
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
             }
 
-            $this->getConnector()->disconnect();
 
             return $retVal;   
         }
@@ -175,6 +178,11 @@
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
             $retVal = null;
 
             return $retVal;

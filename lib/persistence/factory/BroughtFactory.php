@@ -126,7 +126,7 @@
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -181,6 +181,11 @@
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
             $retVal = null;
 
             return $retVal;
