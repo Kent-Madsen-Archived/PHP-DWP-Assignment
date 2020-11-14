@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class ProfileModel
      */
     class ProfileModel 
         extends DatabaseModel 
@@ -10,6 +10,11 @@
                         
     {
         // Constructor
+        /**
+         * ProfileModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -28,8 +33,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -45,16 +52,16 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return int|mixed
          */
         final public function getIdentity()
         {
             return $this->identity;
         }
-        
+
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getUsername()
         {
@@ -63,16 +70,16 @@
 
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getPassword()
         {
             return $this->password;
         }
 
-        
+
         /**
-         * 
+         * @return int
          */
         final public function getProfileType()
         {
@@ -81,7 +88,7 @@
 
 
         /**
-         * 
+         * @return bool
          */
         final public function getIsPasswordHashed()
         {
@@ -90,8 +97,10 @@
 
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @return mixed|void
          */
         final public function setUsername( $var )
         {
@@ -100,7 +109,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setIsPasswordHashed( $var )
         {
@@ -109,7 +118,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
          */
         final public function setPassword( $var )
         {   
@@ -118,7 +128,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setProfileType( $var )
         {
@@ -132,7 +143,9 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {

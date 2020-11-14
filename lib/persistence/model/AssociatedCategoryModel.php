@@ -1,11 +1,19 @@
-<?php 
+<?php
 
+    /**
+     * Class AssociatedCategoryModel
+     */
     class AssociatedCategoryModel 
         extends DatabaseModel
         implements AssociatedCategoryView,
                    AssociatedCategoryController
     {
         // Constructors
+        /**
+         * AssociatedCategoryModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -21,8 +29,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -37,7 +47,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -45,16 +55,16 @@
         }
 
         /**
-         * 
+         * @return |null
          */
         final public function getProductAttributeId()
         {
             return $this->product_attribute_id;
         }
 
-        
+
         /**
-         * 
+         * @return |null
          */
         final public function getProductCategoryId()
         {
@@ -63,7 +73,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getProductId()
         {
@@ -72,7 +82,8 @@
 
             // Setters
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -83,11 +94,11 @@
 
             $this->identity = $var;
         }
-  
-        
+
         /**
-        * 
-        */
+         * @param $var
+         * @throws Exception
+         */
         final public function setProductAttributeId( $var )
         {
             if( !$this->identityValidation( $var ) )
@@ -100,7 +111,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setProductCategoryId( $var )
         {
@@ -114,7 +126,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setProductId( $var )
         {

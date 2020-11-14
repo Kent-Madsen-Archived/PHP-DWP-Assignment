@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class PersonEmailModel
      */
     class PersonEmailModel 
         extends DatabaseModel
@@ -10,7 +10,9 @@
     {
         // Constructor
         /**
-         * 
+         * PersonEmailModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -26,7 +28,8 @@
 
         // implementation of factory classes
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -42,7 +45,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return mixed|null
          */
         final public function getIdentity()
         {
@@ -51,7 +54,7 @@
 
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getContent()
         {
@@ -61,7 +64,9 @@
 
             // Setters
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -72,10 +77,11 @@
             
             $this->identity = $var;
         }
-        
-        
+
+
         /**
-         * 
+         * @param $var
+         * @return mixed|void
          */
         final public function setContent( $var )
         {

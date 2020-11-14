@@ -1,11 +1,19 @@
-<?php 
+<?php
 
+    /**
+     * Class ProductInvoiceModel
+     */
     class ProductInvoiceModel 
         extends DatabaseModel
         implements ProductInvoiceView,
                    ProductInvoiceController
     {
         // Constructors
+        /**
+         * ProductInvoiceModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -24,8 +32,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -41,7 +51,7 @@
         // Accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -50,7 +60,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getAddressId()
         {
@@ -59,7 +69,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getMailId()
         {
@@ -68,7 +78,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getOwnerNameId()
         {
@@ -77,7 +87,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getTotalPrice()
         {
@@ -86,7 +96,7 @@
 
 
         /**
-         *
+         * @return |null
          */
         final public function getRegistered()
         {
@@ -95,8 +105,10 @@
 
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         public function setIdentity( $var )
         {
@@ -110,7 +122,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setRegistered( $var )
         {
@@ -119,7 +131,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setTotalPrice( $var )
         {
@@ -128,7 +140,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setAddressId( $var )
         {
@@ -142,7 +155,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setMailId( $var )
         {
@@ -156,7 +170,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setOwnerNameId( $var )
         {

@@ -1,12 +1,17 @@
-<?php 
+<?php
 
+    /**
+     * Class ImageTypeModel
+     */
     class ImageTypeModel
         extends DatabaseModel
         implements ImageTypeController,
                    ImageView
     {
         /**
-         * 
+         * ImageTypeModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -20,8 +25,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -37,7 +44,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -46,7 +53,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -55,7 +62,8 @@
 
             // Setters
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -69,7 +77,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setContent( $var )
         {

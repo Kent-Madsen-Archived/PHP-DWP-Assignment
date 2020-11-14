@@ -7,7 +7,7 @@
     require_once 'router.php';
 
     /**
-     * 
+     * Class RouterSingleton
      */
     class RouterSingleton
     {
@@ -15,7 +15,7 @@
         private static $instance = null;
 
         /**
-         * 
+         * @return null
          */
         public static function getInstance()
         {
@@ -28,7 +28,7 @@
         }
 
         /**
-         * 
+         * @param $var
          */
         public static function setInstance( $var )
         {

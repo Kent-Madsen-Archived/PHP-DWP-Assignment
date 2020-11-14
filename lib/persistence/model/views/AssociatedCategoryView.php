@@ -5,6 +5,9 @@
      *  Type: PHP Script
      */
 
+    /**
+     * Interface AssociatedCategoryView
+     */
     interface AssociatedCategoryView
     {
 

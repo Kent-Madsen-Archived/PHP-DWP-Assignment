@@ -6,13 +6,15 @@
      */
 
     /**
-     * 
+     * Class Route
      */
     class Route
     {
         // Constructors
         /**
-         * 
+         * Route constructor.
+         * @param $domain
+         * @param $path_to_view
          */
         public function __construct( $domain, $path_to_view )
         {
@@ -27,8 +29,10 @@
         private $validation_tree = array();
 
         // Stages
+
         /**
          * @param $value
+         * @throws Exception
          */
         public final function setValidationTree( $value )
         {
@@ -42,6 +46,7 @@
 
         /**
          * @param $value
+         * @throws Exception
          */
         public final function appendValidationObject( $value )
         {
@@ -66,8 +71,12 @@
             array_push($this->validation_tree, $values );
         }
 
+
         /**
          * @param $argument
+         * @param $lvl
+         * @return bool
+         * @throws Exception
          */
         public function validate( $argument, $lvl )
         {
@@ -113,50 +122,47 @@
         /**
          * @return array
          */
-        public final function getValidationTree(  )
+        final public function getValidationTree(  )
         {
             return $this->validation_tree;
         }
 
 
-
         /**
-         * 
+         *
          */
-        public function load()
+        final public function load()
         {
             require_once $this->getPathToView();
         }
 
         // Accessors
         /**
-         * 
+         * @return null
          */
-        public function getRouteDomain()
+        final public function getRouteDomain()
         {
             return $this->route_domain;
         }
 
         /**
-         * 
+         * @return null
          */
-        public function getPathToView()
+        final public function getPathToView()
         {
             return $this->path_to_view;
         }
 
-
-
         /**
-         * 
+         * @param $var
          */
-        public function setRouteDomain( $var )
+        final public function setRouteDomain( $var )
         {
             $this->route_domain = $var;
         }
 
         /**
-         * 
+         * @param $var
          */
         public function setPathToView( $var )
         {

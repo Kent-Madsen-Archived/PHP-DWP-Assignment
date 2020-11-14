@@ -22,7 +22,7 @@
 
 
         /**
-         * @return string
+         * @return mixed|string
          */
         final public function getFactoryTableName()
         {
@@ -69,7 +69,7 @@
 
 
         /**
-         * @return bool
+         * @return bool|mixed
          * @throws Exception
          */
         final public function exist_database()
@@ -84,7 +84,7 @@
 
 
         /**
-         * @return ImageModel
+         * @return ImageModel|mixed
          */
         final public function createModel()
         {
@@ -110,12 +110,11 @@
 
 
         /**
-         * @return array
+         * @return array|mixed
          * @throws Exception
          */
         public function read()
         {
-
             $this->getConnector()->connect();
 
             $connection = $this->getConnector()->getConnector();
@@ -188,7 +187,7 @@
 
         /**
          * @param $model
-         * @return null
+         * @return mixed|null
          * @throws Exception
          */
         final public function read_model( $model )
@@ -206,9 +205,10 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
-        public function create( $model )
+        final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -220,9 +220,10 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
-        public function delete( $model )
+        final public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -234,9 +235,10 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
-        public function update( $model )
+        final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {

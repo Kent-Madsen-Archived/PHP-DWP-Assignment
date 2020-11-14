@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class ArticleModel
      */
     class ArticleModel 
         extends DatabaseModel
@@ -10,7 +10,9 @@
     {
         // Constructors
         /**
-         * 
+         * ArticleModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -29,8 +31,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -45,7 +49,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -54,7 +58,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getTitle()
         {
@@ -63,7 +67,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -71,7 +75,7 @@
         }
 
         /**
-         * 
+         * @return |null
          */
         final public function getCreatedOn()
         {
@@ -80,7 +84,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getLastUpdated()
         {
@@ -88,8 +92,10 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -103,7 +109,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setTitle( $var )
         {
@@ -117,13 +124,14 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setContent( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
-                throw new Exception( 'ArticleModel - setContent: null or string is allowed' );
+                 throw new Exception( 'ArticleModel - setContent: null or string is allowed' );
             }
 
             $this->content = $var;
@@ -131,7 +139,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setCreatedOn( $var )
         {
@@ -140,7 +148,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setLastUpdated( $var )
         {

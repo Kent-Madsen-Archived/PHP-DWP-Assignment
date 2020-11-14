@@ -1,21 +1,29 @@
 <?php
 
+    /**
+     * Class RouterValidateArgument
+     */
     abstract class RouterValidateArgument
     {
+        // Variables
         public abstract function validateArgumentLevel( $arg );
 
         private $level = 0;
         private $value = null;
 
+        // accessors
         /**
          * @return int
          */
-        public function getLevel()
+        final public function getLevel()
         {
             return $this->level;
         }
 
-        public function getValue()
+        /**
+         * @return null
+         */
+        final public function getValue()
         {
             return $this->value;
         }
@@ -23,12 +31,15 @@
         /**
          * @param int $level
          */
-        public function setLevel( $level )
+        final public function setLevel( $level )
         {
             $this->level = $level;
         }
 
-        public function setValue( $var )
+        /**
+         * @param $var
+         */
+        final public function setValue( $var )
         {
             $this->value = $var;
         }

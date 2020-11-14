@@ -1,11 +1,19 @@
-<?php 
+<?php
 
+/**
+ * Class PageElementModel
+ */
     class PageElementModel 
         extends DatabaseModel
         implements PageElementController,
                    PageElementView
     {
         // Constructors
+        /**
+         * PageElementModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );   
@@ -24,8 +32,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -40,7 +50,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getTitle()
         {
@@ -49,7 +59,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -58,7 +68,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getAreaKey()
         {
@@ -67,7 +77,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -75,16 +85,16 @@
         }
 
         /**
-         * 
+         * @return |null
          */
         final public function getCreatedOn()
         {
             return $this->created_on;
         }
 
-   
+
         /**
-         * 
+         * @return |null
          */
         final public function getLastUpdate()
         {
@@ -92,8 +102,10 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -107,7 +119,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setCreatedOn( $var )
         {
@@ -116,7 +128,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setLastUpdate( $var )
         {
@@ -125,7 +137,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setAreaKey( $var )
         {
@@ -139,7 +152,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setContent( $var )
         {
@@ -151,9 +165,10 @@
             $this->content = $var;
         }
 
-        
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setTitle( $var )
         {

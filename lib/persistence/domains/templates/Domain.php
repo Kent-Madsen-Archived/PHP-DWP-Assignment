@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class Domain
      */
     abstract class Domain
     {
@@ -11,7 +11,8 @@
 
 
         /**
-         * 
+         * @param $info
+         * @return bool
          */
         protected function validateInformation( $info )
         {
@@ -27,7 +28,7 @@
         // Accessor
             // Getter
         /**
-         * 
+         * @return null
          */
         final public function getInformation()
         {
@@ -37,7 +38,8 @@
 
             // Setter
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setInformation( $var )
         {

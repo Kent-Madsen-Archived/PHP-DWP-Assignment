@@ -6,9 +6,9 @@
      */
 
 
-     /**
-      * 
-      */
+    /**
+     * Interface ProfileTypeView
+     */
     interface ProfileTypeView
     {
         

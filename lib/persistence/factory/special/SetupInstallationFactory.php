@@ -1,12 +1,13 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class SetupInstallationFactory
      */
     class SetupInstallationFactory
     {
         /**
-         * 
+         * SetupInstallationFactory constructor.
+         * @param $connection
          */
         public function __construct( $connection )
         {
@@ -15,9 +16,10 @@
 
 
         /**
-         * 
+         * @param $file
+         * @throws Exception
          */
-        public function executeSQLFile( $file )
+        final public function executeSQLFile( $file )
         {
             $this->getConnector()->connect();
 
@@ -72,9 +74,9 @@
         }
 
         /**
-         * 
+         * @throws Exception
          */
-        public function installation()
+        final public function installation()
         {
             $arrToProcess = array();
 
@@ -139,7 +141,7 @@
         }
 
         /**
-         * 
+         * @param $array
          */
         private function process_setup( $array )
         {
@@ -163,7 +165,7 @@
         }
 
         /**
-         * 
+         * @param $array
          */
         private function process_secondaries( $array )
         {
@@ -188,17 +190,17 @@
         private $connector = null;
 
         /**
-         * 
+         * @return null
          */
-        public function getConnector()
+        final public function getConnector()
         {
             return $this->connector;
         }
 
         /**
-         * 
+         * @param $connector
          */
-        public function setConnector( $connector )
+        final public function setConnector( $connector )
         {
             $this->connector = $connector;
         }

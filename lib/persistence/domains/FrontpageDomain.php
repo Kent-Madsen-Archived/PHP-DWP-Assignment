@@ -1,11 +1,15 @@
-<?php 
+<?php
 
+    /**
+     * Class FrontpageDomain
+     */
     class FrontpageDomain 
         extends Domain
     {
         // Construct
         /**
-         * 
+         * FrontpageDomain constructor.
+         * @throws Exception
          */
         public function __construct()
         {

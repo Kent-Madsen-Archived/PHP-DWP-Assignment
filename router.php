@@ -6,7 +6,7 @@
      */
 
     /**
-     * 
+     * Class Router
      */
     class Router
     {
@@ -185,6 +185,7 @@
         /**
          * @param $idx
          * @return mixed
+         * @throws Exception
          */
         final public function getArg( $idx )
         {
@@ -200,8 +201,9 @@
 
         /**
          * @param $idx
-         * @param $closesest_lvl, retrieve the last item in the array, if the index is outside it's range
+         * @param $closesest_lvl
          * @return mixed|null
+         * @throws Exception
          */
         final public function getArgLevel( $idx, $closesest_lvl )
         {
@@ -268,6 +270,7 @@
 
 
             // Setters
+
         /**
          * @param $var
          */
@@ -320,6 +323,7 @@
         }
 
         // States
+
         /**
          * @return bool
          */
@@ -329,6 +333,7 @@
         }
 
         // Edit Accessors
+
         /**
          * @param $var
          */

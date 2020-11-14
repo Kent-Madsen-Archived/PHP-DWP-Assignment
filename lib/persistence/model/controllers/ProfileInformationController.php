@@ -5,9 +5,9 @@
      *  Type: PHP Script
      */
 
-     /**
-      * 
-      */
+    /**
+     * Interface ProfileInformationController
+     */
     interface ProfileInformationController
     {
         

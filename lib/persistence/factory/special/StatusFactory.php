@@ -1,12 +1,13 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class StatusFactory
      */
     class StatusFactory
     {
         /**
-         * 
+         * StatusFactory constructor.
+         * @param $mysql_connector
          */
         public function __construct( $mysql_connector )
         {
@@ -18,7 +19,9 @@
         private $connector = null;
 
         /**
-         * 
+         * @param $name
+         * @return bool
+         * @throws Exception
          */
         final public function getDatabaseStatus( $name )
         {
@@ -77,7 +80,10 @@
         }
 
         /**
-         * 
+         * @param $schema
+         * @param $table
+         * @return bool
+         * @throws Exception
          */
         final public function getStatusOnTable( $schema, $table )
         {
@@ -143,7 +149,10 @@
 
 
         /**
-         * 
+         * @param $schema
+         * @param $view
+         * @return bool
+         * @throws Exception
          */
         final public function getStatusOnView( $schema, $view )
         {
@@ -208,8 +217,9 @@
         }
 
         // Accessors
+
         /**
-         * 
+         * @return null
          */
         final public function getConnector()
         {
@@ -217,7 +227,7 @@
         }
 
         /**
-         * 
+         * @param $connector
          */
         final public function setConnector( $connector )
         {

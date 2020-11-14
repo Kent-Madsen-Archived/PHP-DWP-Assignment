@@ -6,14 +6,15 @@
      */
 
     /**
-     * 
+     * Class ContactDomain
      */
     class ContactDomain 
         extends Domain
     {
         // Construct
         /**
-         * 
+         * ContactDomain constructor.
+         * @throws Exception
          */
         public function __construct()
         {
@@ -26,7 +27,7 @@
         }
 
         /**
-         * 
+         * @throws Exception
          */
         final public function send()
         {
@@ -56,7 +57,9 @@
 
 
         /**
-         * 
+         * @param $connection
+         * @return mixed
+         * @throws Exception
          */
         final protected function getFromMail( $connection )
         {
@@ -79,7 +82,9 @@
 
 
         /**
-         * 
+         * @param $connection
+         * @return mixed
+         * @throws Exception
          */
         final protected function getToMail( $connection )
         {
@@ -102,7 +107,7 @@
 
 
         /**
-         * 
+         * @return mixed
          */
         final protected function getSubject()
         {
@@ -111,7 +116,7 @@
 
 
         /**
-         * 
+         * @return mixed
          */
         final protected function getMessage()
         {

@@ -5,9 +5,16 @@
      *  Type: PHP Script
      */
 
+    /**
+     * Class AdminDomain
+     */
     class AdminDomain
         extends Domain
     {
+        /**
+         * AdminDomain constructor.
+         * @throws Exception
+         */
         public function __construct()
         {
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   

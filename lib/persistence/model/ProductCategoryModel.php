@@ -1,11 +1,19 @@
-<?php 
+<?php
 
+    /**
+     * Class ProductCategoryModel
+     */
     class ProductCategoryModel 
         extends DatabaseModel
         implements ProductCategoryController,
                    ProductCategoryView
     {
         // Constructors
+        /**
+         * ProductCategoryModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -17,8 +25,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -33,7 +43,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -42,7 +52,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -51,8 +61,10 @@
 
 
             // setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -66,7 +78,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setContent( $var )
         {

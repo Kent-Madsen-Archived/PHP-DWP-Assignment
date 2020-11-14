@@ -6,13 +6,14 @@
      */
 
     /**
-     * 
+     * Class AccessPrivilegesDomain
      */
     class AccessPrivilegesDomain
         extends Domain
     {
         /**
-         * 
+         * AccessPrivilegesDomain constructor.
+         * @throws Exception
          */
         public function __construct()
         {
@@ -25,7 +26,7 @@
         }
 
         /**
-         * 
+         * @return bool
          */
         public function is_logged_in()
         {
@@ -38,7 +39,7 @@
         }
 
         /**
-         * 
+         * @return bool
          */
         public function is_not_logged_in()
         {
@@ -46,7 +47,7 @@
         }
 
         /**
-         * 
+         * @return bool
          */
         public function is_admin()
         {

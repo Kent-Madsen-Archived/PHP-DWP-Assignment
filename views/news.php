@@ -34,7 +34,8 @@
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
             $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
 
-            $database = 'test';
+            $database = WEBPAGE_DATABASE_NAME;
+
         ?>
 
         <main>

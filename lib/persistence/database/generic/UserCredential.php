@@ -6,13 +6,16 @@
      */
 
     /**
-     * 
+     * Class UserCredential
      */
     class UserCredential
     {
         // Constructors
         /**
-         * 
+         * UserCredential constructor.
+         * @param $username
+         * @param $password
+         * @throws Exception
          */
         public function __construct( $username, $password )
         {
@@ -25,8 +28,9 @@
         private $password;
 
         // Accessors
+
         /**
-         * 
+         * @return mixed
          */
         final public function getUsername()
         {
@@ -34,7 +38,7 @@
         }
 
         /**
-         * 
+         * @return mixed
          */
         final public function getPassword()
         {
@@ -42,7 +46,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setUsername( $var )
         {
@@ -55,7 +60,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setPassword( $var )
         {
@@ -68,7 +74,7 @@
         }
 
         /**
-         * 
+         * @return string
          */
         public static function getDefaultUsername()
         {

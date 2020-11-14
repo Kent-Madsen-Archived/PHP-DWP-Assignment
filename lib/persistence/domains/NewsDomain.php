@@ -5,9 +5,16 @@
      *  Type: PHP Script
      */
 
+    /**
+     * Class NewsDomain
+     */
     class NewsDomain 
         extends Domain
     {
+        /**
+         * NewsDomain constructor.
+         * @throws Exception
+         */
         public function __construct()
         {
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
@@ -19,7 +26,11 @@
         }
 
 
-        public function lastest_news()
+        /**
+         * @return array
+         * @throws Exception
+         */
+        final public function lastest_news()
         {
             $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
             var_dump($factory->length());
@@ -29,8 +40,12 @@
             return $factory->read_ordered_by_creation_date();
         }
 
-        
-        public function frontpage_news()
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        final public function frontpage_news()
         {
             $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
 
@@ -40,7 +55,11 @@
         }
 
 
-        public function getArticle( $idx )
+        /**
+         * @param $idx
+         * @throws Exception
+         */
+        final public function getArticle( $idx )
         {
             $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
             $model = new ArticleModel( $factory );

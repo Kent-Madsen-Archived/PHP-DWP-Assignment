@@ -4,6 +4,10 @@
      *  Author:
      *  Type: PHP Script
      */
+
+    /**
+     * Interface ProductEntityController
+     */
     interface ProductEntityController
     {
 

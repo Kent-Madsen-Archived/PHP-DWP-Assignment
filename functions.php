@@ -6,7 +6,8 @@
      */
 
     /**
-     * 
+     * @param $path_to_append
+     * @return string
      */
     function get_workspace_directory_destination( $path_to_append )
     {
@@ -32,7 +33,7 @@
     }
 
     /**
-     * 
+     *
      */
     function get_footer()
     {
@@ -40,7 +41,7 @@
     }
 
     /**
-     * 
+     *
      */
     function get_header()
     {
@@ -48,7 +49,7 @@
     }
 
     /**
-     * 
+     * @param $url
      */
     function redirect_to_local_page( $url )
     {
@@ -56,7 +57,8 @@
     }
 
     /**
-     * 
+     * @param $protocol
+     * @param $url
      */
     function redirect_to_external_page( $protocol, $url )
     {
@@ -64,7 +66,7 @@
     }
 
     /**
-     * 
+     * @param $url
      */
     function redirect_to_external_page_insecure( $url )
     {
@@ -72,7 +74,7 @@
     }
 
     /**
-     * 
+     * @param $url
      */
     function redirect_to_external_page_secure( $url )
     {

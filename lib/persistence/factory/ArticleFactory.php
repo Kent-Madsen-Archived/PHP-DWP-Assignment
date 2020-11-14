@@ -5,9 +5,9 @@
      *  Type: PHP Script
      */
 
-/**
- * Class ArticleFactory
- */
+    /**
+     * Class ArticleFactory
+     */
     class ArticleFactory 
         extends Factory
     {

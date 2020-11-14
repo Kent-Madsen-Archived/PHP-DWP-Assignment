@@ -1,6 +1,7 @@
-<?php 
+<?php
+
     /**
-     * 
+     * Class DatabaseModel
      */
     abstract class DatabaseModel 
     {
@@ -10,7 +11,7 @@
         // accessor functions
             // getters
         /**
-         * 
+         * @return null
          */
         final public function getFactory()
         {
@@ -18,8 +19,10 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $factory
+         * @throws Exception
          */
         final public function setFactory( $factory )
         {
@@ -32,12 +35,14 @@
         }
 
         /**
-         * 
+         * @param $factory
+         * @return mixed
          */
         protected abstract function validateFactory( $factory );
 
         /**
-         * 
+         * @param $value
+         * @return bool
          */
         final protected function genericNumberValidation( $value )
         {
@@ -55,7 +60,8 @@
         }
 
         /**
-         * 
+         * @param $value
+         * @return bool
          */
         final protected function genericStringValidation( $value )
         {
@@ -73,7 +79,8 @@
         }
 
         /**
-         * 
+         * @param $value
+         * @return bool
          */
         final protected function identityValidation( $value )
         {
