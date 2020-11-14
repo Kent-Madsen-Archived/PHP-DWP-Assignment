@@ -191,7 +191,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

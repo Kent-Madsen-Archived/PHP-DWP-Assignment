@@ -126,7 +126,7 @@
             $sql = "SELECT * FROM product LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -163,9 +163,11 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
-
-            //
-            $this->getConnector()->disconnect();
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
 
             return $retVal;
         }
@@ -226,9 +228,11 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
-
-            //
-            $this->getConnector()->disconnect();
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
 
             return $retVal;
         }
@@ -293,9 +297,12 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
 
-            //
-            $this->getConnector()->disconnect();
 
             return $retVal;
         }

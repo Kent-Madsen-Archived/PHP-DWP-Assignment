@@ -166,9 +166,12 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
 
-            //
-            $this->getConnector()->disconnect();
 
             return $retVal;
         }
@@ -249,7 +252,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

@@ -122,7 +122,7 @@
 
             $sql = "SELECT * FROM product_entity LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -161,7 +161,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -251,7 +250,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

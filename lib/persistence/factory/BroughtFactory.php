@@ -134,10 +134,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 $stmt->execute();
@@ -167,9 +167,10 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
-
-            //
-            $this->getConnector()->disconnect();
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
 
             return $retVal;
         }
@@ -250,7 +251,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -300,12 +300,10 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
 

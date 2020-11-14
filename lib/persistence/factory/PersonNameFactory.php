@@ -123,7 +123,7 @@
 
             $sql = "SELECT * FROM person_name LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -134,7 +134,7 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 // Executes the query
@@ -160,7 +160,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -206,9 +205,9 @@
                                     $stmt_middle_name );
 
                 //
-                $stmt_first_name = $model->getFirstName();
-                $stmt_last_name = $model->getLastName();
-                $stmt_middle_name = $model->getMiddleName();
+                $stmt_first_name    = $model->getFirstName();
+                $stmt_last_name     = $model->getLastName();
+                $stmt_middle_name   = $model->getMiddleName();
 
                 // Executes the query
                 $stmt->execute();
@@ -224,7 +223,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -290,7 +288,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -351,7 +348,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -401,7 +397,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

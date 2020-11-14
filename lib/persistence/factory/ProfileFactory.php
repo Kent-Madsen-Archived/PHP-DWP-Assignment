@@ -161,7 +161,10 @@
             }
             catch ( Exception $ex )
             {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
 
+                throw new Exception( 'Error:' . $ex );
             }
             finally
             {
@@ -230,7 +233,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -306,7 +308,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error :' . $ex );
             }
             finally
@@ -368,7 +369,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -440,7 +440,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -503,7 +502,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -553,7 +551,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

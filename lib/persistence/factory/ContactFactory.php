@@ -210,7 +210,7 @@
                 
                 $stmt_has_been_send = $model->getHasBeenSend();
 
-                $stmt_to_id = $model->getToMail();
+                $stmt_to_id   = $model->getToMail();
                 $stmt_from_id = $model->getFromMail();
                 
                 // Executes the query
@@ -289,7 +289,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -410,7 +409,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

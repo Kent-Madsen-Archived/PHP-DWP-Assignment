@@ -122,7 +122,7 @@
 
             $sql = "SELECT * FROM product_attribute LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -130,10 +130,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 // Executes the query
@@ -156,7 +156,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -243,7 +242,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -293,7 +291,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
