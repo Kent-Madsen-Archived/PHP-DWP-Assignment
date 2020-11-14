@@ -20,6 +20,7 @@
             return 'profile_type';
         }
 
+
         /**
          * 
          */
@@ -27,6 +28,7 @@
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -36,21 +38,33 @@
             $this->setConnector( $mysql_connector );
         }
 
+
         /**
-         * 
+         * TODO: setup
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: setupSecondaries
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: insert_base_data 
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -65,6 +79,7 @@
             return $value;  
         }
 
+
         /**
          * 
          */
@@ -75,6 +90,7 @@
             return $model;
         }
         
+
         /**
          * 
          */
@@ -336,8 +352,9 @@
             return $retVal;
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

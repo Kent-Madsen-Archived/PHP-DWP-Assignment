@@ -20,6 +20,7 @@
             return 'person_name';
         }
         
+
         /**
          * 
          */
@@ -27,6 +28,7 @@
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -36,21 +38,33 @@
             $this->setConnector( $mysql_connector );
         }
         
+
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -65,6 +79,7 @@
             return $value;         
         }
 
+
         /**
          * 
          */
@@ -74,6 +89,7 @@
 
             return $model;
         }
+
 
         /**
          * 
@@ -346,8 +362,9 @@
             return $retVal;
         }
 
+        
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

@@ -19,6 +19,7 @@
             return 'product_used_images';
         }
 
+
         /**
          * 
          */
@@ -26,6 +27,7 @@
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -35,21 +37,33 @@
             $this->setConnector( $mysql_connector );
         }
 
+
         /**
-         * 
+         *  TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         *  TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This 
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -64,6 +78,7 @@
             return $value;         
         }
 
+
         /**
          * 
          */
@@ -73,6 +88,7 @@
 
             return $model;
         }
+
 
         /**
          * 
@@ -87,16 +103,18 @@
             return false;
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function read()
         {
 
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function create( $model )
         {
@@ -107,8 +125,9 @@
 
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function delete( $model )
         {
@@ -119,8 +138,9 @@
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function update( $model )
         {
@@ -131,8 +151,9 @@
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

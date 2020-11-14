@@ -19,6 +19,7 @@
             return 'contact';
         }
 
+
         /**
          * 
          */
@@ -27,6 +28,7 @@
             return self::getTableName();
         }
 
+
         /**
          * 
          */
@@ -34,6 +36,7 @@
         {
             $this->setConnector( $mysql_connector );
         }
+
 
         /**
          * 
@@ -45,21 +48,33 @@
             return $model;
         }
         
+
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -73,6 +88,7 @@
             
             return $value;
         }
+
 
         /**
          * 
@@ -355,6 +371,10 @@
             return $retVal;
         }
 
+
+        /**
+         * TODO: This
+         */
         final public function length()
         {
             return 0;

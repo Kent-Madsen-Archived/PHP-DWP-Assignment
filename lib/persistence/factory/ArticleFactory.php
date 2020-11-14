@@ -19,6 +19,7 @@
             return 'article';
         }
         
+
         /**
          * 
          */
@@ -27,6 +28,7 @@
             return self::getTableName();
         }
         
+
         /**
          * 
          */
@@ -34,6 +36,7 @@
         {
             $this->setConnector( $mysql_connector );
         }
+
 
         /**
          * 
@@ -45,21 +48,33 @@
             return $model;
         }
 
+
         /**
-         * 
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
+
+        /**
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
 
         /**
          * 
@@ -74,6 +89,7 @@
             return $value;
         }
 
+
         /**
          * 
          */
@@ -87,6 +103,7 @@
             return false;
         }
         
+
         /**
          * 
          */
@@ -324,6 +341,10 @@
             }
         }
 
+        
+        /**
+         * TODO: This
+         */
         final public function length()
         {
             return 0;

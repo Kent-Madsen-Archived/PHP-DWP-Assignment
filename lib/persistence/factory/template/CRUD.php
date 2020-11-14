@@ -7,11 +7,25 @@
 
     interface CRUD
     {
+        /**
+         * 
+         */
+        public function create( $model );
+
+        /**
+         * 
+         */
         public function read();
 
-        public function create( $model );
+        /**
+         * 
+         */
         public function delete( $model );
 
+
+        /**
+         * 
+         */
         public function update( $model );
     }
 ?>
