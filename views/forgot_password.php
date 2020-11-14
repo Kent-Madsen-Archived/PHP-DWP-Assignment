@@ -4,7 +4,7 @@
      *  Author:
      *  Type: PHP Script
      */
-    $access = new AccessPrivileges();
+    $access = new AccessPrivilegesDomain();
 
     if( $access->is_logged_in() )
     {

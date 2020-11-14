@@ -18,4 +18,5 @@
 
     define( "WEBPAGE_DATABASE_USERNAME", "test" );
     define( "WEBPAGE_DATABASE_PASSWORD", "Epc63gez" );
+    define( "WEBPAGE_DATABASE_PORT", 3600 );
 ?>

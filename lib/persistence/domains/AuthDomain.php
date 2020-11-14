@@ -18,10 +18,10 @@
          */
         public function __construct()
         {
-            $access = new NetworkAccess( null, null );   
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
+            $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
+            $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
 
-            $database = "dwp_assignment";
+            $database = WEBPAGE_DATABASE_NAME;
 
             $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
 
@@ -36,50 +36,9 @@
         private $mysql_info = null;
 
 
-        /**
-         * 
-         */
-        final protected function generate_password( $input )
-        {
-            return password_hash( $input, PASSWORD_BCRYPT, $this->options );
-        }
+        // Body of domain
 
-
-        /**
-         * 
-         */
-        final protected function verify( $input_password, $hash )
-        {
-            return password_verify( $input_password, $hash );
-        }
-
-
-        /**
-         * 
-         */
-        final public function login( $username, $password )
-        {     
-            //
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
-            $factory = new ProfileFactory( $connection );
-
-            // Retrieves a user by their username
-            $arr = $factory->get_by_username( $username );
-
-            if( $arr == null )
-            {
-                return null;
-            }
-
-            if( $this->verify( $password, $arr->getPassword() ) )
-            {
-                return $arr;
-            }
-
-            return null;
-        }
-
-
+            // Forgot my password
         /**
          * 
          */
@@ -100,10 +59,16 @@
         }
 
 
+            // Registration
         /**
          * 
          */
-        final public function register( $profile, $name, $email, $birthday, $phone_number, $address )
+        final public function register( $profile, 
+                                        $name, 
+                                        $email, 
+                                        $birthday, 
+                                        $phone_number, 
+                                        $address )
         {
             $retVal = null;
 
@@ -123,7 +88,12 @@
         /**
          * 
          */
-        final public function register_profile_information( $profile, $name, $email, $birthday, $phone_number, $address )
+        final public function register_profile_information( $profile, 
+                                                            $name, 
+                                                            $email, 
+                                                            $birthday, 
+                                                            $phone_number, 
+                                                            $address )
         {
             $retVal = null;
 
@@ -133,7 +103,7 @@
             $person_name_factory = new PersonNameFactory( $connection );
             
             // if empty, insert factory
-            if( $name->getFactory() == null )
+            if( is_null( $name->getFactory() ) )
             {
                 $name->setFactory( $person_name_factory );
             }
@@ -144,14 +114,14 @@
             // retrieve or create email
             $person_email_factory = new PersonEmailFactory( $connection );
 
-            if( $email->getFactory() == null )
+            if( is_null( $email->getFactory() ) )
             {
                 $email->setFactory( $person_email_factory );
             }
 
             $email_found = $person_email_factory->get_by_name( $email->getContent() );
 
-            if( $email_found == null )
+            if( is_null( $email_found ) )
             {
                 $email = $person_email_factory->create( $email );
             }
@@ -163,7 +133,7 @@
             // retrieve or create address
             $person_address_factory = new PersonAddressFactory( $connection );
 
-            if( $address->getFactory() == null )
+            if( is_null( $address->getFactory() ) )
             {
                 $address->setFactory( $person_address_factory );
             }
@@ -224,8 +194,69 @@
             return $profile;
         }
 
+            // Login
+        /**
+         * 
+         */
+        final public function login( $username, 
+                                     $password )
+        {     
+            //
+            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $factory = new ProfileFactory( $connection );
+
+            // Retrieves a user by their username
+            $arr = $factory->get_by_username( $username );
+
+            if( is_null( $arr ) )
+            {
+                return null;
+            }
+
+            if( $this->verify( $password, $arr->getPassword() ) )
+            {
+                return $arr;
+            }
+
+            return null;
+        }
+
+
+        // Internal
+        /**
+         * 
+         */
+        final protected function generate_password( $input )
+        {
+            return password_hash( $input, PASSWORD_BCRYPT, $this->options );
+        }
+
+
+        /**
+         * 
+         */
+        final protected function verify( $input_password, $hash )
+        {
+            return password_verify( $input_password, $hash );
+        }
+
+        
+        // Validation
+        /**
+         * 
+         */
+        final protected function validateMysqlInformation( $var )
+        {
+            if( is_null( $var ) || ( $var instanceof MySQLInformation ) )
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         // accessors
+            // getters
         /**
          * 
          */
@@ -234,13 +265,21 @@
             return $this->mysql_info;
         }
 
+
+            // setters
         /**
          * 
          */
         final public function setMysqlInformation( $var )
         {
+            if( !$this->validateMysqlInformation( $var ) )
+            {
+                throw new Exception('AuthDomain: setMysqlInformation - Not a valid class');
+            }
+
             $this->mysql_info = $var;
         }
+
 
     }
 
