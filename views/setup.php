@@ -12,11 +12,6 @@
     $title->appendToTitle(' - Setup');
 
     $router = RouterSingleton::getInstance();
-
-    if( count($router->getArgs()) )
-    {
-        print_r($router->getArgs());
-    }
 ?>
 
 <!DOCTYPE html>

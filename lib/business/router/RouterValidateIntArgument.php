@@ -5,28 +5,23 @@ class RouterValidateIntArgument
 {
     public function validateArgumentLevel( $arg )
     {
+        $value = filter_var( $arg, FILTER_VALIDATE_INT );
 
+        if( empty( $arg ) )
+        {
+            $this->setValue( null );
+            return true;
+        }
+
+        if( is_null( $arg ) || $value )
+        {
+            $this->setValue( $value );
+            return true;
+        }
 
         return false;
     }
 
-    private $level = 0;
-
-    /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * @param int $level
-     */
-    public function setLevel( $level )
-    {
-        $this->level = $level;
-    }
 }
 
 ?>

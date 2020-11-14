@@ -3,30 +3,21 @@
 class RouterValidateStringArgument
     extends RouterValidateArgument
 {
+    //
     public function validateArgumentLevel( $arg )
     {
+        $value = filter_var( $arg, FILTER_SANITIZE_STRING );
 
+        // Validate character set
+        if( is_null( $arg ) | is_string( $value ) )
+        {
+            $this->setValue( $value );
+            return true;
+        }
 
         return false;
     }
 
-    private $level = 0;
-
-    /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * @param int $level
-     */
-    public function setLevel( $level )
-    {
-        $this->level = $level;
-    }
 }
 
 ?>

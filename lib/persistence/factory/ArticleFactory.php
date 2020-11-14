@@ -5,32 +5,34 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
+/**
+ * Class ArticleFactory
+ */
     class ArticleFactory 
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
             return 'article';
         }
-        
+
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
             return self::getTableName();
         }
-        
+
 
         /**
-         * 
+         * ArticleFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -39,7 +41,7 @@
 
 
         /**
-         * 
+         * @return ArticleModel
          */
         final public function createModel()
         {
@@ -77,7 +79,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -91,7 +94,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -102,10 +106,11 @@
 
             return false;
         }
-        
+
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -174,7 +179,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
@@ -190,7 +197,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read_ordered_by_creation_date()
         {
@@ -259,7 +267,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -318,7 +328,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -374,7 +386,8 @@
 
 
         /**
-         * 
+         * @param $model
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -421,9 +434,10 @@
             }
         }
 
-        
+
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

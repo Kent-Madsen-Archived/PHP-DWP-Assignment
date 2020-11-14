@@ -5,9 +5,9 @@
      *  Type: PHP Script
      */
 
-    /**
-      * 
-      */
+/**
+ * Class ContactFactory
+ */
     class ContactFactory 
         extends Factory
     {

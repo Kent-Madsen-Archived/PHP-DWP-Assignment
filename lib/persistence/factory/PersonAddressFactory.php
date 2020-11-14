@@ -6,32 +6,34 @@
      */
 
 
-    /**
-     * 
-     */
+/**
+ * Class PersonAddressFactory
+ */
     class PersonAddressFactory 
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
             return 'person_address';
         }
 
-        
+
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
             return self::getTableName();
         }
-        
+
 
         /**
-         * 
+         * PersonAddressFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {   
@@ -67,7 +69,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -81,7 +84,7 @@
 
 
         /**
-         * 
+         * @return PersonAddressModel
          */
         final public function createModel()
         {
@@ -92,7 +95,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -106,7 +110,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -174,7 +179,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
@@ -190,7 +197,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -255,7 +264,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -320,9 +331,11 @@
             return $retVal;
         }
 
-        
+
         /**
-         * 
+         * @param $model
+         * @return bool
+         * @throws Exception
          */
         final public function delete( $model )
         {

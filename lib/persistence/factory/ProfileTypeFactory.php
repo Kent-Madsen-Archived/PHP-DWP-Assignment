@@ -7,13 +7,13 @@
 
 
     /**
-     * 
+     * Class ProfileTypeFactory
      */
     class ProfileTypeFactory 
         extends Factory 
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -22,7 +22,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -31,7 +31,9 @@
 
 
         /**
-         * 
+         * ProfileTypeFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -67,7 +69,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -81,7 +84,7 @@
 
 
         /**
-         * 
+         * @return ProfileTypeModel
          */
         final public function createModel()
         {
@@ -89,10 +92,11 @@
 
             return $model;
         }
-        
+
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -104,9 +108,10 @@
             return false;
         }
 
-        
+
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read( )
         {
@@ -169,7 +174,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
@@ -185,7 +192,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -244,7 +253,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -306,7 +317,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return bool
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -366,7 +379,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

@@ -71,6 +71,11 @@
          */
         public function validate( $argument, $lvl )
         {
+            if( !is_int( $lvl ) )
+            {
+                throw new Exception('');
+            }
+
             $retVal = false;
 
             if( count( $this->getValidationTree() ) == 0 )
@@ -82,16 +87,22 @@
             for( $idx = 0;
                  $idx < count( $this->getValidationTree() );
                  $idx ++ )
-            {
+            {;
                 $current = $this->getValidationTree()[ $idx ];
+                $current_state = false;
 
                 if( $current->getLevel() == $lvl )
                 {
                     if( $current->validateArgumentLevel( $argument ) )
                     {
-                        $retVal = true;
-                        break;
+                        $current_state = true;
                     }
+                }
+
+                if( $current_state )
+                {
+                    $retVal = true;
+                    break;
                 }
             }
 

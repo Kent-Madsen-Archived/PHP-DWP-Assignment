@@ -12,7 +12,7 @@
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -21,7 +21,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -30,7 +30,9 @@
 
 
         /**
-         * 
+         * PageElementFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -66,7 +68,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -80,7 +83,7 @@
 
 
         /**
-         * 
+         * @return PageElementModel
          */
         final public function createModel()
         {
@@ -91,7 +94,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -105,7 +109,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -171,13 +176,14 @@
                 $this->getConnector()->disconnect();
             }
 
-
             return $retVal;
         }
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
@@ -193,7 +199,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -206,7 +213,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -218,7 +226,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -230,7 +239,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {
