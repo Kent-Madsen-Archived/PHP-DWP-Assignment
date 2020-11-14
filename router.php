@@ -60,7 +60,7 @@
             $this->split_request_into_arguments();        
 
             //
-            $this->route_domain( $this->getArgs()[1] );
+            $this->route_domain( );
         }
 
         /**
@@ -83,24 +83,30 @@
         public function split_request_into_arguments()
         {
             $split_uri = explode( '/', $this->getCurrentRequest() );
+
+            array_shift( $split_uri );            
+
             $this->setArgs( $split_uri );
         }
 
         /**
          * 
          */
-        public function route_domain()
+        public function route_domain( )
         {
-            $idx = 0;
+            $root_routing_level_idx = 0;
 
             //
             for( $idx = 0; 
                  $idx < $this->getLengthOfRoutes();
                  $idx ++ )
             {
+                // Current Route
                 $current = $this->getRoutes()[$idx];
 
-                if( $this->getArgs()[1] == $current->getRouteDomain() )
+                $root_domain = $this->getArgLevel( $root_routing_level_idx , false );
+
+                if( !is_null( $root_domain ) && ( $root_domain  == $current->getRouteDomain() ) )
                 {
                     $current->load();
                     return;
@@ -136,6 +142,56 @@
         public function getArgs()
         {
             return $this->args;
+        }
+
+        /**
+         * @param $idx
+         * @return mixed
+         */
+        public function getArg( $idx )
+        {
+            if( $idx < $this->getArgsSize() )
+            {
+                return $this->getArgs()[ $idx ];
+            }
+            else
+            {
+                throw new Exception('$idx is outside of the arguments range');
+            }
+        }
+
+        /**
+         * @param $idx
+         * @param $closesest_lvl, retrieve the last item in the array, if the index is outside it's range
+         * @return mixed|null
+         */
+        public function getArgLevel( $idx, $closesest_lvl )
+        {
+            try
+            {
+                return $this->getArg( $idx );
+            }
+            catch ( Exception $ex )
+            {
+                if( $closesest_lvl )
+                {
+                    return $this->getArg( $this->max() );
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public function getArgsSize()
+        {
+            return count( $this->getArgs() );
+        }
+
+        public function max()
+        {
+            return count($this->getArgs()) - 1;
         }
 
         /**
