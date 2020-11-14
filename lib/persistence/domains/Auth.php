@@ -15,7 +15,7 @@
         /**
          * 
          */
-        function __construct()
+        public function __construct()
         {
             $access = new NetworkAccess( null, null );   
             $user_credential = new UserCredential( 'development', 'Epc63gez' );
@@ -26,6 +26,7 @@
 
         }
 
+
         // Variables
         private $options = [ 'cost'=>15 , 
                              'salt'=>WEBPAGE_DEFAULT_SALT ];
@@ -33,26 +34,29 @@
         
         private $mysql_info = null;
 
+
         /**
          * 
          */
-        protected function generate_password( $input )
+        final protected function generate_password( $input )
         {
             return password_hash( $input, PASSWORD_BCRYPT, $this->options );
         }
 
-        /**
-         * 
-         */
-        protected function verify( $input_password, $hash )
-        {
-            return password_verify( $input_password, $hash );
-        }
 
         /**
          * 
          */
-        public function login( $username, $password )
+        final protected function verify( $input_password, $hash )
+        {
+            return password_verify( $input_password, $hash );
+        }
+
+
+        /**
+         * 
+         */
+        final public function login( $username, $password )
         {     
             //
             $connection = new MySQLConnector( $this->getMysqlInformation() );
@@ -74,25 +78,31 @@
             return null;
         }
 
+
         /**
          * 
          */
-        public function forgot_my_password_by_email( $email )
+        final public function forgot_my_password_by_email( $email )
         {
             $retVal = null;
             
             return $retVal;   
         }
 
-        public function forgot_my_password_by_username( $username )
-        {
-            return null;
-        }
 
         /**
          * 
          */
-        public function register( $profile, $name, $email, $birthday, $phone_number, $address )
+        final public function forgot_my_password_by_username( $username )
+        {
+            return null;
+        }
+
+
+        /**
+         * 
+         */
+        final public function register( $profile, $name, $email, $birthday, $phone_number, $address )
         {
             $retVal = null;
 
@@ -108,10 +118,11 @@
             return $retVal;   
         }
 
+
         /**
          * 
          */
-        public function register_profile_information( $profile, $name, $email, $birthday, $phone_number, $address )
+        final public function register_profile_information( $profile, $name, $email, $birthday, $phone_number, $address )
         {
             $retVal = null;
 
@@ -177,10 +188,11 @@
             return $retVal;
         }
 
+
         /**
          * 
          */
-        public function hash_profile_password( $profile_model )
+        final public function hash_profile_password( $profile_model )
         {
             $password_not_hash = $profile_model->getPassword();
 
@@ -190,10 +202,11 @@
             return $profile_model;
         }
 
+
         /**
          * 
          */
-        public function register_profile( $profile_variable )
+        final public function register_profile( $profile_variable )
         {
             //
             $connection = new MySQLConnector( $this->getMysqlInformation() );
@@ -215,7 +228,7 @@
         /**
          * 
          */
-        public function getMysqlInformation()
+        final public function getMysqlInformation()
         {
             return $this->mysql_info;
         }
@@ -223,13 +236,10 @@
         /**
          * 
          */
-        public function setMysqlInformation( $var )
+        final public function setMysqlInformation( $var )
         {
             $this->mysql_info = $var;
         }
-
-
-        
 
     }
 

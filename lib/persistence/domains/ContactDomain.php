@@ -11,6 +11,9 @@
     class ContactDomain
     {
         // Construct
+        /**
+         * 
+         */
         public function __construct()
         {
             $access = new NetworkAccess( 'localhost', 3600 );   
@@ -20,13 +23,15 @@
             $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
 
+
         // Variables
         private $mysql_info = null;
+
 
         /**
          * 
          */
-        public function send()
+        final public function send()
         {
             //
             $connection = new MySQLConnector( $this->getMysqlInformation() );
@@ -52,10 +57,11 @@
             $contact_factory->create( $contact_model );
         }
 
+
         /**
          * 
          */
-        protected function getFromMail( $connection )
+        final protected function getFromMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
 
@@ -74,10 +80,11 @@
             return $fromMail;
         }
 
+
         /**
          * 
          */
-        protected function getToMail( $connection )
+        final protected function getToMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
 
@@ -96,38 +103,44 @@
             return $toMail;
         }
 
-        /**
-         * 
-         */
-        protected function getSubject()
-        {
-            return $_POST[ 'form_contact_subject' ];
-        }
 
         /**
          * 
          */
-        protected function getMessage()
+        final protected function getSubject()
+        {
+            return $_POST[ 'form_contact_subject' ];
+        }
+
+
+        /**
+         * 
+         */
+        final protected function getMessage()
         {
             return $_POST[ 'form_contact_message' ];
         }
+
 
         // accessors
         /**
          * 
          */
-        public function getMysqlInformation()
+        final public function getMysqlInformation()
         {
             return $this->mysql_info;
         }
 
+
         /**
          * 
          */
-        public function setMysqlInformation( $var )
+        final public function setMysqlInformation( $var )
         {
             $this->mysql_info = $var;
         }
+
+
     }
 
 ?>
