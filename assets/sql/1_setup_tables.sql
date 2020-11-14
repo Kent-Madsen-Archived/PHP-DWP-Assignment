@@ -1,288 +1,540 @@
-create table product_attribute
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product_attribute CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product_attribute
 (
-    identity int not null auto_increment,
-    content varchar( 256 ) not null,
-    primary key ( identity )
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
+    content VARCHAR( 256 ) UNIQUE NOT NULL,
+    PRIMARY KEY( identity )
 );
 
-select 'product_attribute', 'created';
+-- Adding commentary to the table
+ALTER TABLE product_attribute COMMENT 'An object that represents redundant attributes, that can be used on products, like color, weight, size';
+
+-- Indicate to software it's done
+SELECT 'product_attribute' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table person_email
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    person_email CASCADE;
+
+-- Creates a new Table
+CREATE TABLE person_email
 (
-    identity int not null auto_increment,
-    content varchar( 256 ) unique not null,
-    primary key ( identity )
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
+    content VARCHAR( 256 ) UNIQUE NOT NULL,
+    PRIMARY KEY( identity )
 );
 
-select 'person_email', 'created';
+-- Adding commentary to the table
+ALTER TABLE person_email COMMENT 'An object that represents redundant email addresses. as they can be used in multiple domains.';
+
+-- Indicate to software it's done
+SELECT 'person_email' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table person_name
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    person_name CASCADE;
+
+-- Creates a new Table
+CREATE TABLE person_name
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    first_name varchar( 256 ) not null,
-    last_name varchar( 256 ),
-    middle_name varchar( 256 ) not null,
+    first_name VARCHAR( 100 ) NOT NULL,
+    last_name VARCHAR( 100 ),
+    middle_name VARCHAR( 100 ) NOT NULL,
 
-    primary key ( identity )
+    INDEX( first_name, 
+           last_name, 
+           middle_name ),
+
+    PRIMARY KEY( identity )
 );
 
-select 'person_name', 'created';
+-- Adding commentary to the table
+ALTER TABLE person_name COMMENT 'An object that represents a list of different person names. that are often used';
+
+-- Indicate to software it's done
+SELECT 'person_name' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table person_address
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    person_address CASCADE;
+
+-- Creates a new Table
+CREATE TABLE person_address
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    street_name varchar( 256 ),
-    street_address_number int default 0,
+    street_name VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
+    street_address_number INT DEFAULT 0 NOT NULL,
 
-    zip_code int,
-    country varchar( 256 ),
+    street_address_stage VARCHAR( 10 ) DEFAULT NULL,
 
-    primary key ( identity )
+    zip_code INT DEFAULT 0 NOT NULL,
+    country VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
+
+    INDEX( street_name, 
+           street_address_number, 
+           street_address_stage, 
+           zip_code, 
+           country ),
+
+    PRIMARY KEY( identity )
 );
 
-select 'person_address', 'created';
+-- Adding commentary to the table
+ALTER TABLE person_address COMMENT 'An object that represents an address for a given person. Are used for personal information and invoices, etc.';
+
+-- Indicate to software it's done
+SELECT 'person_address' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table product_category
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product_category CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product_category
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    content varchar( 256 ) not null,
-    
-    primary key ( identity )
+    content VARCHAR( 256 ) UNIQUE NOT NULL,
+
+    PRIMARY KEY( identity )
 );
 
-select 'product_category', 'created';
+-- Adding commentary to the table
+ALTER TABLE product_category COMMENT 'An object that represents a specific category for a product, if attribute is color, the category can be blue, yellow, orange, etc.';
+
+-- Indicate to software it's done
+SELECT 'product_category' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
 
-create table image_type
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    image_type CASCADE;
+
+-- Creates a new Table
+CREATE TABLE image_type
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    content varchar( 256 ) not null,
-    
-    primary key ( identity )
+    content VARCHAR( 256 ) UNIQUE NOT NULL,
+
+    PRIMARY KEY( identity )
 );
 
-select 'image_type', 'created';
+-- Adding commentary to the table
+ALTER TABLE image_type COMMENT 'Represents different images types, that can be used on the site, small, preview, large, etc. used by the system to identity the proper size';
+
+-- Indicate to software it's done
+SELECT 'image_type' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table profile_type
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    profile_type CASCADE;
+
+CREATE TABLE profile_type
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    content varchar( 256 ) unique not null,
-
-    primary key ( identity )
+    content VARCHAR( 256 ) UNIQUE NOT NULL,
+    
+    PRIMARY KEY( identity )
 );
 
-select 'profile_type', 'created';
+-- Adding commentary to the table
+ALTER TABLE profile_type COMMENT 'Represents what a given users privileges are. Admin, store clerk, etc.';
 
 
-create table associated_category
+-- Indicate to software it's done
+SELECT 'profile_type' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    associated_category CASCADE;
+
+-- Creates a new Table
+CREATE TABLE associated_category
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    product_attribute_id int not null,
-    product_category_id int not null,
+    product_attribute_id INT NOT NULL,
+    product_category_id INT NOT NULL,
     
-    product_id int not null,
-    
-    primary key ( identity )
+    product_id INT NOT NULL,
+
+    INDEX( product_attribute_id, 
+           product_category_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'associated_category', 'created';
+-- Adding commentary to the table
+ALTER TABLE associated_category COMMENT 'represents an Given category given to a product. with an chosen attribute. indicating what type of category its in. ie attribute is color and category is red';
 
 
-create table profile_information
+----- Indicate to software it's done
+SELECT 'associated_category' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    profile_information CASCADE;
+
+-- Creates a new Table
+CREATE TABLE profile_information
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    profile_id int not null,
+    profile_id INT NOT NULL,
 
-    person_name_id int not null,
-    person_address_id int not null,
-    person_email_id int not null,
+    person_name_id      INT NOT NULL,
+    person_address_id   INT NOT NULL,
+    person_email_id     INT NOT NULL,
 
-    person_phone varchar( 256 ),
+    person_phone VARCHAR( 256 ),
 
-    birthday date not null,
-    registered datetime default now() not null,
+    birthday   DATE NOT NULL,
+    registered DATETIME DEFAULT now() NOT NULL,
 
-    primary key ( identity )
+    INDEX( profile_id,
+           person_name_id, 
+           person_email_id, 
+           person_address_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'profile_information', 'created';
+-- Adding commentary to the table
+ALTER TABLE profile_information COMMENT 'stores user information for a given user.';
 
 
-create table article
+-- Indicate to software it's done
+SELECT 'profile_information' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    article CASCADE;
+
+-- Creates a new Table
+CREATE TABLE article
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    title varchar( 256 ) not null,
-    article_content text,
+    title VARCHAR( 256 ) NOT NULL,
+    article_content TEXT DEFAULT '' NOT NULL,
     
-    created_on datetime default now(),
-    last_update datetime default now(),
+    created_on DATETIME DEFAULT now() NOT NULL,
+    last_updated DATETIME DEFAULT now() NOT NULL,
     
-    primary key ( identity )
+    INDEX( title, 
+           created_on ),
+    PRIMARY KEY( identity )
 );
 
-select 'article', 'created';
+
+-- Adding commentary to the table
+ALTER TABLE article COMMENT 'represents article news for the webshop';
 
 
-create table profile
+-- Indicate to software it's done
+select 'article' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    profile CASCADE;
+
+-- Creates a new Table
+CREATE TABLE profile
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    username varchar( 256 ) not null unique,
-    password varchar( 1024 ),
+    username VARCHAR( 256 ) NOT NULL UNIQUE,
+    password VARCHAR( 1024 ),
 
-    profile_type int not null default 1,
+    profile_type INT NOT NULL DEFAULT 1,
     
-    primary key ( identity )
+    INDEX( username, profile_type ),
+    PRIMARY KEY( identity )
 );
 
-select 'profile', 'created';
+-- Adding commentary to the table
+ALTER TABLE profile COMMENT 'represents an official user in the system. it contains only the users username, password and their privileges';
+
+-- Indicate to software it's done
+SELECT 'profile' AS table_name, now() AS time_of_day , 'Created' AS state;
 
 
-create table contact
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    contact CASCADE;
+
+-- Creates a new Table
+CREATE TABLE contact
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    subject_title varchar( 256 ) not null,
-    message text not null,
+    subject_title VARCHAR( 256 ) NOT NULL,
+    message TEXT NOT NULL,
     
-    has_been_send int default 0,
+    has_been_send INT DEFAULT 0 NOT NULL,
     
-    to_id int not null,
-    from_id int not null,
+    to_id INT NOT NULL,
+    from_id INT NOT NULL,
     
-    created_on datetime default now(),
+    created_on DATETIME DEFAULT now() NOT NULL,
 
-    primary key( identity )
+    INDEX( to_id, 
+           from_id, 
+           subject_title ),
+    PRIMARY KEY( identity )
 );
 
-select 'contact', 'created';
+-- Adding commentary to the table
+ALTER TABLE contact COMMENT 'temperary storage, for sending messages to the owner';
 
-create table product
+
+-- Indicate to software it's done
+SELECT 'contact'  AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    title varchar( 256 ) not null,
+    title VARCHAR( 256 ) NOT NULL ,
 
-    product_description text not null,
-    product_price double not null default 0.0,
-    
-    primary key ( identity )
+    product_description TEXT NOT NULL ,
+    product_price DOUBLE NOT NULL DEFAULT 0.0,
+
+    INDEX( title ),
+    PRIMARY KEY( identity )
 );
 
-select 'product created';
+-- Adding commentary to the table
+ALTER TABLE product COMMENT 'represents a profuct, that the consumer can buy';
 
-create table page_element
+-- Indicate to software it's done
+SELECT 'product' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    page_element CASCADE;
+
+-- Creates a new Table
+CREATE TABLE page_element
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    area_key varchar( 256 ) not null unique,
-    title varchar( 256 ) not null,
-    content text not null,
+    area_key VARCHAR( 256 ) NOT NULL UNIQUE,
+
+    title VARCHAR( 256 ) NOT NULL,
+    content TEXT NOT NULL,
     
-    created_on datetime default now(),
-    last_update datetime default now(),
+    created_on      DATETIME DEFAULT now() NOT NULL,
+    last_updated    DATETIME DEFAULT now() NOT NULL,
     
-    primary key ( identity )
+    INDEX( title, 
+           area_key,
+           created_on ),
+    PRIMARY KEY( identity )
 );
 
-select 'page_element created';
+-- Adding commentary to the table
+ALTER TABLE page_element COMMENT 'represents page elements that can be downloaded and shown when needed. used for footer, and information that needs to be shown in specific places';
 
 
-create table product_invoice
+-- Indicate to software it's done
+SELECT 'page_element' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product_invoice CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product_invoice
 (
-    identity int not null auto_increment,
+    identity    INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    total_price double not null default 0.0,
-    invoice_registered datetime default now(),
+    total_price         DOUBLE DEFAULT 0.0 NOT NULL,
+    invoice_registered  DATETIME DEFAULT now() NOT NULL,
 
-    address_id int not null,
-    mail_id int not null,
-    owner_name_id int null,
+    address_id    INT NOT NULL,
+    mail_id       INT NOT NULL,
+    owner_name_id INT NOT NULL,
 
-    primary key ( identity )
+    INDEX( address_id, 
+           mail_id, 
+           owner_name_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'product_invoice created';
+-- Adding commentary to the table
+ALTER TABLE product_invoice COMMENT 'Invoice, for when you brought a product';
+
+-- Indicate to software it's done
+SELECT 'product_invoice' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-create table brought_product
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    brought_product CASCADE;
+
+-- Creates a new Table
+CREATE TABLE brought_product
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    invoice_id int not null,
-    number_of_products int not null default 0,
-    price double not null default 0.0,
-    product_id int not null,
+    invoice_id INT NOT NULL,
+    number_of_products INT NOT NULL DEFAULT 0,
+    price DOUBLE NOT NULL DEFAULT 0.0,
+    product_id INT NOT NULL,
     
-    registered datetime not null default now(),
+    registered DATETIME NOT NULL DEFAULT now(),
 
-    primary key ( identity )
+    INDEX( product_id, 
+           invoice_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'brought_product created';
+-- Adding commentary to the table
+ALTER TABLE brought_product COMMENT 'associatian for product and invoice. telling what a user brought';
 
 
-create table product_entity
+-- Indicate to software it's done
+SELECT 'brought_product' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product_entity CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product_entity
 (
-    identity int not null auto_increment,
-    arrived datetime default now() not null,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
+    arrived DATETIME default now() NOT NULL,
     
-    entity_code varchar( 256 ) not null,
+    entity_code VARCHAR( 256 ) NOT NULL,
 
-    product_id int not null,
-    brought_id int default null,
-
-    primary key ( identity )
+    product_id INT NOT NULL,
+    brought_id INT default NULL,
+    
+    INDEX( product_id, 
+           brought_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'product_entity created';
+-- Adding commentary to the table
+ALTER TABLE product_entity COMMENT 'represents an physical product in the house';
 
 
-create table image
+-- Indicate to software it's done
+SELECT 'product_entity' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    image CASCADE;
+
+-- Creates a new Table
+CREATE TABLE image
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    image_src varchar( 512 ) not null,
-    image_type_id int not null default 1,
+    image_src VARCHAR( 512 ) NOT NULL,
+    image_type_id INT NOT NULL default 1,
 
-    title varchar( 256 ) not null default 'no name',
-    alt varchar( 256 ) not null default 'no alt text has been inserted',
+    title VARCHAR( 256 ) NOT NULL DEFAULT 'no name',
+    alt VARCHAR( 256 ) NOT NULL DEFAULT 'no alt text has been inserted',
 
-    parent_id int not null,
+    parent_id INT NOT NULL,
 
-    registered datetime default now() not null,
-    last_updated datetime default now() not null,
+    registered DATETIME DEFAULT now() NOT NULL,
+    last_updated DATETIME DEFAULT now() NOT NULL,
 
-    primary key ( identity )
+    INDEX( image_src, 
+           image_type_id, 
+           parent_id ),
+    PRIMARY KEY( identity )
 );
 
-select 'image', 'created';
+-- Adding commentary to the table
+ALTER TABLE image COMMENT 'represents an image, that can be shown. it will have a link to its src. it can have children incase it have been edited or made smaller';
 
-create table product_used_images
+
+-- Indicate to software it's done
+SELECT 'image' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+
+
+
+-- incase a table with similar name already exist, drop it
+DROP TABLE IF EXISTS
+    product_used_images CASCADE;
+
+-- Creates a new Table
+CREATE TABLE product_used_images
 (
-    identity int not null auto_increment,
+    identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    product_id int not null,
-    image_full_id int not null,
-    image_preview_id int not null,
+    product_id INT NOT NULL,
+    image_full_id INT NOT NULL,
+    image_preview_id INT NOT NULL,
 
-    is_profile_image int default 0 not null,
+    is_profile_image INT DEFAULT 0 NOT NULL,
 
-    primary key (identity)
+    PRIMARY KEY( identity )
 );
 
-select 'product_used_images', 'created';
+
+-- Adding commentary to the table
+ALTER TABLE product_used_images COMMENT 'represents an instance of a image, used for a given product';
+
+
+-- Indicate to software it's done
+SELECT 'product_used_images' AS table_name, now() AS time_of_day , 'Created' AS state ;

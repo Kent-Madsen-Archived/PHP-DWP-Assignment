@@ -52,9 +52,9 @@ alter table product_used_images
 		foreign key ( image_full_id ) references image ( identity );
 
 alter table product_invoice
-	add constraint pi_personemail_id_fk
+	add constraint pi__personemail_id_fk
 		foreign key ( mail_id ) references person_email ( identity ),
-	add constraint pi_personaddress_id_fk
+	add constraint pi__personaddress_id_fk
 		foreign key ( address_id ) references person_address ( identity ),
-    add constraint pi_personname_id_fk
+    add constraint pi__personname_id_fk
 		foreign key ( owner_name_id ) references person_name ( identity );

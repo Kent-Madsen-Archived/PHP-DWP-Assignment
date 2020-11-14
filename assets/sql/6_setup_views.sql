@@ -91,8 +91,8 @@ SELECT product_invoice.identity AS invoice_id,
        concat(pn.first_name,' ' ,pn.last_name,', ', pn.middle_name) AS owner_name
 FROM product_invoice
 LEFT JOIN person_address pa ON product_invoice.address_id = pa.identity
-LEFT JOIN person_email pe ON product_invoice.mail_id = pe.identity
-LEFT JOIN person_name pn ON product_invoice.owner_name_id = pn.identity;
+LEFT JOIN person_email pe   ON product_invoice.mail_id = pe.identity
+LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
 
 
 CREATE VIEW product_available_units AS
@@ -100,7 +100,7 @@ SELECT product.identity,
        product.title, 
        product.product_description, 
        product.product_price, 
-       count(pe.product_id) AS available_unit
+       count( pe.product_id ) AS available_unit
 FROM product
 LEFT JOIN product_entity pe ON product.identity = pe.product_id
 GROUP BY product_id;
