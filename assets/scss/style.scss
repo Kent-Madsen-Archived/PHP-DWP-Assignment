@@ -14,6 +14,11 @@ header nav
     
 }
 
+.information-container
+{
+    @extend .container;
+}
+
 main 
 {
 
@@ -21,7 +26,13 @@ main
 
 footer 
 {
+    @extend .page-footer;
 
+}
+
+.copyright
+{
+    @extend .footer-copyright;
 }
 
 %form_boundary

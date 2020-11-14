@@ -8,39 +8,39 @@
 ?>
 <header> 
     <nav> 
-        <a href="./homepage" 
+        <a href="/homepage" 
            class="brand-logo">
             Logo 
         </a>
 
         <ul class="right hide-on-med-and-down"> 
             <li> 
-                <a href="./shop"> 
+                <a href="/shop"> 
                     Shop 
                 </a>
             </li>
 
             <li> 
-                <a href="./news"> 
+                <a href="/news"> 
                     News 
                 </a>
             </li>
 
             <li> 
-                <a href="./about"> 
+                <a href="/about"> 
                     About 
                 </a>
             </li>
             
             <li> 
-                <a href="./contact"> 
+                <a href="/contact"> 
                     Contact 
                 </a>
             </li>
 
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="./checkout"> 
+                    <a href="/checkout"> 
                         Checkout 
                     </a>
                 </li>
@@ -48,7 +48,7 @@
             
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="./profile"> 
+                    <a href="/profile"> 
                         Profile 
                     </a>
                 </li>
@@ -56,7 +56,7 @@
 
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="./invoice"> 
+                    <a href="/invoice"> 
                         Invoice
                     </a>
                 </li>
@@ -64,7 +64,7 @@
 
             <?php if( $access->is_admin() ): ?>
                 <li> 
-                    <a href="./admin"> 
+                    <a href="/admin"> 
                         Admin
                     </a>
                 </li>
@@ -72,7 +72,7 @@
 
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="./logout"> 
+                    <a href="/logout"> 
                         Logout 
                     </a>
                 </li>
@@ -80,7 +80,7 @@
             
             <?php if( $access->is_not_logged_in() ): ?>
                 <li> 
-                    <a href="./login"> 
+                    <a href="/login"> 
                         Login 
                     </a>
                 </li>

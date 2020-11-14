@@ -10,6 +10,8 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - News' );
+
+    $domain = new NewsDomain();
 ?>
 
 <!DOCTYPE html>
@@ -26,21 +28,39 @@
     </head>
     <body>
         <?php get_header(); ?>
-        
+
+        <?php 
+            $arr = $domain->lastest_news();
+        ?>
+
         <main>
-            <?php 
-                $access = new NetworkAccess( 'localhost', 3600 );   
-                $user_credential = new UserCredential( 'development', 'Epc63gez' );
-                $database = "dwp_assignment";
+            <div class="row">
+                <?php 
+                    foreach( $arr as $value ):
+                ?>
+                    <div class="col s8 m5">
+                        <div class="card">
+                            <div class="card-image"> 
+                                <img src=""/>
+                            </div>
 
-                $information = new MySQLInformation( $access, $user_credential, $database );
-                
-                $connection = new MySQLConnector($information);
-
-
-
-            ?>
-
+                            <div class="card-content"> 
+                                <p class="card-title"> <?php echo $value->getTitle(); ?> </p>
+                                <p> <?php echo $value->getContent(); ?></p>
+                                
+                                <div class="row"> 
+                                    <p class="col"> <?php echo $value->getCreatedOn(); ?> </p>
+                                    <p class="col"> <?php echo $value->getLastUpdated(); ?> </p>
+                                </div>
+                            </div>
+                            
+                            <div class="card-action">
+                                <a href="<?php echo "./news/" . $value->getIdentity(); ?>"> Read More </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </main>
         
         <?php get_footer(); ?>

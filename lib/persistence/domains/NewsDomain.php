@@ -18,6 +18,36 @@
             $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
 
+
+        public function lastest_news()
+        {
+            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+
+            $factory->setLimit(6);
+
+            return $factory->read_ordered_by_creation_date();
+        }
+
+        
+        public function frontpage_news()
+        {
+            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+
+            $factory->setLimit(3);
+
+            return $factory->read_ordered_by_creation_date();
+        }
+
+
+        public function getArticle( $idx )
+        {
+            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+            $model = new ArticleModel( $factory );
+            $model->setIdentity( $idx );
+
+            
+
+        }
     }
 
 ?>

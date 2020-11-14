@@ -166,7 +166,7 @@
          */
         final public function setLimit( $var )
         {
-            if( is_null( $var ) || ( is_numeric( $idx ) && is_integer( $idx ) ) )
+            if( is_null( $var ) || ( is_numeric( $var ) && is_integer( $var ) ) )
             {
                 $this->limit = $var;
             }
