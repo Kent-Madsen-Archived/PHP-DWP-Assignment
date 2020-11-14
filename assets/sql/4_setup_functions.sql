@@ -1,62 +1,73 @@
 -- functions
-create function exists_email( mail varchar( 1024 ) ) returns int
-begin
-    declare mail_content varchar(1024) default null;
-    declare mail_id int default 0;
+CREATE FUNCTION exists_email( mail VARCHAR( 1024 ) ) RETURNS INT
+BEGIN
+    DECLARE mail_content VARCHAR( 1024 ) DEFAULT NULL;
+    DECLARE mail_id INT DEFAULT 0;
 
-    declare finished int default 0;
-    declare found int default 0;
+    DECLARE finished INT DEFAULT 0;
+    DECLARE found INT DEFAULT 0;
 
-    declare cursor_for_person_emails cursor for select * from person_email where content = lower(mail);
-    declare continue handler for not found set finished=1;
+    DECLARE cursor_for_person_emails 
+        CURSOR FOR 
+            SELECT * 
+            FROM person_email 
+            WHERE content = lower( mail );
 
-    open cursor_for_person_emails;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    OPEN cursor_for_person_emails;
 
     getMails: LOOP
-        fetch cursor_for_person_emails into mail_id, mail_content;
+        FETCH cursor_for_person_emails INTO mail_id, 
+                                            mail_content;
 
-        if finished = 1 then
-            leave getMails;
-        end if;
+        IF finished = 1 THEN
+            LEAVE getMails;
+        END IF;
 
-        if mail_content = mail then
-            set found = 1;
-        end if;
+        IF mail_content = mail THEN
+            SET found = 1;
+        END IF;
 
-    end loop;
+    END LOOP;
 
-    close cursor_for_person_emails;
+    CLOSE cursor_for_person_emails;
 
-    return found;
-end;
+    RETURN found;
+END;
 
 
-create function is_admin(value int) returns int
-begin
-    declare profile_type_id int default 0;
+CREATE FUNCTION is_admin( value int ) RETURNS INT
+BEGIN
+    DECLARE profile_type_id INT DEFAULT 0;
 
-    declare finished int default 0;
-    declare found int default 0;
+    DECLARE finished INT DEFAULT 0;
+    DECLARE found INT DEFAULT 0;
 
-    declare cursor_for_profile_type cursor for select identity from profile_type where content = lower('adminstrator');
-    declare continue handler for not found set finished=1;
+    DECLARE cursor_for_profile_type 
+        CURSOR FOR 
+            SELECT identity 
+            FROM profile_type 
+            WHERE content = lower( 'adminstrator' );
 
-    open cursor_for_profile_type;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    OPEN cursor_for_profile_type;
 
     getProfileType: LOOP
-        fetch cursor_for_profile_type into profile_type_id;
+        FETCH cursor_for_profile_type INTO profile_type_id;
 
-        if finished = 1 then
-            leave getProfileType;
-        end if;
+        IF finished = 1 THEN
+            LEAVE getProfileType;
+        END IF;
 
-        if profile_type_id = value then
-            set found = 1;
-        end if;
+        IF profile_type_id = value THEN
+            SET found = 1;
+        END IF;
 
-    end loop;
+    END LOOP;
 
-    close cursor_for_profile_type;
+    CLOSE cursor_for_profile_type;
 
-    return found;
-end;
+    RETURN found;
+END;
