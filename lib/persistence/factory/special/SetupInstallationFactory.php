@@ -13,6 +13,10 @@
             $this->setConnector( $connection );
         }
 
+
+        /**
+         * 
+         */
         public function executeSQLFile( $file )
         {
             $this->getConnector()->connect();
@@ -25,32 +29,36 @@
             }
 
             $file_query = file_get_contents( $file );
-
+            
             try
             {
-                if( $this->getConnector()->getConnector()->multi_query( $file_query ) )
+                if( $connection->multi_query( $file_query ) )
                 {
                     do 
                     {
-                        if ( $result = $this->getConnector()->getConnector() -> store_result() ) 
+                        if ( $result = $connection->store_result() ) 
                         {    
-                            while ( $row = $result -> fetch_row() ) 
+                            while ( $row = $result->fetch_row() ) 
                             {
-                              var_dump( $row );
+                                var_dump( $row );
                             }
 
-                           $result -> free_result();
-                          }
-                    }
-                    while( $this->getConnector()->getConnector()->more_results() );
+                           $result->free_result();
+                        }
+
+                        if( $connection->more_results() )
+                        {
+                            echo "More";
+                        }
+                        
+                    } while( $connection -> next_result() );
                 }
 
                 // commits the statement
                 $this->getConnector()->finish();   
             }
             catch( Exception $ex )
-            {
-                
+            {   
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 

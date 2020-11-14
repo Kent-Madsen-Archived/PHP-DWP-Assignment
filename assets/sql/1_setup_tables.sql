@@ -5,12 +5,18 @@ create table product_attribute
     primary key ( identity )
 );
 
+select 'product_attribute', 'created';
+
+
 create table person_email
 (
     identity int not null auto_increment,
     content varchar( 256 ) unique not null,
     primary key ( identity )
 );
+
+select 'person_email', 'created';
+
 
 create table person_name
 (
@@ -22,6 +28,9 @@ create table person_name
 
     primary key ( identity )
 );
+
+select 'person_name', 'created';
+
 
 create table person_address
 (
@@ -36,6 +45,9 @@ create table person_address
     primary key ( identity )
 );
 
+select 'person_address', 'created';
+
+
 create table product_category
 (
     identity int not null auto_increment,
@@ -44,6 +56,10 @@ create table product_category
     
     primary key ( identity )
 );
+
+select 'product_category', 'created';
+
+
 
 create table image_type
 (
@@ -54,6 +70,9 @@ create table image_type
     primary key ( identity )
 );
 
+select 'image_type', 'created';
+
+
 create table profile_type
 (
     identity int not null auto_increment,
@@ -62,6 +81,9 @@ create table profile_type
 
     primary key ( identity )
 );
+
+select 'profile_type', 'created';
+
 
 create table associated_category
 (
@@ -74,6 +96,9 @@ create table associated_category
     
     primary key ( identity )
 );
+
+select 'associated_category', 'created';
+
 
 create table profile_information
 (
@@ -93,6 +118,9 @@ create table profile_information
     primary key ( identity )
 );
 
+select 'profile_information', 'created';
+
+
 create table article
 (
     identity int not null auto_increment,
@@ -106,6 +134,9 @@ create table article
     primary key ( identity )
 );
 
+select 'article', 'created';
+
+
 create table profile
 (
     identity int not null auto_increment,
@@ -113,10 +144,13 @@ create table profile
     username varchar( 256 ) not null unique,
     password varchar( 1024 ),
 
-    profile_type int not null,
+    profile_type int not null default 1,
     
     primary key ( identity )
 );
+
+select 'profile', 'created';
+
 
 create table contact
 (
@@ -135,6 +169,8 @@ create table contact
     primary key( identity )
 );
 
+select 'contact', 'created';
+
 create table product
 (
     identity int not null auto_increment,
@@ -146,6 +182,8 @@ create table product
     
     primary key ( identity )
 );
+
+select 'product created';
 
 create table page_element
 (
@@ -160,6 +198,8 @@ create table page_element
     
     primary key ( identity )
 );
+
+select 'page_element created';
 
 
 create table product_invoice
@@ -176,6 +216,9 @@ create table product_invoice
     primary key ( identity )
 );
 
+select 'product_invoice created';
+
+
 create table brought_product
 (
     identity int not null auto_increment,
@@ -190,6 +233,9 @@ create table brought_product
     primary key ( identity )
 );
 
+select 'brought_product created';
+
+
 create table product_entity
 (
     identity int not null auto_increment,
@@ -202,6 +248,9 @@ create table product_entity
 
     primary key ( identity )
 );
+
+select 'product_entity created';
+
 
 create table image
 (
@@ -221,13 +270,19 @@ create table image
     primary key ( identity )
 );
 
+select 'image', 'created';
+
 create table product_used_images
 (
     identity int not null auto_increment,
-    
-    image_preview_id int not null,
-    image_full_id int not null,
-    is_profil_image int not null,
 
-    primary key ( identity )
+    product_id int not null,
+    image_full_id int not null,
+    image_preview_id int not null,
+
+    is_profile_image int default 0 not null,
+
+    primary key (identity)
 );
+
+select 'product_used_images', 'created';
