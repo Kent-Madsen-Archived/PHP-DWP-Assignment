@@ -9,8 +9,9 @@
     /**
      * 
      */
-    class Auth 
-        implements AuthInteraction
+    class AuthDomain
+        extends Domain
+            implements AuthInteraction
     {
         /**
          * 

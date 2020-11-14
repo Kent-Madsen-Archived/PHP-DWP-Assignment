@@ -8,7 +8,8 @@
     /**
      * 
      */
-    class ContactDomain
+    class ContactDomain 
+        extends Domain
     {
         // Construct
         /**

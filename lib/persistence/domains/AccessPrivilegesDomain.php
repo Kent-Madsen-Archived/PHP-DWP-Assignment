@@ -8,12 +8,13 @@
     /**
      * 
      */
-    class AccessPrivileges
+    class AccessPrivilegesDomain
+        extends Domain
     {
         /**
          * 
          */
-        function __construct()
+        public function __construct()
         {
             
         }
