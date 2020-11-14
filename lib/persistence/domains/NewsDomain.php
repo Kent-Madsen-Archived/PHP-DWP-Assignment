@@ -22,6 +22,7 @@
         public function lastest_news()
         {
             $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+            var_dump($factory->length());
 
             $factory->setLimit(6);
 

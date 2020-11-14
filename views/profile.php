@@ -5,6 +5,8 @@
      *  Type: PHP Script
      */
 
+     $domain = new ProfileDomain();
+
     /**
      * 
      */
@@ -28,7 +30,11 @@
         <?php get_header(); ?>
         
         <main> 
-        
+            <h4> Welcome, <?php echo $_SESSION[ 'user_session_object_username' ]; ?> </h4>
+            
+            <div> 
+                
+            </div>
         </main>
 
         <?php get_footer(); ?>
