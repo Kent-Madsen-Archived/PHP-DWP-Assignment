@@ -31,6 +31,10 @@
 
         <?php 
             $arr = $domain->lastest_news();
+            $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
+            $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
+
+            $database = 'test';
         ?>
 
         <main>

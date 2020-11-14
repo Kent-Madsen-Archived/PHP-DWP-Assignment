@@ -7,22 +7,22 @@
 
 
     /**
-     * 
+     * Class ProductCategoryFactory
      */
     class ProductCategoryFactory
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
             return 'product_category';
         }
-        
+
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -31,7 +31,9 @@
 
 
         /**
-         * 
+         * ProductCategoryFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -40,7 +42,7 @@
 
 
         /**
-         * 
+         * @return ProductCategoryModel
          */
         final public function createModel()
         {
@@ -78,7 +80,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -92,7 +95,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -106,7 +110,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -169,18 +174,26 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exceptio
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;
         }
 
-        
+
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -194,7 +207,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -206,7 +220,9 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @return bool
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -266,7 +282,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

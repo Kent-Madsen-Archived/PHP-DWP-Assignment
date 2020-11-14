@@ -6,13 +6,13 @@
      */
 
     /**
-     * 
+     * Class ProductInvoiceFactory
      */
     class ProductInvoiceFactory
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -21,7 +21,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -30,7 +30,9 @@
 
 
         /**
-         * 
+         * ProductInvoiceFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -66,7 +68,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -80,7 +83,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final protected function validateAsValidModel( $var )
         {
@@ -94,7 +98,7 @@
 
 
         /**
-         * 
+         * @return ProductInvoiceModel
          */
         final public function createModel()
         {
@@ -105,7 +109,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -171,10 +176,17 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;
@@ -182,7 +194,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -194,7 +207,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -207,7 +221,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -217,9 +232,10 @@
             }
         }
 
-        
+
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {
@@ -260,7 +276,6 @@
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
 

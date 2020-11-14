@@ -5,14 +5,14 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
+/**
+ * Class BroughtFactory
+ */
     class BroughtFactory
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -21,7 +21,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -30,7 +30,9 @@
 
 
         /**
-         * 
+         * BroughtFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -39,7 +41,7 @@
 
 
         /**
-         * 
+         * @return BroughtProductModel
          */
         final public function createModel()
         {
@@ -77,7 +79,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -91,7 +94,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -105,7 +109,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -126,7 +131,7 @@
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -177,18 +182,26 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
             $retVal = null;
 
             return $retVal;
         }
 
-        
+
         /**
-         * 
+         * @param $model
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -201,7 +214,8 @@
 
 
         /**
-         * 
+         * @param $model
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -214,7 +228,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return bool
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -274,7 +290,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

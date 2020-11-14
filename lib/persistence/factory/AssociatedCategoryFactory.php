@@ -5,14 +5,14 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
+/**
+ * Class AssociatedCategoryFactory
+ */
     class AssociatedCategoryFactory
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -21,7 +21,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -30,7 +30,9 @@
 
 
         /**
-         * 
+         * AssociatedCategoryFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -66,7 +68,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -80,7 +83,7 @@
 
 
         /**
-         * 
+         * @return AssociatedCategoryModel
          */
         final public function createModel()
         {
@@ -91,7 +94,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -105,7 +109,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         final public function read()
         {
@@ -123,7 +128,7 @@
 
             $sql = "SELECT * FROM associated_category LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -131,10 +136,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 // Executes the query
@@ -174,18 +179,25 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;
         }
 
-        
+
         /**
-         * 
+         * @param $model
          */
         final public function create( $model )
         {
@@ -194,7 +206,8 @@
 
 
         /**
-         * 
+         * @param $model
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -207,7 +220,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return bool
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -267,7 +282,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

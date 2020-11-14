@@ -10,6 +10,8 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle(' - Setup');
+
+    $router = RouterSingleton::getInstance();
 ?>
 
 <!DOCTYPE html>

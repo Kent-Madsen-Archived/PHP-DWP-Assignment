@@ -7,13 +7,13 @@
 
 
     /**
-     * 
+     * Class ImageFactory
      */
     class ImageFactory 
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -22,7 +22,7 @@
 
 
         /**
-         * 
+         * @return string
          */
         final public function getFactoryTableName()
         {
@@ -31,7 +31,9 @@
 
 
         /**
-         * 
+         * ImageFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -67,7 +69,8 @@
 
 
         /**
-         * 
+         * @return bool
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -81,7 +84,7 @@
 
 
         /**
-         * 
+         * @return ImageModel
          */
         final public function createModel()
         {
@@ -92,7 +95,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -106,7 +110,8 @@
 
 
         /**
-         * 
+         * @return array
+         * @throws Exception
          */
         public function read()
         {
@@ -182,10 +187,17 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+            
             $retVal = null;
 
             return $retVal;
@@ -193,7 +205,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         public function create( $model )
         {
@@ -206,7 +219,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         public function delete( $model )
         {
@@ -219,7 +233,8 @@
 
 
         /**
-         * TODO: This
+         * @param $model
+         * @throws Exception
          */
         public function update( $model )
         {
@@ -232,7 +247,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

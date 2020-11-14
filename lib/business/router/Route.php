@@ -24,7 +24,102 @@
         private $route_domain = null;
         private $path_to_view = null;
 
+        private $validation_tree = array();
+
         // Stages
+        /**
+         * @param $value
+         */
+        public final function setValidationTree( $value )
+        {
+            if( !is_array( $value ) )
+            {
+                throw new Exception('parameter is not a array');
+            }
+
+            $this->validation_tree = $value;
+        }
+
+        /**
+         * @param $value
+         */
+        public final function appendValidationObject( $value )
+        {
+            if( !$value instanceof RouterValidateArgument )
+            {
+                throw new Exception('');
+            }
+            array_push($this->validation_tree, $value );
+        }
+
+        /**
+         * @param $values
+         * @throws Exception
+         */
+        public final function appendValidationArray( $values )
+        {
+            if( !is_array( $values ) )
+            {
+                throw new Exception('');
+            }
+
+            array_push($this->validation_tree, $values );
+        }
+
+        /**
+         * @param $argument
+         */
+        public function validate( $argument, $lvl )
+        {
+            if( !is_int( $lvl ) )
+            {
+                throw new Exception('');
+            }
+
+            $retVal = false;
+
+            if( count( $this->getValidationTree() ) == 0 )
+            {
+                $retVal = true;
+                return $retVal;
+            }
+
+            for( $idx = 0;
+                 $idx < count( $this->getValidationTree() );
+                 $idx ++ )
+            {;
+                $current = $this->getValidationTree()[ $idx ];
+                $current_state = false;
+
+                if( $current->getLevel() == $lvl )
+                {
+                    if( $current->validateArgumentLevel( $argument ) )
+                    {
+                        $current_state = true;
+                    }
+                }
+
+                if( $current_state )
+                {
+                    $retVal = true;
+                    break;
+                }
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return array
+         */
+        public final function getValidationTree(  )
+        {
+            return $this->validation_tree;
+        }
+
+
+
         /**
          * 
          */
