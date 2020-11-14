@@ -17,9 +17,10 @@
          */
         public function __construct()
         {
-            $access = new NetworkAccess( 'localhost', 3600 );   
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-            $database = "dwp_assignment";
+            $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
+            $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
+
+            $database = WEBPAGE_DATABASE_NAME;
 
             $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
@@ -30,7 +31,7 @@
         final public function send()
         {
             //
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $connection = new MySQLConnector( $this->getInformation() );
 
             // Factories prepared
             $contact_factory = new ContactFactory( $connection );

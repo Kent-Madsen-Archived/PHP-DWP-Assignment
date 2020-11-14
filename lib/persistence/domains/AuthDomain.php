@@ -24,17 +24,12 @@
             $database = WEBPAGE_DATABASE_NAME;
 
             $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
-
         }
 
 
         // Variables
         private $options = [ 'cost'=>15 , 
                              'salt'=>WEBPAGE_DEFAULT_SALT ];
-
-        
-        private $mysql_info = null;
-
 
         // Body of domain
 
@@ -97,7 +92,7 @@
         {
             $retVal = null;
 
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $connection = new MySQLConnector( $this->getInformation() );
             
             // retrieve or create name
             $person_name_factory = new PersonNameFactory( $connection );
@@ -180,7 +175,7 @@
         final public function register_profile( $profile_variable )
         {
             //
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $connection = new MySQLConnector( $this->getInformation() );
             
             $factory = new ProfileFactory( $connection );
             $profile_variable->setFactory( $factory );
@@ -202,7 +197,7 @@
                                      $password )
         {     
             //
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $connection = new MySQLConnector( $this->getInformation() );
             $factory = new ProfileFactory( $connection );
 
             // Retrieves a user by their username
@@ -238,46 +233,6 @@
         final protected function verify( $input_password, $hash )
         {
             return password_verify( $input_password, $hash );
-        }
-
-        
-        // Validation
-        /**
-         * 
-         */
-        final protected function validateMysqlInformation( $var )
-        {
-            if( is_null( $var ) || ( $var instanceof MySQLInformation ) )
-            {
-                return true;
-            }
-            return false;
-        }
-
-
-        // accessors
-            // getters
-        /**
-         * 
-         */
-        final public function getMysqlInformation()
-        {
-            return $this->mysql_info;
-        }
-
-
-            // setters
-        /**
-         * 
-         */
-        final public function setMysqlInformation( $var )
-        {
-            if( !$this->validateMysqlInformation( $var ) )
-            {
-                throw new Exception('AuthDomain: setMysqlInformation - Not a valid class');
-            }
-
-            $this->mysql_info = $var;
         }
 
 
