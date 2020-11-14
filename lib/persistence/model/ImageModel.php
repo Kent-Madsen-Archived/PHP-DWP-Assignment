@@ -8,10 +8,11 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
+
 
         // Variables
         private $identity = null;
@@ -27,48 +28,101 @@
         private $registered   = null;
         private $last_updated = null;
 
-        //
-        public function getIdentity()
+
+        // implementation of factory classes
+        /**
+         * 
+         */
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ImageFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        
+        // accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
-        public function getTitle()
+        
+        /**
+         * 
+         */
+        final public function getTitle()
         {
             return $this->title;
         }
 
-        public function getAlt()
+
+        /**
+         * 
+         */
+        final public function getAlt()
         {
             return $this->alt;
         }
 
-        public function getParentId()
+
+        /**
+         * 
+         */
+        final public function getParentId()
         {
             return $this->parent_id;
         }
 
-        public function getImageSrc()
+
+        /**
+         * 
+         */
+        final public function getImageSrc()
         {
             return $this->image_src;
         }
 
-        public function getImageTypeId()
+
+        /**
+         * 
+         */
+        final public function getImageTypeId()
         {
             return $this->image_type_id;
         }
 
-        public function getRegistered()
+
+        /**
+         * 
+         */
+        final public function getRegistered()
         {
             return $this->registered;
         }
 
-        public function getLastUpdated()
+
+        /**
+         * 
+         */
+        final public function getLastUpdated()
         {
             return $this->identity;
         }
 
-        public function setIdentity( $var )
+
+            // Setters
+        /**
+         * 
+         */
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -78,7 +132,11 @@
             $this->identity = $var;
         }
 
-        public function setTitle( $var )
+
+        /**
+         * 
+         */
+        final public function setTitle( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -88,8 +146,10 @@
             $this->title = $var;
         }
 
-        
-        public function setAlt( $var )
+        /**
+         * 
+         */
+        final public function setAlt( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -100,7 +160,10 @@
         }
 
 
-        public function setImageTypeId( $var )
+        /**
+         * 
+         */
+        final public function setImageTypeId( $var )
         {
             if( !$this->genericNumberValidation( $var ) )
             {
@@ -110,8 +173,10 @@
             $this->image_type_id = $var;
         }
 
-
-        public function setImageSrc( $var )
+        /**
+         * 
+         */
+        final public function setImageSrc( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -121,7 +186,10 @@
             $this->image_src = $var;
         }
 
-        public function setParentId( $var )
+        /**
+         * 
+         */
+        final public function setParentId( $var )
         {
             if( !$this->genericNumberValidation( $var ) )
             {
@@ -131,13 +199,18 @@
             $this->parent_id = $var;
         }
 
-        public function setRegistered( $var )
+        /**
+         * 
+         */
+        final public function setRegistered( $var )
         {
             $this->registered = $var;
         }
 
-
-        public function setLastUpdated( $var )
+        /**
+         * 
+         */
+        final public function setLastUpdated( $var )
         {
             $this->identity = $var;
         }

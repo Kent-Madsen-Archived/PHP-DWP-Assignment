@@ -12,10 +12,11 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
+
 
         // variables
         private $identity = 0;
@@ -30,11 +31,27 @@
 
         private $registered = null;
         
-        // accessors
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function getIdentity()
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProfileInformationFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -43,7 +60,7 @@
         /**
          * 
          */
-        public function getPersonPhone()
+        final public function getPersonPhone()
         {
             return $this->person_phone;
         }
@@ -52,7 +69,7 @@
         /**
          * 
          */
-        public function getBirthday()
+        final public function getBirthday()
         {
             return $this->birthday;
         }
@@ -61,7 +78,7 @@
         /**
          * 
          */
-        public function getRegistered()
+        final public function getRegistered()
         {
             return $this->registered;
         }
@@ -70,7 +87,7 @@
         /**
          * 
          */
-        public function getProfileId()
+        final public function getProfileId()
         {
             return $this->profile_id;
         }
@@ -79,7 +96,7 @@
         /**
          * 
          */
-        public function getPersonNameId()
+        final public function getPersonNameId()
         {
             return $this->person_name_id;
         }
@@ -88,7 +105,7 @@
         /**
          * 
          */
-        public function getPersonAddressId()
+        final public function getPersonAddressId()
         {
             return $this->person_address_id;
         }
@@ -97,16 +114,17 @@
         /**
          * 
          */
-        public function getPersonEmailId()
+        final public function getPersonEmailId()
         {
             return $this->person_email_id;
         }
 
 
+        // Setters
         /**
          * 
          */
-        public function setProfileId( $var )
+        final public function setProfileId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -120,7 +138,7 @@
         /**
          * 
          */
-        public function setPersonNameId( $var )
+        final public function setPersonNameId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -134,7 +152,7 @@
         /**
          * 
          */
-        public function setPersonAddressId( $var )
+        final public function setPersonAddressId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -148,7 +166,7 @@
         /**
          * 
          */
-        public function setPersonEmailId( $var )
+        final public function setPersonEmailId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -162,7 +180,7 @@
         /**
          * 
          */
-        public function setPersonPhone( $var )
+        final public function setPersonPhone( $var )
         {
             $this->person_phone = $var;
         }
@@ -171,7 +189,7 @@
         /**
          * 
          */
-        public function setBirthday( $var )
+        final public function setBirthday( $var )
         {
             $this->birthday = $var;
         }
@@ -180,7 +198,7 @@
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -190,11 +208,10 @@
             $this->identity = $var;
         }
 
-
         /**
          * 
          */
-        public function setRegistered( $var )
+        final public function setRegistered( $var )
         {
             $this->registered = $var;
         }

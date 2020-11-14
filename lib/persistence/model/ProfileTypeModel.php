@@ -9,41 +9,61 @@
                        ProfileTypeView
     {
         // constructors
-        
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
+
 
         // variables
         private $identity = 0;
         
         private $content = null;
         
-        // accessors
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function getIdentity()
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProfileTypeFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        
+        // accessors
+            // getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
+
         /**
          * 
          */
-        public function getContent()
+        final public function getContent()
         {
             return $this->content;
         }
         
+
+            // setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -53,15 +73,14 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             $this->content = $var;
         }
 
     }
-
-
 ?>

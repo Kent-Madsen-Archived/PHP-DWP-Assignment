@@ -8,19 +8,38 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
+        
         
         // Variables
         private $identity = null;
         private $content = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function getIdentity()
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ImageTypeFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        // accessors
+            // getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -29,15 +48,16 @@
         /**
          * 
          */
-        public function getContent()
+        final public function getContent()
         {
             return $this->content;
         }
 
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -51,7 +71,7 @@
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {

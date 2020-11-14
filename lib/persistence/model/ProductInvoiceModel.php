@@ -6,10 +6,11 @@
                    ProductInvoiceController
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
+
 
         // Variables
         private $identity = null;
@@ -17,25 +18,50 @@
         private $total_price        = null;
         private $invoice_registered = null;
 
+
+        // implementation of factory classes
+        /**
+         * 
+         */
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductInvoiceFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         // Accessors
             // getters
         /**
          * 
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
-        public function getTotalPrice()
+
+        /**
+         * 
+         */
+        final public function getTotalPrice()
         {
             return $this->total_price;
         }
 
-        public function getRegistered()
+
+        /**
+         *
+         */
+        final public function getRegistered()
         {
             return $this->invoice_registered;
         }
+
 
             // Setters
         /**
@@ -51,15 +77,24 @@
             $this->identity = $var;
         }
 
-        public function setRegistered( $var )
+
+        /**
+         * 
+         */
+        final public function setRegistered( $var )
         {
             $this->invoice_registered = $var;
         }
 
-        public function setTotalPrice( $var )
+
+        /**
+         * 
+         */
+        final public function setTotalPrice( $var )
         {
             $this->total_price = $var;
         }
+
 
     }
 

@@ -6,7 +6,7 @@
                    ProductCategoryView
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
@@ -15,11 +15,46 @@
         private $identity = null;
         private $content  = null;
 
-        // accessors
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function setIdentity( $var )
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductCategoryFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // accessors
+            // getters
+        /**
+         * 
+         */
+        final public function getIdentity()
+        {
+            return $this->identity;
+        }
+
+
+        /**
+         * 
+         */
+        final public function getContent()
+        {
+            return $this->content;
+        }
+
+
+            // setters
+        /**
+         * 
+         */
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -29,30 +64,16 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             $this->content = $var;
         }
 
-        /**
-         * 
-         */
-        public function getIdentity()
-        {
-            return $this->identity;
-        }
-
-        /**
-         * 
-         */
-        public function getContent()
-        {
-            return $this->content;
-        }
-
+        
     }
 
 ?>

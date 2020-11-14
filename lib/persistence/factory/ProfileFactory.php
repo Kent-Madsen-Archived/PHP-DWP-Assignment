@@ -20,10 +20,15 @@
             return 'profile';
         }
         
-        public function getFactoryTableName()
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -33,21 +38,33 @@
             $this->setConnector( $mysql_connector );
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -62,6 +79,7 @@
             return $value;     
         }
 
+
         /**
          * 
          */
@@ -71,6 +89,7 @@
 
             return $model;
         }
+
 
         /**
          * 
@@ -432,11 +451,17 @@
             return $retVal;
         }
 
+
         /**
          * 
          */
-        final public function validate_if_profile_type_is_admin( $value_int )
+        final public function validate_if_profile_type_is_admin( $model )
         {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
             $retVal = false;
 
             $this->getConnector()->connect();
@@ -457,7 +482,7 @@
                 $stmt->bind_param( "i",
                                     $stmt_profile_type_idx );
                 
-                $stmt_profile_type_idx = $value_int;
+                $stmt_profile_type_idx = $model->getProfileType();
 
                 // Executes the query
                 $stmt->execute();
@@ -489,8 +514,9 @@
             return $retVal;
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

@@ -19,11 +19,17 @@
         {
             return 'person_email';
         }
-        public function getFactoryTableName()
+
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }
         
+
         /**
          * 
          */
@@ -32,22 +38,34 @@
             $this->setConnector( $mysql_connector );
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
         
+
         /**
          * 
          */
@@ -61,6 +79,7 @@
             return $value;      
         }
 
+
         /**
          * 
          */
@@ -70,6 +89,7 @@
 
             return $model;
         }
+
 
         /**
          * 
@@ -83,6 +103,7 @@
 
             return false;
         }
+
 
         /**
          * 
@@ -142,6 +163,7 @@
             
             return $retVal;
         }
+
 
         /**
          * 
@@ -273,7 +295,7 @@
         /**
          * 
          */
-        public function read_by_name( $model )
+        final public function read_by_name( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -449,8 +471,9 @@
             return $retVal;
         }
 
+        
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

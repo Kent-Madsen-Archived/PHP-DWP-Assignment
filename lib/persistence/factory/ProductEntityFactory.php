@@ -18,10 +18,16 @@
         {
             return 'product_entity';
         }
-        public function getFactoryTableName()
+
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -30,6 +36,7 @@
         {   
             $this->setConnector( $mysql_connector );
         }
+
 
         /**
          * 
@@ -40,22 +47,25 @@
 
             return $model;
         }
+
         
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
 
         /**
          * 
@@ -70,6 +80,16 @@
             return $value;      
         }
 
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
+
         /**
          * 
          */
@@ -82,6 +102,7 @@
 
             return false;
         }
+
 
         /**
          * 
@@ -151,8 +172,9 @@
             return $retVal;
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function create( $model )
         {
@@ -163,8 +185,9 @@
 
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function delete( $model )
         {
@@ -175,8 +198,9 @@
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function update( $model )
         {
@@ -187,8 +211,9 @@
             
         }
 
+        
         /**
-         * 
+         * TODO: This
          */
         final public function length()
         {

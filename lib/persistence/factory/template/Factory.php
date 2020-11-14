@@ -21,33 +21,12 @@
         private $pagination_index = 0;
         private $limit = 5;
 
+
+        // Validation of objects
         /**
          * 
          */
-        public function getConnector()
-        {
-            return $this->connector;
-        }
-
-        public abstract function getFactoryTableName();
-
-        /**
-        * 
-        */
-        public function setConnector( $var )
-        {
-            if( !$this->validateAsValidConnector( $var ) )
-            {
-                throw new Exception( "Factory - setConnector: Only class MySQLConnector or null is allowed" );
-            }
-
-            $this->connector = $var;
-        }
-
-        /**
-         * 
-         */
-        protected function validateAsValidConnector( $var )
+        final protected function validateAsValidConnector( $var )
         {
             if( is_null( $var ) )
             {
@@ -62,15 +41,77 @@
             return false;
         }
 
-        public abstract function createModel();
 
-        // Accessors
-            // Getters
+        // Cursor
+        /**
+         * 
+         */
         final public function calculateOffset()
         {
             return $this->getLimit() * $this->getPaginationIndex();
         }
 
+
+        /**
+         * 
+         */
+        final public function next()
+        {
+            $this->next_jump( 1 );
+        }
+
+
+        /**
+         * 
+         */
+        final public function next_jump( $value )
+        {
+            $this->setPaginationIndex( ( $this->getPaginationIndex() + $value ) );
+        }
+
+
+        /**
+         * 
+         */
+        final public function previous()
+        {
+            $this->previous_jump( 1 );
+        }
+
+
+        /**
+         * 
+         */
+        final public function previous_jump( $value )
+        {
+            $this->setPaginationIndex( ( $this->getPaginationIndex() - $value ) );
+        }
+
+
+        // Template functions
+        /**
+         * 
+         */
+        public abstract function getFactoryTableName();
+
+
+        /**
+         * 
+         */
+        public abstract function createModel();
+
+
+        // Accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getConnector()
+        {
+            return $this->connector;
+        }
+
+        
         /**
          * 
          */
@@ -78,6 +119,7 @@
         {
             return $this->pagination_index;
         }
+
 
         /**
          * 
@@ -87,13 +129,28 @@
             return $this->limit;
         }
 
+
             // Setters
+        /**
+        * 
+        */
+        final public function setConnector( $var )
+        {
+            if( !$this->validateAsValidConnector( $var ) )
+            {
+                throw new Exception( "Factory - setConnector: Only class MySQLConnector or null is allowed" );
+            }
+
+            $this->connector = $var;
+        }
+
+
         /**
          * 
          */
         final public function setPaginationIndex( $idx )
         {
-            if( $idx == null || is_numeric( $idx ) )
+            if( $idx == null || ( is_numeric( $idx ) && is_integer( $idx ) )  )
             {
                 $this->pagination_index = $idx;
             }
@@ -103,12 +160,13 @@
             }
         }
 
+
         /**
          * 
          */
         final public function setLimit( $var )
         {
-            if( is_null( $var ) || is_numeric( $var ) )
+            if( is_null( $var ) || ( is_numeric( $idx ) && is_integer( $idx ) ) )
             {
                 $this->limit = $var;
             }

@@ -6,11 +6,12 @@
                    ProductEntityView
     {
         // Constructors
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
 
+        
         // Variables
         private $identity = null;
         private $arrived = null;
@@ -21,27 +22,45 @@
         private $brought_id = null;
 
 
-        // Accessors
+        // implementation of factory classes
         /**
          * 
          */
-        public function getIdentity()
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductEntityFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        // Accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
-        /**
-         * 
-         */
-        public function getArrived()
-        {
-            return $this->arrived;
-        }
 
         /**
          * 
          */
-        public function getEntityCode()
+        final public function getArrived()
+        {
+            return $this->arrived;
+        }
+
+
+        /**
+         * 
+         */
+        final public function getEntityCode()
         {
             return $this->entity_code;
         }
@@ -50,23 +69,26 @@
         /**
          * 
          */
-        public function getProductId()
+        final public function getProductId()
         {
             return $this->product_id;
         }
 
-        /**
-         * 
-         */
-        public function getBrougth()
-        {
-            return $this->brought_id;
-        }
 
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function getBrougth()
+        {
+            return $this->brought_id;
+        }
+
+
+            // Setters
+        /**
+         * 
+         */
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -80,15 +102,16 @@
         /**
          * 
          */
-        public function setEntityCode( $var )
+        final public function setEntityCode( $var )
         {
             $this->entity_code = $var;
         }
 
+
         /**
          * 
          */
-        public function setProductId( $var )
+        final public function setProductId( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -98,10 +121,11 @@
             $this->product_id = $var;
         }
 
+
         /**
          * 
          */
-        public function setBrought( $var )
+        final public function setBrought( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -111,10 +135,11 @@
             $this->brought_id = $var;
         }
 
+        
         /**
          * 
          */
-        public function setArrived( $var )
+        final public function setArrived( $var )
         {
             $this->arrived = $var;
         }

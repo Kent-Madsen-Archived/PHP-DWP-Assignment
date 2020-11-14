@@ -6,20 +6,60 @@
                    ProductAttributeView
     {
         // Constructors
-        function __construct( $factory )
+        /**
+         * 
+         */
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
+
 
         // Variables
         private $identity = null;
         private $content  = null;
 
-        // accessors
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function setIdentity( $var )
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ProductAttributeFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        // accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getIdentity()
+        {
+            return $this->identity;
+        }
+
+        
+        /**
+         * 
+         */
+        final public function getContent()
+        {
+            return $this->content;
+        }
+
+
+            // setters
+        /**
+         * 
+         */
+        final public function setIdentity( $var )
         {
             if( !$this->identityValidation( $var ) )
             {
@@ -33,25 +73,9 @@
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             $this->content = $var;
-        }
-
-        /**
-         * 
-         */
-        public function getIdentity()
-        {
-            return $this->identity;
-        }
-
-        /**
-         * 
-         */
-        public function getContent()
-        {
-            return $this->content;
         }
 
     }

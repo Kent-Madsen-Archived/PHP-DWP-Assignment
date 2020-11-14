@@ -12,11 +12,12 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
 
+        
         // Variables
         private $identity = null;
 
@@ -26,11 +27,27 @@
         private $created_on     = null;
         private $last_updated   = null;
 
-        // Accessors
+
+        // implementation of factory classes
         /**
          * 
          */
-        public function getIdentity()
+        final protected function validateFactory( $factory )
+        {
+            if( $factory instanceof ArticleFactory )
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        // Accessors
+            // Getters
+        /**
+         * 
+         */
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -39,7 +56,7 @@
         /**
          * 
          */
-        public function getTitle()
+        final public function getTitle()
         {
             return $this->title;
         }
@@ -48,7 +65,7 @@
         /**
          * 
          */
-        public function getContent()
+        final public function getContent()
         {
             return $this->content;
         }
@@ -56,7 +73,7 @@
         /**
          * 
          */
-        public function getCreatedOn()
+        final public function getCreatedOn()
         {
             return $this->created_on;
         }
@@ -65,16 +82,16 @@
         /**
          * 
          */
-        public function getLastUpdated()
+        final public function getLastUpdated()
         {
             return $this->last_updated;
         }
 
-
+            // Setters
         /**
          * 
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             if( !( $this->identityValidation( $var ) ) )
             {
@@ -88,7 +105,7 @@
         /**
          * 
          */
-        public function setTitle( $var )
+        final public function setTitle( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -102,7 +119,7 @@
         /**
          * 
          */
-        public function setContent( $var )
+        final public function setContent( $var )
         {
             if( !$this->genericStringValidation( $var ) )
             {
@@ -116,7 +133,7 @@
         /**
          * 
          */
-        public function setCreatedOn( $var )
+        final public function setCreatedOn( $var )
         {
             $this->created_on = $var;
         }
@@ -125,7 +142,7 @@
         /**
          * 
          */
-        public function setLastUpdated( $var )
+        final public function setLastUpdated( $var )
         {
             $this->last_updated = $var;
         }

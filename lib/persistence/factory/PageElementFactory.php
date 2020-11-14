@@ -18,10 +18,16 @@
         {
             return 'page_element';
         }
-        public function getFactoryTableName()
+
+
+        /**
+         * 
+         */
+        final public function getFactoryTableName()
         {
             return self::getTableName();
         }
+
 
         /**
          * 
@@ -31,21 +37,33 @@
             $this->setConnector( $mysql_connector );
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setup()
         {
             
         }
 
+
         /**
-         * 
+         * TODO: This
          */
         final public function setupSecondaries()
         {
             
         }
+
+
+        /**
+         * TODO: This
+         */
+        final public function insert_base_data()
+        {
+
+        }
+
 
         /**
          * 
@@ -60,6 +78,7 @@
             return $value;
         }
 
+
         /**
          * 
          */
@@ -69,6 +88,7 @@
 
             return $model;
         }
+
 
         /**
          * 
@@ -82,6 +102,7 @@
 
             return false;
         }
+
 
         /**
          * 
@@ -152,6 +173,10 @@
             return $retVal;
         }
 
+
+        /**
+         * TODO: This
+         */
         final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -161,6 +186,10 @@
 
         }
 
+
+        /**
+         * TODO: This
+         */
         final public function delete( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -169,6 +198,10 @@
             }   
         }
 
+
+        /**
+         * TODO: This
+         */
         final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -177,6 +210,10 @@
             }   
         }
 
+
+        /**
+         * TODO: This
+         */
         final public function length()
         {
             return 0;
