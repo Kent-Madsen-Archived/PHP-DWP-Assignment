@@ -180,6 +180,17 @@
         /**
          * 
          */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
         final public function read_by_profile_id( $model )
         {
             $retVal = $model;

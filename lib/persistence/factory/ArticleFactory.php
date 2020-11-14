@@ -176,6 +176,17 @@
         /**
          * 
          */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
         final public function read_ordered_by_creation_date()
         {
             $this->getConnector()->connect();

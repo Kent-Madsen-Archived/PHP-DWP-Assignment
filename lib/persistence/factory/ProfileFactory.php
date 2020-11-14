@@ -178,6 +178,18 @@
         /**
          * 
          */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+
+        /**
+         * 
+         */
         final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )

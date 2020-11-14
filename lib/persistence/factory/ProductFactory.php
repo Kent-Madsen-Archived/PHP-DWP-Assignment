@@ -176,6 +176,17 @@
         /**
          * 
          */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
         final public function create( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
@@ -358,7 +369,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -409,7 +419,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally

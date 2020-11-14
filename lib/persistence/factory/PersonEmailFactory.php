@@ -349,6 +349,17 @@
         /**
          * 
          */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
         final public function update( $model )
         {
             if( !$this->validateAsValidModel( $model ) )

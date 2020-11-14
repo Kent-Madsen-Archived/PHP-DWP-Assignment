@@ -173,6 +173,18 @@
 
 
         /**
+         * 
+         */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+
+        /**
          * TODO: This
          */
         final public function create( $model )
