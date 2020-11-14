@@ -23,7 +23,7 @@
 
             $database = WEBPAGE_DATABASE_NAME;
 
-            $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
+            $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
 
         }
 

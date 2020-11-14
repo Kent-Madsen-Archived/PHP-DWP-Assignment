@@ -21,13 +21,8 @@
             $user_credential = new UserCredential( 'development', 'Epc63gez' );
             $database = "dwp_assignment";
 
-            $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
+            $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
-
-
-        // Variables
-        private $mysql_info = null;
-
 
         /**
          * 
@@ -121,26 +116,6 @@
         {
             return $_POST[ 'form_contact_message' ];
         }
-
-
-        // accessors
-        /**
-         * 
-         */
-        final public function getMysqlInformation()
-        {
-            return $this->mysql_info;
-        }
-
-
-        /**
-         * 
-         */
-        final public function setMysqlInformation( $var )
-        {
-            $this->mysql_info = $var;
-        }
-
 
     }
 
