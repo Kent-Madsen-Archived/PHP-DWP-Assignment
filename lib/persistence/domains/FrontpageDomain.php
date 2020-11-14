@@ -1,13 +1,12 @@
 <?php 
-    /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
-     */
 
-    class AdminDomain
+    class FrontpageDomain 
         extends Domain
     {
+        // Construct
+        /**
+         * 
+         */
         public function __construct()
         {
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
@@ -15,7 +14,7 @@
 
             $database = WEBPAGE_DATABASE_NAME;
 
-            $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );   
+            $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
 
     }

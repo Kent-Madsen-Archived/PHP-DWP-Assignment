@@ -6,6 +6,8 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle(' - About us');
+
+    $domain = new AboutDomain();
 ?>
 
 <!DOCTYPE html>

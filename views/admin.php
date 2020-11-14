@@ -6,6 +6,8 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - Admin Panel' );
+
+    $domain = new AdminDomain();
 ?>
 
 <!DOCTYPE html>

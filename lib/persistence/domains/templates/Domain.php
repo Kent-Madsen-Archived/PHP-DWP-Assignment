@@ -43,7 +43,7 @@
         {
             if( !$this->validateInformation( $var ) )
             {
-                throw new Exception( '' );
+                throw new Exception( 'Error: Only null or MySQLInformation class is allowed' );
             }
 
             $this->information = $var;
