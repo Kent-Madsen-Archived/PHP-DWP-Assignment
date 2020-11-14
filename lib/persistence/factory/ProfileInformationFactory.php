@@ -166,7 +166,86 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
+        final public function read_model( $model )
+        {
+            $retVal = null;
+
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
+        final public function read_by_profile_id( $model )
+        {
+            $retVal = $model;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT * FROM profile_information WHERE profile_id = ?;";
+
+            $stmt_profile_id = null;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                                    $stmt_profile_id );
+
+                $stmt_profile_id = $model->getProfileId();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModel();
+
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setProfileId( $row[ 'profile_id' ] );
+
+                        $model->setPersonNameId( $row[ 'person_name_id' ] );
+                        $model->setPersonAddressId( $row[ 'person_address_id' ] );
+                        $model->setPersonEmailId( $row[ 'person_email_id' ] );
+
+                        $model->setPersonPhone( $row[ 'person_phone' ] );
+                        $model->setBirthday( $row[ 'birthday' ] );
+
+                        $model->setRegistered( $row[ 'registered' ] );
+
+                        $retVal = $model;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -237,7 +316,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -311,7 +389,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -372,7 +449,6 @@
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -389,7 +465,49 @@
          */
         final public function length()
         {
-            return 0;
+            
+            $retVal = 0;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+                
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $retVal = $row[ 'number_of_rows' ];
+                    }
+                }  
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
 
     }

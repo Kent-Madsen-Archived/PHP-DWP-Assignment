@@ -16,6 +16,7 @@
          * 
          */
         public function read();
+        public function read_model( $model );
 
         /**
          * 

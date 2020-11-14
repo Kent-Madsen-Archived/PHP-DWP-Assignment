@@ -124,7 +124,7 @@
             $sql = "SELECT * FROM image_type LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             try
@@ -132,10 +132,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit  = $this->getLimit();
                 $stmt_offset = $this->calculateOffset();
 
                 $stmt->execute();
@@ -158,9 +158,22 @@
             {
                 throw new Exception( 'Error: ' . $ex );
             }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();   
+            }
 
-            //
-            $this->getConnector()->disconnect();
+            return $retVal;
+        }
+
+
+        /**
+         * 
+         */
+        final public function read_model( $model )
+        {
+            $retVal = null;
 
             return $retVal;
         }
@@ -206,11 +219,52 @@
 
         
         /**
-         * TODO: This
+         * 
          */
         final public function length()
         {
-            return 0;
+            $retVal = 0;
+
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            try 
+            {
+                $stmt = $connection->prepare( $sql );
+                
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > 0 )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $retVal = $row[ 'number_of_rows' ];
+                    }
+                }  
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getConnector()->disconnect();
+            }
+
+            return $retVal;
         }
     }
 
