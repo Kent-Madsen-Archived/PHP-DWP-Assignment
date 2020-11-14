@@ -13,6 +13,56 @@
             $this->setConnector( $connection );
         }
 
+        public function executeSQLFile( $file )
+        {
+            $this->getConnector()->connect();
+
+            $connection = $this->getConnector()->getConnector();
+
+            if( $connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $connection->connect_error );
+            }
+
+            $file_query = file_get_contents( $file );
+
+            try
+            {
+                if( $this->getConnector()->getConnector()->multi_query( $file_query ) )
+                {
+                    do 
+                    {
+                        if ( $result = $this->getConnector()->getConnector() -> store_result() ) 
+                        {    
+                            while ( $row = $result -> fetch_row() ) 
+                            {
+                              var_dump( $row );
+                            }
+
+                           $result -> free_result();
+                          }
+                    }
+                    while( $this->getConnector()->getConnector()->more_results() );
+                }
+
+                // commits the statement
+                $this->getConnector()->finish();   
+            }
+            catch( Exception $ex )
+            {
+                
+                // Rolls back, the changes
+                $this->getConnector()->undo_state();
+
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getConnector()->disconnect();
+            }
+
+        }
+
         /**
          * 
          */
