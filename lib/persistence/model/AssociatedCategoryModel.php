@@ -11,6 +11,7 @@
             $this->setFactory( $factory );
         }   
 
+        
         // Variables
         private $identity = null;
         
@@ -18,6 +19,8 @@
         private $product_category_id  = null;
         private $product_id           = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */

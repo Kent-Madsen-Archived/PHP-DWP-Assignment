@@ -17,6 +17,7 @@
             $this->setFactory( $factory );
         }
 
+
         // Variables
         private $identity = null;
         
@@ -25,6 +26,8 @@
         private $zip_code               = null;
         private $country                = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -37,6 +40,7 @@
 
             return false;
         }
+
 
         // Accessors
             // getters
@@ -57,6 +61,7 @@
             return $this->street_name;
         }
         
+
         /**
          * 
          */
@@ -65,6 +70,7 @@
             return $this->street_address_number;
         }
 
+
         /**
          * 
          */
@@ -72,6 +78,7 @@
         {
             return $this->zip_code;
         }
+
 
         /**
          * 
@@ -95,6 +102,7 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
@@ -102,6 +110,7 @@
         {
             $this->zip_code = $var;
         }
+
 
         /**
          * 
@@ -111,6 +120,7 @@
             $this->country = $var;
         }
 
+        
         /**
          * 
          */

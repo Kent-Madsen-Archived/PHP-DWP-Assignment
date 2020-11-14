@@ -13,6 +13,7 @@
             $this->setFactory( $factory );   
         }
         
+
         // Variables
         private $identity = null;
 
@@ -21,6 +22,8 @@
 
         private $is_profile_image = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -34,6 +37,7 @@
             return false;
         }
 
+
         // Accessor
             // Getters
        /**
@@ -44,6 +48,7 @@
             return $this->identity;
         }
 
+
         /**
          * 
          */
@@ -51,6 +56,7 @@
         {
             return $this->image_preview_id;
         }
+
 
         /**
          * 
@@ -60,6 +66,7 @@
             return $this->image_full_id;
         }
         
+
         /**
          * 
          */
@@ -67,6 +74,7 @@
         {
             return $this->is_profile_image;
         }
+
 
             // Setters
         /**
@@ -82,6 +90,7 @@
             $this->image_preview_id = $var;
         }
 
+
         /**
          * 
          */
@@ -94,6 +103,7 @@
 
             $this->image_full_id = $var;
         }
+        
         
         /**
          * 

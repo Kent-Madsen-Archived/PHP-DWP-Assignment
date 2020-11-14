@@ -5,11 +5,13 @@
         implements BroughtProductController,
                    BroughtProductView
     {
+        
         // Constructors
         public function __construct( $factory )
         {
             $this->setFactory( $factory );   
         }
+
 
         // Variables
         private $identity   = null;
@@ -22,6 +24,8 @@
 
         private $registered = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */

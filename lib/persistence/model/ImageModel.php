@@ -13,6 +13,7 @@
             $this->setFactory( $factory );   
         }
 
+
         // Variables
         private $identity = null;
 
@@ -27,6 +28,8 @@
         private $registered   = null;
         private $last_updated = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -40,6 +43,7 @@
             return false;
         }
 
+        
         // accessors
             // Getters
         /**
@@ -50,6 +54,7 @@
             return $this->identity;
         }
 
+        
         /**
          * 
          */
@@ -57,6 +62,7 @@
         {
             return $this->title;
         }
+
 
         /**
          * 
@@ -66,6 +72,7 @@
             return $this->alt;
         }
 
+
         /**
          * 
          */
@@ -73,6 +80,7 @@
         {
             return $this->parent_id;
         }
+
 
         /**
          * 
@@ -82,6 +90,7 @@
             return $this->image_src;
         }
 
+
         /**
          * 
          */
@@ -89,6 +98,7 @@
         {
             return $this->image_type_id;
         }
+
 
         /**
          * 
@@ -98,6 +108,7 @@
             return $this->registered;
         }
 
+
         /**
          * 
          */
@@ -105,6 +116,7 @@
         {
             return $this->identity;
         }
+
 
             // Setters
         /**
@@ -119,6 +131,7 @@
 
             $this->identity = $var;
         }
+
 
         /**
          * 

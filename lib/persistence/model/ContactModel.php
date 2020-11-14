@@ -17,6 +17,7 @@
             $this->setFactory( $factory );
         }
 
+
         // Variables
         private $message = null;
         private $subject = null;
@@ -29,6 +30,8 @@
 
         private $identity  = 0;
 
+
+        // implementation of factory classes
         /**
          * 
          */

@@ -12,10 +12,11 @@
         /**
          * 
          */
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
+
 
         // variables
         private $identity = 0;
@@ -30,10 +31,12 @@
 
         private $registered = null;
         
+
+        // implementation of factory classes
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof ProfileInformationFactory )
             {

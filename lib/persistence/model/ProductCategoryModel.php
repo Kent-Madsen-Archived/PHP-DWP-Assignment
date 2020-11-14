@@ -15,6 +15,8 @@
         private $identity = null;
         private $content  = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -38,6 +40,7 @@
             return $this->identity;
         }
 
+
         /**
          * 
          */
@@ -45,6 +48,7 @@
         {
             return $this->content;
         }
+
 
             // setters
         /**
@@ -60,6 +64,7 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
@@ -68,6 +73,7 @@
             $this->content = $var;
         }
 
+        
     }
 
 ?>

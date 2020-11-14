@@ -11,6 +11,7 @@
             $this->setFactory( $factory );
         }
 
+        
         // Variables
         private $identity = null;
         private $arrived = null;
@@ -20,6 +21,8 @@
         private $product_id = null;
         private $brought_id = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -33,6 +36,7 @@
             return false;
         }
 
+
         // Accessors
             // Getters
         /**
@@ -43,6 +47,7 @@
             return $this->identity;
         }
 
+
         /**
          * 
          */
@@ -50,6 +55,7 @@
         {
             return $this->arrived;
         }
+
 
         /**
          * 
@@ -68,6 +74,7 @@
             return $this->product_id;
         }
 
+
         /**
          * 
          */
@@ -75,6 +82,7 @@
         {
             return $this->brought_id;
         }
+
 
             // Setters
         /**
@@ -99,6 +107,7 @@
             $this->entity_code = $var;
         }
 
+
         /**
          * 
          */
@@ -111,6 +120,7 @@
 
             $this->product_id = $var;
         }
+
 
         /**
          * 
@@ -125,6 +135,7 @@
             $this->brought_id = $var;
         }
 
+        
         /**
          * 
          */

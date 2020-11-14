@@ -10,10 +10,11 @@
                         
     {
         // Constructor
-        function __construct( $factory )
+        public function __construct( $factory )
         {
             $this->setFactory( $factory );
         }
+
 
         // Variables
         private $identity = 0;
@@ -25,10 +26,12 @@
 
         private $profile_type = 0;
 
+
+        // implementation of factory classes
         /**
          * 
          */
-        protected function validateFactory( $factory )
+        final protected function validateFactory( $factory )
         {
             if( $factory instanceof ProfileFactory )
             {
@@ -38,6 +41,7 @@
             return false;
         }
 
+        
         // Accessors
             // Getters
         /**
@@ -48,6 +52,7 @@
             return $this->identity;
         }
         
+
         /**
          * 
          */
@@ -55,6 +60,7 @@
         {
             return $this->username;
         }
+
 
         /**
          * 
@@ -64,6 +70,7 @@
             return $this->password;
         }
 
+        
         /**
          * 
          */
@@ -71,6 +78,7 @@
         {
             return $this->profile_type;
         }
+
 
         /**
          * 
@@ -80,7 +88,8 @@
             return $this->is_password_hashed;
         }
 
-        // Setters
+
+            // Setters
         /**
          * 
          */
@@ -88,6 +97,7 @@
         {
             $this->username = $var;
         }
+
 
         /**
          * 
@@ -97,6 +107,7 @@
             $this->is_password_hashed = $var;
         }
 
+
         /**
          * 
          */
@@ -104,6 +115,7 @@
         {   
             $this->password = $var;
         }
+
 
         /**
          * 
@@ -117,6 +129,7 @@
 
             $this->profile_type = $var;
         }
+
 
         /**
          * 

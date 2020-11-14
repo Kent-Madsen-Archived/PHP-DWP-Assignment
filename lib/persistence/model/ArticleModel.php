@@ -17,6 +17,7 @@
             $this->setFactory( $factory );
         }
 
+        
         // Variables
         private $identity = null;
 
@@ -26,6 +27,8 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -40,6 +43,7 @@
         }
 
         // Accessors
+            // Getters
         /**
          * 
          */
@@ -83,7 +87,7 @@
             return $this->last_updated;
         }
 
-
+            // Setters
         /**
          * 
          */
@@ -134,7 +138,7 @@
             $this->created_on = $var;
         }
 
-        
+
         /**
          * 
          */

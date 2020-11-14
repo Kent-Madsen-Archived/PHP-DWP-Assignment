@@ -11,6 +11,7 @@
             $this->setFactory( $factory );   
         }
 
+        
         // Variables
         private $identity = null;
         private $area_key = null;
@@ -21,6 +22,8 @@
         private $created_on     = null;
         private $last_update    = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -102,6 +105,7 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
@@ -110,6 +114,7 @@
             $this->created_on = $var;
         }
 
+
         /**
          * 
          */
@@ -117,6 +122,7 @@
         {
             $this->last_update = $var;
         }
+
 
         /**
          * 
@@ -131,6 +137,7 @@
             $this->area_key = $var;
         }
 
+
         /**
          * 
          */
@@ -144,6 +151,7 @@
             $this->content = $var;
         }
 
+        
         /**
          * 
          */

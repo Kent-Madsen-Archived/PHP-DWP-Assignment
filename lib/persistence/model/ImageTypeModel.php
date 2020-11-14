@@ -13,10 +13,13 @@
             $this->setFactory( $factory );   
         }
         
+        
         // Variables
         private $identity = null;
         private $content = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -29,6 +32,7 @@
 
             return false;
         }
+
 
         // accessors
             // getters

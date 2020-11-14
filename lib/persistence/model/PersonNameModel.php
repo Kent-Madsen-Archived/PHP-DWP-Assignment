@@ -17,6 +17,7 @@
             $this->setFactory( $factory );
         }
 
+
         // Variables
         private $first_name     = null;
         private $last_name      = null;
@@ -24,6 +25,8 @@
 
         private $identity       = null;
 
+
+        // implementation of factory classes
         /**
          * 
          */
@@ -47,6 +50,7 @@
             return $this->identity;
         }
 
+
         /**
          * 
          */
@@ -64,6 +68,7 @@
             return $this->last_name;
         }
 
+
         /**
          * 
          */
@@ -71,6 +76,7 @@
         {
             return $this->middle_name;
         }
+
 
             // Setters
         /**
@@ -86,6 +92,7 @@
             $this->identity = $var;
         }
 
+
         /**
          * 
          */
@@ -93,6 +100,7 @@
         {
             $this->first_name = $var;
         }
+
 
         /**
          * 
@@ -102,6 +110,7 @@
             $this->middle_name = $var;
         }
 
+        
         /**
          * 
          */
