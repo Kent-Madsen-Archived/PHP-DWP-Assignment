@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class ProductModel
      */
     class ProductModel 
         extends DatabaseModel
@@ -10,7 +10,9 @@
     {
         // constructors
         /**
-         * 
+         * ProductModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -27,8 +29,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -44,7 +48,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -53,7 +57,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getDescription()
         {
@@ -62,7 +66,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getPrice()
         {
@@ -71,7 +75,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getTitle()
         {
@@ -80,8 +84,10 @@
 
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -95,7 +101,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setDescription( $var )
         {
@@ -104,7 +110,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setPrice( $var )
         {
@@ -113,7 +119,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setTitle( $var )
         {

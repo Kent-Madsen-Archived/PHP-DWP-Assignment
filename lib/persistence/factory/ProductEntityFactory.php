@@ -21,7 +21,7 @@
 
 
         /**
-         * @return string
+         * @return mixed|string
          */
         final public function getFactoryTableName()
         {
@@ -41,7 +41,7 @@
 
 
         /**
-         * @return ProductEntityModel
+         * @return mixed|ProductEntityModel
          */
         final public function createModel()
         {
@@ -70,7 +70,7 @@
 
 
         /**
-         * @return bool
+         * @return bool|mixed
          * @throws Exception
          */
         final public function exist_database()
@@ -109,7 +109,7 @@
 
 
         /**
-         * @return array
+         * @return array|mixed
          * @throws Exception
          */
         final public function read()
@@ -179,7 +179,7 @@
 
         /**
          * @param $model
-         * @return null
+         * @return mixed|null
          * @throws Exception
          */
         final public function read_model( $model )
@@ -197,6 +197,7 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
         final public function create( $model )
@@ -211,6 +212,7 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
         final public function delete( $model )
@@ -225,6 +227,7 @@
 
         /**
          * @param $model
+         * @return mixed|void
          * @throws Exception
          */
         final public function update( $model )

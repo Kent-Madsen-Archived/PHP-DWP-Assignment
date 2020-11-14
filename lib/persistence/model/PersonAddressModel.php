@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class PersonAddressModel
      */
     class PersonAddressModel 
         extends DatabaseModel 
@@ -10,7 +10,9 @@
     {
         // constructors
         /**
-         * 
+         * PersonAddressModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -28,8 +30,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -45,7 +49,7 @@
         // Accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -54,16 +58,16 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getStreetName()
         {
             return $this->street_name;
         }
-        
+
 
         /**
-         * 
+         * @return |null
          */
         final public function getStreetAddressNumber()
         {
@@ -72,7 +76,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getZipCode()
         {
@@ -81,7 +85,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getCountry()
         {
@@ -89,8 +93,10 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -104,7 +110,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setZipCode( $var )
         {
@@ -113,16 +119,16 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setCountry( $var )
         {
             $this->country = $var;
         }
 
-        
+
         /**
-         * 
+         * @param $var
          */
         final public function setStreetName( $var )
         {
@@ -131,7 +137,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setStreetAddressNumber( $var )
         {

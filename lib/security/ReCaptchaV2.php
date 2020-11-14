@@ -1,12 +1,15 @@
-<?php 
+<?php
+
     /**
-     * 
+     * Class ReCaptchaV2
      * // https://codeforgeek.com/google-recaptcha-tutorial/
      */
     class ReCaptchaV2
     {
         /**
-         * 
+         * ReCaptchaV2 constructor.
+         * @param $private
+         * @param $public
          */
         public function __construct( $private, $public )
         {
@@ -28,7 +31,10 @@
         private $response_key = null;
 
         // Functions
-        public function retrieve_response()
+        /**
+         *
+         */
+        final public function retrieve_response()
         {
             $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode( $this->getSecurityPrivateField() ) .  '&response=' . urlencode( $this->getResponseKey() );
 
@@ -38,7 +44,11 @@
         }
 
         // Validates the result, if it isn't a success it will throw an error.
-        public function validate()
+
+        /**
+         * @throws Exception
+         */
+        final public function validate()
         {
             if( !$this->getJSONResponse()[ 'success' ] ) 
             {
@@ -47,50 +57,76 @@
         }
 
         // globals
+        /**
+         *
+         */
         public static function PrintPublicKey()
         {
             echo GOOGLE_V2_RECAPTCHA_PUBLIC;
         }
 
         // Accessors
-            //
-        public function getSecurityPrivateField()
+
+        /**
+         * @return null
+         */
+        final public function getSecurityPrivateField()
         {
             return $this->security_private_field;
         }
-        
-        public function getSecurityPublicField()
+
+        /**
+         * @return null
+         */
+        final public function getSecurityPublicField()
         {
             return $this->security_public_field;
         }
 
-        public function getJSONResponse()
+        /**
+         * @return null
+         */
+        final public function getJSONResponse()
         {
             return $this->json_response;
         }
 
-        public function getResponseKey()
+        /**
+         * @return null
+         */
+        final public function getResponseKey()
         {
             return $this->response_key;
         }
-        
-            //
-        public function setSecurityPrivateField( $var )
+
+        /**
+         * @param $var
+         */
+        final public function setSecurityPrivateField( $var )
         {
             $this->security_private_field = $var;
         }
 
-        public function setSecurityPublicField( $var )
+        /**
+         * @param $var
+         */
+        final public function setSecurityPublicField( $var )
         {
             $this->security_public_field = $var;
         }
 
-        public function setJSONResponse( $var )
+        /**
+         * @param $var
+         */
+        final public function setJSONResponse( $var )
         {
             $this->json_response = $var;
         }
 
-        public function setResponseKey( $var )
+        /**
+         * @param $var
+         */
+        final public function setResponseKey( $var )
         {
             $this->response_key = $var;
         }

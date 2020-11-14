@@ -7,14 +7,15 @@
 
 
     /**
-     * 
+     * Class AuthDomain
      */
     class AuthDomain
         extends Domain
             implements AuthInteraction
     {
         /**
-         * 
+         * AuthDomain constructor.
+         * @throws Exception
          */
         public function __construct()
         {
@@ -35,7 +36,8 @@
 
             // Forgot my password
         /**
-         * 
+         * @param $email
+         * @return mixed|null
          */
         final public function forgot_my_password_by_email( $email )
         {
@@ -46,7 +48,8 @@
 
 
         /**
-         * 
+         * @param $username
+         * @return mixed|null
          */
         final public function forgot_my_password_by_username( $username )
         {
@@ -55,8 +58,15 @@
 
 
             // Registration
+
         /**
-         * 
+         * @param $profile
+         * @param $name
+         * @param $email
+         * @param $birthday
+         * @param $phone_number
+         * @param $address
+         * @return mixed|null
          */
         final public function register( $profile, 
                                         $name, 
@@ -81,7 +91,14 @@
 
 
         /**
-         * 
+         * @param $profile
+         * @param $name
+         * @param $email
+         * @param $birthday
+         * @param $phone_number
+         * @param $address
+         * @return |null
+         * @throws Exception
          */
         final public function register_profile_information( $profile, 
                                                             $name, 
@@ -156,7 +173,8 @@
 
 
         /**
-         * 
+         * @param $profile_model
+         * @return mixed
          */
         final public function hash_profile_password( $profile_model )
         {
@@ -170,7 +188,9 @@
 
 
         /**
-         * 
+         * @param $profile_variable
+         * @return mixed
+         * @throws Exception
          */
         final public function register_profile( $profile_variable )
         {
@@ -190,8 +210,12 @@
         }
 
             // Login
+
         /**
-         * 
+         * @param $username
+         * @param $password
+         * @return mixed|ProfileModel|null
+         * @throws Exception
          */
         final public function login( $username, 
                                      $password )
@@ -218,8 +242,10 @@
 
 
         // Internal
+
         /**
-         * 
+         * @param $input
+         * @return false|string|null
          */
         final protected function generate_password( $input )
         {
@@ -228,7 +254,9 @@
 
 
         /**
-         * 
+         * @param $input_password
+         * @param $hash
+         * @return bool
          */
         final protected function verify( $input_password, $hash )
         {

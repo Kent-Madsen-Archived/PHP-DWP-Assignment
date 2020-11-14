@@ -1,11 +1,19 @@
 <?php
 
+    /**
+     * Class ProductEntityModel
+     */
     class ProductEntityModel 
         extends DatabaseModel
         implements ProductEntityController,
                    ProductEntityView
     {
         // Constructors
+        /**
+         * ProductEntityModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
@@ -23,8 +31,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -40,7 +50,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -49,7 +59,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getArrived()
         {
@@ -58,7 +68,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getEntityCode()
         {
@@ -67,7 +77,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getProductId()
         {
@@ -76,7 +86,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getBrougth()
         {
@@ -85,8 +95,10 @@
 
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -100,7 +112,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setEntityCode( $var )
         {
@@ -109,7 +121,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setProductId( $var )
         {
@@ -123,7 +136,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setBrought( $var )
         {
@@ -135,9 +149,9 @@
             $this->brought_id = $var;
         }
 
-        
+
         /**
-         * 
+         * @param $var
          */
         final public function setArrived( $var )
         {

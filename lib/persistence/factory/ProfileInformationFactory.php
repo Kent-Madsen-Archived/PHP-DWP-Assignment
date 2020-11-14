@@ -22,7 +22,7 @@
 
 
         /**
-         * @return string
+         * @return mixed|string
          */
         final public function getFactoryTableName()
         {
@@ -69,7 +69,7 @@
 
 
         /**
-         * @return bool
+         * @return bool|mixed
          * @throws Exception
          */
         final public function exist_database()
@@ -84,7 +84,7 @@
 
 
         /**
-         * @return ProfileInformationModel
+         * @return mixed|ProfileInformationModel
          */
         final public function createModel()
         {
@@ -110,7 +110,7 @@
 
 
         /**
-         * @return array
+         * @return array|mixed
          * @throws Exception
          */
         final public function read()
@@ -184,7 +184,7 @@
 
         /**
          * @param $model
-         * @return null
+         * @return mixed|null
          * @throws Exception
          */
         final public function read_model( $model )
@@ -420,7 +420,7 @@
 
         /**
          * @param $model
-         * @return bool
+         * @return bool|mixed
          * @throws Exception
          */
         final public function delete( $model )

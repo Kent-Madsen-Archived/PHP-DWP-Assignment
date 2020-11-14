@@ -5,9 +5,16 @@
      *  Type: PHP Script
      */
 
+    /**
+     * Class ProfileDomain
+     */
     class ProfileDomain 
         extends Domain
     {
+        /**
+         * ProfileDomain constructor.
+         * @throws Exception
+         */
         public function __construct()
         {
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   

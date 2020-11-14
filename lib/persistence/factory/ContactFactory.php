@@ -5,14 +5,14 @@
      *  Type: PHP Script
      */
 
-/**
- * Class ContactFactory
- */
+    /**
+     * Class ContactFactory
+     */
     class ContactFactory 
         extends Factory
     {
         /**
-         * 
+         * @return string
          */
         final public static function getTableName()
         {
@@ -21,7 +21,7 @@
 
 
         /**
-         * 
+         * @return mixed|string
          */
         final public function getFactoryTableName()
         {
@@ -30,7 +30,9 @@
 
 
         /**
-         * 
+         * ContactFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
          */
         public function __construct( $mysql_connector )
         {
@@ -39,7 +41,7 @@
 
 
         /**
-         * 
+         * @return ContactModel|mixed
          */
         final public function createModel()
         {
@@ -77,7 +79,8 @@
 
 
         /**
-         * 
+         * @return bool|mixed
+         * @throws Exception
          */
         final public function exist_database()
         {
@@ -91,7 +94,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final public function validateAsValidModel( $var )
         {
@@ -105,7 +109,8 @@
 
 
         /**
-         * 
+         * @return array|mixed
+         * @throws Exception
          */
         final public function read()
         {
@@ -174,7 +179,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed|null
+         * @throws Exception
          */
         final public function read_model( $model )
         {
@@ -190,7 +197,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function create( $model )
         {
@@ -260,7 +269,9 @@
 
 
         /**
-         * 
+         * @param $model
+         * @return bool|mixed
+         * @throws Exception
          */
         final public function delete( $model )
         {
@@ -318,9 +329,11 @@
             return $retVal;
         }
 
-        
+
         /**
-         * 
+         * @param $model
+         * @return mixed
+         * @throws Exception
          */
         final public function update( $model )
         {
@@ -391,7 +404,8 @@
 
 
         /**
-         * 
+         * @return int|mixed
+         * @throws Exception
          */
         final public function length()
         {

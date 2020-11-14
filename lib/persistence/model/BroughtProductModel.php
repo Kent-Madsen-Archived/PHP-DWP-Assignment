@@ -1,12 +1,19 @@
-<?php 
+<?php
 
+    /**
+     * Class BroughtProductModel
+     */
     class BroughtProductModel 
         extends DatabaseModel
         implements BroughtProductController,
                    BroughtProductView
     {
-        
         // Constructors
+        /**
+         * BroughtProductModel constructor.
+         * @param $factory
+         * @throws Exception
+         */
         public function __construct( $factory )
         {
             $this->setFactory( $factory );   
@@ -27,7 +34,8 @@
 
         // implementation of factory classes
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -42,7 +50,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getProductId()
         {
@@ -50,16 +58,16 @@
         }
 
         /**
-         * 
+         * @return |null
          */
         final public function getPrice()
         {
             return $this->price;
         }
-        
+
 
         /**
-         * 
+         * @return |null
          */
         final public function getNumberOfProducts()
         {
@@ -67,24 +75,24 @@
         }
 
         /**
-         * 
+         * @return |null
          */
         final public function getRegistered()
         {
             return $this->registered;
         }
-        
+
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
             return $this->identity;
         }
-        
+
 
         /**
-         * 
+         * @return |null
          */
         final public function getInvoiceId()
         {
@@ -93,8 +101,10 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -107,7 +117,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setNumberOfProducts( $var )
         {
@@ -121,7 +132,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setInvoiceId( $var )
         {
@@ -134,7 +146,7 @@
         }
 
         /**
-         * 
+         * @param $var
          */
         final public function setRegistered( $var )
         {
@@ -142,7 +154,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setProductId( $var )
         {
@@ -156,7 +169,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setPrice( $var )
         {

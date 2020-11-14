@@ -1,5 +1,8 @@
-<?php 
+<?php
 
+    /**
+     * Class ProductAttributeModel
+     */
     class ProductAttributeModel 
         extends DatabaseModel
         implements ProductAttributeController,
@@ -7,7 +10,9 @@
     {
         // Constructors
         /**
-         * 
+         * ProductAttributeModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -22,7 +27,8 @@
 
         // implementation of factory classes
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -38,16 +44,16 @@
         // accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
             return $this->identity;
         }
 
-        
+
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -57,7 +63,8 @@
 
             // setters
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -68,10 +75,10 @@
             
             $this->identity = $var;
         }
-        
+
 
         /**
-         * 
+         * @param $var
          */
         final public function setContent( $var )
         {

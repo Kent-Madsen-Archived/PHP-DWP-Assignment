@@ -6,13 +6,18 @@
      */
 
     /**
-     * 
+     * Class MySQLInformation
      */
     class MySQLInformation
     {
         // Constructors
+
         /**
-         * 
+         * MySQLInformation constructor.
+         * @param $access
+         * @param $credential
+         * @param $database
+         * @throws Exception
          */
         public function __construct( $access, 
                                      $credential, 
@@ -30,27 +35,42 @@
 
         private $access;
 
-        //
+        // Accessor
+        /**
+         * @return mixed
+         */
         final public function retrieve_username()
         {
             return $this->credential->getUsername();
         }
 
+        /**
+         * @return mixed
+         */
         final public function retrieve_password()
         {
             return $this->credential->getPassword();
         }
 
+        /**
+         * @return mixed
+         */
         final public function retrieve_hostname()
         {
             return $this->access->getHostname();
         }
 
+        /**
+         * @return mixed
+         */
         final public function retrieve_port()
         {
             return $this->access->getPort();
         }
 
+        /**
+         * @return mixed
+         */
         final public function retrieve_database()
         {
             return $this->getDatabase();
@@ -58,7 +78,8 @@
 
         // Functions
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final protected function validateAsCredential( $var )
         {
@@ -76,8 +97,9 @@
         }
 
         /**
-        * 
-        */
+         * @param $var
+         * @return bool
+         */
         final protected function validateAsAccess( $var )
         {
             if( is_null( $var ) )
@@ -97,7 +119,7 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return mixed
          */
         final public function getCredential()
         {
@@ -105,7 +127,7 @@
         }
 
         /**
-         * 
+         * @return mixed
          */
         final public function getAccess()
         {
@@ -113,16 +135,17 @@
         }
 
         /**
-         * 
+         * @return mixed
          */
         final public function getDatabase()
         {
             return $this->database;
         }
 
-            // Setters 
-        /**
-         * Result: Allowed to be null or a instance of NetworkAccess
+            // Setters
+        /** Result: Allowed to be null or a instance of NetworkAccess
+         * @param $value
+         * @throws Exception
          */
         final public function setAccess( $value )
         {
@@ -134,8 +157,9 @@
             $this->access = $value;
         }
 
-        /**
-         * Result: Allowed to be null or a instance of UserCredential
+        /** Result: Allowed to be null or a instance of UserCredential
+         * @param $value
+         * @throws Exception
          */
         final public function setCredential( $value )
         {
@@ -147,9 +171,9 @@
             $this->credential = $value;
         }
 
-        /**
-         * 
-         * Result: Allowed to be null, or a instance of a string.
+        /** Result: Allowed to be null, or a instance of a string.
+         * @param $value
+         * @throws Exception
          */
         final public function setDatabase( $value )
         {

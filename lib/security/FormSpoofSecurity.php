@@ -1,11 +1,15 @@
 <?php
+
     /**
-     * 
+     * Class FormSpoofSecurity
      */
     class FormSpoofSecurity
     {
         // Constructors
-        function __construct()
+        /**
+         * FormSpoofSecurity constructor.
+         */
+        public function __construct()
         {
             $this->generate();
         }
@@ -14,7 +18,11 @@
         private $token = null;
 
         // Stages
-        function generate()
+
+        /**
+         * @return null
+         */
+        final public function generate()
         {
             $value = md5( uniqid( mt_rand(), true ) );
             $this->setToken( $value );
@@ -22,18 +30,27 @@
             return $this->getToken();
         }
 
-        function apply_to_session()
+        /**
+         *
+         */
+        final public function apply_to_session()
         {
             $_SESSION[ 'fss_token' ] = $this->getToken();
         }
 
         // Accessors
-        public function getToken()
+        /**
+         * @return null
+         */
+        final public function getToken()
         {
             return $this->token;
         }
 
-        public function setToken( $var )
+        /**
+         * @param $var
+         */
+        final public function setToken( $var )
         {
             $this->token = $var;
         }

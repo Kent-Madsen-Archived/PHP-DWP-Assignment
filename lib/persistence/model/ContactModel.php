@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class ContactModel
      */
     class ContactModel 
         extends DatabaseModel
@@ -10,7 +10,9 @@
     {
         // Constructors
         /**
-         * 
+         * ContactModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -32,8 +34,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -49,7 +53,7 @@
             // Getters
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getMessage()
         {
@@ -57,7 +61,7 @@
         }
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getToMail()
         {
@@ -65,7 +69,7 @@
         }
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getSubject()
         {
@@ -73,7 +77,7 @@
         }
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getFromMail()
         {
@@ -81,7 +85,7 @@
         }
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getCreatedOn()
         {
@@ -89,7 +93,7 @@
         }
 
         /**
-         * 
+         * @return mixed|null
          */
         final public function getHasBeenSend()
         {
@@ -97,7 +101,7 @@
         }
 
         /**
-         * 
+         * @return int|mixed
          */
         final public function getIdentity()
         {
@@ -105,8 +109,11 @@
         }
 
             // Setters
+
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -119,7 +126,9 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setHasBeenSend( $var )
         {
@@ -132,7 +141,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
          */
         final public function setCreatedOn( $var )
         {
@@ -140,7 +150,9 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setFromMail( $var )
         {
@@ -153,7 +165,9 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setToMail( $var )
         {
@@ -166,7 +180,9 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setSubject( $var )
         {
@@ -179,7 +195,9 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return mixed|void
+         * @throws Exception
          */
         final public function setMessage( $var )
         {

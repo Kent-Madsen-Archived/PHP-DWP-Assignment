@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class PersonNameModel
      */
     class PersonNameModel 
         extends DatabaseModel 
@@ -10,7 +10,9 @@
     {
         // Constructors
         /**
-         * 
+         * PersonNameModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -27,8 +29,10 @@
 
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -43,7 +47,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return |null
          */
         final public function getIdentity()
         {
@@ -52,16 +56,16 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getFirstName()
         {
             return $this->first_name;
         }
 
-    
+
         /**
-         * 
+         * @return |null
          */
         final public function getLastName()
         {
@@ -70,7 +74,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getMiddleName()
         {
@@ -80,7 +84,8 @@
 
             // Setters
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -94,7 +99,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setFirstName( $var )
         {
@@ -103,16 +108,16 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setMiddleName( $var )
         {
             $this->middle_name = $var;
         }
 
-        
+
         /**
-         * 
+         * @param $var
          */
         final public function setLastName( $var )
         {

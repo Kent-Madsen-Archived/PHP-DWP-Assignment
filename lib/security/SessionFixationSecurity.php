@@ -1,12 +1,12 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class SessionFixationSecurity
      */
     class SessionFixationSecurity
     {
         /**
-         * 
+         * SessionFixationSecurity constructor.
          */
         public function __construct()
         {
@@ -14,7 +14,7 @@
         }
 
         /**
-         * 
+         *
          */
         function update()
         {

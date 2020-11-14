@@ -6,7 +6,7 @@
      */
 
     /**
-     * 
+     * Class MySQLConnector
      */
     class MySQLConnector 
         implements ConnectorTemplate, 
@@ -14,7 +14,9 @@
     {
         // Constructor
         /**
-         * 
+         * MySQLConnector constructor.
+         * @param $mysql_information
+         * @throws Exception
          */
         public function __construct( $mysql_information ) 
         {
@@ -28,8 +30,9 @@
         private $connector;
 
         // implementations
+
         /**
-         * 
+         * @throws Exception
          */
         final public function connect()
         {
@@ -51,7 +54,7 @@
         }
 
         /**
-         * 
+         *
          */
         final public function disconnect()
         {
@@ -69,7 +72,7 @@
         }
 
         /**
-         * 
+         *
          */
         final public function finish()
         {
@@ -77,8 +80,9 @@
         }
 
         // Accessors
+
         /**
-         * 
+         * @return mixed
          */
         final public function getInformation()
         {
@@ -86,7 +90,7 @@
         }
 
         /**
-         * 
+         * @return mixed
          */
         final public function getConnector()
         {
@@ -94,7 +98,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setInformation( $var )
         {
@@ -107,7 +112,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final protected function validateAsMySQLInformation( $var )
         {
@@ -125,7 +131,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setConnector( $var )
         {
@@ -138,7 +145,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final protected function validateAsMysqli( $var )
         {

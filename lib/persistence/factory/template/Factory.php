@@ -7,7 +7,7 @@
 
 
     /**
-     * 
+     * Class Factory
      */
     abstract class Factory
         implements CRUD, 
@@ -23,8 +23,10 @@
 
 
         // Validation of objects
+
         /**
-         * 
+         * @param $var
+         * @return bool
          */
         final protected function validateAsValidConnector( $var )
         {
@@ -43,8 +45,9 @@
 
 
         // Cursor
+
         /**
-         * 
+         * @return float|int
          */
         final public function calculateOffset()
         {
@@ -53,50 +56,61 @@
 
 
         /**
-         * 
+         * @return int
          */
         final public function next()
         {
             $this->next_jump( 1 );
+
+            return $this->getPaginationIndex();
         }
 
 
         /**
-         * 
+         * @param $value
+         * @return int
+         * @throws Exception
          */
         final public function next_jump( $value )
         {
             $this->setPaginationIndex( ( $this->getPaginationIndex() + $value ) );
+
+            return $this->getPaginationIndex();
         }
 
 
         /**
-         * 
+         * @return int
          */
         final public function previous()
         {
             $this->previous_jump( 1 );
+            return $this->getPaginationIndex();
         }
 
 
         /**
-         * 
+         * @param $value
+         * @return int
+         * @throws Exception
          */
         final public function previous_jump( $value )
         {
             $this->setPaginationIndex( ( $this->getPaginationIndex() - $value ) );
+            return $this->getPaginationIndex();
         }
 
 
         // Template functions
+
         /**
-         * 
+         * @return mixed
          */
         public abstract function getFactoryTableName();
 
 
         /**
-         * 
+         * @return mixed
          */
         public abstract function createModel();
 
@@ -104,16 +118,16 @@
         // Accessors
             // Getters
         /**
-         * 
+         * @return |null
          */
         final public function getConnector()
         {
             return $this->connector;
         }
 
-        
+
         /**
-         * 
+         * @return int
          */
         final public function getPaginationIndex()
         {
@@ -122,7 +136,7 @@
 
 
         /**
-         * 
+         * @return int
          */
         final public function getLimit()
         {
@@ -131,9 +145,11 @@
 
 
             // Setters
+
         /**
-        * 
-        */
+         * @param $var
+         * @throws Exception
+         */
         final public function setConnector( $var )
         {
             if( !$this->validateAsValidConnector( $var ) )
@@ -146,7 +162,8 @@
 
 
         /**
-         * 
+         * @param $idx
+         * @throws Exception
          */
         final public function setPaginationIndex( $idx )
         {
@@ -162,7 +179,8 @@
 
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setLimit( $var )
         {

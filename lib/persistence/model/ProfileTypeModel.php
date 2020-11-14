@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     /**
-     * 
+     * Class ProfileTypeModel
      */
     class ProfileTypeModel 
         extends DatabaseModel
@@ -10,7 +10,9 @@
     {
         // constructors
         /**
-         * 
+         * ProfileTypeModel constructor.
+         * @param $factory
+         * @throws Exception
          */
         public function __construct( $factory )
         {
@@ -25,8 +27,10 @@
         
 
         // implementation of factory classes
+
         /**
-         * 
+         * @param $factory
+         * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
@@ -42,7 +46,7 @@
         // accessors
             // getters
         /**
-         * 
+         * @return int
          */
         final public function getIdentity()
         {
@@ -51,7 +55,7 @@
 
 
         /**
-         * 
+         * @return |null
          */
         final public function getContent()
         {
@@ -61,7 +65,8 @@
 
             // setters
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setIdentity( $var )
         {
@@ -75,7 +80,7 @@
 
 
         /**
-         * 
+         * @param $var
          */
         final public function setContent( $var )
         {

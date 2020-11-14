@@ -6,13 +6,15 @@
      */
 
     /**
-     * 
+     * Class NetworkAccess
      */
     class NetworkAccess
     {
-        // Constructors
         /**
-         * 
+         * NetworkAccess constructor.
+         * @param $hostname
+         * @param $port
+         * @throws Exception
          */
         public function __construct( $hostname, $port )
         {
@@ -40,8 +42,9 @@
         private $port;
 
         // Accessors
+
         /**
-         * 
+         * @return mixed
          */
         final public function getHostname()
         {
@@ -49,7 +52,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setHostname( $var )
         {
@@ -63,7 +67,7 @@
 
 
         /**
-         * 
+         * @return mixed
          */
         final public function getPort()
         {
@@ -71,7 +75,8 @@
         }
 
         /**
-         * 
+         * @param $var
+         * @throws Exception
          */
         final public function setPort( $var )
         {
@@ -84,7 +89,7 @@
         }
 
         /**
-         * 
+         * @return int
          */
         final static public function getDefaultPort()
         {
@@ -92,7 +97,7 @@
         }
 
         /**
-         * 
+         * @return string
          */
         final static public function getDefaultServer()
         {
