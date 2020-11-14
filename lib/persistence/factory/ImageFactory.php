@@ -235,7 +235,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM image;";
+            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
 
             try 
             {

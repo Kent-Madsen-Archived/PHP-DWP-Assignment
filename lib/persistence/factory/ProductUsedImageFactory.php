@@ -169,7 +169,7 @@
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM product_used_images;";
+            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
 
             try 
             {
