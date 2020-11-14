@@ -8,28 +8,30 @@
     /**
      * 
      */
-    class ContactDomain
+    class ContactDomain 
+        extends Domain
     {
         // Construct
+        /**
+         * 
+         */
         public function __construct()
         {
-            $access = new NetworkAccess( 'localhost', 3600 );   
-            $user_credential = new UserCredential( 'development', 'Epc63gez' );
-            $database = "dwp_assignment";
+            $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
+            $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
 
-            $this->setMysqlInformation( new MySQLInformation( $access, $user_credential, $database ) );
+            $database = WEBPAGE_DATABASE_NAME;
+
+            $this->setInformation( new MySQLInformation( $access, $user_credential, $database ) );
         }
-
-        // Variables
-        private $mysql_info = null;
 
         /**
          * 
          */
-        public function send()
+        final public function send()
         {
             //
-            $connection = new MySQLConnector( $this->getMysqlInformation() );
+            $connection = new MySQLConnector( $this->getInformation() );
 
             // Factories prepared
             $contact_factory = new ContactFactory( $connection );
@@ -52,10 +54,11 @@
             $contact_factory->create( $contact_model );
         }
 
+
         /**
          * 
          */
-        protected function getFromMail( $connection )
+        final protected function getFromMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
 
@@ -74,10 +77,11 @@
             return $fromMail;
         }
 
+
         /**
          * 
          */
-        protected function getToMail( $connection )
+        final protected function getToMail( $connection )
         {
             $factory = new PersonEmailFactory( $connection );
 
@@ -96,38 +100,24 @@
             return $toMail;
         }
 
+
         /**
          * 
          */
-        protected function getSubject()
+        final protected function getSubject()
         {
             return $_POST[ 'form_contact_subject' ];
         }
 
+
         /**
          * 
          */
-        protected function getMessage()
+        final protected function getMessage()
         {
             return $_POST[ 'form_contact_message' ];
         }
 
-        // accessors
-        /**
-         * 
-         */
-        public function getMysqlInformation()
-        {
-            return $this->mysql_info;
-        }
-
-        /**
-         * 
-         */
-        public function setMysqlInformation( $var )
-        {
-            $this->mysql_info = $var;
-        }
     }
 
 ?>

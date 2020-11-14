@@ -16,7 +16,7 @@
             }
         }
 
-        $authentication = new Auth();
+        $authentication = new AuthDomain();
         
         $credentials = $authentication->login( $_POST[ 'form_login_username' ], $_POST[ 'form_login_password' ] );
 

@@ -6,6 +6,8 @@
      */
     $title = PageTitleSingleton::getInstance();
     $title->appendToTitle( ' - Checkout' );
+
+    $domain = new CheckoutDomain();
 ?>
 
 <!DOCTYPE html>
