@@ -28,30 +28,50 @@
     RouterSingleton::setInstance( $router );
 
     // Adds predfined routes, to the router.
-    $router->appendRoutes( new Route( 'setup', 'views/setup.php' ) );
-    
-    $router->appendRoutes( new Route( 'homepage', 'views/index.php' ) );
-    
-    $router->appendRoutes( new Route( 'product', 'views/product.php') );
+    $setup_route = new Route( 'setup', 'views/setup.php' );
+    $router->appendRoutes( $setup_route );
 
-    $router->appendRoutes( new Route( 'shop', 'views/shop.php' ) );
-    $router->appendRoutes( new Route( 'checkout', 'views/checkout.php' ) );
-    
-    $router->appendRoutes( new Route( 'about', 'views/about.php' ) );
-    $router->appendRoutes( new Route( 'contact', 'views/contact.php' ) );
-    
-    $router->appendRoutes( new Route( 'profile', 'views/profile.php' ) );
-    
-    $router->appendRoutes( new Route( 'login', 'views/login.php' ) );
-    
-    $router->appendRoutes( new Route( 'logout', 'views/logout.php' ) );
-    $router->appendRoutes( new Route( 'register', 'views/register.php' ) );
-    $router->appendRoutes( new Route( 'forgot-my-password', 'views/forgot_password.php' ) );
-    
-    $router->appendRoutes( new Route( 'news', 'views/news.php' ) );
-    $router->appendRoutes( new Route( 'invoice', 'views/invoices.php' ) );
+    $homepage = new Route( 'homepage', 'views/index.php' );
+    $router->appendRoutes( $homepage );
 
-    $router->appendRoutes( new Route( 'admin', 'views/admin.php' ) );
+    $product = new Route( 'product', 'views/product.php');
+    $router->appendRoutes( $product );
+
+    $shop = new Route( 'shop', 'views/shop.php' );
+    $router->appendRoutes( $shop );
+
+    $checkout = new Route( 'checkout', 'views/checkout.php' );
+    $router->appendRoutes( $checkout );
+
+    $about = new Route( 'about', 'views/about.php' );
+    $router->appendRoutes( $about );
+
+    $contact = new Route( 'contact', 'views/contact.php' ) ;
+    $router->appendRoutes( $contact );
+
+    $profile = new Route( 'profile', 'views/profile.php' ) ;
+    $router->appendRoutes( $profile );
+
+    $login = new Route( 'login', 'views/login.php' );
+    $router->appendRoutes( $login );
+
+    $logout = new Route( 'logout', 'views/logout.php' );
+    $router->appendRoutes( $logout );
+
+    $register = new Route( 'register', 'views/register.php' );
+    $router->appendRoutes( $register );
+
+    $forgot_my_password = new Route( 'forgot-my-password', 'views/forgot_password.php' );
+    $router->appendRoutes( $forgot_my_password );
+
+    $news = new Route( 'news', 'views/news.php' ) ;
+    $router->appendRoutes( $news );
+
+    $invoice = new Route( 'invoice', 'views/invoices.php' );
+    $router->appendRoutes( $invoice );
+
+    $admin = new Route( 'admin', 'views/admin.php' );
+    $router->appendRoutes( $admin );
     
     // Special Routes, like page 404.
     $special_404 = new Route( '404', 'views/404.php' );

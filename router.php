@@ -106,6 +106,7 @@
 
                 $root_domain = $this->getArgLevel( $root_routing_level_idx , false );
 
+                //
                 if( !is_null( $root_domain ) && ( $root_domain  == $current->getRouteDomain() ) )
                 {
                     $current->load();
