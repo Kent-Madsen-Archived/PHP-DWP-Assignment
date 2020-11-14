@@ -43,6 +43,7 @@ create table associated_category
 
     product_attribute_id int not null,
     product_category_id int not null,
+    
     product_id int not null,
     
     primary key ( identity )
@@ -64,7 +65,7 @@ create table profile
 (
     identity int not null auto_increment,
     
-    username varchar( 1024 ) not null unique,
+    username varchar( 256 ) not null unique,
     password varchar( 1024 ),
 
     profile_type int not null,
@@ -72,14 +73,16 @@ create table profile
     primary key ( identity )
 );
 
+
 create table profile_type
 (
     identity int not null auto_increment,
     
-    content varchar( 1024 ),
+    content varchar( 256 ) unique not null,
 
     primary key ( identity )
 );
+
 
 create table profile_information
 (
@@ -91,7 +94,7 @@ create table profile_information
     person_address_id int not null,
     person_email_id int not null,
 
-    person_phone varchar( 1024 ),
+    person_phone varchar( 256 ),
 
     birthday date not null,
     registered datetime default now() not null,
@@ -102,7 +105,7 @@ create table profile_information
 create table person_email
 (
     identity int not null auto_increment,
-    content varchar( 1024 ) not null,
+    content varchar( 256 ) unique not null,
     primary key ( identity )
 );
 
@@ -110,9 +113,9 @@ create table person_name
 (
     identity int not null auto_increment,
 
-    first_name varchar( 1024 ),
-    last_name varchar( 1024 ),
-    middle_name varchar( 1024 ),
+    first_name varchar( 256 ) not null,
+    last_name varchar( 256 ),
+    middle_name varchar( 256 ) not null,
 
     primary key ( identity )
 );
@@ -121,20 +124,21 @@ create table person_address
 (
     identity int not null auto_increment,
 
-    street_name varchar( 1024 ),
+    street_name varchar( 256 ),
     street_address_number int default 0,
 
     zip_code int,
-    country varchar( 1024 ),
+    country varchar( 256 ),
 
     primary key ( identity )
 );
+
 
 create table contact
 (
     identity int not null auto_increment,
 
-    subject_title varchar( 1024 ) not null,
+    subject_title varchar( 256 ) not null,
     message text not null,
     
     has_been_send int default 0,
@@ -147,6 +151,7 @@ create table contact
     primary key( identity )
 );
 
+
 create table product_invoice
 (
     identity int not null auto_increment,
@@ -154,8 +159,13 @@ create table product_invoice
     total_price double not null default 0.0,
     invoice_registered datetime default now(),
 
+    address_id int not null,
+    mail_id int not null,
+    owner_name_id int null,
+
     primary key ( identity )
 );
+
 
 create table brought_product
 (
@@ -171,18 +181,20 @@ create table brought_product
     primary key ( identity )
 );
 
+
 create table product_entity
 (
     identity int not null auto_increment,
     arrived datetime default now() not null,
     
-    entity_code varchar( 1024 ) not null,
+    entity_code varchar( 256 ) not null,
 
     product_id int not null,
     brought_id int default null,
 
     primary key ( identity )
 );
+
 
 create table page_element
 (
@@ -215,7 +227,7 @@ create table image
     image_type_id int not null default 1,
 
     title varchar( 256 ) not null default 'no name',
-    alt varchar( 1024 ) not null default 'no alt text has been inserted',
+    alt varchar( 256 ) not null default 'no alt text has been inserted',
 
     parent_id int not null,
 
@@ -224,6 +236,7 @@ create table image
 
     primary key ( identity )
 );
+
 
 create table product_used_images
 (
@@ -257,6 +270,7 @@ alter table profile_information
 	add constraint profile_information_person_email_identity_fk
 		foreign key ( person_email_id ) references person_email( identity );
 
+
 alter table contact
 	add constraint contact_person_email_identity_fk
 		foreign key ( to_id ) references person_email ( identity );
@@ -264,6 +278,7 @@ alter table contact
 alter table contact
 	add constraint contact_person_email_identity_fk_2
 		foreign key ( from_id ) references person_email ( identity );
+
 
 alter table associated_category
 	add constraint associated_category_product_attribute_identity_fk
@@ -277,6 +292,7 @@ alter table associated_category
 	add constraint associated_category_product_identity_fk
 		foreign key ( product_id ) references product ( identity );
 
+
 alter table brought_product
 	add constraint brought_product_product_invoice_identity_fk
 		foreign key ( invoice_id ) references product_invoice ( identity );
@@ -284,6 +300,7 @@ alter table brought_product
 alter table brought_product
 	add constraint brought_product_product_identity_fk
 		foreign key ( product_id ) references product ( identity );
+
 
 alter table product_entity
 	add constraint product_entity_brought_product_identity_fk
@@ -293,6 +310,7 @@ alter table product_entity
 	add constraint product_entity_product_identity_fk
 		foreign key ( product_id ) references product ( identity );
 
+
 alter table image
 	add constraint image_image_identity_fk
 		foreign key ( parent_id ) references image ( identity );
@@ -300,6 +318,7 @@ alter table image
 alter table image
 	add constraint image_image_type_identity_fk
 		foreign key ( image_type_id ) references image_type ( identity );
+
 
 alter table product_used_images
 	add constraint product_used_images_image_identity_fk
@@ -309,9 +328,22 @@ alter table product_used_images
 	add constraint product_used_images_image_identity_fk_2
 		foreign key ( image_full_id ) references image ( identity );
 
+
+alter table product_invoice
+	add constraint product_invoice_person_address_identity_fk
+		foreign key (address_id) references person_address (identity);
+
+alter table product_invoice
+	add constraint product_invoice_person_email_identity_fk
+		foreign key (mail_id) references person_email (identity);
+
+alter table product_invoice
+	add constraint product_invoice_person_name_identity_fk
+		foreign key (owner_name_id) references person_name (identity);
+
+
+
 -- Index
-create unique index person_email_content_uindex
-	on person_email (content);
 
 -- Set Default to's
 alter table profile alter column profile_type set default 1;
@@ -366,6 +398,29 @@ from contact
 left join person_email p1 on p1.identity = contact.from_id
 left join person_email p2 on p2.identity = contact.to_id;
 
+create or replace view product_associated_category_view as
+select associated_category.identity as associated_category_identity, pc.content as category, pa.content as attribute, associated_category.product_id
+from associated_category
+left join product_category pc on associated_category.product_category_id = pc.identity
+left join product_attribute pa on associated_category.product_attribute_id = pa.identity;
+
+create view product_invoice_view as
+select product_invoice.identity as invoice_identity,
+       product_invoice.total_price as invoice_total_price,
+       product_invoice.invoice_registered as invoice_registered,
+       pa.country as invoice_address_country,
+       pa.street_name as invoice_address_street_name,
+       pa.street_address_number as invoice_address_number,
+       pa.zip_code as invoice_address_zip_code,
+       pe.content as invoice_mail_to,
+       pn.first_name as invoice_owner_firstname,
+       pn.last_name as invoice_owner_lastname,
+       pn.middle_name as invoice_owner_middle_name
+from product_invoice
+left join person_address pa on product_invoice.address_id = pa.identity
+left join person_email pe on product_invoice.mail_id = pe.identity
+left join person_name pn on product_invoice.owner_name_id = pn.identity;
+
 -- Triggers
 create trigger person_name_insert_nomalise
 before insert on person_name
@@ -407,6 +462,20 @@ before update on person_address
         NEW.street_name           = lower( NEW.street_name ),
         NEW.country               = lower( NEW.country );
 
+create trigger article_on_update__update_timestamp
+before update on article
+    for each row
+    set NEW.last_update = now();
+
+create trigger image_on_update__update_timestamp
+before update on image
+    for each row
+    set NEW.last_updated = now();
+
+create trigger page_element_on_update__update_timestamp
+before update on page_element
+    for each row
+    set NEW.last_update = now();
 
 create trigger profile_type_insert_nomalise
 before insert on profile_type
@@ -438,6 +507,17 @@ create trigger product_category_update_nomalise
 before update on product_category
     for each row
     set NEW.content = lower( NEW.content );
+
+create trigger profile_normalise_insert_username
+before insert on profile
+    for each row
+    set NEW.username = lower( NEW.username );
+
+create trigger profile_normalise_update_username
+before update on profile
+    for each row
+    set NEW.username = lower( NEW.username );
+
 
 
 -- Insert Values
