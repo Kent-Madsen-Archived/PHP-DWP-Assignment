@@ -11,7 +11,7 @@ LEFT JOIN profile_type ON profile.profile_type = profile_type.identity;
 
 CREATE VIEW contact_model_view AS
 SELECT contact.subject_title,
-       contact.meesage,
+       contact.message,
        contact.has_been_send,
        contact.created_on,
 
@@ -48,17 +48,20 @@ SELECT contact.identity,
        contact.has_been_send,
        contact.created_on,
        pe_from.content AS from_mail,
-       pe_to.content AS to_mail
+       pe_to.content   AS to_mail
 FROM contact
 LEFT JOIN person_email pe_from ON pe_from.identity = contact.from_id
-LEFT JOIN person_email pe_to ON pe_to.identity = contact.to_id;
+LEFT JOIN person_email pe_to   ON pe_to.identity = contact.to_id;
 
 
 CREATE VIEW product_associated_category_view AS
-SELECT associated_category.identity AS associated_category_identity, pc.content AS category, pa.content AS attribute, associated_category.product_id
+SELECT associated_category.identity AS associated_category_identity, 
+       pc.content AS product_category, 
+       pa.content AS product_attribute, 
+       associated_category.product_id
 FROM associated_category
-LEFT JOIN product_category pc ON associated_category.product_category_id = pc.identity
-LEFT JOIN product_attribute pa ON associated_category.product_attribute_id = pa.identity;
+LEFT JOIN product_category pc   ON associated_category.product_category_id = pc.identity
+LEFT JOIN product_attribute pa  ON associated_category.product_attribute_id = pa.identity;
 
 
 CREATE VIEW product_invoice_view AS
@@ -93,7 +96,11 @@ LEFT JOIN person_name pn ON product_invoice.owner_name_id = pn.identity;
 
 
 CREATE VIEW product_available_units AS
-SELECT product.identity, product.title, product.product_description, product.product_price, count(pe.product_id) AS available_unit
+SELECT product.identity, 
+       product.title, 
+       product.product_description, 
+       product.product_price, 
+       count(pe.product_id) AS available_unit
 FROM product
 LEFT JOIN product_entity pe ON product.identity = pe.product_id
 GROUP BY product_id;
