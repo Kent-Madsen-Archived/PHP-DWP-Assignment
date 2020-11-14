@@ -20,9 +20,9 @@
     require 'bootstrap.php'; 
     require 'router_singleton.php'; 
 
+    //
     $session_fixation = new SessionFixationSecurity();
     $session_fixation->update();
-
 
     // Variables
     $router = new Router();

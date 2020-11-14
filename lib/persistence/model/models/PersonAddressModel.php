@@ -27,10 +27,10 @@
         private $street_address_number  = null;
         private $zip_code               = null;
         private $country                = null;
+        private $street_floor           = null;
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
@@ -46,6 +46,60 @@
         }
 
 
+        /**
+         * @return mixed|null
+         */
+        final public function viewId()
+        {
+            return $this->getIdentity();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewStreetName()
+        {
+            return $this->getStreetName();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewStreetFloor()
+        {
+            return $this->getStreetFloor();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewZipCode()
+        {
+            return $this->getZipCode();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewCountry()
+        {
+            return $this->getCountry();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewStreetAddressNumber()
+        {
+            return $this->getStreetAddressNumber();
+        }
+
+
         // Accessors
             // getters
         /**
@@ -56,6 +110,21 @@
             return $this->identity;
         }
 
+        /**
+         * @return |null
+         */
+        final public function getStreetFloor()
+        {
+            return $this->street_floor;
+        }
+
+        /**
+         * @param $var
+         */
+        final public function setStreetFloor( $var )
+        {
+            $this->street_floor = $var;
+        }
 
         /**
          * @return |null

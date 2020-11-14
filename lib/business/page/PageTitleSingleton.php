@@ -5,27 +5,33 @@
      *  Type: PHP Script
      */
 
-     /**
-      * 
-      */
-class PageTitleSingleton
-{
-    private static $instance = null;
-
-    public static function getInstance()
+    /**
+     * Class PageTitleSingleton
+     */
+    class PageTitleSingleton
     {
-        if( self::$instance == null )
+        private static $instance = null;
+
+        /**
+         * @return null
+         */
+        public static function getInstance()
         {
-            self::setInstance( new PageTitle( null ) );
+            if( self::$instance == null )
+            {
+                self::setInstance( new PageTitle( null ) );
+            }
+
+            return self::$instance;
         }
 
-        return self::$instance;
+        /**
+         * @param $var
+         */
+        public static function setInstance( $var )
+        {
+            self::$instance = $var;
+        }
     }
-
-    public static function setInstance( $var )
-    {
-        self::$instance = $var;
-    }
-}
 
 ?>

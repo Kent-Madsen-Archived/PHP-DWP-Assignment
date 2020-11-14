@@ -77,14 +77,14 @@ CREATE TABLE person_address
     street_name VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
     street_address_number INT DEFAULT 0 NOT NULL,
 
-    street_address_stage VARCHAR( 10 ) DEFAULT NULL,
+    street_address_floor VARCHAR( 10 ) DEFAULT NULL,
 
     zip_code INT DEFAULT 0 NOT NULL,
     country VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
 
     INDEX( street_name, 
            street_address_number, 
-           street_address_stage, 
+           street_address_floor, 
            zip_code, 
            country ),
 

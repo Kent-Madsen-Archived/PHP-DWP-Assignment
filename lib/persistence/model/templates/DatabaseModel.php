@@ -26,6 +26,12 @@
          */
         final public function setFactory( $factory )
         {
+            if( is_null( $factory ) )
+            {
+                $this->factory = $factory;
+                return;
+            }
+
             if( !$this->validateFactory( $factory ) )
             {
                 throw new Exception( 'Error: Factory instance is of the wrong type. ' );

@@ -45,7 +45,7 @@ ON person_address
         NEW.street_address_number   = lower( NEW.street_address_number ),
         NEW.street_name             = lower( NEW.street_name ),
         NEW.country                 = lower( NEW.country ),
-        NEW.street_address_stage    = lower( NEW.street_address_stage );
+        NEW.street_address_floor    = lower( NEW.street_address_floor );
 
 
 
@@ -130,4 +130,4 @@ ON person_address
         NEW.street_address_number = lower( NEW.street_address_number ),
         NEW.street_name           = lower( NEW.street_name ),
         NEW.country               = lower( NEW.country ),
-        NEW.street_address_stage  = lower( NEW.street_address_stage );
+        NEW.street_address_floor  = lower( NEW.street_address_floor );

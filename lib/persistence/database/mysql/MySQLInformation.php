@@ -115,6 +115,14 @@
             return false;
         }
 
+        /**
+         * @return MySQLInformation
+         * @throws Exception
+         */
+        final public static function generateDefaultMysql()
+        {
+            return new MySQLInformation(NetworkAccess::generateNetworkAccess(), UserCredential::generateDefaultUserCredential(), 'mysql');
+        }
         
         // Accessors
             // Getters

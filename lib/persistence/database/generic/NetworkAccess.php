@@ -75,6 +75,16 @@
         }
 
         /**
+         * @return NetworkAccess
+         * @throws Exception
+         */
+        final static public function generateNetworkAccess()
+        {
+            return new NetworkAccess( self::getDefaultServer(), self::getDefaultPort() );
+        }
+
+
+        /**
          * @param $var
          * @throws Exception
          */

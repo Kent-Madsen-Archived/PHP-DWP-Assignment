@@ -32,7 +32,6 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
@@ -47,6 +46,46 @@
             return false;
         }
 
+        /**
+         * @return mixed|void
+         */
+        final public function viewId()
+        {
+            return $this->getIdentity();
+        }
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewTotalPrice()
+        {
+            return $this->getTotalPrice();
+        }
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewOwnerAddress()
+        {
+            return $this->getAddressId();
+        }
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewOwnerMail()
+        {
+            return $this->getMailId();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewOwnerName()
+        {
+            return $this->getOwnerNameId();
+        }
 
         // Accessors
             // getters
@@ -57,7 +96,6 @@
         {
             return $this->identity;
         }
-
 
         /**
          * @return |null
@@ -105,7 +143,6 @@
 
 
             // Setters
-
         /**
          * @param $var
          * @throws Exception
@@ -183,6 +220,64 @@
             $this->owner_name_id = $var;
         }
 
+        /**
+         * @param $identity
+         * @param $total_price
+         * @param $registered
+         * @param $address_id
+         * @param $mail_id
+         * @param $owner_name_id
+         * @return ProductInvoiceModel
+         * @throws Exception
+         */
+        final public static function GenerateProductInvoiceModelBase( $identity,
+                                                                      $total_price,
+                                                                      $registered,
+                                                                      $address_id,
+                                                                      $mail_id,
+                                                                      $owner_name_id )
+        {
+            return self::GenerateProductInvoiceModel(   $identity,
+                                                        $total_price,
+                                                        $registered,
+                                                        $address_id,
+                                                        $mail_id,
+                                                        $owner_name_id,
+                                                        null);
+        }
+
+        /**
+         * @param $identity
+         * @param $total_price
+         * @param $registered
+         * @param $address_id
+         * @param $mail_id
+         * @param $owner_name_id
+         * @param $factory
+         * @return ProductInvoiceModel
+         * @throws Exception
+         */
+        final public static function GenerateProductInvoiceModel( $identity,
+                                                                  $total_price,
+                                                                  $registered,
+                                                                  $address_id,
+                                                                  $mail_id,
+                                                                  $owner_name_id,
+                                                                  $factory )
+        {
+            $object = new ProductInvoiceModel( $factory );
+
+            $object->setIdentity( $identity );
+            $object->total_price( $total_price );
+
+            $object->setRegistered( $registered );
+
+            $object->setAddressId( $address_id );
+            $object->setMailId( $mail_id );
+            $object->setOwnerNameId( $owner_name_id );
+
+            return $object;
+        }
 
     }
 

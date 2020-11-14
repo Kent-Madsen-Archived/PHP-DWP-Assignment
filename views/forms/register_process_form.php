@@ -24,7 +24,7 @@
         $recaptcha_v2->validate();
 
 
-        $auth = new Auth();
+        $auth = new AuthDomain();
 
         $profile = new ProfileModel( null );
         $profile->setUsername( $_POST[ 'form_register_username' ] );

@@ -6,11 +6,15 @@
      */
 
     /**
-     * 
+     * Class PageTitle
      */
     class PageTitle
     {
         // constructors
+        /**
+         * PageTitle constructor.
+         * @param $title
+         */
         public function __construct( $title )
         {
             if( $title == null )
@@ -27,8 +31,9 @@
         private $title = null;
 
         // Accessors
+
         /**
-         * 
+         * @return null
          */
         public function getTitle()
         {
@@ -36,7 +41,7 @@
         }
 
         /**
-         * 
+         * @param $var
          */
         public function setTitle( $var )
         {
@@ -44,7 +49,7 @@
         }
 
         /**
-         * 
+         *
          */
         public function clear()
         {
@@ -52,7 +57,7 @@
         }
 
         /**
-         * 
+         * @param $var
          */
         public function appendToTitle( $var )
         {
@@ -60,8 +65,9 @@
         }
 
         // Placeholder functions
+
         /**
-         * 
+         *
          */
         public function printDocumentTitle()
         {
