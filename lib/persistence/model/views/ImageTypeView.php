@@ -10,6 +10,15 @@
      */
     interface ImageTypeView
     {
+        /**
+         * @return mixed
+         */
+        public function viewIdentity();
+
+        /**
+         * @return mixed
+         */
+        public function viewContent();
 
     }
 ?>

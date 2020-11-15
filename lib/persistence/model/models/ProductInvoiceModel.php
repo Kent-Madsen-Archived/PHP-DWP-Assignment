@@ -117,6 +117,7 @@
             return $this->getAddressId();
         }
 
+
         /**
          * @return mixed|null
          */
@@ -132,6 +133,16 @@
         final public function viewOwnerName()
         {
             return $this->getOwnerNameId();
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewRegistered()
+        {
+            // TODO: Implement viewRegistered() method.
+            return null;
         }
 
 

@@ -13,7 +13,7 @@
         /**
          * @return mixed
          */
-        public function viewId();
+        public function viewIdentity();
 
         /**
          * @return mixed
@@ -34,5 +34,10 @@
          * @return mixed
          */
         public function viewOwnerName();
+
+        /**
+         * @return mixed
+         */
+        public function viewRegistered();
     }
 ?>

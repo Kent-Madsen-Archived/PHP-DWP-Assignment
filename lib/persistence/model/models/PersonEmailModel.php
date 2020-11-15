@@ -52,6 +52,15 @@
 
 
         /**
+         * @return false|mixed
+         */
+        final public function viewContent()
+        {
+            return false;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

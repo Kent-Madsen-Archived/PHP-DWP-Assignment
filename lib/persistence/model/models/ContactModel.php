@@ -52,6 +52,66 @@
 
 
         /**
+         * @return mixed|null
+         */
+        final public function viewCreatedOn()
+        {
+            // TODO: Implement viewCreatedOn() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewFromMail()
+        {
+            // TODO: Implement viewFromMail() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewToMail()
+        {
+            // TODO: Implement viewToMail() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewMessage()
+        {
+            // TODO: Implement viewMessage() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewSubject()
+        {
+            // TODO: Implement viewSubject() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewHasBeenSend()
+        {
+            // TODO: Implement viewHasBeenSend() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

@@ -52,6 +52,56 @@
 
 
         /**
+         * @return mixed|void
+         */
+        final public function viewAreaKey()
+        {
+            // TODO: Implement viewAreaKey() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewCreatedOn()
+        {
+            // TODO: Implement viewCreatedOn() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewLastUpdate()
+        {
+            // TODO: Implement viewLastUpdate() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewTitle()
+        {
+            // TODO: Implement viewTitle() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewContent()
+        {
+            // TODO: Implement viewContent() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

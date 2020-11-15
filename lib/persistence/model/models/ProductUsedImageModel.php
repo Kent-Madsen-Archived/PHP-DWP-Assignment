@@ -51,6 +51,46 @@
 
 
         /**
+         * @return mixed|void
+         */
+        final public function viewImageFull()
+        {
+            // TODO: Implement viewImageFull() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewImagePreview()
+        {
+            // TODO: Implement viewImagePreview() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewIsProfileImage()
+        {
+            // TODO: Implement viewIsProfileImage() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function viewProduct()
+        {
+            // TODO: Implement viewProduct() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

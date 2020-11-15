@@ -13,17 +13,22 @@
         /**
          * @return mixed
          */
-        public function getIdentity();
+        public function viewIdentity();
 
         /**
          * @return mixed
          */
-        public function getUsername();
+        public function viewUsername();
 
         /**
          * @return mixed
          */
-        public function getPassword();
+        public function viewPassword();
+
+        /**
+         * @return mixed
+         */
+        public function viewProfileType();
     }
 
 ?>

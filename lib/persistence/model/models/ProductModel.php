@@ -62,6 +62,36 @@
         }
 
 
+        /**
+         * @return mixed|null
+         */
+        final public function viewDescription()
+        {
+            // TODO: Implement viewDescription() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewPrice()
+        {
+            // TODO: Implement viewPrice() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewTitle()
+        {
+            // TODO: Implement viewTitle() method.
+            return null;
+        }
+
+
         // Variables
         private $identity = null;
 

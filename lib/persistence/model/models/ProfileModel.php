@@ -54,6 +54,35 @@
 
 
         /**
+         * @return int|mixed|null
+         */
+        final public function viewUsername()
+        {
+
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewPassword()
+        {
+            // TODO: Implement viewPassword() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewProfileType()
+        {
+            return null;
+        }
+
+
+        /**
          * @return bool
          */
         final public function requiredFieldsValidated()

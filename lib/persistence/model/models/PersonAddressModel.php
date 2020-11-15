@@ -88,15 +88,6 @@
         /**
          * @return mixed|null
          */
-        final public function viewId()
-        {
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
         final public function viewStreetName()
         {
             return $this->getStreetName();

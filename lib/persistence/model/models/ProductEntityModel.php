@@ -52,6 +52,46 @@
 
 
         /**
+         * @return mixed|null
+         */
+        public function viewProduct()
+        {
+            // TODO: Implement viewProduct() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        public function viewArrived()
+        {
+            // TODO: Implement viewArrived() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        public function viewBrought()
+        {
+            // TODO: Implement viewBrought() method.
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        public function viewEntityCode()
+        {
+            // TODO: Implement viewEntityCode() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

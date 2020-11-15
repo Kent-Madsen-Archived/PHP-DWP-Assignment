@@ -52,6 +52,16 @@
 
 
         /**
+         * @return mixed|null
+         */
+        final public function viewContent()
+        {
+
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

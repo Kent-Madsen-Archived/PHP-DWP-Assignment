@@ -62,6 +62,16 @@
         }
 
 
+        /**
+         * @return mixed|void
+         */
+        final public function viewContent()
+        {
+            // TODO: Implement viewContent() method.
+            return null;
+        }
+
+
         // Variables
         private $identity = null;
         private $content  = null;

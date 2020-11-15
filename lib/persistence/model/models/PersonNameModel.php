@@ -86,6 +86,35 @@
         }
 
 
+        //
+        /**
+         * @return mixed|null
+         */
+        final public function viewFirstname()
+        {
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewLastname()
+        {
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewMiddlename()
+        {
+
+            return null;
+        }
+
+
         // accessors
             // getters
         /**

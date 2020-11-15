@@ -13,7 +13,7 @@
         /**
          * @return mixed
          */
-        public function viewId();
+        public function viewIdentity();
 
         /**
          * @return mixed
