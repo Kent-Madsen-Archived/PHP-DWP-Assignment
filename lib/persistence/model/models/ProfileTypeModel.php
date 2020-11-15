@@ -65,7 +65,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerContent($var)
+        final public function controllerContent( $var )
         {
             // TODO: Implement controllerContent() method.
             return null;

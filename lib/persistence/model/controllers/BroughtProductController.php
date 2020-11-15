@@ -9,6 +9,7 @@
      * Interface BroughtProductController
      */
     interface BroughtProductController
+        extends BaseEntityController
     {
         /**
          * @param $var

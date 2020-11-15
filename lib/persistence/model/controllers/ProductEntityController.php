@@ -9,6 +9,7 @@
      * Interface ProductEntityController
      */
     interface ProductEntityController
+        extends BaseEntityController
     {
         /**
          * @param $var

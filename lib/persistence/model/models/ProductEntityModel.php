@@ -54,7 +54,7 @@
         /**
          * @return mixed|null
          */
-        public function viewProduct()
+        final public function viewProduct()
         {
             // TODO: Implement viewProduct() method.
             return null;
@@ -64,7 +64,7 @@
         /**
          * @return mixed|null
          */
-        public function viewArrived()
+        final public function viewArrived()
         {
             // TODO: Implement viewArrived() method.
             return null;
@@ -74,7 +74,7 @@
         /**
          * @return mixed|null
          */
-        public function viewBrought()
+        final public function viewBrought()
         {
             // TODO: Implement viewBrought() method.
             return null;
@@ -84,7 +84,7 @@
         /**
          * @return mixed|null
          */
-        public function viewEntityCode()
+        final public function viewEntityCode()
         {
             // TODO: Implement viewEntityCode() method.
             return null;

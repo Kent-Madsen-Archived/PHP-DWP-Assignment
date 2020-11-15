@@ -9,12 +9,8 @@
      * Interface BroughtProductView
      */
     interface BroughtProductView
+        extends BaseEntityView
     {
-        /**
-         * @return mixed
-         */
-        public function viewIdentity();
-
         /**
          * @return mixed
          */

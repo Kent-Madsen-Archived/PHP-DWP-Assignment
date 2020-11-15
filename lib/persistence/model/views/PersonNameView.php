@@ -9,12 +9,8 @@
      * Interface PersonNameView
      */
     interface PersonNameView
+        extends BaseEntityView
     {
-        /**
-         * @return mixed
-         */
-        public function viewIdentity();
-
         /**
          * @return mixed
          */

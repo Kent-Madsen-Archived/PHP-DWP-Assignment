@@ -103,12 +103,13 @@
 
         /**
          * @param $var
-         * @return mixed|void
+         * @return mixed|null
          */
-        final public function controllerContent($var)
+        final public function controllerContent( $var )
         {
             // TODO: Implement controllerContent() method.
 
+            return null;
         }
 
 
@@ -116,7 +117,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerTitle($var)
+        final public function controllerTitle( $var )
         {
             // TODO: Implement controllerTitle() method.
             return null;
@@ -127,7 +128,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerLastUpdated($var)
+        final public function controllerLastUpdated( $var )
         {
             // TODO: Implement controllerLastUpdated() method.
             return null;
@@ -138,7 +139,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerCreatedOn($var)
+        final public function controllerCreatedOn( $var )
         {
             // TODO: Implement controllerCreatedOn() method.
             return null;
@@ -149,7 +150,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerAreaKey($var)
+        final public function controllerAreaKey( $var )
         {
             // TODO: Implement controllerAreaKey() method.
             return null;

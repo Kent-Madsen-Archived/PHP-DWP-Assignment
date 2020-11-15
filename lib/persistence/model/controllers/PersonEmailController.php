@@ -9,6 +9,7 @@
      * Interface PersonEmailController
      */
     interface PersonEmailController
+        extends BaseEntityController
     {
         public function controllerContent( $var );
     }

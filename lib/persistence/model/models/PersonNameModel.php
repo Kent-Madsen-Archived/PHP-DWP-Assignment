@@ -119,7 +119,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerFirstname($var)
+        final public function controllerFirstname( $var )
         {
             // TODO: Implement controllerFirstname() method.
             return null;
@@ -130,7 +130,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerLastname($var)
+        final public function controllerLastname( $var )
         {
             // TODO: Implement controllerLastname() method.
             return null;
@@ -141,7 +141,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerMiddleName($var)
+        final public function controllerMiddleName( $var )
         {
             // TODO: Implement controllerMiddleName() method.
             return null;
@@ -165,29 +165,44 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getFirstName()
         {
-            return $this->first_name;
+            if( is_null( $this->first_name ) )
+            {
+                return null;
+            }
+
+            return strval( $this->first_name );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getLastName()
         {
-            return $this->last_name;
+            if( is_null( $this->last_name ) )
+            {
+                return null;
+            }
+
+            return strval( $this->last_name );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getMiddleName()
         {
-            return $this->middle_name;
+            if( is_null( $this->middle_name ) )
+            {
+                return null;
+            }
+
+            return strval( $this->middle_name );
         }
 
 

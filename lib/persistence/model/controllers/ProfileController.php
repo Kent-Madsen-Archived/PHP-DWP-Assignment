@@ -9,6 +9,7 @@
      * Interface ProfileController
      */
     interface ProfileController
+        extends BaseEntityController
     {
         /**
          * @param $var

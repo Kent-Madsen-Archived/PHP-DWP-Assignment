@@ -9,6 +9,7 @@
      * Interface PersonNameController
      */
     interface PersonNameController
+        extends BaseEntityController
     {
         /**
          * @param $var

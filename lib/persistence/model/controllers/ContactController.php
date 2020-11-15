@@ -9,6 +9,7 @@
      * Interface ContactController
      */
     interface ContactController
+        extends BaseEntityController
     {
         /**
          * @param $var

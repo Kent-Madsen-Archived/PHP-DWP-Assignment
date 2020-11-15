@@ -9,6 +9,7 @@
      * Interface ProductController
      */
     interface ProductController
+        extends BaseEntityController
     {
 
         /**

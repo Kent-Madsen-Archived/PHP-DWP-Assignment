@@ -9,6 +9,7 @@
      * Interface AssociatedCategoryController
      */
     interface AssociatedCategoryController
+        extends BaseEntityController
     {
         /**
          * @param $var

@@ -9,6 +9,7 @@
      * Interface ProductAttributeController
      */
     interface ProductAttributeController
+        extends BaseEntityController
     {
         /**
          * @param $var

@@ -115,7 +115,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerCreatedOn($var)
+        final public function controllerCreatedOn( $var )
         {
             // TODO: Implement controllerCreatedOn() method.
             return null;
@@ -126,7 +126,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerFrom($var)
+        final public function controllerFrom( $var )
         {
             // TODO: Implement controllerFrom() method.
             return null;
@@ -137,7 +137,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerHasBeenSend($var)
+        final public function controllerHasBeenSend( $var )
         {
             // TODO: Implement controllerHasBeenSend() method.
             return null;
@@ -148,7 +148,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerMessage($var)
+        final public function controllerMessage( $var )
         {
             // TODO: Implement controllerMessage() method.
             return null;
@@ -159,21 +159,23 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerSubject($var)
+        final public function controllerSubject( $var )
         {
             // TODO: Implement controllerSubject() method.
             return null;
         }
 
+
         /**
          * @param $var
          * @return mixed|null
          */
-        final public function controllerToMail($var)
+        final public function controllerToMail( $var )
         {
             // TODO: Implement controllerToMail() method.
             return null;
         }
+
 
         /**
          * @return bool|mixed

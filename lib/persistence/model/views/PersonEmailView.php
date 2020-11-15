@@ -10,12 +10,8 @@
      * Interface PersonEmailView
      */
     interface PersonEmailView
+        extends BaseEntityView
     {
-        /**
-         * @return mixed
-         */
-        public function viewIdentity();
-
         /**
          * @return mixed
          */

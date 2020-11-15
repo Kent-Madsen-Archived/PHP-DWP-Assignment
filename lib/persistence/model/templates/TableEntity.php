@@ -10,6 +10,7 @@
          */
         public function viewIdentity();
 
+
         /**
          * @return mixed
          */

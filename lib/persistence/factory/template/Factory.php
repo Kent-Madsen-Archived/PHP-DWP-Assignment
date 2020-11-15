@@ -44,8 +44,31 @@
         }
 
 
-        // Cursor
+        /**
+         * @param $Class
+         * @param $interface_name
+         * @return bool
+         */
+        final static public function modelImplements( $Class, $interface_name )
+        {
+            $retVal = false;
 
+            $class_interfaces_implemented = class_implements( $Class );
+
+            foreach ( $class_interfaces_implemented as $interface_implemented_value )
+            {
+                if( strtolower( $interface_name ) == strtolower( $interface_implemented_value ) )
+                {
+                    $retVal = true;
+                    break;
+                }
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        // Cursor
         /**
          * @return float|int
          */

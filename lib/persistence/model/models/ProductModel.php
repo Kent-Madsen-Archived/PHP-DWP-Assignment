@@ -96,7 +96,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerTitle($var)
+        final public function controllerTitle( $var )
         {
             // TODO: Implement controllerTitle() method.
             return null;
@@ -107,7 +107,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerPrice($var)
+        final public function controllerPrice( $var )
         {
             // TODO: Implement controllerPrice() method.
             return null;
@@ -118,7 +118,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerDescription($var)
+        final public function controllerDescription( $var )
         {
             // TODO: Implement controllerDescription() method.
             return null;

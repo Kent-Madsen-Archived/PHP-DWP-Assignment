@@ -283,6 +283,7 @@
 
             // prepare statement variables
             $stmt_identity      = null;
+
             $stmt_title         = null;
             $stmt_description   = null;
             $stmt_price         = null;

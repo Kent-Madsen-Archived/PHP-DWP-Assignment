@@ -34,6 +34,16 @@
 
             $database = WEBPAGE_DATABASE_NAME;
 
+            $c = new ArticleModel( null );
+
+            $arr = class_implements($c);
+
+            foreach ($arr as $value)
+            {
+                var_dump($value);
+                echo "</br>";
+            }
+
 
         ?>
 

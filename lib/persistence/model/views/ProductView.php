@@ -9,12 +9,8 @@
      * Interface ProductView
      */
     interface ProductView
+        extends BaseEntityView
     {
-        /**
-         * @return mixed
-         */
-        public function viewIdentity();
-
         /**
          * @return mixed
          */

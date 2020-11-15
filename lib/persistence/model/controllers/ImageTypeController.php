@@ -9,6 +9,7 @@
      * Interface ImageTypeController
      */
     interface ImageTypeController
+        extends BaseEntityController
     {
         /**
          * @param $var

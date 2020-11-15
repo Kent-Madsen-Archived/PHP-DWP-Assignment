@@ -9,6 +9,7 @@
      * Interface ArticleController
      */
     interface ArticleController
+        extends BaseEntityController
     {
         /**
          * @param $var

@@ -9,6 +9,7 @@
      * Interface ProductUsedImageController
      */
     interface ProductUsedImageController
+        extends BaseEntityController
     {
 
         /**

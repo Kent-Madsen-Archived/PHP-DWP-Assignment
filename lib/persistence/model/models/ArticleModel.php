@@ -28,6 +28,7 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -58,6 +59,7 @@
             return boolval( $retVal );
         }
 
+
         /**
          * @return null
          */
@@ -67,6 +69,7 @@
             return null;
         }
 
+
         /**
          * @return null
          */
@@ -75,6 +78,7 @@
             return null;
         }
 
+
         /**
          * @return null
          */
@@ -82,6 +86,7 @@
         {
             return null;
         }
+
 
         /**
          * @return null
@@ -96,7 +101,7 @@
          * @param $var
          * @return mixed|null
          */
-        public function controllerContent($var)
+        final public function controllerContent( $var )
         {
             // TODO: Implement controllerContent() method.
             return null;
@@ -107,7 +112,7 @@
          * @param $var
          * @return mixed|null
          */
-        public function controllerCreatedOn($var)
+        final public function controllerCreatedOn( $var )
         {
             // TODO: Implement controllerCreatedOn() method.
             return null;
@@ -118,7 +123,7 @@
          * @param $var
          * @return mixed|null
          */
-        public function controllerLastUpdated($var)
+        final public function controllerLastUpdated( $var )
         {
             // TODO: Implement controllerLastUpdated() method.
             return null;
@@ -129,7 +134,7 @@
          * @param $var
          * @return mixed|null
          */
-        public function controllerTitle($var)
+        final public function controllerTitle( $var )
         {
             // TODO: Implement controllerTitle() method.
             return null;
@@ -289,6 +294,28 @@
         final public function setLastUpdated( $var )
         {
             $this->last_updated = $var;
+        }
+
+        /**
+         * @param $class
+         */
+        final public static function implementsView( $class )
+        {
+            $retVal = false;
+
+            $is_class_object = false;
+
+            if( !is_object( $class ) )
+            {
+                $is_class_object = true;
+
+            }
+
+
+            $is_class_implementing_view = false;
+
+
+            return boolval( $is_class_object && $is_class_implementing_view );
         }
 
     }

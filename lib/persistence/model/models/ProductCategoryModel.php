@@ -76,7 +76,7 @@
          * @param $var
          * @return mixed|null
          */
-        final public function controllerContent($var)
+        final public function controllerContent( $var )
         {
             // TODO: Implement controllerContent() method.
             return null;
@@ -121,11 +121,16 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return $this->content;
+            }
+
+            return strval( $this->content );
         }
 
 

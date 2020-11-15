@@ -9,6 +9,7 @@
      * Interface PageElementController
      */
     interface PageElementController
+        extends BaseEntityController
     {
         /**
          * @param $var

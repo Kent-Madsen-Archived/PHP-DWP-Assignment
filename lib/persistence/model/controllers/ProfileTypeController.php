@@ -9,6 +9,7 @@
      * Interface ProfileTypeController
      */
     interface ProfileTypeController
+        extends BaseEntityController
     {
 
         /**

@@ -21,13 +21,12 @@
 
 
         // implement interfaces
-
         /**
          * @return int|mixed|null
          */
         final public function viewIdentity()
         {
-            if ($this->viewIsIdentityNull()) {
+            if ( $this->viewIsIdentityNull() ) {
                 return null;
             }
 
@@ -42,11 +41,12 @@
         {
             $retVal = false;
 
-            if (is_null($this->identity) == true) {
+            if ( is_null( $this->identity ) )
+            {
                 $retVal = true;
             }
 
-            return boolval($retVal);
+            return boolval( $retVal );
         }
 
 
@@ -57,7 +57,7 @@
         {
             $retVal = false;
 
-            return boolval($retVal);
+            return boolval( $retVal );
         }
 
 
@@ -73,20 +73,20 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
          */
-        final protected function validateFactory($factory)
+        final protected function validateFactory( $factory )
         {
             $retval = false;
 
-            if ($factory instanceof ProductInvoiceFactory) {
+            if ( $factory instanceof ProductInvoiceFactory )
+            {
                 $retval = true;
             }
 
-            return boolval($retval);
+            return boolval( $retval );
         }
 
 

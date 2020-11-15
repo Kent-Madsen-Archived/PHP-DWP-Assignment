@@ -9,12 +9,8 @@
      * Interface ProfileView
      */
     interface ProfileView
+        extends BaseEntityView
     {
-        /**
-         * @return mixed
-         */
-        public function viewIdentity();
-
         /**
          * @return mixed
          */
