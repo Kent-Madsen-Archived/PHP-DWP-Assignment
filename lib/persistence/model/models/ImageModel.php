@@ -18,6 +18,7 @@
             $this->setFactory( $factory );   
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -32,6 +33,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -39,12 +41,12 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
         /**
@@ -54,7 +56,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -74,19 +76,20 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ImageFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
         
@@ -107,20 +110,30 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getTitle()
         {
-            return $this->title;
+            if( is_null( $this->title ) )
+            {
+                return null;
+            }
+
+            return strval( $this->title );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getAlt()
         {
-            return $this->alt;
+            if( is_null( $this->alt ) )
+            {
+                return null;
+            }
+
+            return strval( $this->alt );
         }
 
 
@@ -134,21 +147,26 @@
                 return null;
             }
 
-            return intval($this->parent_id, self::base());
+            return intval( $this->parent_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getImageSrc()
         {
-            return $this->image_src;
+            if( is_null( $this->image_src ) )
+            {
+                return null;
+            }
+
+            return strval( $this->image_src );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getImageTypeId()
         {
@@ -211,6 +229,7 @@
             $this->title = $var;
         }
 
+
         /**
          * @param $var
          * @throws Exception
@@ -242,6 +261,7 @@
             $this->image_type_id = $value;
         }
 
+
         /**
          * @param $var
          * @throws Exception
@@ -255,6 +275,7 @@
 
             $this->image_src = $var;
         }
+
 
         /**
          * @param $var
@@ -272,6 +293,7 @@
             $this->parent_id = $value;
         }
 
+
         /**
          * @param $var
          */
@@ -280,6 +302,7 @@
             $this->registered = $var;
         }
 
+
         /**
          * @param $var
          */
@@ -287,8 +310,6 @@
         {
             $this->last_updated = $var;
         }
-
-
 
     }
 

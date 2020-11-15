@@ -134,7 +134,6 @@
             $this->content = $var;
         }
 
-        
     }
 
 ?>

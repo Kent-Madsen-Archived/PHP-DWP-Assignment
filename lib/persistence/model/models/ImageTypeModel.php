@@ -18,19 +18,16 @@
             $this->setFactory( $factory );   
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
          */
         final public function viewIdentity()
         {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
             return $this->getIdentity();
         }
+
 
         /**
          * @return bool|mixed
@@ -44,8 +41,9 @@
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -54,7 +52,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
         
         
@@ -64,19 +62,20 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ImageTypeFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
 
@@ -97,12 +96,18 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return null;
+            }
+
+            return strval( $this->content );
         }
+
 
             // Setters
         /**
@@ -135,6 +140,7 @@
 
             $this->content = $var;
         }
+
     }
 
 ?>

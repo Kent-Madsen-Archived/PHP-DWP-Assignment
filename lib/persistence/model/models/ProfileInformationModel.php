@@ -36,7 +36,7 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
         final public function viewIsIdentityNull()
         {
@@ -47,7 +47,7 @@
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -73,23 +73,24 @@
         private $person_phone   = null;
         private $birthday       = null;
 
-        private $registered = null;
+        private $registered     = null;
         
 
-        // implementation of factory classes
-
+        // implementation of factory classesd
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ProfileInformationFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
 
@@ -110,11 +111,16 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getPersonPhone()
         {
-            return $this->person_phone;
+            if( is_null( $this->person_phone ) )
+            {
+                return null;
+            }
+
+            return strval( $this->person_phone );
         }
 
 
@@ -146,7 +152,7 @@
                 return null;
             }
 
-            return intval( $this->profile_id );
+            return intval( $this->profile_id, self::base() );
         }
 
 
@@ -160,7 +166,7 @@
                 return null;
             }
 
-            return intval( $this->person_name_id );
+            return intval( $this->person_name_id, self::base() );
         }
 
 
@@ -174,7 +180,7 @@
                 return null;
             }
 
-            return intval( $this->person_address_id );
+            return intval( $this->person_address_id, self::base() );
         }
 
 
@@ -188,7 +194,7 @@
                 return null;
             }
 
-            return intval( $this->person_email_id );
+            return intval( $this->person_email_id, self::base() );
         }
 
 
@@ -199,7 +205,7 @@
          */
         final public function setProfileId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -216,7 +222,7 @@
          */
         final public function setPersonNameId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -233,7 +239,7 @@
          */
         final public function setPersonAddressId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -250,7 +256,7 @@
          */
         final public function setPersonEmailId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT   );
 
             if( !$this->identityValidation( $value ) )
             {

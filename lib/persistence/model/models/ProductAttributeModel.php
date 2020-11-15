@@ -19,6 +19,7 @@
             $this->setFactory( $factory );   
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -33,6 +34,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -40,22 +42,12 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
-        }
-
-        /**
-         * @return bool|mixed
-         */
-        final public function requiredFieldsValidated()
-        {
-            $retVal = false;
-
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -71,12 +63,25 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retVal = false;
+
             if( $factory instanceof ProductAttributeFactory )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return boolval( $retVal );
         }
 
 
@@ -97,11 +102,16 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return null;
+            }
+
+            return strval( $this->content );
         }
 
 

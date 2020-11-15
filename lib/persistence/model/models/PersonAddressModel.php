@@ -154,59 +154,78 @@
             return intval( $this->identity, self::base() );
         }
 
+
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getStreetFloor()
         {
-            return $this->street_floor;
+            if( is_null( $this->street_floor ) )
+            {
+                return null;
+            }
+
+            return strval( $this->street_floor );
         }
 
-        /**
-         * @param $var
-         */
-        final public function setStreetFloor( $var )
-        {
-            $this->street_floor = $var;
-        }
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getStreetName()
         {
-            return $this->street_name;
+            if( is_null( $this->street_name ) )
+            {
+                return null;
+            }
+
+            return strval( $this->street_name );
         }
 
 
         /**
-         * @return |null
-         */
-        final public function getStreetAddressNumber()
-        {
-            return $this->street_address_number;
-        }
-
-
-        /**
-         * @return |null
+         * @return string|null
          */
         final public function getZipCode()
         {
-            return $this->zip_code;
+            if( is_null( $this->zip_code ) )
+            {
+                return null;
+            }
+
+            return strval( $this->zip_code );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getCountry()
         {
-            return $this->country;
+            if( is_null( $this->country ) )
+            {
+                return null;
+            }
+
+            return strval( $this->country );
         }
 
-            // Setters
 
+        /**
+         * @return int|null
+         */
+        final public function getStreetAddressNumber()
+        {
+            if( is_null( $this->street_address_number ) )
+            {
+                return null;
+            }
+
+            return intval( $this->street_address_number, self::base() );
+        }
+
+
+            // Setters
         /**
          * @param $var
          * @throws Exception
@@ -221,6 +240,15 @@
             }
             
             $this->identity = $value;
+        }
+
+
+        /**
+         * @param $var
+         */
+        final public function setStreetFloor( $var )
+        {
+            $this->street_floor = $var;
         }
 
 
@@ -268,6 +296,4 @@
         }
 
     }
-
-
 ?>

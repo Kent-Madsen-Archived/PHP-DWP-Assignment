@@ -19,6 +19,7 @@
             $this->setFactory( $factory );
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -33,6 +34,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -40,13 +42,14 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -55,7 +58,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -73,34 +76,41 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retVal = false;
+
             if( $factory instanceof ContactFactory )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
+
 
         // Accessor
             // Getters
-
         /**
-         * @return mixed|null
+         * @return mixed|string|null
          */
         final public function getMessage()
         {
-            return $this->message;
+            if( is_null( $this->message ) )
+            {
+                return null;
+            }
+
+            return strval( $this->message );
         }
 
+
         /**
-         * @return int|null
+         * @return int|mixed|null
          */
         final public function getToMail()
         {
@@ -112,16 +122,23 @@
             return intval( $this->toMail, self::base() );
         }
 
+
         /**
-         * @return mixed|null
+         * @return mixed|string|null
          */
         final public function getSubject()
         {
-            return $this->subject;
+            if( is_null( $this->subject ) )
+            {
+                return null;
+            }
+
+            return strval( $this->subject );
         }
 
+
         /**
-         * @return int|null
+         * @return int|mixed|null
          */
         final public function getFromMail()
         {
@@ -133,6 +150,7 @@
             return intval( $this->fromMail, self::base() );
         }
 
+
         /**
          * @return mixed|null
          */
@@ -141,16 +159,23 @@
             return $this->created_on;
         }
 
+
         /**
-         * @return mixed|null
+         * @return int|mixed|null
          */
         final public function getHasBeenSend()
         {
-            return $this->has_been_send;
+            if( is_null( $this->has_been_send ) )
+            {
+                return null;
+            }
+
+            return intval( $this->has_been_send, self::base() );
         }
 
+
         /**
-         * @return int
+         * @return int|mixed|null
          */
         final public function getIdentity()
         {
@@ -162,8 +187,8 @@
             return intval( $this->identity, self::base() );
         }
 
-            // Setters
 
+            // Setters
         /**
          * @param $var
          * @return mixed|void
@@ -181,6 +206,7 @@
             $this->identity = $value;
         }
 
+
         /**
          * @param $var
          * @return mixed|void
@@ -196,6 +222,7 @@
             $this->has_been_send = $var;
         }
 
+
         /**
          * @param $var
          * @return mixed|void
@@ -204,6 +231,7 @@
         {
             $this->created_on = $var;
         }
+
 
         /**
          * @param $var
@@ -222,6 +250,7 @@
             $this->fromMail = $value;
         }
 
+
         /**
          * @param $var
          * @return mixed|void
@@ -239,6 +268,7 @@
             $this->toMail = $value;
         }
 
+
         /**
          * @param $var
          * @return mixed|void
@@ -254,6 +284,7 @@
             $this->subject = $var;
         }
 
+
         /**
          * @param $var
          * @return mixed|void
@@ -268,6 +299,5 @@
 
             $this->message = $var;
         }
-
     }
 ?>

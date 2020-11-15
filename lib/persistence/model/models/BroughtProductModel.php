@@ -41,7 +41,7 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
@@ -88,6 +88,7 @@
             return false;
         }
 
+
         // Accessors
             // Getters
         /**
@@ -103,22 +104,34 @@
             return intval( $this->product_id, self::base() );
         }
 
+
         /**
-         * @return |null
+         * @return float|null
          */
         final public function getPrice()
         {
-            return $this->price;
+            if( is_null( $this->price ) )
+            {
+                return null;
+            }
+
+            return doubleval( $this->price );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getNumberOfProducts()
         {
-            return $this->number_of_products;
+            if( is_null( $this->number_of_products ) )
+            {
+                return null;
+            }
+
+            return intval( $this->number_of_products );
         }
+
 
         /**
          * @return |null
@@ -127,6 +140,7 @@
         {
             return $this->registered;
         }
+
 
         /**
          * @return int|null

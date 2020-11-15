@@ -41,12 +41,12 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -57,7 +57,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
         
 
@@ -77,12 +77,14 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ProductUsedImageFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
 

@@ -19,6 +19,7 @@
             $this->setFactory( $factory );
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -32,6 +33,7 @@
 
             return $this->getIdentity();
         }
+
 
         /**
          * @return bool|mixed
@@ -48,6 +50,7 @@
             return $retVal;
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -57,7 +60,8 @@
 
             return $retVal;
         }
-        
+
+
         // Variables
         private $identity = null;
         private $content  = null;
@@ -96,11 +100,16 @@
 
 
         /**
-         * @return mixed|null
+         * @return mixed|string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return null;
+            }
+
+            return strval( $this->content );
         }
 
 
@@ -121,6 +130,7 @@
             
             $this->identity = $value;
         }
+
 
         /**
          * @param $var

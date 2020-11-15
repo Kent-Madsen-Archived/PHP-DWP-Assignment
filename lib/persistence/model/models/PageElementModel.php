@@ -19,6 +19,7 @@
             $this->setFactory( $factory );   
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -33,6 +34,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -40,13 +42,14 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -55,7 +58,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
         
@@ -67,51 +70,68 @@
         private $content    = null;
 
         private $created_on     = null;
-        private $last_update    = null;
+        private $last_updated    = null;
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof PageElementFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
+
 
         // accessors
             // getters
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getTitle()
         {
-            return $this->title;
+            if( is_null( $this->title ) )
+            {
+                return null;
+            }
+
+            return strval( $this->title );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return null;
+            }
+
+            return strval( $this->content );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getAreaKey()
         {
-            return $this->area_key;
+            if( is_null( $this->area_key ) )
+            {
+                return null;
+            }
+
+            return strval( $this->area_key );
         }
 
 
@@ -133,6 +153,11 @@
          */
         final public function getCreatedOn()
         {
+            if( is_null( $this->created_on ) )
+            {
+                return null;
+            }
+
             return $this->created_on;
         }
 
@@ -140,13 +165,18 @@
         /**
          * @return |null
          */
-        final public function getLastUpdate()
+        final public function getLastUpdated()
         {
-            return $this->last_update;
+            if( is_null( $this->last_updated ) )
+            {
+                return null;
+            }
+
+            return $this->last_updated;
         }
 
-            // Setters
 
+            // Setters
         /**
          * @param $var
          * @throws Exception
@@ -176,9 +206,9 @@
         /**
          * @param $var
          */
-        final public function setLastUpdate( $var )
+        final public function setLastUpdated( $var )
         {
-            $this->last_update = $var;
+            $this->last_updated = $var;
         }
 
 

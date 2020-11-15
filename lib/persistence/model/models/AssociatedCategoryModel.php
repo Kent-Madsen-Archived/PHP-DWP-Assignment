@@ -22,10 +22,12 @@
         
         // Variables
         private $identity = null;
-        
+
+        private $product_id           = null;
+
         private $product_attribute_id = null;
         private $product_category_id  = null;
-        private $product_id           = null;
+
 
         // implement interfaces
         /**
@@ -41,6 +43,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -48,13 +51,14 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -63,24 +67,27 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
-        // implementation of factory classes
 
+        // implementation of factory classes
         /**
          * @param $factory
          * @return bool|mixed
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof AssociatedCategoryFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
+
 
         // Accessors
             // Getters
@@ -97,12 +104,13 @@
             return intval( $this->identity, self::base() );
         }
 
+
         /**
          * @return int|null
          */
         final public function getProductAttributeId()
         {
-            if( is_null( $this->identity ) )
+            if( is_null( $this->product_attribute_id ) )
             {
                 return null;
             }
@@ -116,7 +124,7 @@
          */
         final public function getProductCategoryId()
         {
-            if( is_null( $this->identity ) )
+            if( is_null( $this->product_category_id ) )
             {
                 return null;
             }
@@ -130,13 +138,14 @@
          */
         final public function getProductId()
         {
-            if( is_null( $this->identity ) )
+            if( is_null( $this->product_id ) )
             {
                 return null;
             }
 
             return intval( $this->product_id, self::base() );
         }
+
 
             // Setters
         /**
@@ -154,6 +163,7 @@
 
             $this->identity = $value;
         }
+
 
         /**
          * @param $var

@@ -18,6 +18,7 @@
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
+            $this->setIsPasswordHashed(false );
         }
 
 
@@ -43,7 +44,7 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
@@ -53,13 +54,13 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
         final public function requiredFieldsValidated()
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -69,7 +70,7 @@
         private $username = null;
         private $password = null;
 
-        private $is_password_hashed = false;
+        private $is_password_hashed = null;
 
         private $profile_type = null;
 
@@ -77,16 +78,18 @@
         // implementation of factory classes
         /**
          * @param $factory
-         * @return bool|mixed
+         * @return bool
          */
         final protected function validateFactory( $factory )
         {
+            $retVal = false;
+
             if( $factory instanceof ProfileFactory )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
         
@@ -107,20 +110,30 @@
 
 
         /**
-         * @return mixed|null
+         * @return string|null
          */
         final public function getUsername()
         {
-            return $this->username;
+            if( is_null( $this->username ) )
+            {
+                return null;
+            }
+
+            return strval( $this->username );
         }
 
 
         /**
-         * @return mixed|null
+         * @return string|null
          */
         final public function getPassword()
         {
-            return $this->password;
+            if( is_null( $this->password ) )
+            {
+                return null;
+            }
+
+            return strval( $this->password );
         }
 
 
@@ -143,7 +156,7 @@
          */
         final public function getIsPasswordHashed()
         {
-            return $this->is_password_hashed;
+            return boolval( $this->is_password_hashed );
         }
 
 

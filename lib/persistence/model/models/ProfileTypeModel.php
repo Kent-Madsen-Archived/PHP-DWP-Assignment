@@ -47,10 +47,10 @@
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
-        
+
         /**
          * @return bool|mixed
          */
@@ -58,7 +58,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -74,12 +74,14 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ProfileTypeFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
         
@@ -100,11 +102,11 @@
 
 
         /**
-         * @return |null
+         * @return string
          */
         final public function getContent()
         {
-            return $this->content;
+            return strval( $this->content );
         }
         
 

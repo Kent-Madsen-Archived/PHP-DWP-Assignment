@@ -29,6 +29,7 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -43,6 +44,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -50,13 +52,14 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -65,8 +68,9 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         // implementation of factory classes
         /**
@@ -75,13 +79,16 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ArticleFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
+
 
         // Accessors
             // Getters
@@ -100,20 +107,30 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getTitle()
         {
-            return $this->title;
+            if( is_null( $this->title ) )
+            {
+                return null;
+            }
+
+            return strval( $this->title );
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getContent()
         {
-            return $this->content;
+            if( is_null( $this->content ) )
+            {
+                return null;
+            }
+
+            return strval( $this->content );
         }
 
         /**
@@ -133,8 +150,8 @@
             return $this->last_updated;
         }
 
-            // Setters
 
+            // Setters
         /**
          * @param $var
          * @throws Exception

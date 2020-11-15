@@ -47,7 +47,7 @@
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -58,7 +58,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -80,12 +80,14 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ProductInvoiceFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
 
@@ -114,7 +116,6 @@
         {
             return $this->getAddressId();
         }
-
 
         /**
          * @return mixed|null
@@ -193,11 +194,16 @@
 
 
         /**
-         * @return |null
+         * @return float|null
          */
         final public function getTotalPrice()
         {
-            return $this->total_price;
+            if( is_null( $this->total_price ) )
+            {
+                return null;
+            }
+
+            return doubleval( $this->total_price );
         }
 
 

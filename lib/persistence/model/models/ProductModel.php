@@ -42,12 +42,12 @@
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->identity ) )
             {
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -58,7 +58,7 @@
         {
             $retVal = false;
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -77,12 +77,14 @@
          */
         final protected function validateFactory( $factory )
         {
+            $retval = false;
+
             if( $factory instanceof ProductFactory )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
 
 
@@ -103,11 +105,16 @@
 
 
         /**
-         * @return |null
+         * @return string|null
          */
         final public function getDescription()
         {
-            return $this->description;
+            if( is_null( $this->description ) )
+            {
+                return null;
+            }
+
+            return strval( $this->description );
         }
 
 
@@ -116,7 +123,12 @@
          */
         final public function getPrice()
         {
-            return $this->price;
+            if( is_null( $this->price ) )
+            {
+                return null;
+            }
+
+            return doubleval( $this->price );
         }
 
 
@@ -125,9 +137,13 @@
          */
         final public function getTitle()
         {
-            return $this->title;
-        }
+            if( is_null( $this->title ) )
+            {
+                return null;
+            }
 
+            return strval( $this->title );
+        }
 
             // Setters
         /**
