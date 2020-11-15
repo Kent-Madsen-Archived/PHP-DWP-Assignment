@@ -19,10 +19,41 @@
             $this->setFactory( $factory );
         }
 
+        // implement interfaces
+        final public function viewIdentity()
+        {
+
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
+
         
         // Variables
         private $identity = null;
-        private $arrived = null;
+        private $arrived  = null;
         
         private $entity_code = null;
 

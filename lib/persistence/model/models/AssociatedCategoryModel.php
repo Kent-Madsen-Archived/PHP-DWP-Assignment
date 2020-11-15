@@ -27,6 +27,36 @@
         private $product_category_id  = null;
         private $product_id           = null;
 
+        // implement interfaces
+        final public function viewIdentity()
+        {
+
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
 
         // implementation of factory classes
 

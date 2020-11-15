@@ -19,14 +19,45 @@
             $this->setFactory( $factory );
         }
 
+        // implement interfaces
+        final public function viewIdentity()
+        {
+
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
+
 
         // variables
-        private $identity = 0;
+        private $identity = null;
 
-        private $profile_id         = 0;
-        private $person_name_id     = 0;
-        private $person_address_id  = 0;
-        private $person_email_id    = 0;
+        private $profile_id         = null;
+        private $person_name_id     = null;
+        private $person_address_id  = null;
+        private $person_email_id    = null;
 
         private $person_phone   = null;
         private $birthday       = null;

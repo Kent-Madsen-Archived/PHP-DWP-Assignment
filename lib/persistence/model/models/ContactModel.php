@@ -19,6 +19,37 @@
             $this->setFactory( $factory );
         }
 
+        // implement interfaces
+        final public function viewIdentity()
+        {
+
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
+
 
         // Variables
         private $message = null;
@@ -30,7 +61,7 @@
         private $has_been_send = null;
         private $created_on    = null;
 
-        private $identity  = 0;
+        private $identity = null;
 
 
         // implementation of factory classes

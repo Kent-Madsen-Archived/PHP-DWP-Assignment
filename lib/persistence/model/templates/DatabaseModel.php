@@ -4,6 +4,7 @@
      * Class DatabaseModel
      */
     abstract class DatabaseModel 
+        implements TableEntity
     {
         // Variables
         private $factory = null;
@@ -19,7 +20,6 @@
         }
 
             // Setters
-
         /**
          * @param $factory
          * @throws Exception
@@ -39,6 +39,12 @@
             
             $this->factory = $factory;
         }
+
+        /**
+         * @return mixed
+         */
+        public abstract function requiredFieldsValidated();
+
 
         /**
          * @param $factory

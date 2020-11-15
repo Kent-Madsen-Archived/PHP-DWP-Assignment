@@ -20,16 +20,47 @@
             $this->setFactory( $factory );
         }
 
+        // implement interfaces
+        final public function viewIdentity()
+        {
+
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
+
 
         // Variables
-        private $identity = 0;
+        private $identity = null;
 
         private $username = null;
         private $password = null;
 
         private $is_password_hashed = false;
 
-        private $profile_type = 0;
+        private $profile_type = null;
 
 
         // implementation of factory classes

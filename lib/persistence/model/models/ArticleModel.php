@@ -29,9 +29,41 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+        // implement interfaces
+        /**
+         * @return |null
+         */
+        final public function viewIdentity()
+        {
+            return $this->getIdentity();
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
