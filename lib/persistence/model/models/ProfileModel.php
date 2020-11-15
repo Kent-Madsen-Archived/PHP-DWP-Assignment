@@ -149,12 +149,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProfileModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->identity = $var;
+            $this->identity = $value;
         }
         
 

@@ -102,12 +102,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductEntityModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 
@@ -126,12 +128,14 @@
          */
         final public function setProductId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->product_id = $var;
+            $this->product_id = $value;
         }
 
 
@@ -141,12 +145,14 @@
          */
         final public function setBrought( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
             
-            $this->brought_id = $var;
+            $this->brought_id = $value;
         }
 
 

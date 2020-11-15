@@ -149,12 +149,14 @@
          */
         public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 
@@ -182,12 +184,14 @@
          */
         final public function setAddressId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->address_id = $var;
+            $this->address_id = $value;
         }
 
 
@@ -197,12 +201,14 @@
          */
         final public function setMailId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->mail_id = $var;
+            $this->mail_id = $value;
         }
 
 
@@ -212,12 +218,14 @@
          */
         final public function setOwnerNameId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductInvoiceModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->owner_name_id = $var;
+            $this->owner_name_id = $value;
         }
 
         /**

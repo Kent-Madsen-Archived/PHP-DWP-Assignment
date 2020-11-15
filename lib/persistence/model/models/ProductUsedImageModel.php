@@ -91,12 +91,14 @@
          */
         final public function setImagePreviewId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->image_preview_id = $var;
+            $this->image_preview_id = $value;
         }
 
 
@@ -106,12 +108,14 @@
          */
         final public function setImageFullId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->image_full_id = $var;
+            $this->image_full_id = $value;
         }
 
 
@@ -121,12 +125,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProductUsedImageModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 

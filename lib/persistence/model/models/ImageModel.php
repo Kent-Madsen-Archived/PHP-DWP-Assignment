@@ -133,12 +133,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ImageModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 
@@ -177,12 +179,14 @@
          */
         final public function setImageTypeId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ImageModel - setImageTypeId: null or numeric number is allowed' );
             }
 
-            $this->image_type_id = $var;
+            $this->image_type_id = $value;
         }
 
         /**
@@ -205,12 +209,14 @@
          */
         final public function setParentId( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ImageModel - setParentId: null or numeric number is allowed' );
             }
 
-            $this->parent_id = $var;
+            $this->parent_id = $value;
         }
 
         /**

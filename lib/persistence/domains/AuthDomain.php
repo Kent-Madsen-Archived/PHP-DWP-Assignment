@@ -131,15 +131,15 @@
                 $email->setFactory( $person_email_factory );
             }
 
-            $email_found = $person_email_factory->get_by_name( $email->getContent() );
+            $email_found = $person_email_factory->read_by_name( $email );
 
-            if( is_null( $email_found ) )
+            if( is_null( $email_found->getIdentity() ) )
             {
                 $email = $person_email_factory->create( $email );
             }
             else 
             {
-                $email = $email_found[0];
+                $email = $email_found;
             }
             
             // retrieve or create address
@@ -150,16 +150,16 @@
                 $address->setFactory( $person_address_factory );
             }
 
-            $address = $person_address_factory->create( $address );
+            $address_model = $person_address_factory->create( $address );
             
             // 
             $profile_information_factory = new ProfileInformationFactory( $connection );
             $pi = new ProfileInformationModel( $profile_information_factory );
 
             $pi->setProfileId( $profile->getIdentity() );
-            
+
             $pi->setPersonNameId( $name->getIdentity() );
-            $pi->setPersonAddressId( $address->getIdentity() );
+            $pi->setPersonAddressId( $address_model->getIdentity() );
             $pi->setPersonEmailId( $email->getIdentity() );
 
             $pi->setPersonPhone( $phone_number );

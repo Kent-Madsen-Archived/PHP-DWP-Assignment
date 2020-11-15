@@ -169,12 +169,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 
@@ -211,12 +213,14 @@
          */
         final public function setStreetAddressNumber( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->street_address_number = $var;
+            $this->street_address_number = $value;
         }
 
     }

@@ -108,12 +108,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
         /**
@@ -122,12 +124,14 @@
          */
         final public function setNumberOfProducts( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->genericNumberValidation( $value ) )
             {
                 throw new Exception( 'BroughtProductModel - setNumberOfProducts: null or numeric number is allowed' );
             }
 
-            $this->identity = $number_of_products;
+            $this->number_of_products = $value;
         }
 
 
@@ -137,12 +141,14 @@
          */
         final public function setInvoiceId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'BroughtProductModel - setInvoiceId: null or numeric number is allowed' );
             }
 
-            $this->invoice_id = $var;
+            $this->invoice_id = $value;
         }
 
         /**
@@ -159,12 +165,14 @@
          */
         final public function setProductId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'BroughtProductModel - setProductId: null or numeric number is allowed' );
             }
 
-            $this->product_id = $var;
+            $this->product_id = $value;
         }
 
 

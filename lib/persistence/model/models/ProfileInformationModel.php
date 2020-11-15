@@ -132,12 +132,14 @@
          */
         final public function setProfileId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
             
-            $this->profile_id = $var;
+            $this->profile_id = $value;
         }
 
 
@@ -147,12 +149,14 @@
          */
         final public function setPersonNameId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_name_id = $var;
+            $this->person_name_id = $value;
         }
 
 
@@ -162,12 +166,14 @@
          */
         final public function setPersonAddressId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_address_id = $var;
+            $this->person_address_id = $value;
         }
 
 
@@ -177,12 +183,14 @@
          */
         final public function setPersonEmailId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_email_id = $var;
+            $this->person_email_id = $value;
         }
 
 
@@ -210,12 +218,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'ProfileInformationModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
         /**

@@ -101,12 +101,14 @@
          */
         final public function setProductAttributeId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductAttributeId: null or numeric number is allowed' );
             }
         
-            $this->product_attribute_id = $var;
+            $this->product_attribute_id = $value;
         }
 
 
@@ -116,12 +118,14 @@
          */
         final public function setProductCategoryId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductCategoryId: null or numeric number is allowed' );
             }
 
-            $this->product_category_id = $var;
+            $this->product_category_id = $value;
         }
 
 
@@ -131,12 +135,14 @@
          */
         final public function setProductId( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductId: null or numeric number is allowed' );
             }
 
-            $this->product_id = $var;
+            $this->product_id = $value;
         }
     }
 

@@ -90,12 +90,14 @@
          */
         final protected function identityValidation( $value )
         {
-            if( $this->genericNumberValidation( $value ) && is_int( $value ) )
+            $retVal = false;
+
+            if( $this->genericNumberValidation( $value ) || is_int( $value ) )
             {
-                return true;
+                $retVal = true;
             }
             
-            return false;
+            return $retVal;
         }
     }
 ?>

@@ -283,7 +283,7 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
+            $retVal = null;
 
             $this->getConnector()->connect();
 
@@ -296,6 +296,14 @@
 
             $sql = "INSERT INTO profile_information( profile_id, person_name_id, person_address_id, person_email_id, person_phone, birthday ) VALUES( ?, ?, ?, ?, ?, ? );";
 
+            $stmt_profile_id        = null;
+            $stmt_person_name_id    = null;
+            $stmt_person_address_id = null;
+            $stmt_person_email_id   = null;
+
+            $stmt_person_phone      = null;
+            $stmt_birthday          = null;
+
             try
             {
                 $stmt = $connection->prepare( $sql );
@@ -306,7 +314,7 @@
                                     $stmt_person_name_id,
                                     $stmt_person_address_id,
                                     $stmt_person_email_id,
-                                    $stmt_person_phwhereone,
+                                    $stmt_person_phone,
                                     $stmt_birthday );
 
                 //
@@ -325,6 +333,7 @@
                 $this->getConnector()->finish();
 
                 $model->setIdentity( $stmt->insert_id );
+
                 $retVal = $model;
             }
             catch( Exception $ex )
