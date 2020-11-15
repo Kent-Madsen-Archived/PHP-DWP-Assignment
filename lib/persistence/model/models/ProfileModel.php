@@ -20,6 +20,7 @@
             $this->setFactory( $factory );
         }
 
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -33,6 +34,7 @@
 
             return $this->getIdentity();
         }
+
 
         /**
          * @return bool
@@ -48,6 +50,7 @@
 
             return boolval( $retVal );
         }
+
 
         /**
          * @return bool|mixed
@@ -72,7 +75,6 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed

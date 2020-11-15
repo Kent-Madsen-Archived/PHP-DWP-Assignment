@@ -5,8 +5,8 @@
  */
     class PageElementModel 
         extends DatabaseModel
-        implements PageElementController,
-                   PageElementView
+            implements PageElementController,
+                       PageElementView
     {
         // Constructors
         /**

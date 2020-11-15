@@ -5,8 +5,8 @@
      */
     class AssociatedCategoryModel 
         extends DatabaseModel
-        implements AssociatedCategoryView,
-                   AssociatedCategoryController
+            implements AssociatedCategoryView,
+                       AssociatedCategoryController
     {
         // Constructors
         /**

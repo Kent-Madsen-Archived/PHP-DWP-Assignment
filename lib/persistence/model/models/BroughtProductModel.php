@@ -5,10 +5,9 @@
      */
     class BroughtProductModel 
         extends DatabaseModel
-        implements BroughtProductController,
-                   BroughtProductView
+            implements BroughtProductController,
+                       BroughtProductView
     {
-        // Constructors
         /**
          * BroughtProductModel constructor.
          * @param $factory
@@ -18,6 +17,7 @@
         {
             $this->setFactory( $factory );   
         }
+
 
         // implement interfaces
         /**
@@ -33,6 +33,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -47,6 +48,7 @@
 
             return $retVal;
         }
+
 
         /**
          * @return bool|mixed
@@ -153,8 +155,8 @@
             return intval( $this->invoice_id, self::base() );
         }
 
-            // Setters
 
+            // Setters
         /**
          * @param $var
          * @throws Exception
@@ -170,6 +172,7 @@
 
             $this->identity = $value;
         }
+
 
         /**
          * @param $var
@@ -204,6 +207,7 @@
             $this->invoice_id = $value;
         }
 
+
         /**
          * @param $var
          */
@@ -211,6 +215,7 @@
         {
             $this->registered = $var;
         }
+
 
         /**
          * @param $var

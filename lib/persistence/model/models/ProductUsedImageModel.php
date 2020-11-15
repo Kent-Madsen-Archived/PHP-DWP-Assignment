@@ -5,8 +5,8 @@
      */
     class ProductUsedImageModel
         extends DatabaseModel
-        implements ProductUsedImageController,
-                   ProductUsedImageView
+            implements ProductUsedImageController,
+                       ProductUsedImageView
     {
         /**
          * ProductUsedImageModel constructor.
@@ -18,6 +18,7 @@
             $this->setFactory( $factory );   
         }
         
+
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -31,6 +32,7 @@
 
             return $this->getIdentity();
         }
+
 
         /**
          * @return bool|mixed
@@ -46,6 +48,7 @@
 
             return $retVal;
         }
+
 
         /**
          * @return bool|mixed
@@ -68,7 +71,6 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed

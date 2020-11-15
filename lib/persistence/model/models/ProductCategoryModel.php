@@ -5,8 +5,8 @@
      */
     class ProductCategoryModel 
         extends DatabaseModel
-        implements ProductCategoryController,
-                   ProductCategoryView
+            implements ProductCategoryController,
+                       ProductCategoryView
     {
         // Constructors
         /**
@@ -18,6 +18,7 @@
         {
             $this->setFactory( $factory );
         }
+
 
         // implement interfaces
         /**
@@ -32,6 +33,7 @@
 
             return $this->getIdentity();
         }
+
 
         /**
          * @return bool|mixed
@@ -48,6 +50,7 @@
             return $retVal;
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -58,13 +61,13 @@
             return $retVal;
         }
 
+
         // Variables
         private $identity = null;
         private $content  = null;
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
@@ -79,6 +82,7 @@
             return false;
         }
 
+        
         // accessors
             // getters
         /**

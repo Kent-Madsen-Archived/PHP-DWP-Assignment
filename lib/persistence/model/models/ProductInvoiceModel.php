@@ -5,8 +5,8 @@
      */
     class ProductInvoiceModel 
         extends DatabaseModel
-        implements ProductInvoiceView,
-                   ProductInvoiceController
+            implements ProductInvoiceView,
+                       ProductInvoiceController
     {
         // Constructors
         /**
@@ -18,6 +18,7 @@
         {
             $this->setFactory( $factory );
         }
+
 
         // implement interfaces
         /**
@@ -33,6 +34,7 @@
             return $this->getIdentity();
         }
 
+
         /**
          * @return bool|mixed
          */
@@ -47,6 +49,7 @@
 
             return $retVal;
         }
+
 
         /**
          * @return bool|mixed
@@ -85,6 +88,7 @@
             return false;
         }
 
+
         /**
          * @return mixed|void
          */
@@ -92,6 +96,7 @@
         {
             return $this->getIdentity();
         }
+
 
         /**
          * @return mixed|void
@@ -101,6 +106,7 @@
             return $this->getTotalPrice();
         }
 
+
         /**
          * @return mixed|void
          */
@@ -108,6 +114,7 @@
         {
             return $this->getAddressId();
         }
+
 
         /**
          * @return mixed|null
@@ -126,6 +133,7 @@
             return $this->getOwnerNameId();
         }
 
+
         // Accessors
             // getters
         /**
@@ -140,6 +148,7 @@
 
             return intval( $this->identity, self::base() );;
         }
+
 
         /**
          * @return int|null
@@ -287,6 +296,7 @@
             $this->owner_name_id = $value;
         }
 
+
         /**
          * @param $identity
          * @param $total_price
@@ -313,6 +323,7 @@
                                                         null);
         }
 
+        
         /**
          * @param $identity
          * @param $total_price

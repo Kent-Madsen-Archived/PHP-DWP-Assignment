@@ -5,8 +5,8 @@
      */
     class ProductEntityModel 
         extends DatabaseModel
-        implements ProductEntityController,
-                   ProductEntityView
+            implements ProductEntityController,
+                       ProductEntityView
     {
         // Constructors
         /**
