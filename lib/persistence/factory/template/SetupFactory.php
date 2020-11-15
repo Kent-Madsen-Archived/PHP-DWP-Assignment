@@ -14,11 +14,6 @@
          * @return mixed
          */
         public function setupSecondaries();
-
-        /**
-         * @return mixed
-         */
-        public function insert_base_data();
     }
 
 ?>

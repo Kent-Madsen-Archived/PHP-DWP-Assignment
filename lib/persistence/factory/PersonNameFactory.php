@@ -60,15 +60,6 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */

@@ -26,7 +26,7 @@
          */
         final public function getFactoryTableName()
         {
-            return self::getTableName();
+            return strval( self::getTableName() );
         }
 
 
@@ -60,15 +60,6 @@
 
 
         /**
-         * TODO: insert_base_data 
-         */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
@@ -85,6 +76,7 @@
 
         /**
          * @return mixed|ProfileTypeModel
+         * @throws Exception
          */
         final public function createModel()
         {

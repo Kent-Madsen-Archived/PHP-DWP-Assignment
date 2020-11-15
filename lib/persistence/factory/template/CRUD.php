@@ -16,16 +16,19 @@
          */
         public function create( $model );
 
+
         /**
          * @return mixed
          */
         public function read();
+
 
         /**
          * @param $model
          * @return mixed
          */
         public function read_model( $model );
+
 
         /**
          * @param $model

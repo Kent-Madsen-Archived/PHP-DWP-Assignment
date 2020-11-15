@@ -54,18 +54,9 @@
         /**
          * TODO: This
          */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
-         * TODO: This
-         */
         final public function setup()
         {
-            
+
         }
 
 

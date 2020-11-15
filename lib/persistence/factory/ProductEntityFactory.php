@@ -61,15 +61,6 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
