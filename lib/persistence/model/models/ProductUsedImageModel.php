@@ -19,9 +19,17 @@
         }
         
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -79,29 +87,44 @@
         // Accessor
             // Getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );;
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getImagePreviewId()
         {
-            return $this->image_preview_id;
+            if( is_null( $this->image_preview_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->image_preview_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getImageFullId()
         {
-            return $this->image_full_id;
+            if( is_null( $this->image_full_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->image_full_id, self::base() );
         }
 
 
@@ -122,7 +145,7 @@
          */
         final public function setImagePreviewId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -139,7 +162,7 @@
          */
         final public function setImageFullId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -156,7 +179,7 @@
          */
         final public function setIdentity( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {

@@ -31,10 +31,15 @@
 
         // implement interfaces
         /**
-         * @return |null
+         * @return int|mixed|null
          */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
+
             return $this->getIdentity();
         }
 
@@ -81,11 +86,16 @@
         // Accessors
             // Getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -131,7 +141,7 @@
          */
         final public function setIdentity( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !( $this->identityValidation( $value ) ) )
             {

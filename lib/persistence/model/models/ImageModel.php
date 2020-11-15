@@ -19,9 +19,17 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -85,11 +93,16 @@
         // accessors
             // Getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -112,11 +125,16 @@
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getParentId()
         {
-            return $this->parent_id;
+            if( is_null( $this->parent_id ) )
+            {
+                return null;
+            }
+
+            return intval($this->parent_id, self::base());
         }
 
 
@@ -134,7 +152,12 @@
          */
         final public function getImageTypeId()
         {
-            return $this->image_type_id;
+            if( is_null( $this->image_type_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->image_type_id, self::base() );
         }
 
 
@@ -152,19 +175,18 @@
          */
         final public function getLastUpdated()
         {
-            return $this->identity;
+            return $this->last_updated;
         }
 
 
             // Setters
-
         /**
          * @param $var
          * @throws Exception
          */
         final public function setIdentity( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -210,7 +232,7 @@
          */
         final public function setImageTypeId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -240,7 +262,7 @@
          */
         final public function setParentId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -263,7 +285,7 @@
          */
         final public function setLastUpdated( $var )
         {
-            $this->identity = $var;
+            $this->last_updated = $var;
         }
 
 

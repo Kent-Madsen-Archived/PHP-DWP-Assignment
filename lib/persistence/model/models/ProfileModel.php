@@ -21,13 +21,21 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
         final public function viewIsIdentityNull()
         {
@@ -38,7 +46,7 @@
                 $retVal = true;
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
         /**
@@ -83,11 +91,16 @@
         // Accessors
             // Getters
         /**
-         * @return int|mixed
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -110,11 +123,16 @@
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getProfileType()
         {
-            return $this->profile_type;
+            if( is_null( $this->profile_type ) )
+            {
+                return null;
+            }
+
+            return intval( $this->profile_type, self::base() );
         }
 
 
@@ -128,7 +146,6 @@
 
 
             // Setters
-
         /**
          * @param $var
          * @return mixed|void

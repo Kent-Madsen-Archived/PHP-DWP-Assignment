@@ -20,9 +20,17 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -84,11 +92,16 @@
         // accessors
             // Getters
         /**
-         * @return int
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -120,50 +133,69 @@
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getProfileId()
         {
-            return $this->profile_id;
+            if( is_null( $this->profile_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->profile_id );
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getPersonNameId()
         {
-            return $this->person_name_id;
+            if( is_null( $this->person_name_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->person_name_id );
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getPersonAddressId()
         {
-            return $this->person_address_id;
+            if( is_null( $this->person_address_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->person_address_id );
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getPersonEmailId()
         {
-            return $this->person_email_id;
+            if( is_null( $this->person_email_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->person_email_id );
         }
 
 
         // Setters
-
         /**
          * @param $var
          * @throws Exception
          */
         final public function setProfileId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -180,7 +212,7 @@
          */
         final public function setPersonNameId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -197,7 +229,7 @@
          */
         final public function setPersonAddressId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -214,7 +246,7 @@
          */
         final public function setPersonEmailId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE  );
 
             if( !$this->identityValidation( $value ) )
             {

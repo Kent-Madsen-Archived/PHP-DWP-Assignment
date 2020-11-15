@@ -20,9 +20,17 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -78,11 +86,16 @@
         // accessors
             // getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 

@@ -20,9 +20,17 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -81,11 +89,16 @@
         // Accessors
             // Getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -108,25 +121,34 @@
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getProductId()
         {
-            return $this->product_id;
+            if( is_null( $this->product_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->product_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
-        final public function getBrougth()
+        final public function getBrought()
         {
-            return $this->brought_id;
+            if( is_null( $this->brought_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->brought_id, self::base() );
         }
 
 
             // Setters
-
         /**
          * @param $var
          * @throws Exception

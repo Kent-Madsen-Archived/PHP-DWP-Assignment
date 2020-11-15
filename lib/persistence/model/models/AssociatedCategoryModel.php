@@ -28,9 +28,17 @@
         private $product_id           = null;
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -77,37 +85,57 @@
         // Accessors
             // Getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getProductAttributeId()
         {
-            return $this->product_attribute_id;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->product_attribute_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getProductCategoryId()
         {
-            return $this->product_category_id;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->product_category_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getProductId()
         {
-            return $this->product_id;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->product_id, self::base() );
         }
 
             // Setters
@@ -117,12 +145,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
         /**
@@ -131,7 +161,7 @@
          */
         final public function setProductAttributeId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -148,7 +178,7 @@
          */
         final public function setProductCategoryId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -165,7 +195,7 @@
          */
         final public function setProductId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {

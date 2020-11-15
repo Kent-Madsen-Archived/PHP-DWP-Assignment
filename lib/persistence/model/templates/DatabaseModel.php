@@ -105,5 +105,13 @@
             
             return $retVal;
         }
+
+        /**
+         * @return int
+         */
+        final static protected function base()
+        {
+            return 10;
+        }
     }
 ?>

@@ -20,9 +20,17 @@
         }
 
         // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
         final public function viewIdentity()
         {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
 
+            return $this->getIdentity();
         }
 
         /**
@@ -121,37 +129,57 @@
         // Accessors
             // getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );;
         }
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getAddressId()
         {
-            return $this->address_id;
+            if( is_null( $this->address_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->address_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getMailId()
         {
-            return $this->mail_id;
+            if( is_null( $this->mail_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->mail_id, self::base() );
         }
 
 
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getOwnerNameId()
         {
-            return $this->owner_name_id;
+            if( is_null( $this->owner_name_id ) )
+            {
+                return null;
+            }
+
+            return intval( $this->owner_name_id, self::base() );
         }
 
 
@@ -180,7 +208,7 @@
          */
         public function setIdentity( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -215,7 +243,7 @@
          */
         final public function setAddressId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -232,7 +260,7 @@
          */
         final public function setMailId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
@@ -249,7 +277,7 @@
          */
         final public function setOwnerNameId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+            $value = filter_var( $var, FILTER_VALIDATE_INT );
 
             if( !$this->identityValidation( $value ) )
             {
