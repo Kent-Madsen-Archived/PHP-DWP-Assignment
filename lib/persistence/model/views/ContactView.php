@@ -13,37 +13,38 @@
          /**
           * @return mixed
           */
-         public function getFromMail();
+         public function viewIdentity();
 
          /**
           * @return mixed
           */
-         public function getToMail();
+         public function viewFromMail();
 
          /**
           * @return mixed
           */
-         public function getSubject();
+         public function viewToMail();
 
          /**
           * @return mixed
           */
-         public function getMessage();
+         public function viewSubject();
 
          /**
           * @return mixed
           */
-         public function getCreatedOn();
+         public function viewMessage();
 
          /**
           * @return mixed
           */
-         public function getHasBeenSend();
+         public function viewCreatedOn();
 
          /**
           * @return mixed
           */
-         public function getIdentity();
+         public function viewHasBeenSend();
+
      }
 
 ?>

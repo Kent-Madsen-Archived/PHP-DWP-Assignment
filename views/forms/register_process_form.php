@@ -23,8 +23,7 @@
         $recaptcha_v2->retrieve_response();
         $recaptcha_v2->validate();
 
-
-        $auth = new Auth();
+        $auth = new AuthDomain();
 
         $profile = new ProfileModel( null );
         $profile->setUsername( $_POST[ 'form_register_username' ] );
@@ -45,6 +44,7 @@
 
         //
         $person_phone_number = $_POST[ 'form_register_phone_number' ];
+
 
         //
         $person_address = new PersonAddressModel( null );

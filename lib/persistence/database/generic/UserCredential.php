@@ -28,7 +28,6 @@
         private $password;
 
         // Accessors
-
         /**
          * @return mixed
          */
@@ -76,9 +75,18 @@
         /**
          * @return string
          */
-        public static function getDefaultUsername()
+        final public static function getDefaultUsername()
         {
             return "root";
+        }
+
+        /**
+         * @return UserCredential
+         * @throws Exception
+         */
+        final public static function generateDefaultUserCredential()
+        {
+            return new UserCredential(self::getDefaultUsername(), '');
         }
     }
 ?>

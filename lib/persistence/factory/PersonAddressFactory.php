@@ -245,6 +245,7 @@
                 $this->getConnector()->finish();
 
                 $model->setIdentity( $stmt->insert_id );
+
                 $retVal = $model;
             }
             catch( Exception $ex )

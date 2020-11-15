@@ -20,6 +20,48 @@
         }
 
 
+        // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
+        final public function viewIdentity()
+        {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
+
+            return $this->getIdentity();
+        }
+
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) == true )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool|mixed
+         */
+        final public function requiredFieldsValidated()
+        {
+            $retVal = false;
+
+            return $retVal;
+        }
+
+
         // Variables
         private $first_name     = null;
         private $last_name      = null;
@@ -29,7 +71,6 @@
 
 
         // implementation of factory classes
-
         /**
          * @param $factory
          * @return bool|mixed
@@ -44,14 +85,82 @@
             return false;
         }
 
+
+        //
+        /**
+         * @return mixed|null
+         */
+        final public function viewFirstname()
+        {
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewLastname()
+        {
+            return null;
+        }
+
+
+        /**
+         * @return mixed|null
+         */
+        final public function viewMiddlename()
+        {
+
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerFirstname($var)
+        {
+            // TODO: Implement controllerFirstname() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerLastname($var)
+        {
+            // TODO: Implement controllerLastname() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerMiddleName($var)
+        {
+            // TODO: Implement controllerMiddleName() method.
+            return null;
+        }
+
+
         // accessors
             // getters
         /**
-         * @return |null
+         * @return int|null
          */
         final public function getIdentity()
         {
-            return $this->identity;
+            if( is_null( $this->identity ) )
+            {
+                return null;
+            }
+
+            return intval( $this->identity, self::base() );
         }
 
 
@@ -89,12 +198,14 @@
          */
         final public function setIdentity( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            $value = filter_var( $var, FILTER_VALIDATE_INT  );
+
+            if( !$this->identityValidation( $value ) )
             {
                 throw new Exception( 'PersonNameModel - setIdentity: null or numeric number is allowed' );
             }
             
-            $this->identity = $var;
+            $this->identity = $value;
         }
 
 

@@ -10,7 +10,12 @@
      */
     interface ProfileTypeController
     {
-        
+
+        /**
+         * @param $var
+         * @return mixed
+         */
+        public function controllerContent( $var );
 
     }
 ?>

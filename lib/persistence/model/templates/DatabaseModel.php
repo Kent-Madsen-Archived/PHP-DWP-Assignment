@@ -4,6 +4,7 @@
      * Class DatabaseModel
      */
     abstract class DatabaseModel 
+        implements TableEntity
     {
         // Variables
         private $factory = null;
@@ -19,13 +20,18 @@
         }
 
             // Setters
-
         /**
          * @param $factory
          * @throws Exception
          */
         final public function setFactory( $factory )
         {
+            if( is_null( $factory ) )
+            {
+                $this->factory = $factory;
+                return;
+            }
+
             if( !$this->validateFactory( $factory ) )
             {
                 throw new Exception( 'Error: Factory instance is of the wrong type. ' );
@@ -33,6 +39,12 @@
             
             $this->factory = $factory;
         }
+
+        /**
+         * @return mixed
+         */
+        public abstract function requiredFieldsValidated();
+
 
         /**
          * @param $factory
@@ -84,12 +96,22 @@
          */
         final protected function identityValidation( $value )
         {
-            if( $this->genericNumberValidation( $value ) && is_int( $value ) )
+            $retVal = false;
+
+            if( $this->genericNumberValidation( $value ) || is_int( $value ) )
             {
-                return true;
+                $retVal = true;
             }
             
-            return false;
+            return $retVal;
+        }
+
+        /**
+         * @return int
+         */
+        final static protected function base()
+        {
+            return 10;
         }
     }
 ?>

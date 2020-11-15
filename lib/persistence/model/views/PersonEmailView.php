@@ -14,12 +14,12 @@
         /**
          * @return mixed
          */
-        public function getContent();
+        public function viewIdentity();
 
         /**
          * @return mixed
          */
-        public function getIdentity();
+        public function viewContent();
     }
 
 ?>

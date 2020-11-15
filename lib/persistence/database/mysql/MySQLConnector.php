@@ -30,7 +30,6 @@
         private $connector;
 
         // implementations
-
         /**
          * @throws Exception
          */

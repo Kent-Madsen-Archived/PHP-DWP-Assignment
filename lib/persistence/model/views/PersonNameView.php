@@ -10,6 +10,26 @@
      */
     interface PersonNameView
     {
-        
+        /**
+         * @return mixed
+         */
+        public function viewIdentity();
+
+        /**
+         * @return mixed
+         */
+        public function viewFirstname();
+
+        /**
+         * @return mixed
+         */
+        public function viewLastname();
+
+
+        /**
+         * @return mixed
+         */
+        public function viewMiddlename();
+
     }
 ?>

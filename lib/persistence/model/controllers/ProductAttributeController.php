@@ -10,6 +10,10 @@
      */
     interface ProductAttributeController
     {
-
+        /**
+         * @param $var
+         * @return mixed
+         */
+        public function controllerContent( $var );
     }
 ?>

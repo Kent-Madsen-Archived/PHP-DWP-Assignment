@@ -1,12 +1,14 @@
-<?php 
+<?php
+
     /**
-     * 
+     * Class UserSession
      */
     class UserSession
     {
 
         /**
-         * 
+         * UserSession constructor.
+         * @param $profileModel
          */
         public function __construct( $profileModel )
         {
@@ -26,49 +28,49 @@
         private $profile_type = 0;
 
         /**
-         * 
+         * @return int
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
 
         /**
-         * 
+         * @param $var
          */
-        public function setIdentity( $var )
+        final public function setIdentity( $var )
         {
             $this->identity = $var;
         }
 
         /**
-         * 
+         * @param $var
          */
-        public function setUsername( $var )
+        final public function setUsername( $var )
         {
             $this->username = $var;
         }
 
         /**
-         * 
+         * @return null
          */
-        public function getUsername()
+        final public function getUsername()
         {
             return $this->username;
         }
 
         /**
-         * 
+         * @param $var
          */
-        public function setProfileType( $var )
+        final public function setProfileType( $var )
         {
             $this->profile_type = $var;
         }
 
         /**
-         * 
+         * @return int
          */
-        public function getProfileType()
+        final public function getProfileType()
         {
             return $this->profile_type;
         }
