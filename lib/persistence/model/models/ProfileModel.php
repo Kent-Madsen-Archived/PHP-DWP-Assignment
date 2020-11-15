@@ -83,6 +83,39 @@
 
 
         /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPassword($var)
+        {
+            // TODO: Implement controllerPassword() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerUsername($var)
+        {
+            // TODO: Implement controllerUsername() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerProfileType($var)
+        {
+            // TODO: Implement controllerProfileType() method.
+            return null;
+        }
+
+
+        /**
          * @return bool
          */
         final public function requiredFieldsValidated()

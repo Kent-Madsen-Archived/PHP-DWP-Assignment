@@ -122,6 +122,83 @@
 
 
         /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerRegistered($var)
+        {
+            // TODO: Implement controllerRegistered() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerBirthday($var)
+        {
+            // TODO: Implement controllerBirthday() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPersonAddress($var)
+        {
+            // TODO: Implement controllerPersonAddress() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPersonEmail($var)
+        {
+            // TODO: Implement controllerPersonEmail() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPersonName($var)
+        {
+            // TODO: Implement controllerPersonName() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPersonPhone($var)
+        {
+            // TODO: Implement controllerPersonPhone() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerProfile($var)
+        {
+            // TODO: Implement controllerProfile() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

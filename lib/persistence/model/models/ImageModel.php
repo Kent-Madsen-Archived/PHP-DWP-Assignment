@@ -131,6 +131,82 @@
         }
 
 
+        /**
+         * @param $var
+         * @return mixed|void
+         */
+        final public function controllerLastUpdated($var)
+        {
+            // TODO: Implement controllerLastUpdated() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerAlt($var)
+        {
+            // TODO: Implement controllerAlt() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerImageSrc($var)
+        {
+            // TODO: Implement controllerImageSrc() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerImageType($var)
+        {
+            // TODO: Implement controllerImageType() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerParent($var)
+        {
+            // TODO: Implement controllerParent() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerRegistered($var)
+        {
+            // TODO: Implement controllerRegistered() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerTitle($var)
+        {
+            // TODO: Implement controllerTitle() method.
+            return null;
+        }
+
         // Variables
         private $identity = null;
 

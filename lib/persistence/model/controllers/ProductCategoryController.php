@@ -10,6 +10,10 @@
      */
     interface ProductCategoryController
     {
-
+        /**
+         * @param $var
+         * @return mixed
+         */
+        public function controllerContent( $var );
     }
 ?>

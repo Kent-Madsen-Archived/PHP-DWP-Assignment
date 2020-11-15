@@ -81,11 +81,55 @@
 
 
         /**
-         * @return mixed|void
+         * @return mixed|null
          */
         final public function viewProduct()
         {
             // TODO: Implement viewProduct() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerProduct($var)
+        {
+            // TODO: Implement controllerProduct() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|void
+         */
+        final public function controllerImageFull($var)
+        {
+            // TODO: Implement controllerImageFull() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerImagePreview($var)
+        {
+            // TODO: Implement controllerImagePreview() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerIsProfileImage($var)
+        {
+            // TODO: Implement controllerIsProfileImage() method.
             return null;
         }
 

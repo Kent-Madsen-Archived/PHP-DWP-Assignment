@@ -88,6 +88,38 @@
 
 
         /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerAttribute($var)
+        {
+            // TODO: Implement controllerAttribute() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerCategory($var)
+        {
+            // TODO: Implement controllerCategory() method.
+            return null;
+        }
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerProduct($var)
+        {
+            // TODO: Implement controllerProduct() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

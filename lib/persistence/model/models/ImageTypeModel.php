@@ -6,7 +6,7 @@
     class ImageTypeModel
         extends DatabaseModel
             implements ImageTypeController,
-                       ImageView
+                       ImageTypeView
     {
         /**
          * ImageTypeModel constructor.
@@ -48,69 +48,20 @@
         /**
          * @return mixed|null
          */
-        final public function viewTitle()
+        final public function viewContent()
         {
-            // TODO: Implement viewTitle() method.
+            // TODO: Implement viewContent() method.
             return null;
         }
 
 
         /**
+         * @param $var
          * @return mixed|null
          */
-        final public function viewAlt()
+        final public function controllerContent($var)
         {
-            // TODO: Implement viewAlt() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewImageSrc()
-        {
-            // TODO: Implement viewImageSrc() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewImageType()
-        {
-            // TODO: Implement viewImageType() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewParent()
-        {
-            // TODO: Implement viewParent() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewRegistered()
-        {
-            // TODO: Implement viewRegistered() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewLastUpdate()
-        {
-            // TODO: Implement viewLastUpdate() method.
+            // TODO: Implement controllerContent() method.
             return null;
         }
 

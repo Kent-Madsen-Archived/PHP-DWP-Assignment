@@ -61,6 +61,17 @@
         }
 
 
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerContent($var)
+        {
+            // TODO: Implement controllerContent() method.
+            return null;
+        }
+
+
         // Variables
         private $identity = null;
         private $content  = null;

@@ -92,6 +92,50 @@
 
 
         /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerProduct($var)
+        {
+            // TODO: Implement controllerProduct() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerArrived($var)
+        {
+            // TODO: Implement controllerArrived() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerBrought($var)
+        {
+            // TODO: Implement controllerBrought() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerEntityCode($var)
+        {
+            // TODO: Implement controllerEntityCode() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

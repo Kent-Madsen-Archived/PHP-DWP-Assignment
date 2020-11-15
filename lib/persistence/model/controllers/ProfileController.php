@@ -14,19 +14,20 @@
          * @param $var
          * @return mixed
          */
-        public function setUsername( $var );
+        public function controllerUsername( $var );
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setPassword( $var );
+        public function controllerPassword( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setIdentity( $var );    
+        public function controllerProfileType( $var );
         
     }
 

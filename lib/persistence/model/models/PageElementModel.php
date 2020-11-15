@@ -102,6 +102,61 @@
 
 
         /**
+         * @param $var
+         * @return mixed|void
+         */
+        final public function controllerContent($var)
+        {
+            // TODO: Implement controllerContent() method.
+
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerTitle($var)
+        {
+            // TODO: Implement controllerTitle() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerLastUpdated($var)
+        {
+            // TODO: Implement controllerLastUpdated() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerCreatedOn($var)
+        {
+            // TODO: Implement controllerCreatedOn() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerAreaKey($var)
+        {
+            // TODO: Implement controllerAreaKey() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

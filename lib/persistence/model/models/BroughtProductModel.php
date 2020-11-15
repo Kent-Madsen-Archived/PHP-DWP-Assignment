@@ -100,6 +100,60 @@
         }
 
 
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerInvoice($var)
+        {
+            // TODO: Implement controllerInvoice() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerNumberOfProducts($var)
+        {
+            // TODO: Implement controllerNumberOfProducts() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerPrice($var)
+        {
+            // TODO: Implement controllerPrice() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerProduct($var)
+        {
+            // TODO: Implement controllerProduct() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerRegistered($var)
+        {
+            // TODO: Implement controllerRegistered() method.
+            return null;
+        }
+
 
         /**
          * @return bool|mixed

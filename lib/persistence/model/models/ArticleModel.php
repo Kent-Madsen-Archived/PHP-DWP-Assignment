@@ -28,7 +28,6 @@
         private $created_on     = null;
         private $last_updated   = null;
 
-
         // implement interfaces
         /**
          * @return int|mixed|null
@@ -92,6 +91,49 @@
             return null;
         }
 
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerContent($var)
+        {
+            // TODO: Implement controllerContent() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerCreatedOn($var)
+        {
+            // TODO: Implement controllerCreatedOn() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerLastUpdated($var)
+        {
+            // TODO: Implement controllerLastUpdated() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        public function controllerTitle($var)
+        {
+            // TODO: Implement controllerTitle() method.
+            return null;
+        }
 
 
         /**

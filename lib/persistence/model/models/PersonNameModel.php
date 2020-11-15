@@ -115,6 +115,39 @@
         }
 
 
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerFirstname($var)
+        {
+            // TODO: Implement controllerFirstname() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerLastname($var)
+        {
+            // TODO: Implement controllerLastname() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerMiddleName($var)
+        {
+            // TODO: Implement controllerMiddleName() method.
+            return null;
+        }
+
+
         // accessors
             // getters
         /**

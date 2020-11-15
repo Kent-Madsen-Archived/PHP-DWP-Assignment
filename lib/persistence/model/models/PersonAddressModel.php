@@ -130,6 +130,61 @@
         }
 
 
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerCountry($var)
+        {
+            // TODO: Implement controllerCountry() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerStreetAddressFloor($var)
+        {
+            // TODO: Implement controllerStreetAddressFloor() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerStreetAddressNumber($var)
+        {
+            // TODO: Implement controllerStreetAddressNumber() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerStreetAddressZipCode($var)
+        {
+            // TODO: Implement controllerStreetAddressZipCode() method.
+            return null;
+        }
+
+
+        /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerStreetName($var)
+        {
+            // TODO: Implement controllerStreetName() method.
+            return null;
+        }
+
+
         // Accessors
             // getters
         /**

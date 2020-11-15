@@ -62,6 +62,17 @@
 
 
         /**
+         * @param $var
+         * @return mixed|null
+         */
+        final public function controllerContent($var)
+        {
+            // TODO: Implement controllerContent() method.
+            return null;
+        }
+
+
+        /**
          * @return bool|mixed
          */
         final public function requiredFieldsValidated()

@@ -14,42 +14,41 @@
          * @param $var
          * @return mixed
          */
-        public function setFromMail( $var );
+        public function controllerSubject( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setToMail( $var );
+        public function controllerMessage( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setSubject( $var );
+        public function controllerHasBeenSend( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setMessage( $var );
+        public function controllerToMail( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setHasBeenSend( $var );
+        public function controllerFrom( $var );
+
 
         /**
          * @param $var
          * @return mixed
          */
-        public function setCreatedOn( $var );
-
-        /**
-         * @param $var
-         * @return mixed
-         */
-        public function setIdentity( $var );
+        public function controllerCreatedOn( $var );
     }
 ?>

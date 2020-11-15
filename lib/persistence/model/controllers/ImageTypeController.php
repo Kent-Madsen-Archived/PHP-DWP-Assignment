@@ -10,6 +10,10 @@
      */
     interface ImageTypeController
     {
-
+        /**
+         * @param $var
+         * @return mixed
+         */
+        public function controllerContent( $var );
     }
 ?>
