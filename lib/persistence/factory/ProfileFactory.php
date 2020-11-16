@@ -13,6 +13,19 @@
         extends FactoryTemplate
     {
         /**
+         * ProfileFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {
+            $this->setConnector( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
+        }
+
+
+        /**
          * @return string
          */
         final public static function getTableName()
@@ -45,17 +58,6 @@
         final public static function getControllerName()
         {
             return 'ProfileController';
-        }
-
-
-        /**
-         * ProfileFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
-         */
-        public function __construct( $mysql_connector )
-        {
-            $this->setConnector( $mysql_connector );
         }
 
 
@@ -126,7 +128,7 @@
                                     $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();

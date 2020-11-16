@@ -55,6 +55,8 @@
         function __construct( $mysql_connector )
         {   
             $this->setConnector( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
         }
 
 

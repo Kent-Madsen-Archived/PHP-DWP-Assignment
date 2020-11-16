@@ -12,6 +12,19 @@
         extends FactoryTemplate
     {
         /**
+         * ProductAttributeFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {   
+            $this->setConnector( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
+        }
+
+
+        /**
          * @return string
          */
         final public static function getTableName()
@@ -44,17 +57,6 @@
         final public static function getControllerName()
         {
             return 'ProductAttributeController';
-        }
-
-
-        /**
-         * ProductAttributeFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
-         */
-        public function __construct( $mysql_connector )
-        {   
-            $this->setConnector( $mysql_connector );
         }
 
 
@@ -125,7 +127,7 @@
                                     $stmt_offset );
 
                 $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();

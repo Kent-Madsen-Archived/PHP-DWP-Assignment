@@ -51,7 +51,7 @@
          * @param $interface_name
          * @return bool
          */
-        final static public function ModelImplements($Class, $interface_name )
+        final static public function ModelImplements( $Class, $interface_name )
         {
             $retVal = false;
 
@@ -72,13 +72,12 @@
 
         // Cursor
         /**
-         * Calculates, the offset, used by MYSQL
          * @return int
          * @throws Exception
          */
-        final public function calculateOffset()
+        final public function CalculateOffset()
         {
-            if( !( is_null( $this->limit ) && is_null( $this->pagination_index ) ) )
+            if( is_null( $this->limit ) && is_null( $this->pagination_index ) )
             {
                 throw new Exception( 'can\'t calculate offset, as either limit or pagination index is null' );
             }
@@ -108,7 +107,7 @@
         {
             if( is_null( $value ) )
             {
-                return $this->getPaginationIndex();
+                return null;
             }
 
             if( !is_int( $value ) )
@@ -117,6 +116,7 @@
             }
 
             $this->setPaginationIndex( intval( $this->getPaginationIndex() + $value ) );
+
             return $this->getPaginationIndex();
         }
 
@@ -142,7 +142,7 @@
         {
             if( is_null( $value ) )
             {
-                return $this->getPaginationIndex();
+                return null;
             }
 
             if( !is_int( $value ) )
@@ -151,6 +151,7 @@
             }
 
             $this->setPaginationIndex( intval( $this->getPaginationIndex() - $value ) );
+
             return $this->getPaginationIndex();
         }
 

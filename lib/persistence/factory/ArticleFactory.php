@@ -19,6 +19,8 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
         }
 
 
@@ -129,7 +131,7 @@
                                    $stmt_offset );
 
                 $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -210,7 +212,7 @@
                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
