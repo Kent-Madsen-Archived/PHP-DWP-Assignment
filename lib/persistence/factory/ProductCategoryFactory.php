@@ -10,7 +10,7 @@
      * Class ProductCategoryFactory
      */
     class ProductCategoryFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

@@ -9,7 +9,7 @@
      * Class ContactFactory
      */
     class ContactFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

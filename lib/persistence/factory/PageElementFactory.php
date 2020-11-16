@@ -9,7 +9,7 @@
      * Class PageElementFactory
      */
     class PageElementFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

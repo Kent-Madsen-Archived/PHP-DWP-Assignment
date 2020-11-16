@@ -9,7 +9,7 @@
      * Class BroughtFactory
      */
     class BroughtFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

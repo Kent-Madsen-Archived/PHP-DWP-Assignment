@@ -10,7 +10,7 @@
      * Class ImageFactory
      */
     class ImageFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

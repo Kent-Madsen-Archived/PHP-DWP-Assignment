@@ -10,6 +10,7 @@
          */
         public function exist_database();
 
+        
         /**
          * @return mixed
          */

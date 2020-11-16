@@ -9,7 +9,7 @@
      * Class AssociatedCategoryFactory
      */
     class AssociatedCategoryFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

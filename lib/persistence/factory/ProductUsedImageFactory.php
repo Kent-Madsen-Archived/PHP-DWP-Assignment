@@ -9,7 +9,7 @@
      * Class ProductUsedImageFactory
      */
     class ProductUsedImageFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

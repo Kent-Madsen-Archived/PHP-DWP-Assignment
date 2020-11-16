@@ -10,7 +10,7 @@
      * Class PersonNameFactory
      */
     class PersonNameFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

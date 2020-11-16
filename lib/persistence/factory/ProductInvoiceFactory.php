@@ -9,7 +9,7 @@
      * Class ProductInvoiceFactory
      */
     class ProductInvoiceFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

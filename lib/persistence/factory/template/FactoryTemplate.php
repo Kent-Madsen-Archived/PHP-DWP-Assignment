@@ -9,7 +9,7 @@
     /**
      * Class Factory
      */
-    abstract class Factory
+    abstract class FactoryTemplate
         implements FactoryCRUD,
                    SetupFactory, 
                    StateFactory
@@ -84,7 +84,7 @@
                 throw new Exception( 'can\'t calculate offset, as either limit or pagination index is null' );
             }
 
-            return intval($this->getLimit() * $this->getPaginationIndex() );
+            return intval( $this->getLimit() * $this->getPaginationIndex() );
         }
 
 

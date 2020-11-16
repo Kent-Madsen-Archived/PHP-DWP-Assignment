@@ -10,7 +10,7 @@
      * Class ProfileFactory
      */
     class ProfileFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

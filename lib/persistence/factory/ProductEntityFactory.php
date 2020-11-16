@@ -9,7 +9,7 @@
      * Class ProductEntityFactory
      */
     class ProductEntityFactory
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * @return string

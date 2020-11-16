@@ -9,7 +9,7 @@
      * Class ArticleFactory
      */
     class ArticleFactory 
-        extends Factory
+        extends FactoryTemplate
     {
         /**
          * ArticleFactory constructor.
