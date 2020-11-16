@@ -11,6 +11,7 @@
      interface ContactView
          extends BaseEntityView
      {
+
          /**
           * @return mixed
           */

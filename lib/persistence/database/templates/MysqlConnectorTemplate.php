@@ -9,17 +9,8 @@
      * Interface MysqlConnectorTemplate
      */
     interface MysqlConnectorTemplate
+        extends ConnectorTemplate
     {
-        /**
-         * @return mixed
-         */
-        public function connect();
-
-        /**
-         * @return mixed
-         */
-        public function disconnect();
-
         /**
          * @return mixed
          */

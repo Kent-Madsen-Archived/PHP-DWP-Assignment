@@ -111,7 +111,7 @@
          */
         final static protected function base()
         {
-            return 10;
+            return BASE_10;
         }
     }
 ?>

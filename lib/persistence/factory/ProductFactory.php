@@ -31,6 +31,24 @@
 
 
         /**
+         * @return string
+         */
+        final public static function getViewName()
+        {
+            return 'ProductView';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getControllerName()
+        {
+            return 'ProductController';
+        }
+
+
+        /**
          * ProductFactory constructor.
          * @param $mysql_connector
          * @throws Exception
@@ -70,7 +88,7 @@
             $database = $this->getConnector()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;         
+            return boolval( $value );
         }
 
 
@@ -91,12 +109,14 @@
          */
         final public function validateAsValidModel( $var )
         {
+            $retVal = false;
+
             if( $var instanceof ProductModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -106,14 +126,7 @@
          */
         final public function read( )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             // return array
             $retVal = array();
@@ -199,14 +212,7 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             // return array
             $retVal = null;
@@ -266,14 +272,7 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             // return array
             $retVal = null;
@@ -341,16 +340,10 @@
             
             $retVal = null;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "DELETE FROM product WHERE identity = ?;";
+
             $stmt_identity = null;
 
             try
@@ -396,17 +389,9 @@
          */
         final public function length()
         {
-            
-            $retVal = 0;
+            $retVal = ZERO;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
 
@@ -427,9 +412,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -438,7 +420,65 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedController( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
+            }
+
+            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
         }
 
     }

@@ -10,37 +10,40 @@
      * Class Factory
      */
     abstract class Factory
-        implements CRUD, 
+        implements FactoryCRUD,
                    SetupFactory, 
                    StateFactory
     {
         //
         private $connector = null;
         
+
         // Useful when implementing pagination
         private $pagination_index = 0;
         private $limit = 5;
 
 
         // Validation of objects
-
         /**
          * @param $var
          * @return bool
          */
         final protected function validateAsValidConnector( $var )
         {
+            $retVal = false;
+
             if( is_null( $var ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
             if( $var instanceof MySQLConnector )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -70,20 +73,28 @@
 
         // Cursor
         /**
-         * @return float|int
+         * Calculates, the offset, used by MYSQL
+         * @return int
+         * @throws Exception
          */
         final public function calculateOffset()
         {
-            return $this->getLimit() * $this->getPaginationIndex();
+            if( !( is_null( $this->limit ) && is_null( $this->pagination_index ) ) )
+            {
+                throw new Exception( 'can\'t calculate offset, as either limit or pagination index is null' );
+            }
+
+            return intval($this->getLimit() * $this->getPaginationIndex() );
         }
 
 
         /**
-         * @return int
+         * @return int|null
+         * @throws Exception
          */
         final public function next()
         {
-            $this->next_jump( 1 );
+            $this->next_jump( CONSTANT_ONE );
 
             return $this->getPaginationIndex();
         }
@@ -91,41 +102,61 @@
 
         /**
          * @param $value
-         * @return int
+         * @return int|null
          * @throws Exception
          */
         final public function next_jump( $value )
         {
-            $this->setPaginationIndex( ( $this->getPaginationIndex() + $value ) );
+            if( is_null( $value ) )
+            {
+                return $this->getPaginationIndex();
+            }
 
+            if( !is_int( $value ) )
+            {
+                throw new Exception('Variable is not null, or an Integer value.');
+            }
+
+            $this->setPaginationIndex( intval( $this->getPaginationIndex() + $value ) );
             return $this->getPaginationIndex();
         }
 
 
         /**
-         * @return int
+         * @return int|null
+         * @throws Exception
          */
         final public function previous()
         {
-            $this->previous_jump( 1 );
+            $this->previous_jump( CONSTANT_ONE );
+
             return $this->getPaginationIndex();
         }
 
 
         /**
          * @param $value
-         * @return int
+         * @return int|null
          * @throws Exception
          */
         final public function previous_jump( $value )
         {
-            $this->setPaginationIndex( ( $this->getPaginationIndex() - $value ) );
+            if( is_null( $value ) )
+            {
+                return $this->getPaginationIndex();
+            }
+
+            if( !is_int( $value ) )
+            {
+                throw new Exception('Variable is not null, or an Integer value.');
+            }
+
+            $this->setPaginationIndex( intval( $this->getPaginationIndex() - $value ) );
             return $this->getPaginationIndex();
         }
 
 
         // Template functions
-
         /**
          * @return mixed
          */
@@ -145,76 +176,117 @@
          */
         final public function getConnector()
         {
+            if( is_null( $this->connector ) )
+            {
+                return null;
+            }
+
             return $this->connector;
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getPaginationIndex()
         {
-            return $this->pagination_index;
+            if( is_null( $this->pagination_index ) )
+            {
+                return null;
+            }
+
+            return intval( $this->pagination_index );
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
         final public function getLimit()
         {
-            return $this->limit;
+            if( is_null( $this->limit ) )
+            {
+                return null;
+            }
+
+            return intval( $this->limit );
         }
 
 
             // Setters
-
         /**
          * @param $var
+         * @return |null
          * @throws Exception
          */
         final public function setConnector( $var )
         {
+            if( is_null( $var ) )
+            {
+                $this->connector = null;
+                return $this->connector;
+            }
+
             if( !$this->validateAsValidConnector( $var ) )
             {
-                throw new Exception( "Factory - setConnector: Only class MySQLConnector or null is allowed" );
+                throw new Exception( "Factory - setConnector: Only the class MySQLConnector or null is allowed" );
             }
 
             $this->connector = $var;
+
+            return $this->connector;
         }
 
 
         /**
          * @param $idx
+         * @return int|null
          * @throws Exception
          */
         final public function setPaginationIndex( $idx )
         {
-            if( $idx == null || ( is_numeric( $idx ) && is_integer( $idx ) )  )
+            if( is_null( $idx ) )
             {
-                $this->pagination_index = $idx;
+                $this->pagination_index = null;
+                return $this->pagination_index;
+            }
+
+            if( ( is_numeric( $idx ) && is_integer( $idx ) )  )
+            {
+                $this->pagination_index = intval( $idx );
             }
             else
             {
                 throw new Exception( 'Factory - setPaginationIndex: only numeric characters or null is allowed' );
             }
+
+            return intval( $this->pagination_index );
         }
 
 
         /**
          * @param $var
+         * @return int|null
          * @throws Exception
          */
         final public function setLimit( $var )
         {
-            if( is_null( $var ) || ( is_numeric( $var ) && is_integer( $var ) ) )
+            if( is_null( $var ) )
             {
-                $this->limit = $var;
+                $this->limit = null;
+                return $this->limit;
+            }
+
+            if( ( is_numeric( $var ) && is_integer( $var ) ) )
+            {
+                $this->limit = intval( $var );
             }
             else 
             {
                 throw new Exception( 'Factory - setLimit: only numeric characters or null is allowed' );   
             }
+
+            return intval( $this->limit );
         }
 
     }

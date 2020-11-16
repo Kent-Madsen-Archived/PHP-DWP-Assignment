@@ -182,7 +182,7 @@
                 return null;
             }
 
-            return intval( $this->identity, self::base() );
+            return intval( $this->identity, BASE_10 );
         }
 
 

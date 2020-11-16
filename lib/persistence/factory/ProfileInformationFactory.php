@@ -39,7 +39,25 @@
         {
             $this->setConnector( $mysql_connector );
         }
-        
+
+
+        /**
+         * @return string
+         */
+        final public static function getViewName()
+        {
+            return 'ProfileInformationView';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getControllerName()
+        {
+            return 'ProfileInformationController';
+        }
+
 
         /**
          * TODO: This
@@ -70,7 +88,7 @@
             $database = $this->getConnector()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;     
+            return boolval( $value );
         }
 
 
@@ -91,12 +109,14 @@
          */
         final public function validateAsValidModel( $var )
         {
+            $retVal = false;
+
             if( $var instanceof ProfileInformationModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -108,14 +128,7 @@
         {
             $retVal = array();
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT * FROM profile_information LIMIT ? OFFSET ?;";
 
@@ -200,14 +213,7 @@
         {
             $retVal = $model;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT * FROM profile_information WHERE profile_id = ?;";
 
@@ -276,14 +282,7 @@
 
             $retVal = null;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "INSERT INTO profile_information( profile_id, person_name_id, person_address_id, person_email_id, person_phone, birthday ) VALUES( ?, ?, ?, ?, ?, ? );";
 
@@ -357,14 +356,7 @@
 
             $retVal = array();
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? WHERE identity = ?;";
 
@@ -432,14 +424,7 @@
             
             $retVal = null;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "DELETE FROM profile_information WHERE identity = ?;";
 
@@ -486,16 +471,9 @@
          */
         final public function length()
         {
-            $retVal = 0;
+            $retVal = ZERO;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
 
@@ -516,9 +494,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -526,7 +501,65 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedController( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
+            }
+
+            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
         }
 
     }

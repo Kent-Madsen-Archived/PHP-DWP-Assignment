@@ -15,6 +15,7 @@
          */
         public function connect();
 
+
         /**
          * @return mixed
          */

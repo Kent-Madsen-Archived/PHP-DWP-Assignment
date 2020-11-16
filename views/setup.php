@@ -24,6 +24,8 @@
         
         <?php 
                 $title->printDocumentTitle();
+
+
         ?>
     </head>
     <body>

@@ -19,9 +19,27 @@
          * @param $file
          * @throws Exception
          */
-        final public function executeSQLFile( $file )
+        final public function executeSQLFile( $file_path )
         {
-            $this->getConnector()->connect();
+            // loaded queries from the file
+            $file_query = null;
+
+            $retVal     = false;
+
+            if( !file_exists( $file_path ) )
+            {
+                return boolval( $retVal );
+            }
+
+            $pathInfo = pathinfo( $file_path );
+            var_dump( $pathInfo );
+
+            if( !$pathInfo['extension'] == 'sql')
+            {
+
+            }
+
+            $file_query = file_get_contents( $file_path );
 
             $connection = $this->getConnector()->getConnector();
 
@@ -29,8 +47,6 @@
             {
                 throw new Exception( 'Error: ' . $connection->connect_error );
             }
-
-            $file_query = file_get_contents( $file );
             
             try
             {
@@ -50,14 +66,17 @@
 
                         if( $connection->more_results() )
                         {
-                            echo "More";
+                            // Do something
+                            echo "";
                         }
                         
                     } while( $connection -> next_result() );
                 }
 
                 // commits the statement
-                $this->getConnector()->finish();   
+                $this->getConnector()->finish();
+
+                $retVal = true;
             }
             catch( Exception $ex )
             {   
@@ -71,6 +90,7 @@
                 $this->getConnector()->disconnect();
             }
 
+            return boolval( $retVal );
         }
 
         /**

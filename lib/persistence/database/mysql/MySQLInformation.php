@@ -11,7 +11,6 @@
     class MySQLInformation
     {
         // Constructors
-
         /**
          * MySQLInformation constructor.
          * @param $access
@@ -28,53 +27,85 @@
 
             $this->setDatabase( $database );
         }
+
         
         // internal variables
-        private $credential;        
-        private $database;
+        private $credential = null;
+        private $database = null;
 
-        private $access;
+        private $access = null;
+
 
         // Accessor
         /**
-         * @return mixed
+         * @return string|null
          */
         final public function retrieve_username()
         {
-            return $this->credential->getUsername();
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
+            return strval( $this->credential->getUsername() );
         }
 
+
         /**
-         * @return mixed
+         * @return string|null
          */
         final public function retrieve_password()
         {
-            return $this->credential->getPassword();
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
+            return strval( $this->credential->getPassword() );
         }
 
+
         /**
-         * @return mixed
+         * @return string|null
          */
         final public function retrieve_hostname()
         {
-            return $this->access->getHostname();
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
+            return strval( $this->access->getHostname() );
         }
 
+
         /**
-         * @return mixed
+         * @return int|null
          */
         final public function retrieve_port()
         {
-            return $this->access->getPort();
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
+            return intval( $this->access->getPort() );
         }
 
+
         /**
-         * @return mixed
+         * @return string|null
          */
         final public function retrieve_database()
         {
-            return $this->getDatabase();
+            if( is_null( $this->database ) )
+            {
+                return null;
+            }
+
+            return strval( $this->getDatabase() );
         }
+
 
         // Functions
         /**
@@ -83,18 +114,16 @@
          */
         final protected function validateAsCredential( $var )
         {
-            if( is_null( $var ) )
-            {
-                return true;
-            }
+            $retval = false;
 
             if( $var instanceof UserCredential )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
+
 
         /**
          * @param $var
@@ -102,18 +131,16 @@
          */
         final protected function validateAsAccess( $var )
         {
-            if( is_null( $var ) )
-            {
-                return true;
-            }
+            $retVal = false;
 
             if( $var instanceof NetworkAccess )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return MySQLInformation
@@ -121,9 +148,12 @@
          */
         final public static function generateDefaultMysql()
         {
-            return new MySQLInformation(NetworkAccess::generateNetworkAccess(), UserCredential::generateDefaultUserCredential(), 'mysql');
+            return new MySQLInformation( NetworkAccess::generateNetworkAccess(),
+                                         UserCredential::generateDefaultUserCredential(),
+                                'mysql' );
         }
-        
+
+
         // Accessors
             // Getters
         /**
@@ -134,6 +164,7 @@
             return $this->credential;
         }
 
+
         /**
          * @return mixed
          */
@@ -142,21 +173,35 @@
             return $this->access;
         }
 
+
         /**
-         * @return mixed
+         * @return string|null
          */
         final public function getDatabase()
         {
-            return $this->database;
+            if( is_null( $this->database ) )
+            {
+                return null;
+            }
+
+            return strval( $this->database );
         }
+
 
             // Setters
         /** Result: Allowed to be null or a instance of NetworkAccess
          * @param $value
+         * @return null
          * @throws Exception
          */
         final public function setAccess( $value )
         {
+            if( is_null( $value ) )
+            {
+                $this->access = $value;
+                return $this->access;
+            }
+
             if( !$this->validateAsAccess( $value ) )
             {
                 throw new Exception( 'MySQLInformation - setAccess: Only NetworkAccess class or Null is allowed' );
@@ -165,12 +210,19 @@
             $this->access = $value;
         }
 
+
         /** Result: Allowed to be null or a instance of UserCredential
          * @param $value
          * @throws Exception
          */
         final public function setCredential( $value )
         {
+            if( is_null( $this->credential ) )
+            {
+                $this->credential = $value;
+                return $this->credential;
+            }
+
             if( !$this->validateAsCredential( $value ) )
             {
                 throw new Exception( 'MySQLInformation - setCredential: Only UserCredential class or Null is allowed' );
@@ -179,16 +231,18 @@
             $this->credential = $value;
         }
 
+
         /** Result: Allowed to be null, or a instance of a string.
          * @param $value
+         * @return null
          * @throws Exception
          */
         final public function setDatabase( $value )
         {
             if( is_null( $value ) )
             {
-                $this->credential = $value;   
-                return;
+                $this->database = $value;
+                return $this->database;
             }
 
             if( !is_string( $value ) )
@@ -196,7 +250,7 @@
                 throw new Exception( 'MySQLInformation - setDatabase: Only string or null is allowed' );
             }
 
-            $this->database = $value;
+            $this->database = strval( $value );
         }
 
     }

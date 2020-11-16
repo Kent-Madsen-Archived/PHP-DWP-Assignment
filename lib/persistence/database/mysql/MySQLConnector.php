@@ -25,42 +25,56 @@
             $this->setConnector( null );
         }
 
+
         // Variables
         private $information;
         private $connector;
 
+
         // implementations
         /**
+         * @return mixed
          * @throws Exception
          */
         final public function connect()
         {
             $information = $this->getInformation();
 
-
             // 
             $local_connection = new mysqli( $information->retrieve_hostname(), 
                                             $information->retrieve_username(), $information->retrieve_password(), 
-                                            $information->retrieve_database(), $information->retrieve_port() );
+                                            $information->retrieve_database(),
+                                            $information->retrieve_port() );
             
             // by default is true. it's set to false so it won't update the mysql state automaticly
             // consequence is that factory classes have to call commit. inorder for change to 
             // be updated.
             $local_connection->autocommit( FALSE );
 
+            //
+            if( $local_connection->connect_error )
+            {
+                throw new Exception( 'Error: ' . $local_connection->connect_error );
+            }
+
             // 
             $this->setConnector( $local_connection );
+            return $this->getConnector();
         }
 
+
         /**
-         *
+         * @return mixed
          */
         final public function disconnect()
         {
             $connector = $this->getConnector();
             
-            $connector->close();   
+            $connector->close();
+
+            return $this->getConnector();
         }
+
 
         /**
          *
@@ -70,6 +84,7 @@
             $this->getConnector()->rollback();
         }
 
+
         /**
          *
          */
@@ -78,8 +93,8 @@
             $this->getConnector()->commit();
         }
 
-        // Accessors
 
+        // Accessors
         /**
          * @return mixed
          */
@@ -88,6 +103,7 @@
             return $this->information;
         }
 
+
         /**
          * @return mixed
          */
@@ -95,6 +111,7 @@
         {
             return $this->connector;
         }
+
 
         /**
          * @param $var
@@ -109,6 +126,7 @@
 
             $this->information = $var;
         }
+
 
         /**
          * @param $var
@@ -129,6 +147,7 @@
             return false;
         }
 
+
         /**
          * @param $var
          * @throws Exception
@@ -142,6 +161,7 @@
 
             $this->connector = $var;
         }
+
 
         /**
          * @param $var
