@@ -215,6 +215,7 @@ CREATE TABLE profile_information
     person_phone VARCHAR( 256 ),
 
     birthday   DATE NOT NULL,
+
     registered DATETIME DEFAULT now() NOT NULL,
 
     INDEX( profile_id,
@@ -243,7 +244,7 @@ CREATE TABLE article
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
     title VARCHAR( 256 ) NOT NULL,
-    article_content TEXT DEFAULT '' NOT NULL,
+    content TEXT DEFAULT '' NOT NULL,
     
     created_on DATETIME DEFAULT now() NOT NULL,
     last_updated DATETIME DEFAULT now() NOT NULL,
@@ -301,7 +302,7 @@ CREATE TABLE contact
 (
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    subject_title VARCHAR( 256 ) NOT NULL,
+    title VARCHAR( 256 ) NOT NULL,
     message TEXT NOT NULL,
     
     has_been_send INT DEFAULT 0 NOT NULL,
@@ -313,7 +314,7 @@ CREATE TABLE contact
 
     INDEX( to_id, 
            from_id, 
-           subject_title ),
+           title ),
     PRIMARY KEY( identity )
 );
 
@@ -339,8 +340,8 @@ CREATE TABLE product
     
     title VARCHAR( 256 ) NOT NULL ,
 
-    product_description TEXT NOT NULL ,
-    product_price DOUBLE NOT NULL DEFAULT 0.0,
+    description TEXT NOT NULL ,
+    price DOUBLE NOT NULL DEFAULT 0.0,
 
     INDEX( title ),
     PRIMARY KEY( identity )
@@ -396,8 +397,9 @@ CREATE TABLE product_invoice
 (
     identity    INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    total_price         DOUBLE DEFAULT 0.0 NOT NULL,
-    invoice_registered  DATETIME DEFAULT now() NOT NULL,
+    total_price DOUBLE DEFAULT 0.0 NOT NULL,
+
+    registered  DATETIME DEFAULT now() NOT NULL,
 
     address_id    INT NOT NULL,
     mail_id       INT NOT NULL,
@@ -427,8 +429,10 @@ CREATE TABLE brought_product
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
     invoice_id INT NOT NULL,
+
     number_of_products INT NOT NULL DEFAULT 0,
     price DOUBLE NOT NULL DEFAULT 0.0,
+
     product_id INT NOT NULL,
     
     registered DATETIME NOT NULL DEFAULT now(),
@@ -523,6 +527,7 @@ CREATE TABLE product_used_images
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
     product_id INT NOT NULL,
+
     image_full_id INT NOT NULL,
     image_preview_id INT NOT NULL,
 
