@@ -8,7 +8,7 @@
     /**
      * Interface CRUD
      */
-    interface CRUD
+    interface FactoryCRUD
     {
         /**
          * @param $model
