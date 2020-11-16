@@ -60,28 +60,10 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-        
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
          * @return bool
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist()
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
@@ -121,20 +103,27 @@
 
 
         /**
-         * @return array
+         * @return array|mixed|null
          * @throws Exception
          */
         final public function read()
         {
-            $retVal = array();
+            //
+            $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
+            // SQL Query
             $sql = "SELECT * FROM person_address LIMIT ? OFFSET ?;";
+
+            //
+            $stmt_limit  = null;
+            $stmt_offset = null;
+
+            //
+            $local_connection = $this->getConnector()->connect();
 
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "ii", 
                                    $stmt_limit, 
@@ -148,8 +137,10 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $personAddressModel = $this->createModel();
@@ -160,6 +151,7 @@
                         $personAddressModel->setStreetAddressNumber( $row[ 'street_address_number' ] );
                         $personAddressModel->setZipCode( $row[ 'zip_code' ] );
                         $personAddressModel->setCountry( $row[ 'country' ] );
+                        $personAddressModel->setStreetFloor( $row['street_address_floor'] );
 
                         array_push( $retVal, $personAddressModel );
                     }
@@ -168,9 +160,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -187,7 +176,7 @@
          * @return null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function read_model( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -205,45 +194,53 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
+            // return value
+            $retVal = false;
 
-            $connection = $this->getConnector()->connect();
+            // SQL Query
+            $sql = "INSERT INTO person_address( street_name, street_address_number, zip_code, country, street_address_floor ) VALUES( ?, ?, ?, ?, ? );";
 
-            $sql = "INSERT INTO person_address( street_name, street_address_number, zip_code, country ) VALUES( ?, ?, ?, ? );";
+            // Prepared Statement Variables
+            $stmt_name = null;
+            $stmt_street_address_number = null;
+            $stmt_zip_code = null;
+            $stmt_country = null;
+            $stmt_street_floor = null;
+
+            // Opens a connection to a MySQL database
+            $local_connection = $this->getConnector()->connect();
 
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
-                $stmt->bind_param( "siss", 
+                $stmt->bind_param( "sisss",
                                     $stmt_name, 
                                     $stmt_street_address_number, 
                                     $stmt_zip_code, 
-                                    $stmt_country );
+                                    $stmt_country,
+                                    $stmt_street_floor );
 
                 //
                 $stmt_name                  =  $model->getStreetName();
                 $stmt_street_address_number =  $model->getStreetAddressNumber();
                 $stmt_zip_code              =  $model->getZipCode();
                 $stmt_country               =  $model->getCountry();
+                $stmt_street_floor          =  $model->getStreetFloor();
 
                 // Executes the query
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
-
-                $model->setIdentity( $stmt->insert_id );
-
-                $retVal = $model;
+                $model->setIdentity( $this->getConnector()->finish_insert( $stmt ) );
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -257,7 +254,7 @@
                 $this->getConnector()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -266,29 +263,42 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
+            // return value
+            $retVal = false;
 
-            $connection = $this->getConnector()->connect();
+            // SQL Query
+            $sql = "UPDATE person_address SET street_name = ?, street_address_number = ?, zip_code = ?, country = ?, street_address_floor=? WHERE identity = ?;";
 
-            $sql = "UPDATE person_address SET street_name = ?, street_address_number = ?, zip_code = ?, country = ? WHERE identity = ?;";
+            // prepared statement variables
+            $stmt_name                  = null;
+            $stmt_street_address_number = null;
+            $stmt_zip_code              = null;
+            $stmt_country               = null;
+            $stmt_address_floor         = null;
+
+            $stmt_identity              = null;
+
+            // opens a connection to the mysql server
+            $local_connection = $this->getConnector()->connect();
 
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
-                $stmt->bind_param( "sissi", 
+                $stmt->bind_param( "sisssi",
                                     $stmt_name, 
                                     $stmt_street_address_number, 
                                     $stmt_zip_code, 
-                                    $stmt_country, 
+                                    $stmt_country,
+                                    $stmt_address_floor,
                                     $stmt_identity );
 
                 //
@@ -296,6 +306,7 @@
                 $stmt_street_address_number = $model->getStreetAddressNumber();
                 $stmt_zip_code              = $model->getZipCode();
                 $stmt_country               = $model->getCountry();
+                $stmt_address_floor         = $model->getStreetFloor();
 
                 $stmt_identity              = $model->getIdentity();
 
@@ -305,7 +316,7 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -319,7 +330,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -328,22 +339,28 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+            // return value
             $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
+            // SQL Query
             $sql = "DELETE FROM person_address WHERE identity = ?;";
+
+            // prepared statements variables
+            $stmt_identity = null;
+
+            // connection to the server
+            $local_connection = $this->getConnector()->connect();
 
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
                 $stmt->bind_param( "i",  
@@ -358,11 +375,11 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
+                $retVal = false;
 
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
@@ -384,20 +401,23 @@
          */
         final public function length()
         {
-            $retVal = ZERO;
+            // return value
+            $retVal = CONSTANT_ZERO;
 
-            $connection = $this->getConnector()->connect();
-
+            // sql query
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            // opens a connection to the server
+            $local_connection = $this->getConnector()->connect();
 
             try 
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -407,9 +427,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -441,7 +458,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
             }
 
-            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );
@@ -470,7 +487,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
             }
 
-            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );

@@ -22,6 +22,6 @@
     define( "WEBPAGE_DATABASE_PORT", 3600 );
 
     define( "BASE_10", 10 );
-    define( 'ZERO', 0 );
+    define( 'CONSTANT_ZERO', 0 );
     define( 'CONSTANT_ONE', 1 );
 ?>

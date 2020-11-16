@@ -9,6 +9,7 @@
         // Variables
         private $factory = null;
 
+
         // accessor functions
             // getters
         /**
@@ -18,6 +19,7 @@
         {
             return $this->factory;
         }
+
 
             // Setters
         /**
@@ -40,6 +42,7 @@
             $this->factory = $factory;
         }
 
+
         /**
          * @return mixed
          */
@@ -52,24 +55,30 @@
          */
         protected abstract function validateFactory( $factory );
 
+
         /**
          * @param $value
          * @return bool
          */
         final protected function genericNumberValidation( $value )
         {
+            $retVal = false;
+
             if( is_null( $value ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
             if( is_numeric( $value ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
-            return false;
+            return boolval( $retVal );
         }
+
 
         /**
          * @param $value
@@ -77,18 +86,23 @@
          */
         final protected function genericStringValidation( $value )
         {
+            $retVal = false;
+
             if( is_null( $value ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
             if( is_string( $value ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
-            return false;
+            return $retVal;
         }
+
 
         /**
          * @param $value
@@ -98,12 +112,12 @@
         {
             $retVal = false;
 
-            if( $this->genericNumberValidation( $value ) || is_int( $value ) )
+            if( $this->genericNumberValidation( $value ) && is_int( $value ) )
             {
                 $retVal = true;
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
         /**
@@ -113,5 +127,6 @@
         {
             return BASE_10;
         }
+
     }
 ?>

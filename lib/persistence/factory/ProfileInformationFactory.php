@@ -60,28 +60,10 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist()
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
@@ -126,14 +108,14 @@
          */
         final public function read()
         {
-            $retVal = array();
-
-            $connection = $this->getConnector()->connect();
+            $retVal = null;
 
             $sql = "SELECT * FROM profile_information LIMIT ? OFFSET ?;";
 
             $stmt_limit = null;
             $stmt_offset = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -151,13 +133,16 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
+
                         $model->setProfileId( $row[ 'profile_id' ] );
 
                         $model->setPersonNameId( $row[ 'person_name_id' ] );
@@ -188,36 +173,23 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool|mixed
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function read_model( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
-
-            return $retVal;
-        }
-
-
-        /**
-         * @param $model
-         * @return ProfileInformationModel
-         * @throws Exception
-         */
-        final public function read_by_profile_id( $model )
-        {
-            $retVal = $model;
-
-            $connection = $this->getConnector()->connect();
-
+            //
             $sql = "SELECT * FROM profile_information WHERE profile_id = ?;";
 
             $stmt_profile_id = null;
+
+            //
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -233,13 +205,12 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = $this->createModel();
-
                         $model->setIdentity( $row[ 'identity' ] );
+
                         $model->setProfileId( $row[ 'profile_id' ] );
 
                         $model->setPersonNameId( $row[ 'person_name_id' ] );
@@ -251,7 +222,7 @@
 
                         $model->setRegistered( $row[ 'registered' ] );
 
-                        $retVal = $model;
+                        $retVal = true;
                     }
                 }
             }
@@ -264,7 +235,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -273,7 +244,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -281,8 +252,6 @@
             }
 
             $retVal = null;
-
-            $connection = $this->getConnector()->connect();
 
             $sql = "INSERT INTO profile_information( profile_id, person_name_id, person_address_id, person_email_id, person_phone, birthday ) VALUES( ?, ?, ?, ?, ?, ? );";
 
@@ -293,6 +262,8 @@
 
             $stmt_person_phone      = null;
             $stmt_birthday          = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -309,6 +280,7 @@
 
                 //
                 $stmt_profile_id        = $model->getProfileId();
+
                 $stmt_person_name_id    = $model->getPersonNameId();
                 $stmt_person_address_id = $model->getPersonAddressId();
                 $stmt_person_email_id   = $model->getPersonEmailId();
@@ -319,18 +291,16 @@
                 // Executes the query
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
+                //
+                $model->setIdentity( $this->getConnector()->finish_insert() );
 
-                $model->setIdentity( $stmt->insert_id );
-
-                $retVal = $model;
+                //
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -338,7 +308,7 @@
                 $this->getConnector()->disconnect();
             }
             
-            return $retVal;
+            return intval( $retVal );
         }
 
 
@@ -347,18 +317,32 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
+            //
+            $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
+            //
             $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? WHERE identity = ?;";
+
+            //
+            $stmt_profile_id = null;
+
+            $stmt_person_name_id    = null;
+            $stmt_person_address_id = null;
+            $stmt_person_email_id   = null;
+            $stmt_person_phone      = null;
+            $stmt_birthday          = null;
+
+            $stmt_identity          = null;
+
+            //
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -392,13 +376,12 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -406,7 +389,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -415,18 +398,20 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
             
-            $retVal = null;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = false;
 
             $sql = "DELETE FROM profile_information WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -445,15 +430,12 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -461,7 +443,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -471,11 +453,11 @@
          */
         final public function length()
         {
-            $retVal = ZERO;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = CONSTANT_ZERO;
 
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            $connection = $this->getConnector()->connect();
 
             try 
             {
@@ -484,7 +466,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -524,7 +506,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
             }
 
-            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );
@@ -553,7 +535,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
             }
 
-            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );

@@ -61,28 +61,10 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist()
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
@@ -126,25 +108,20 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $retVal = null;
 
             $sql = "INSERT INTO person_email( content ) VALUES( ? );";
+
+            $stmt_email = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -196,9 +173,11 @@
 
             $retVal = false;
 
-            $connection = $this->getConnector()->connect();
-
             $sql = "SELECT exists_email( ? ) as validation;";
+
+            $stmt_mail = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -214,7 +193,7 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -245,14 +224,17 @@
          */
         final public function read()
         {
-            $retVal = array();
+            $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
+            //
             $sql = "SELECT * FROM person_email LIMIT ? OFFSET ?;";
 
+            //
             $stmt_limit = null;
             $stmt_offset = null;
+
+            //
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -270,8 +252,10 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
@@ -308,18 +292,13 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = $model;
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $retVal = false;
 
             $sql = "SELECT * FROM person_email WHERE content = ?;";
+
+            $stmt_mail = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -334,13 +313,15 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {   
                         $model->setIdentity( $row[ 'identity' ] );
                     }
                 }
+
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -351,7 +332,7 @@
                 $this->getConnector()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -360,7 +341,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function read_model( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -378,7 +359,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -387,9 +368,12 @@
 
             $retVal = false;
 
-            $connection = $this->getConnector()->connect();
+            $stmt_email= null;
+            $stmt_identity = null;
 
             $sql = "UPDATE person_email SET content = ? WHERE identity = ?;";
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -409,8 +393,6 @@
 
                 // commits the statement
                 $this->getConnector()->finish();
-
-                $model->setIdentity( $stmt->insert_id );
             }
             catch( Exception $ex )
             {
@@ -433,7 +415,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -442,13 +424,15 @@
 
             $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
             $sql = "DELETE FROM person_email WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $local_connection = $this->getConnector()->connect();
 
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
                 $stmt->bind_param( "i",  
@@ -463,11 +447,11 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
+                $retVal = false;
 
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
@@ -489,11 +473,11 @@
          */
         final public function length()
         {
-            $retVal = ZERO;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = CONSTANT_ZERO;
 
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            $connection = $this->getConnector()->connect();
 
             try 
             {
@@ -502,7 +486,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -512,9 +496,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -546,7 +527,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
             }
 
-            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );
@@ -575,7 +556,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
             }
 
-            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );

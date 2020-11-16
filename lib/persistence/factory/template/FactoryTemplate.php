@@ -11,7 +11,6 @@
      */
     abstract class FactoryTemplate
         implements FactoryCRUD,
-                   SetupFactory, 
                    StateFactory
     {
         //
@@ -52,7 +51,7 @@
          * @param $interface_name
          * @return bool
          */
-        final static public function modelImplements( $Class, $interface_name )
+        final static public function ModelImplements($Class, $interface_name )
         {
             $retVal = false;
 

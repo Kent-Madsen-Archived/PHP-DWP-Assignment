@@ -69,35 +69,17 @@
 
 
         /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist()
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
             $database = $this->getConnector()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;   
+            return boolval( $value );
         }
 
 
@@ -119,16 +101,11 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|mixed|null
          * @throws Exception
          */
         final public function read()
         {
-            $connection = $this->getConnector()->connect();
-
-            // return array
-            $retVal = array();
-
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
 
@@ -136,9 +113,15 @@
             $stmt_limit  = null;
             $stmt_offset = null;
 
+            // return array
+            $retVal = null;
+
+            // get a local connection
+            $local_connection = $this->getConnector()->connect();
+
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
                                     $stmt_limit,
@@ -150,8 +133,10 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $brought = $this->createModel();
@@ -188,7 +173,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function read_model( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -206,7 +191,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -221,7 +206,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -236,27 +221,27 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
-
-            $connection = $this->getConnector()->connect();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
 
             $sql = "DELETE FROM brought_product WHERE identity = ?;";
 
+            // Return value
+            $retVal = false;
+
+            // statement variables
+            $stmt_identity = null;
+
+            // opens a connection
+            $local_connection = $this->getConnector()->connect();
+
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
                 $stmt->bind_param( "i",  
@@ -271,12 +256,10 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
 
@@ -287,7 +270,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -297,11 +280,13 @@
          */
         final public function length()
         {
-            $retVal = ZERO;
+            // sql query
+            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
 
+            //
             $connection = $this->getConnector()->connect();
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $retVal = CONSTANT_ZERO;
 
             try 
             {
@@ -310,7 +295,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -320,9 +305,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -353,7 +335,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
             }
 
-            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );
@@ -382,7 +364,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
             }
 
-            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );

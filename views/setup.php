@@ -25,7 +25,14 @@
         <?php 
                 $title->printDocumentTitle();
 
+                $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );
+                $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
 
+                $database = 'dwp_assignment';
+
+                $setup = new SetupInstallation(new MySQLConnector(new MySQLInformation( $access, $user_credential, $database )));
+
+                $setup->installation_status();
         ?>
     </head>
     <body>

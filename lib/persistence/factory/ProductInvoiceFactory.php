@@ -57,30 +57,12 @@
             $this->setConnector( $mysql_connector );    
         }
 
-        
-        /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
 
         /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist()
         {
             $status_factory = new StatusFactory( $this->getConnector() );
             
@@ -125,14 +107,14 @@
          */
         final public function read()
         {
-            $retVal = array();
-
-            $connection = $this->getConnector()->connect();
+            $retVal = null;
 
             $sql = "SELECT * FROM product_invoice LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -150,8 +132,10 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
@@ -183,7 +167,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function read_model( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -201,7 +185,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -215,7 +199,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -230,7 +214,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -245,11 +229,11 @@
          */
         final public function length()
         {
-            $retVal = ZERO;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = CONSTANT_ZERO;
 
             $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+
+            $connection = $this->getConnector()->connect();
 
             try 
             {
@@ -258,7 +242,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -268,9 +252,6 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -301,7 +282,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
             }
 
-            if( Factory::modelImplements( $classObject, self::getControllerName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );
@@ -330,7 +311,7 @@
                 throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
             }
 
-            if( Factory::modelImplements( $classObject, self::getViewName() ) )
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
             {
                 $retVal = true;
                 return boolval( $retVal );

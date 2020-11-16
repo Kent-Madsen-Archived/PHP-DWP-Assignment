@@ -14,7 +14,7 @@
          * @param $model
          * @return mixed
          */
-        public function create( $model );
+        public function create( &$model );
 
 
         /**
@@ -27,20 +27,20 @@
          * @param $model
          * @return mixed
          */
-        public function read_model( $model );
+        public function read_model( &$model );
 
 
         /**
          * @param $model
          * @return mixed
          */
-        public function delete( $model );
+        public function delete( &$model );
 
 
         /**
          * @param $model
          * @return mixed
          */
-        public function update( $model );
+        public function update( &$model );
     }
 ?>

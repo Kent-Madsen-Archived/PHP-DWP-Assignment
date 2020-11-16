@@ -26,9 +26,7 @@
          */
         final public function getDatabaseStatus( $name )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
+            $connection = $this->getConnector()->connect();
 
             $retVal = false;
 
@@ -93,12 +91,7 @@
         {
             $retVal = false;
 
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT TABLE_NAME = ? AS validation FROM information_schema.tables WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = ? AND TABLE_NAME = ?;";
 
@@ -128,7 +121,7 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > Factory::Zero() )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -161,16 +154,9 @@
          */
         final public function getStatusOnView( $schema, $view )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
+            $connection = $this->getConnector()->connect();
 
             $retVal = false;
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
 
             $sql = "SELECT TABLE_NAME = ? AS validation FROM information_schema.tables WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = ? AND TABLE_NAME = ?;";
 

@@ -16,9 +16,22 @@
          */
         public function undo_state();
 
+
         /**
          * @return mixed
          */
         public function finish();
+
+
+        /**
+         * @return mixed
+         */
+        public function finish_insert( $stmt );
+
+
+        /**
+         * @return mixed
+         */
+        public function is_open();
     }
 ?>

@@ -65,6 +65,7 @@
 
         /**
          * @return mixed
+         * @throws Exception
          */
         final public function disconnect()
         {
@@ -72,7 +73,19 @@
             
             $connector->close();
 
+            // clears the connection session
+            $this->setConnector(null );
+
             return $this->getConnector();
+        }
+
+
+        /**
+         * @return mixed|void
+         */
+        final public function is_open()
+        {
+
         }
 
 
@@ -91,6 +104,25 @@
         final public function finish()
         {
             $this->getConnector()->commit();
+        }
+
+
+        /**
+         * @param $stmt
+         * @return int|mixed|null
+         */
+        public function finish_insert( $stmt )
+        {
+            $this->getConnector()->commit();
+
+            $retVal = $stmt->insert_id;
+
+            if( is_null( $retVal ) )
+            {
+                return null;
+            }
+
+            return intval( $retVal );
         }
 
 
@@ -134,17 +166,20 @@
          */
         final protected function validateAsMySQLInformation( $var )
         {
+            $retVal = false;
+
             if( is_null( $var ) )
             {
-                return true;
+                $retVal = true;
+                return boolval( $retVal );
             }
 
             if( $var instanceof MySQLInformation )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -169,17 +204,20 @@
          */
         final protected function validateAsMysqli( $var )
         {
+            $retVal = false;
+
             if( is_null( $var ) )
             {
-                return true;
+                $retVal = true;
+                return boolval($retVal);
             }
 
             if( $var instanceof mysqli )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
     }
