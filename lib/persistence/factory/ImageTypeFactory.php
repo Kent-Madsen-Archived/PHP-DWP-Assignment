@@ -18,7 +18,7 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
             $this->setPaginationIndex(CONSTANT_ZERO);
             $this->setLimit(CONSTANT_ZERO);
         }
@@ -35,7 +35,7 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
@@ -63,11 +63,11 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return boolval( $value );
@@ -108,7 +108,7 @@
          */
         final public function read()
         {
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             // return array
             $retVal = null;
@@ -155,7 +155,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();   
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -185,13 +185,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model )
+        final public function create( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+
+            return false;
         }
 
 
@@ -200,13 +202,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function delete( &$model )
+        final public function delete( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+
+            return false;
         }
 
 
@@ -215,13 +219,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( &$model )
+        final public function update( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+
+            return false;
         }
 
 
@@ -229,7 +235,7 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
             // Return value
             $retVal = CONSTANT_ZERO;
@@ -238,7 +244,7 @@
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to a mysql database
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -261,7 +267,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return intval( $retVal );

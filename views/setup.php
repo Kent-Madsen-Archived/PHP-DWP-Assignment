@@ -30,7 +30,7 @@
 
                 $database = 'dwp_assignment';
 
-                $setup = new SetupInstallation(new MySQLConnector(new MySQLInformation( $access, $user_credential, $database )));
+                $setup = new SetupInstallation(new MySQLConnectorWrapper(new MySQLInformation( $access, $user_credential, $database )));
 
                 $setup->installation_status();
         ?>

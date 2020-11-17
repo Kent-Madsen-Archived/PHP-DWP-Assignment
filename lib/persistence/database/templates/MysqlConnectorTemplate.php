@@ -26,7 +26,7 @@
         /**
          * @return mixed
          */
-        public function finish_insert( $stmt );
+        public function finish_commit_and_retrieve_insert_id( $stmt );
 
 
         /**

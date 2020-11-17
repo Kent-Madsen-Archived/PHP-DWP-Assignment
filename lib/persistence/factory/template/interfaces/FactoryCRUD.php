@@ -12,9 +12,9 @@
     {
         /**
          * @param $model
-         * @return mixed
+         * @return bool|null
          */
-        public function create( &$model );
+        public function create( &$model ): bool;
 
 
         /**
@@ -30,17 +30,18 @@
         public function read_model( &$model );
 
 
+
         /**
          * @param $model
-         * @return mixed
+         * @return bool|null
          */
-        public function delete( &$model );
+        public function delete( &$model ): bool;
 
 
         /**
          * @param $model
          * @return mixed
          */
-        public function update( &$model );
+        public function update( &$model ):bool;
     }
 ?>

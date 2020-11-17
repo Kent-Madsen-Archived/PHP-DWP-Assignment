@@ -32,7 +32,7 @@
         final public function send()
         {
             //
-            $connection = new MySQLConnector( $this->getInformation() );
+            $connection = new MySQLConnectorWrapper( $this->getInformation() );
 
             // Factories prepared
             $contact_factory = new ContactFactory( $connection );

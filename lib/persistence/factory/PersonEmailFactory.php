@@ -19,7 +19,7 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
             $this->setPaginationIndex(CONSTANT_ZERO);
             $this->setLimit(CONSTANT_ZERO);
         }
@@ -35,9 +35,9 @@
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
@@ -65,11 +65,11 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return boolval( $value );
@@ -109,7 +109,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model )
+        final public function create( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -122,7 +122,7 @@
 
             $stmt_email = null;
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -139,19 +139,19 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
 
                 $model->setIdentity( $stmt->insert_id );
                 $retVal = $model;
             }
             catch( Exception $ex )
             {
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
             
             return $retVal;
@@ -176,7 +176,7 @@
 
             $stmt_mail = null;
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -210,7 +210,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return boolval( $retVal );
@@ -233,7 +233,7 @@
             $stmt_offset = null;
 
             //
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -272,7 +272,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
             
             return $retVal;
@@ -297,7 +297,7 @@
 
             $stmt_mail = null;
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -328,7 +328,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
             
             return boolval( $retVal );
@@ -358,7 +358,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( &$model )
+        final public function update( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -372,7 +372,7 @@
 
             $sql = "UPDATE person_email SET content = ? WHERE identity = ?;";
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -391,16 +391,16 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
             }
             catch( Exception $ex )
             {
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return boolval( $retVal );
@@ -412,7 +412,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model )
+        final public function delete( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -425,7 +425,7 @@
 
             $stmt_identity = null;
 
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try
             {
@@ -442,18 +442,18 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
                 $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return boolval( $retVal );
@@ -464,7 +464,7 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
@@ -473,7 +473,7 @@
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -497,7 +497,7 @@
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return intval( $retVal );

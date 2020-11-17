@@ -25,15 +25,15 @@
 
 
         // Variables
-        private $username;
-        private $password;
+        private $username = null;
+        private $password = null;
 
 
         // Accessors
         /**
          * @return string|null
          */
-        final public function getUsername()
+        final public function getUsername(): ?string
         {
             if( is_null( $this->username ) )
             {
@@ -47,7 +47,7 @@
         /**
          * @return string|null
          */
-        final public function getPassword()
+        final public function getPassword(): ?string
         {
             if( is_null( $this->password ) )
             {
@@ -59,17 +59,16 @@
 
 
         /**
-         * @param $var
-         * @return null
+         * @param string $var
+         * @return string|null
          * @throws Exception
          */
-        final public function setUsername( $var )
+        final public function setUsername( $var = "root" ): ?string
         {
-
             if( is_null( $var ) )
             {
                 $this->username = $var;
-                return $this->username;
+                return $this->getUsername();
             }
 
             if( !is_string( $var ) )
@@ -78,20 +77,22 @@
             }
 
             $this->username = strval( $var );
+
+            return $this->getUsername();
         }
 
 
         /**
-         * @param $var
-         * @return null
+         * @param string $var
+         * @return string|null
          * @throws Exception
          */
-        final public function setPassword( $var )
+        final public function setPassword( $var = "" ): ?string
         {
             if( is_null( $var ) )
             {
                 $this->password = $var;
-                return $this->password;
+                return $this->getPassword();
             }
 
             if( !is_string( $var ) )
@@ -100,6 +101,8 @@
             }
 
             $this->password = strval( $var );
+
+            return $this->getPassword();
         }
 
 

@@ -13,13 +13,13 @@
         /**
          * @return mixed
          */
-        public function connect();
+        public function connect(): ?mysqli;
 
 
         /**
          * @return mixed
          */
-        public function disconnect();
+        public function disconnect(): ?mysqli;
 
     }
 ?>

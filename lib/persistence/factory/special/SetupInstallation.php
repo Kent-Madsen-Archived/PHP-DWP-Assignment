@@ -6,21 +6,22 @@
     class SetupInstallation
     {
         /**
-         * SetupInstallationFactory constructor.
+         * SetupInstallation constructor.
          * @param $connection
          */
         public function __construct( $connection )
         {
-            $this->setConnector( $connection );
+            $this->setWrapper( $connection );
         }
 
 
         // Internal Variables
-        private $connector = null;
+        private $wrapper = null;
 
 
         /**
-         * @param $file
+         * @param $file_path
+         * @return bool
          * @throws Exception
          */
         final public function executeSQLFile( $file_path )
@@ -50,7 +51,7 @@
             $file_query = file_get_contents( $file_path );
 
             // connects to the database and retrives a instance of the mysqli connector
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try
             {
@@ -78,20 +79,20 @@
                 }
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
 
                 $retVal = true;
             }
             catch( Exception $ex )
             {   
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
 
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return boolval( $retVal );
@@ -99,6 +100,7 @@
 
 
         /**
+         * @return bool
          * @throws Exception
          */
         final public function installation_status()
@@ -107,33 +109,33 @@
 
             $arrToProcess = array();
 
-            $articleFactory = new ArticleFactory( $this->getConnector() );
-            $associatedCategoryFactory = new AssociatedCategoryFactory( $this->getConnector() );
+            $articleFactory = new ArticleFactory( $this->getWrapper() );
+            $associatedCategoryFactory = new AssociatedCategoryFactory( $this->getWrapper() );
 
-            $broughtFactory = new BroughtFactory( $this->getConnector() );
+            $broughtFactory = new BroughtFactory( $this->getWrapper() );
 
-            $contactfactory = new ContactFactory( $this->getConnector() );
+            $contactfactory = new ContactFactory( $this->getWrapper() );
 
-            $imageFactory       = new ImageFactory( $this->getConnector() );
-            $imageTypeFactory   = new ImageTypeFactory( $this->getConnector() );
+            $imageFactory       = new ImageFactory( $this->getWrapper() );
+            $imageTypeFactory   = new ImageTypeFactory( $this->getWrapper() );
 
-            $pageElementFactory = new PageElementFactory( $this->getConnector() );
+            $pageElementFactory = new PageElementFactory( $this->getWrapper() );
 
 
 
-            $personAddressFactory   = new PersonAddressFactory( $this->getConnector() );
-            $personNameFactory      = new PersonNameFactory( $this->getConnector() );
+            $personAddressFactory   = new PersonAddressFactory( $this->getWrapper() );
+            $personNameFactory      = new PersonNameFactory( $this->getWrapper() );
 
-            $productAttributeFactory    = new ProductAttributeFactory( $this->getConnector() );
-            $productCategoryFactory     = new ProductCategoryFactory( $this->getConnector() );
-            $productEntityFactory       = new ProductEntityFactory( $this->getConnector() );
-            $productFactory             = new ProductFactory( $this->getConnector() );
-            $productInvoiceFactory      = new ProductInvoiceFactory( $this->getConnector() );
-            $productUsedImageFactory    = new ProductUsedImageFactory( $this->getConnector() );
+            $productAttributeFactory    = new ProductAttributeFactory( $this->getWrapper() );
+            $productCategoryFactory     = new ProductCategoryFactory( $this->getWrapper() );
+            $productEntityFactory       = new ProductEntityFactory( $this->getWrapper() );
+            $productFactory             = new ProductFactory( $this->getWrapper() );
+            $productInvoiceFactory      = new ProductInvoiceFactory( $this->getWrapper() );
+            $productUsedImageFactory    = new ProductUsedImageFactory( $this->getWrapper() );
 
-            $profileFactory             = new ProfileFactory( $this->getConnector() );
-            $profileInformationFactory  = new ProfileInformationFactory( $this->getConnector() );
-            $profileTypeFactory         = new ProfileTypeFactory( $this->getConnector() );
+            $profileFactory             = new ProfileFactory( $this->getWrapper() );
+            $profileInformationFactory  = new ProfileInformationFactory( $this->getWrapper() );
+            $profileTypeFactory         = new ProfileTypeFactory( $this->getWrapper() );
 
 
             array_push( $arrToProcess,
@@ -200,37 +202,42 @@
          */
         private function printStatus( $table_name )
         {
-            echo ("<p>currently selected table: {$table_name}</p>");
+            echo ("<p>currently selected table: { $table_name }</p>");
         }
 
 
         /**
-         * 
+         * @param $key
+         * @param $value
          */
-        private function printRow( $key, $value )
+        private function printRow( $key = "Key", $value="Value" )
         {
             $converted_key = htmlentities( $key );
             $converted_value = htmlentities( $value );
-            echo ("<li> {$converted_key}, {$converted_value} </li>");
+
+            echo ("<li> { $converted_key }, { $converted_value } </li>");
         }
 
 
         // Accessor
         /**
-         * @return null
+         * @return MySQLConnectorWrapper|null
          */
-        final public function getConnector()
+        final public function getWrapper(): ?MySQLConnectorWrapper
         {
-            return $this->connector;
+            return $this->wrapper;
         }
 
 
         /**
-         * @param $connector
+         * @param $wrapper
+         * @return MySQLConnectorWrapper|null
          */
-        final public function setConnector( $connector )
+        final public function setWrapper( $wrapper ): ?MySQLConnectorWrapper
         {
-            $this->connector = $connector;
+            $this->wrapper = $wrapper;
+
+            return $this->getWrapper();
         }
 
     }

@@ -32,7 +32,7 @@
          */
         final public function lastest_news()
         {
-            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
             var_dump($factory->length());
 
             $factory->setLimit(6);
@@ -47,7 +47,7 @@
          */
         final public function frontpage_news()
         {
-            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
 
             $factory->setLimit(3);
 
@@ -61,7 +61,7 @@
          */
         final public function getArticle( $idx )
         {
-            $factory = new ArticleFactory( new MySQLConnector( $this->getInformation() ) );
+            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
             $model = new ArticleModel( $factory );
             $model->setIdentity( $idx );
 

@@ -37,7 +37,7 @@
                 return boolval( $retVal );
             }
 
-            if( $var instanceof MySQLConnector )
+            if( $var instanceof MySQLConnectorWrapper )
             {
                 $retVal = true;
             }
@@ -52,7 +52,7 @@
          */
         final protected function escape( $value ) : string
         {
-            $connector = $this->getConnector()->getConnector();
+            $connector = $this->getWrapper()->getConnector();
 
             if( is_null( $connector ) )
             {
@@ -112,7 +112,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function next()
+        final public function next(): ?int
         {
             $this->next_jump( CONSTANT_ONE );
 
@@ -125,7 +125,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function next_jump( $value )
+        final public function next_jump( $value ): ?int
         {
             if( is_null( $value ) )
             {
@@ -147,7 +147,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function previous()
+        final public function previous(): ?int
         {
             $this->previous_jump( CONSTANT_ONE );
 
@@ -160,7 +160,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function previous_jump( $value )
+        final public function previous_jump( $value ): ?int
         {
             if( is_null( $value ) )
             {
@@ -169,7 +169,7 @@
 
             if( !is_int( $value ) )
             {
-                throw new Exception('Variable is not null, or an Integer value.');
+                throw new Exception('Variable is not null, or an Integer value.' );
             }
 
             $this->setPaginationIndex( intval( $this->getPaginationIndex() - $value ) );
@@ -182,7 +182,7 @@
         /**
          * @return mixed
          */
-        public abstract function getFactoryTableName();
+        public abstract function getFactoryTableName() : string;
 
 
         /**
@@ -194,9 +194,9 @@
         // Accessors
             // Getters
         /**
-         * @return |null
+         * @return MySQLConnectorWrapper|null
          */
-        final public function getConnector()
+        final public function getWrapper(): ?MySQLConnectorWrapper
         {
             if( is_null( $this->connector ) )
             {
@@ -210,7 +210,7 @@
         /**
          * @return int|null
          */
-        final public function getPaginationIndex()
+        final public function getPaginationIndex(): ?int
         {
             if( is_null( $this->pagination_index ) )
             {
@@ -224,7 +224,7 @@
         /**
          * @return int|null
          */
-        final public function getLimit()
+        final public function getLimit(): ?int
         {
             if( is_null( $this->limit ) )
             {
@@ -238,10 +238,10 @@
             // Setters
         /**
          * @param $var
-         * @return |null
+         * @return MySQLConnectorWrapper|null
          * @throws Exception
          */
-        final public function setConnector( $var )
+        final public function setWrapper( $var ): ?MySQLConnectorWrapper
         {
             if( is_null( $var ) )
             {
@@ -251,7 +251,7 @@
 
             if( !$this->validateAsValidConnector( $var ) )
             {
-                throw new Exception( "Factory - setConnector: Only the class MySQLConnector or null is allowed" );
+                throw new Exception( "Factory - setConnector: Only the class MySQLConnectorWrapper or null is allowed" );
             }
 
             $this->connector = $var;
@@ -265,7 +265,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function setPaginationIndex( $idx )
+        final public function setPaginationIndex( $idx ): ?int
         {
             if( is_null( $idx ) )
             {
@@ -291,7 +291,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function setLimit( $var )
+        final public function setLimit( $var ): ?int
         {
             if( is_null( $var ) )
             {

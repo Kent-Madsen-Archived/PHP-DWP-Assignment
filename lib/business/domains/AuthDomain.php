@@ -109,7 +109,7 @@
         {
             $retVal = null;
 
-            $connection = new MySQLConnector( $this->getInformation() );
+            $connection = new MySQLConnectorWrapper( $this->getInformation() );
             
             // retrieve or create name
             $person_name_factory = new PersonNameFactory( $connection );
@@ -195,7 +195,7 @@
         final public function register_profile( $profile_variable )
         {
             //
-            $connection = new MySQLConnector( $this->getInformation() );
+            $connection = new MySQLConnectorWrapper( $this->getInformation() );
             
             $factory = new ProfileFactory( $connection );
             $profile_variable->setFactory( $factory );
@@ -221,7 +221,7 @@
                                      $password )
         {     
             //
-            $connection = new MySQLConnector( $this->getInformation() );
+            $connection = new MySQLConnectorWrapper( $this->getInformation() );
             $factory = new ProfileFactory( $connection );
 
             // Retrieves a user by their username

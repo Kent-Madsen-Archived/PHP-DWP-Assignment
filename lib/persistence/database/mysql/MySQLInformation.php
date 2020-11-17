@@ -9,6 +9,7 @@
      * Class MySQLInformation
      */
     class MySQLInformation
+        implements MySQLInformationInterface
     {
         // Constructors
         /**
@@ -40,7 +41,7 @@
         /**
          * @return string|null
          */
-        final public function retrieve_username()
+        final public function retrieveUsername() : ? string
         {
             if( is_null( $this->credential ) )
             {
@@ -54,7 +55,7 @@
         /**
          * @return string|null
          */
-        final public function retrieve_password()
+        final public function retrievePassword() : ? string
         {
             if( is_null( $this->credential ) )
             {
@@ -68,7 +69,7 @@
         /**
          * @return string|null
          */
-        final public function retrieve_hostname()
+        final public function retrieveHostname() : ? string
         {
             if( is_null( $this->access ) )
             {
@@ -82,7 +83,7 @@
         /**
          * @return int|null
          */
-        final public function retrieve_port()
+        final public function retrievePort() : ? int
         {
             if( is_null( $this->access ) )
             {
@@ -96,7 +97,7 @@
         /**
          * @return string|null
          */
-        final public function retrieve_database()
+        final public function retrieveDatabase() : ? string
         {
             if( is_null( $this->database ) )
             {
@@ -112,7 +113,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsCredential( $var )
+        final protected function validateAsCredential( $var ) : bool
         {
             $retval = false;
 
@@ -129,7 +130,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsAccess( $var )
+        final protected function validateAsAccess( $var ) : bool
         {
             $retVal = false;
 
@@ -159,8 +160,13 @@
         /**
          * @return mixed
          */
-        final public function getCredential()
+        final public function getCredential(): ?UserCredential
         {
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
             return $this->credential;
         }
 
@@ -168,8 +174,13 @@
         /**
          * @return mixed
          */
-        final public function getAccess()
+        final public function getAccess(): ?NetworkAccess
         {
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
             return $this->access;
         }
 
@@ -177,7 +188,7 @@
         /**
          * @return string|null
          */
-        final public function getDatabase()
+        final public function getDatabase() : ?string
         {
             if( is_null( $this->database ) )
             {
@@ -191,15 +202,15 @@
             // Setters
         /** Result: Allowed to be null or a instance of NetworkAccess
          * @param $value
-         * @return null
+         * @return NetworkAccess|null
          * @throws Exception
          */
-        final public function setAccess( $value )
+        final public function setAccess( $value ): ?NetworkAccess
         {
             if( is_null( $value ) )
             {
                 $this->access = $value;
-                return $this->access;
+                return $this->getAccess();
             }
 
             if( !$this->validateAsAccess( $value ) )
@@ -208,19 +219,22 @@
             }
 
             $this->access = $value;
+
+            return $this->getAccess();
         }
 
 
         /** Result: Allowed to be null or a instance of UserCredential
          * @param $value
+         * @return UserCredential|null
          * @throws Exception
          */
-        final public function setCredential( $value )
+        final public function setCredential( $value ): ?UserCredential
         {
             if( is_null( $this->credential ) )
             {
                 $this->credential = $value;
-                return $this->credential;
+                return $this->getCredential();
             }
 
             if( !$this->validateAsCredential( $value ) )
@@ -229,20 +243,22 @@
             }
 
             $this->credential = $value;
+
+            return $this->getCredential();
         }
 
 
         /** Result: Allowed to be null, or a instance of a string.
          * @param $value
-         * @return null
+         * @return string|null
          * @throws Exception
          */
-        final public function setDatabase( $value )
+        final public function setDatabase( $value ) : ?string
         {
             if( is_null( $value ) )
             {
                 $this->database = $value;
-                return $this->database;
+                return $this->getDatabase();
             }
 
             if( !is_string( $value ) )
@@ -251,6 +267,8 @@
             }
 
             $this->database = strval( $value );
+
+            return $this->getDatabase();
         }
 
     }

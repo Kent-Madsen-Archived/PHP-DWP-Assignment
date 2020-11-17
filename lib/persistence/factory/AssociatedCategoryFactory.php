@@ -18,7 +18,7 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
             $this->setPaginationIndex(CONSTANT_ZERO);
             $this->setLimit(CONSTANT_ZERO);
         }
@@ -34,9 +34,9 @@
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
@@ -64,11 +64,11 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return boolval( $value );
@@ -120,7 +120,7 @@
             $retVal = null;
 
             // Connection
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try
             {
@@ -163,7 +163,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -192,7 +192,7 @@
          * @param $model
          * @return mixed|void
          */
-        final public function create( &$model )
+        final public function create( &$model ):bool
         {
             
         }
@@ -203,7 +203,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( &$model )
+        final public function update( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -215,10 +215,10 @@
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool|null
          * @throws Exception
          */
-        final public function delete( &$model )
+        final public function delete( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -235,7 +235,7 @@
             $retVal = false;
 
             //
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try
             {
@@ -252,18 +252,18 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
                 $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return boolval( $retVal );
@@ -274,7 +274,7 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
             // return value
             $retVal = CONSTANT_ZERO;
@@ -284,7 +284,7 @@
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // connection to the mysql database
-            $local_connection = $this->getConnector()->connect();
+            $local_connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -304,13 +304,13 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return intval( $retVal );

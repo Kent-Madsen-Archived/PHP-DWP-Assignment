@@ -46,7 +46,7 @@
         /**
          * @return string|null
          */
-        final public function getHostname()
+        final public function getHostname(): ?string
         {
             if( is_null( $this->hostname ) )
             {
@@ -60,7 +60,7 @@
         /**
          * @return int|null
          */
-        final public function getPort()
+        final public function getPort(): ?int
         {
             if( is_null( $this->port ) )
             {
@@ -72,16 +72,16 @@
 
 
         /**
-         * @param $var
+         * @param string $var
          * @return string|null
          * @throws Exception
          */
-        final public function setHostname( $var )
+        final public function setHostname( $var = "localhost" ): ?string
         {
             if( is_null( $var ) )
             {
                 $this->hostname = $var;
-                return $this->hostname;
+                return $this->getHostname();
             }
 
             if( !is_string( $var ) )
@@ -91,21 +91,21 @@
 
             $this->hostname = strval( $var );
 
-            return strval( $this->hostname );
+            return $this->getHostname();
         }
 
 
         /**
-         * @param $var
+         * @param int $var
          * @return int|null
          * @throws Exception
          */
-        final public function setPort( $var )
+        final public function setPort( $var =  3600 ): ?int
         {
             if( is_null( $var ) )
             {
                 $this->port = $var;
-                return $this->port;
+                return $this->getPort();
             }
 
             if( !is_numeric( $var ) )
@@ -115,7 +115,7 @@
 
             $this->port = intval( $var, BASE_10 );
 
-            return intval( $this->port );
+            return $this->getPort();
         }
 
 

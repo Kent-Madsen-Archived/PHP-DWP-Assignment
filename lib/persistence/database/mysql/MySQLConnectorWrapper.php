@@ -6,15 +6,15 @@
      */
 
     /**
-     * Class MySQLConnector
+     * Class MySQLConnectorWrapper
      */
-    class MySQLConnector 
+    class MySQLConnectorWrapper
         implements ConnectorTemplate, 
                    MysqlConnectorTemplate
     {
         // Constructor
         /**
-         * MySQLConnector constructor.
+         * MySQLConnectorWrapper constructor.
          * @param $mysql_information
          * @throws Exception
          */
@@ -27,24 +27,24 @@
 
 
         // Variables
-        private $information;
-        private $connector;
+        private $information    = null;
+        private $connector      = null;
 
 
         // implementations
         /**
-         * @return mixed
+         * @return mysqli|null
          * @throws Exception
          */
-        final public function connect()
+        final public function connect() : ?mysqli
         {
             $information = $this->getInformation();
 
             // 
-            $local_connection = new mysqli( $information->retrieve_hostname(), 
-                                            $information->retrieve_username(), $information->retrieve_password(), 
-                                            $information->retrieve_database(),
-                                            $information->retrieve_port() );
+            $local_connection = new mysqli( $information->retrieveHostname(),
+                                            $information->retrieveUsername(), $information->retrievePassword(),
+                                            $information->retrieveDatabase(),
+                                            $information->retrievePort() );
             
             // by default is true. it's set to false so it won't update the mysql state automaticly
             // consequence is that factory classes have to call commit. inorder for change to 
@@ -64,10 +64,10 @@
 
 
         /**
-         * @return mixed
+         * @return mysqli|null
          * @throws Exception
          */
-        final public function disconnect()
+        final public function disconnect() : ?mysqli
         {
             $connector = $this->getConnector();
             
@@ -81,11 +81,18 @@
 
 
         /**
-         * @return mixed|void
+         * @return bool
          */
-        final public function is_open()
+        final public function is_open() : bool
         {
+            $retVal = false;
 
+            if( is_null( $this->getConnector() ) )
+            {
+                $retVal = true;
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -109,9 +116,9 @@
 
         /**
          * @param $stmt
-         * @return int|mixed|null
+         * @return int|null
          */
-        public function finish_insert( $stmt )
+        public function finish_commit_and_retrieve_insert_id( $stmt ) : ?int
         {
             $this->getConnector()->commit();
 
@@ -130,7 +137,7 @@
         /**
          * @return mixed
          */
-        final public function getInformation()
+        final public function getInformation() : ?MySQLInformation
         {
             return $this->information;
         }
@@ -139,7 +146,7 @@
         /**
          * @return mixed
          */
-        final public function getConnector()
+        final public function getConnector() : ?mysqli
         {
             return $this->connector;
         }
@@ -149,14 +156,16 @@
          * @param $var
          * @throws Exception
          */
-        final public function setInformation( $var )
+        final public function setInformation( $var ) : ?MySQLInformation
         {
             if( !$this->validateAsMySQLInformation( $var ) )
             {
-                throw new Exception( 'MySQLConnector - setInformation : Only class MySQLInformation or null is allowed' );
+                throw new Exception( 'MySQLConnectorWrapper - setInformation : Only class MySQLInformation or null is allowed' );
             }
 
             $this->information = $var;
+
+            return $this->getInformation();
         }
 
 
@@ -191,7 +200,7 @@
         {
             if( !$this->validateAsMysqli( $var ) ) 
             {
-                throw new Exception( 'MySQLConnector - setConnector : Only class mysqli or null is allowed' );
+                throw new Exception( 'MySQLConnectorWrapper - setConnector : Only class mysqli or null is allowed' );
             }
 
             $this->connector = $var;

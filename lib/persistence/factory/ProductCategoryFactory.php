@@ -19,7 +19,7 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
 
             $this->setLimit( CONSTANT_ZERO );
             $this->setPaginationIndex( CONSTANT_ZERO );
@@ -38,7 +38,7 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
@@ -77,11 +77,11 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
             return boolval( $value );
@@ -118,7 +118,7 @@
             $stmt_limit  = null;
             $stmt_offset = null;
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -157,7 +157,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -187,14 +187,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model )
+        final public function create( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            
+
+            return false;
         }
 
 
@@ -203,12 +204,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( &$model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
+
+
+            return false;
         }
 
 
@@ -217,7 +221,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -230,7 +234,7 @@
 
             $stmt_identity = null;
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -247,19 +251,19 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
 
                 $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undo_state();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -270,14 +274,14 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
             $table_name = self::getTableName();
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $connection = $this->getConnector()->connect();
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -301,7 +305,7 @@
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return intval( $retVal );

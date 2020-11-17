@@ -6,15 +6,15 @@
     interface StateFactory
     {
         /**
-         * @return mixed
+         * @return bool
          */
-        public function exist();
+        public function exist(): bool;
 
-        
+
         /**
-         * @return mixed
+         * @return int
          */
-        public function length();
+        public function length(): int;
     }
 
 ?>
