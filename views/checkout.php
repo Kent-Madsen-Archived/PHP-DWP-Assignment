@@ -4,9 +4,10 @@
      *  Author:
      *  Type: PHP Script
      */
-    PageTitleController::getSingletonController()->append( ' - Checkout' );
 
     $domain = new CheckoutDomain();
+
+    PageTitleController::getSingletonController()->append( ' - Checkout' );
 ?>
 
 <!DOCTYPE html>

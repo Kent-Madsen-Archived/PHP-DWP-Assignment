@@ -8,8 +8,7 @@
     /**
      * 
      */
-
-    PageTitleController::getSingletonController()->append(' - Product');
+    PageTitleController::getSingletonController()->append( ' - Product' );
 ?>
 
 <!DOCTYPE html>

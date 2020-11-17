@@ -5,9 +5,7 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
+    
     PageTitleController::getSingletonController()->append( ' - Invoices' );
 ?>
 

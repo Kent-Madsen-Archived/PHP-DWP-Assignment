@@ -4,9 +4,10 @@
      *  Author:
      *  Type: PHP Script
      */
-    PageTitleController::getSingletonController()->append( ' - About us' );
 
     $domain = new AboutDomain();
+    
+    PageTitleController::getSingletonController()->append( ' - About us' );
 ?>
 
 <!DOCTYPE html>

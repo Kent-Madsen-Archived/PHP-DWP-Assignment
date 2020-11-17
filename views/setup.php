@@ -6,7 +6,7 @@
      */
 
 
-    PageTitleController::getSingletonController()->append(' - Setup' );
+    PageTitleController::getSingletonController()->append( ' - Setup' );
 ?>
 
 <!DOCTYPE html>

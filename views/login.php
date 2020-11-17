@@ -23,6 +23,7 @@
     $fss = new FormSpoofSecurity();
     $fss->apply_to_session();
 
+    
     PageTitleController::getSingletonController()->append( ' - Login' );
 ?>
 

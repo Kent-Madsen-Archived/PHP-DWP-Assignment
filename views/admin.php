@@ -4,10 +4,10 @@
      *  Author:
      *  Type: PHP Script
      */
-    PageTitleController::getSingletonController()->append( ' - Admin Panel' );
-
 
     $domain = new AdminDomain();
+
+    PageTitleController::getSingletonController()->append( ' - Admin Panel' );
 ?>
 
 <!DOCTYPE html>

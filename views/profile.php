@@ -7,7 +7,7 @@
 
     $domain = new ProfileDomain();
 
-    PageTitleController::getSingletonController()->append(' - Profile');
+    PageTitleController::getSingletonController()->append( ' - Profile' );
 ?>
 
 <!DOCTYPE html>

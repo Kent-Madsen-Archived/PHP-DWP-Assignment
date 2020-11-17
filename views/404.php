@@ -4,7 +4,8 @@
      *  Author:
      *  Type: PHP Script
      */
-    PageTitleController::getSingletonController()->append(' - 404 Page' );
+    
+    PageTitleController::getSingletonController()->append( ' - 404 Page' );
 ?>
 
 <!DOCTYPE html>

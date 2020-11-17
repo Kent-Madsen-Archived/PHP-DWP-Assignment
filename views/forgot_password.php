@@ -18,12 +18,10 @@
     // Then process the form and upload it to the database
     require 'forms/forgot_my_password_process.php';
 
-    /**
-     * 
-     */
+    
     PageTitleController::getSingletonController()->append( ' - Forgot my password' );
-
 ?>
+
 <!DOCTYPE html>
 
 <html lang="en">

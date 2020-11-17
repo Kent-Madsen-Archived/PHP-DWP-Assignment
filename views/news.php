@@ -5,10 +5,8 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
-    PageTitleController::getSingletonController()->append(' - News');
+     
+    PageTitleController::getSingletonController()->append( ' - News' );
 ?>
 
 <!DOCTYPE html>

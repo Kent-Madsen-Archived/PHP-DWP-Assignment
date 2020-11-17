@@ -5,10 +5,8 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
-    PageTitleController::getSingletonController()->append(' - Shop' );
+    
+    PageTitleController::getSingletonController()->append( ' - Shop' );
 ?>
 
 <!DOCTYPE html>

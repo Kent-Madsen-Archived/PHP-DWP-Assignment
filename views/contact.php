@@ -7,13 +7,14 @@
      *  Author:
      *  Type: PHP Script
      */
-    PageTitleController::getSingletonController()->append( ' - Contact' );
 
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
     $fss = new FormSpoofSecurity();
     $fss->apply_to_session();
+
+    PageTitleController::getSingletonController()->append( ' - Contact' );
 ?>
 
 <!DOCTYPE html>
