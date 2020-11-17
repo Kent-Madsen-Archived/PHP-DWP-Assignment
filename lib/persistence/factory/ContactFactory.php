@@ -170,7 +170,6 @@
                 $this->getConnector()->disconnect();
             }
 
-
             return $retVal;   
         }
 
@@ -205,11 +204,19 @@
                 throw new Exception( 'Not accepted model' );
             }
             
-            $retVal = null;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = false;
 
             $sql = "INSERT INTO contact( subject_title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
+
+            $stmt_subject = null;
+            $stmt_message = null;
+
+            $stmt_has_been_send = null;
+
+            $stmt_to_id     = null;
+            $stmt_from_id   = null;
+
+            $connection = $this->getConnector()->connect();
 
             try 
             {
@@ -223,7 +230,7 @@
                                    $stmt_from_id );
 
                 // Setup variables
-                $stmt_subject = $model->getSubject() ;
+                $stmt_subject = $model->getSubject();
                 $stmt_message = $model->getMessage();
                 
                 $stmt_has_been_send = $model->getHasBeenSend();
@@ -234,18 +241,14 @@
                 // Executes the query
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
-
                 // Apply Identity
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $model->setIdentity( $this->getConnector()->finish_insert( $stmt ) );
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( "Error: " . $ex );
             }
             finally 
@@ -254,7 +257,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -270,11 +273,13 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
-
-            $connection = $this->getConnector()->connect();
+            $retVal = false;
 
             $sql = "DELETE FROM contact WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -292,16 +297,12 @@
 
                 // commits the statement
                 $this->getConnector()->finish();
-
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -309,13 +310,13 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool|mixed
          * @throws Exception
          */
         final public function update( &$model )
@@ -327,9 +328,18 @@
 
             $retVal = null;
 
-            $connection = $this->getConnector()->connect();
-
             $sql = "UPDATE contact SET subject_title = ?, message = ?, has_been_send = ?, to_id = ?, from_id = ? WHERE identity = ?;";
+
+            $stmt_subject = null;
+            $stmt_message = null;
+            $stmt_has_been_send = null;
+
+            $stmt_to_id = null;
+            $stmt_from_id = null;
+
+            $stmt_identity = null;
+
+            $connection = $this->getConnector()->connect();
 
             try
             {
@@ -360,13 +370,12 @@
                 // commits the statement
                 $this->getConnector()->finish();
 
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( "Error: " . $ex );
             }
             finally
@@ -375,7 +384,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -387,7 +396,8 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // Opens a connection to the database
             $local_connection = $this->getConnector()->connect();

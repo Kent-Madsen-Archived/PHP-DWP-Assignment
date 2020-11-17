@@ -20,8 +20,9 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
         }
 
 
@@ -109,7 +110,7 @@
          * @return array|mixed
          * @throws Exception
          */
-        final public function read( )
+        final public function read()
         {
             //
             $sql = "SELECT * FROM profile_type LIMIT ? OFFSET ?;";
@@ -202,7 +203,7 @@
             $stmt_profile_type_content = null;
 
             // Return Value
-            $retVal = null;
+            $retVal = false;
 
             //
             $connection = $this->getConnector()->connect();
@@ -223,7 +224,6 @@
 
                 // commits the statement
                 $model->setIdentity( $this->getConnector()->finish_insert( $stmt ) );
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -237,7 +237,7 @@
                 $this->getConnector()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -259,8 +259,8 @@
             //
             $sql = "UPDATE profile_type SET content = ? WHERE identity = ?;";
 
-            $stmt_profile_type_content = null;
-            $stmt_identity = null;
+            $stmt_profile_type_content  = null;
+            $stmt_identity              = null;
 
             //
             $connection = $this->getConnector()->connect();
@@ -276,14 +276,13 @@
 
                 //
                 $stmt_profile_type_content = $model->getContent();
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
                 $this->getConnector()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -333,7 +332,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -365,8 +364,9 @@
         final public function length()
         {
             $retVal = CONSTANT_ZERO;
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 

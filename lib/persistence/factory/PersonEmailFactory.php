@@ -146,9 +146,7 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -369,8 +367,8 @@
 
             $retVal = false;
 
-            $stmt_email= null;
-            $stmt_identity = null;
+            $stmt_email     = null;
+            $stmt_identity  = null;
 
             $sql = "UPDATE person_email SET content = ? WHERE identity = ?;";
 
@@ -397,9 +395,7 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -423,7 +419,7 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
+            $retVal = false;
 
             $sql = "DELETE FROM person_email WHERE identity = ?;";
 
@@ -447,16 +443,12 @@
 
                 // commits the statement
                 $this->getConnector()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = false;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -464,7 +456,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -476,8 +468,11 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
+            
             $connection = $this->getConnector()->connect();
 
             try 

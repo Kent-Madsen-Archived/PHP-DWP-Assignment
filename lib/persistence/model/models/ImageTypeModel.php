@@ -5,8 +5,7 @@
      */
     class ImageTypeModel
         extends DatabaseModel
-            implements ImageTypeController,
-                       ImageTypeView
+            implements ImageTypeController
     {
         /**
          * ImageTypeModel constructor.
@@ -42,16 +41,6 @@
             }
 
             return boolval( $retVal );
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewContent()
-        {
-            // TODO: Implement viewContent() method.
-            return null;
         }
 
 

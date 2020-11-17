@@ -5,8 +5,7 @@
      */
     class ProfileInformationModel 
         extends DatabaseModel 
-            implements ProfileInformationView, 
-                       ProfileInformationController
+            implements ProfileInformationController
     {
         // constructors
         /**
@@ -49,77 +48,7 @@
 
             return boolval( $retVal );
         }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPersonAddress()
-        {
-            // TODO: Implement viewPersonAddress() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPersonBirthday()
-        {
-            // TODO: Implement viewPersonBirthday() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPersonEmail()
-        {
-            // TODO: Implement viewPersonEmail() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPersonName()
-        {
-            // TODO: Implement viewPersonName() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPhoneNumber()
-        {
-            // TODO: Implement viewPhoneNumber() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewProfile()
-        {
-            // TODO: Implement viewProfile() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|void
-         */
-        final public function viewRegistered()
-        {
-            // TODO: Implement viewRegistered() method.
-            return null;
-        }
-
+        
 
         /**
          * @param $var

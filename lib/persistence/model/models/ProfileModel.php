@@ -5,8 +5,7 @@
      */
     class ProfileModel 
         extends DatabaseModel 
-            implements ProfileView, 
-                       ProfileController 
+            implements ProfileController 
                         
     {
         // Constructor
@@ -18,7 +17,7 @@
         public function __construct( $factory )
         {
             $this->setFactory( $factory );
-            $this->setIsPasswordHashed(false );
+            $this->setIsPasswordHashed( false );
         }
 
 
@@ -51,36 +50,7 @@
 
             return boolval( $retVal );
         }
-
-
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewUsername()
-        {
-
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPassword()
-        {
-            // TODO: Implement viewPassword() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewProfileType()
-        {
-            return null;
-        }
-
+        
 
         /**
          * @param $var

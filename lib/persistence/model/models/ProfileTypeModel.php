@@ -5,8 +5,7 @@
      */
     class ProfileTypeModel 
         extends DatabaseModel
-            implements ProfileTypeController, 
-                       ProfileTypeView
+            implements ProfileTypeController
     {
         // constructors
         /**
@@ -48,16 +47,6 @@
             }
 
             return boolval( $retVal );
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewContent()
-        {
-
-            return null;
         }
 
 
@@ -154,7 +143,12 @@
          */
         final public function setContent( $var )
         {
-            $this->content = $var;
+            if( is_null( $var ) )
+            {
+                return null;
+            }
+
+            $this->content = strval( $var );
         }
 
     }

@@ -278,9 +278,9 @@
                                     $stmt_identity );
 
                 //
-                $stmt_first_name = $model->getFirstName();
-                $stmt_last_name = $model->getLastName();
-                $stmt_middle_name = $model->getMiddleName();
+                $stmt_first_name    = $model->getFirstName();
+                $stmt_last_name     = $model->getLastName();
+                $stmt_middle_name   = $model->getMiddleName();
 
                 $stmt_identity = $model->getIdentity();
 
@@ -296,7 +296,6 @@
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -337,7 +336,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -372,8 +371,9 @@
         final public function length()
         {
             $retVal = CONSTANT_ZERO;
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 

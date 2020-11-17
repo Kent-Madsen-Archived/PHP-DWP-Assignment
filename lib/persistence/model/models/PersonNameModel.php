@@ -5,8 +5,7 @@
      */
     class PersonNameModel 
         extends DatabaseModel 
-            implements PersonNameView, 
-                       PersonNameController
+            implements PersonNameController
     {
         // Constructors
         /**
@@ -83,35 +82,6 @@
             }
 
             return false;
-        }
-
-
-        //
-        /**
-         * @return mixed|null
-         */
-        final public function viewFirstname()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewLastname()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewMiddlename()
-        {
-
-            return null;
         }
 
 

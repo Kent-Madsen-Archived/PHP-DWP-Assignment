@@ -19,8 +19,9 @@
         public function __construct( $mysql_connector )
         {   
             $this->setConnector( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
         }
 
 
@@ -128,8 +129,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -144,13 +145,13 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setArrived( $row[ 'arrived' ] );
-                        $model->setEntityCode( $row[ 'entity_code' ] );
+                        $model->setArrived( strval( $row[ 'arrived' ] ) );
+                        $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
 
-                        $model->setProductId( $row[ 'product_id' ] );
-                        $model->setBrought( $row[ 'brought_id' ] );
+                        $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
+                        $model->setBrought( intval( $row[ 'brought_id' ], 10 ) );
 
                         array_push( $retVal, $model );
                     }
@@ -240,8 +241,9 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
-
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+            
             $connection = $this->getConnector()->connect();
 
             try 
@@ -251,11 +253,11 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = $row[ 'number_of_rows' ];
+                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
                     }
                 }  
             }

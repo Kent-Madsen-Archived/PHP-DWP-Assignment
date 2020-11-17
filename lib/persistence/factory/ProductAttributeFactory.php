@@ -239,7 +239,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -251,11 +251,8 @@
             }
             catch( Exception $ex )
             {
-                $retVal = false;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -275,8 +272,11 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
+            
             $connection = $this->getConnector()->connect();
 
             try 

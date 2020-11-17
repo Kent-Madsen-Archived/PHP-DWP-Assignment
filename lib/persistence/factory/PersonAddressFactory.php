@@ -149,11 +149,13 @@
 
                         $personAddressModel->setIdentity( $row[ 'identity' ] );
     
-                        $personAddressModel->setStreetName( $row[ 'street_name' ] );
+                        $personAddressModel->setStreetName(  $row[ 'street_name' ]  );
                         $personAddressModel->setStreetAddressNumber( $row[ 'street_address_number' ] );
-                        $personAddressModel->setZipCode( $row[ 'zip_code' ] );
-                        $personAddressModel->setCountry( $row[ 'country' ] );
-                        $personAddressModel->setStreetFloor( $row['street_address_floor'] );
+
+                        $personAddressModel->setZipCode(  $row[ 'zip_code' ]  );
+                        $personAddressModel->setCountry(  $row[ 'country' ]  );
+
+                        $personAddressModel->setStreetFloor( $row['street_address_floor']  );
 
                         array_push( $retVal, $personAddressModel );
                     }
@@ -248,7 +250,6 @@
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -324,7 +325,6 @@
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -349,7 +349,7 @@
             }
 
             // return value
-            $retVal = null;
+            $retVal = false;
 
             // SQL Query
             $sql = "DELETE FROM person_address WHERE identity = ?;";
@@ -369,7 +369,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -381,11 +381,8 @@
             }
             catch( Exception $ex )
             {
-                $retVal = false;
-
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -393,7 +390,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -405,9 +402,9 @@
         {
             // return value
             $retVal = CONSTANT_ZERO;
-
-            // sql query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to the server
             $local_connection = $this->getConnector()->connect();
@@ -433,7 +430,6 @@
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
 

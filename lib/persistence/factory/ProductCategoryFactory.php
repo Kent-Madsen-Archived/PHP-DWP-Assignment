@@ -20,8 +20,9 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
         }
 
 
@@ -127,8 +128,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit  = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -143,8 +144,8 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setContent( strval( $row[ 'content' ] ) );
 
                         array_push( $retVal, $model );
                     }
@@ -240,7 +241,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -254,7 +255,6 @@
             {
                 // Rolls back, the changes
                 $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -274,7 +274,8 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 
@@ -285,7 +286,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > CONSTANT_ZERO )
+                if( $result->num_rows>CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {

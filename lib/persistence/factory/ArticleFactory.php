@@ -67,7 +67,6 @@
         final public function createModel()
         {
             $model = new ArticleModel( $this );
-
             return $model;
         }
 
@@ -110,10 +109,8 @@
          */
         final public function read()
         {
-            $connection = $this->getConnector()->connect();
-
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM article LIMIT ? OFFSET ?;";
@@ -121,6 +118,8 @@
             // prepare statement variables
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            $connection = $this->getConnector()->connect();
 
             try 
             {
@@ -138,6 +137,8 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $articleModel = $this->createModel();
@@ -201,7 +202,7 @@
             $stmt_offset = null;
 
             // return array
-            $retVal = array();
+            $retVal = null;
 
             try 
             {
@@ -219,14 +220,16 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $articleModel = $this->createModel();
                         
                         $articleModel->setIdentity( $row[ 'identity' ] );
                         
-                        $articleModel->setTitle( $row[ 'title' ] );
-                        $articleModel->setContent( $row[ 'content' ] );
+                        $articleModel->setTitle( $row[ 'title' ]  );
+                        $articleModel->setContent( $row[ 'content' ]  );
 
                         $articleModel->setCreatedOn( $row[ 'created_on' ] );
                         $articleModel->setLastUpdated( $row[ 'last_updated' ] );
@@ -261,11 +264,11 @@
             }
 
             // Statement Variables
-            $stmt_title = null;
+            $stmt_title   = null;
             $stmt_content = null;
 
             // Return Values
-            $retVal = null;
+            $retVal = false;
 
             $sql = "INSERT INTO article( title, article_content ) VALUES( ?, ? );";
 
@@ -280,14 +283,14 @@
                                     $stmt_title, 
                                     $stmt_content );
 
-                $stmt_title = $model->getTitle();
+                $stmt_title   = $model->getTitle();
                 $stmt_content = $model->getContent();
 
                 // Executes the query
                 $stmt->execute();
 
                 $model->setIdentity( $this->getConnector()->finish_insert( $stmt ) );
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -300,7 +303,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -323,7 +326,7 @@
             $stmt_identity  = null;
 
             // Return Value
-            $retVal = null;
+            $retVal = false;
 
             //
             $connection = $this->getConnector()->connect();
@@ -346,6 +349,7 @@
 
                 // commits the statement
                 $this->getConnector()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -358,7 +362,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $model;
+            return boolval( $retVal );
         }
 
 
@@ -385,6 +389,7 @@
 
             // opens a connection to the mysql database
             $local_connection = $this->getConnector()->connect();
+
 
             try 
             {
@@ -424,8 +429,9 @@
         final public function length()
         {
             // SQL Query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
-
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+            
             // Connection to the mysql Database
             $local_connection = $this->getConnector()->connect();
 
@@ -472,12 +478,12 @@
 
             if( is_null( $classObject ) )
             {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes');
+                throw new Exception( 'ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes' );
             }
 
             if( !is_object( $classObject ) )
             {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
+                throw new Exception( 'ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.' );
             }
 
             if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )

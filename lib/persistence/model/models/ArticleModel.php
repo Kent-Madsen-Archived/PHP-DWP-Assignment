@@ -4,8 +4,7 @@
      */
     class ArticleModel 
         extends DatabaseModel
-            implements ArticleController, 
-                       ArticleView
+            implements ArticleController
     {
         // Constructors
         /**
@@ -57,43 +56,6 @@
             }
 
             return boolval( $retVal );
-        }
-
-
-        /**
-         * @return null
-         */
-        final public function viewTitle()
-        {
-
-            return null;
-        }
-
-
-        /**
-         * @return null
-         */
-        final public function viewContent()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return null
-         */
-        final public function viewCreatedOn()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return null
-         */
-        final public function viewLastUpdated()
-        {
-            return null;
         }
 
 

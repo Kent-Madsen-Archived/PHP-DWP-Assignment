@@ -5,8 +5,7 @@
      */
     class ImageModel 
         extends DatabaseModel
-            implements ImageController,
-                       ImageView
+            implements ImageController
     {
         /**
          * ImageModel constructor.
@@ -58,76 +57,6 @@
             $retVal = false;
 
             return boolval( $retVal );
-        }
-
-
-        /**
-         * @return mixed|void
-         */
-        public function viewTitle()
-        {
-            // TODO: Implement viewTitle() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewParent()
-        {
-            // TODO: Implement viewParent() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewImageType()
-        {
-            // TODO: Implement viewImageType() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewImageSrc()
-        {
-            // TODO: Implement viewImageSrc() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewAlt()
-        {
-            // TODO: Implement viewAlt() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewRegistered()
-        {
-            // TODO: Implement viewRegistered() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewLastUpdate()
-        {
-            // TODO: Implement viewLastUpdate() method.
-            return null;
         }
 
 

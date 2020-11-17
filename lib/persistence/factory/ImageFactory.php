@@ -247,8 +247,9 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            // sql query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            // SQL query
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to the database
             $local_connection = $this->getConnector()->connect();

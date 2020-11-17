@@ -27,7 +27,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsValidConnector( $var )
+        final protected function validateAsValidConnector( $var ) : bool
         {
             $retVal = false;
 
@@ -43,6 +43,28 @@
             }
 
             return boolval( $retVal );
+        }
+
+        /**
+         * @param $connector
+         * @param $value
+         * @return string
+         */
+        final protected function escape( $value ) : string
+        {
+            $connector = $this->getConnector()->getConnector();
+
+            if( is_null( $connector ) )
+            {
+                throw new Exception('connector is null');
+            }
+
+            if( !( $connector instanceof mysqli ) )
+            {
+                throw new Exception('connector is not class mysqli');
+            }
+
+            return $connector->escape_string( $value );
         }
 
 

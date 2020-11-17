@@ -5,8 +5,7 @@
      */
     class BroughtProductModel 
         extends DatabaseModel
-            implements BroughtProductController,
-                       BroughtProductView
+            implements BroughtProductController
     {
         /**
          * BroughtProductModel constructor.
@@ -49,57 +48,7 @@
             return $retVal;
         }
 
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewRegistered()
-        {
-            // TODO: Implement viewRegistered() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewProduct()
-        {
-            // TODO: Implement viewProduct() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPrice()
-        {
-            // TODO: Implement viewPrice() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewInvoice()
-        {
-            // TODO: Implement viewInvoice() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewNumberOfProducts()
-        {
-            // TODO: Implement viewNumberOfProducts() method.
-            return null;
-        }
-
-
+        
         /**
          * @param $var
          * @return mixed|null

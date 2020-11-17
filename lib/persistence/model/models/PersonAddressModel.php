@@ -5,8 +5,7 @@
      */
     class PersonAddressModel 
         extends DatabaseModel 
-            implements PersonAddressView,
-                       PersonAddressController
+            implements PersonAddressController
     {
         // constructors
         /**
@@ -84,52 +83,7 @@
             return false;
         }
 
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewStreetName()
-        {
-            return $this->getStreetName();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewStreetFloor()
-        {
-            return $this->getStreetFloor();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewZipCode()
-        {
-            return $this->getZipCode();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewCountry()
-        {
-            return $this->getCountry();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewStreetAddressNumber()
-        {
-            return $this->getStreetAddressNumber();
-        }
-
-
+        
         /**
          * @param $var
          * @return mixed|null

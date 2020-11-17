@@ -20,8 +20,9 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
         }
 
 
@@ -141,14 +142,14 @@
                     {
                         $Model = $this->createModel();
 
-                        $Model->setIdentity( $row[ 'identity' ] );
+                        $Model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $Model->setUsername( $row[ 'username' ] );
+                        $Model->setUsername( strval( $row[ 'username' ] ) );
 
-                        $Model->setPassword( $row[ 'password' ] );
+                        $Model->setPassword( strval( $row[ 'password' ] ) );
                         $Model->setIsPasswordHashed( TRUE );
 
-                        $Model->setProfileType( $row[ 'profile_type' ] );
+                        $Model->setProfileType( intval( $row[ 'profile_type' ], 10 ) );
 
                         array_push( $retVal, $Model );
                     }
@@ -224,7 +225,7 @@
                 $stmt_username = $model->getUsername();
                 $stmt_password = $model->getPassword();
 
-                $stmt_profile_type = $model->getProfileType();
+                $stmt_profile_type = intval( $model->getProfileType(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -243,7 +244,7 @@
                 $this->getConnector()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -288,12 +289,12 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 $stmt_username = $model->getUsername();
                 $stmt_password = $model->getPassword();
 
-                $stmt_profile_type = $model->getProfileType();
+                $stmt_profile_type = intval( $model->getProfileType(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -351,7 +352,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -428,7 +429,6 @@
                     }
                 }
 
-                $retVal = $model;
             }
             catch( Exception $ex )
             {
@@ -470,7 +470,7 @@
                 $stmt->bind_param( "i",
                                     $stmt_profile_type_idx );
                 
-                $stmt_profile_type_idx = $model->getProfileType();
+                $stmt_profile_type_idx = intval( $model->getProfileType(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -509,8 +509,9 @@
         final public function length()
         {
             $retVal = CONSTANT_ZERO;
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 

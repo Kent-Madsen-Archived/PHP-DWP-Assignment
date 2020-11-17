@@ -5,8 +5,7 @@
      */
     class ProductInvoiceModel 
         extends DatabaseModel
-            implements ProductInvoiceView,
-                       ProductInvoiceController
+            implements ProductInvoiceController
     {
         // Constructors
         /**
@@ -88,53 +87,6 @@
 
             return boolval( $retval );
         }
-
-
-        /**
-         * @return mixed|void
-         */
-        final public function viewTotalPrice()
-        {
-            return $this->getTotalPrice();
-        }
-
-
-        /**
-         * @return mixed|void
-         */
-        final public function viewOwnerAddress()
-        {
-            return $this->getAddressId();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewOwnerMail()
-        {
-            return $this->getMailId();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewOwnerName()
-        {
-            return $this->getOwnerNameId();
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewRegistered()
-        {
-            // TODO: Implement viewRegistered() method.
-            return null;
-        }
-
 
         /**
          * @param $var

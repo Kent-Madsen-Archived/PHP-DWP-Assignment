@@ -136,7 +136,7 @@
             $profileTypeFactory         = new ProfileTypeFactory( $this->getConnector() );
 
 
-            array_push($arrToProcess,
+            array_push( $arrToProcess,
                         $articleFactory, $associatedCategoryFactory,
                         $broughtFactory, $contactfactory,
                         $imageFactory, $imageTypeFactory,
@@ -171,15 +171,27 @@
 
                 if( $current->exist() )
                 {
-                    echo ("<li> Table: Exists </li>");
+                    $this->printRow('table', 'exist');
+
+                    $val = $current->length();
+                    $this->printRow('current size', $val);
                 }
                 else
                 {
-                    echo ("<li> Table: does not exist </li>");
+                    echo ( "<li> Table: does not exist </li>" );
                 }
             }
 
             echo ("</ul>");
+        }
+
+
+        /**
+         * 
+         */
+        private function process_view_setup()
+        {
+
         }
 
 
@@ -189,6 +201,17 @@
         private function printStatus( $table_name )
         {
             echo ("<p>currently selected table: {$table_name}</p>");
+        }
+
+
+        /**
+         * 
+         */
+        private function printRow( $key, $value )
+        {
+            $converted_key = htmlentities( $key );
+            $converted_value = htmlentities( $value );
+            echo ("<li> {$converted_key}, {$converted_value} </li>");
         }
 
 

@@ -111,7 +111,7 @@
             $connection = $this->getConnector()->connect();
 
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM image_type LIMIT ? OFFSET ?;";
@@ -136,6 +136,8 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $brought = $this->createModel();
@@ -232,8 +234,8 @@
             // Return value
             $retVal = CONSTANT_ZERO;
 
-            // SQL Query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to a mysql database
             $local_connection = $this->getConnector()->connect();

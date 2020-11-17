@@ -117,7 +117,7 @@
             $stmt_offset = null;
 
             // Return Values
-            $retVal = array();
+            $retVal = null;
 
             // Connection
             $local_connection = $this->getConnector()->connect();
@@ -140,16 +140,18 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setProductAttributeId( $row[ 'product_attribute_id' ] );
-                        $model->setProductCategoryId( $row[ 'product_category_id' ] );
+                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], 10 ) );
+                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], 10 ) );
                         
-                        $model->setProductId( $row[ 'product_id' ] );
+                        $model->setProductId( intval( $row[ 'product_id' ], 10) );
 
                         array_push( $retVal, $model );
                     }
@@ -244,14 +246,13 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
                 $this->getConnector()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -279,7 +280,8 @@
             $retVal = CONSTANT_ZERO;
 
             // sql query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // connection to the mysql database
             $local_connection = $this->getConnector()->connect();

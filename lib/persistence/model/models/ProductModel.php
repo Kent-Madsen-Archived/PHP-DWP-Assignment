@@ -5,8 +5,7 @@
      */
     class ProductModel 
         extends DatabaseModel
-            implements ProductView, 
-                       ProductController
+            implements ProductController
     {
         // constructors
         /**
@@ -61,59 +60,7 @@
             return boolval( $retVal );
         }
 
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewDescription()
-        {
-            // TODO: Implement viewDescription() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewPrice()
-        {
-            // TODO: Implement viewPrice() method.
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewTitle()
-        {
-            // TODO: Implement viewTitle() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerTitle( $var )
-        {
-            // TODO: Implement controllerTitle() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerPrice( $var )
-        {
-            // TODO: Implement controllerPrice() method.
-            return null;
-        }
-
-
+        
         /**
          * @param $var
          * @return mixed|null

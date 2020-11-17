@@ -126,8 +126,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit  = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -142,9 +142,9 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
                         
-                        $model->setTotalPrice( $row[ 'total_price' ] );
+                        $model->setTotalPrice( doubleval( $row[ 'total_price' ] ) );
                         $model->setRegistered( $row[ 'invoice_registered' ] );
 
                         array_push( $retVal, $model );
@@ -233,8 +233,9 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
-
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+            
             $connection = $this->getConnector()->connect();
 
             try 

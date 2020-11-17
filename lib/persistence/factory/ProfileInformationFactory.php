@@ -20,8 +20,9 @@
         public function __construct( $mysql_connector )
         {
             $this->setConnector( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
         }
 
 
@@ -82,7 +83,6 @@
         final public function createModel()
         {
             $model = new ProfileInformationModel( $this );
-
             return $model;
         }
 
@@ -127,8 +127,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -143,16 +143,16 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setProfileId( $row[ 'profile_id' ] );
+                        $model->setProfileId( intval( $row[ 'profile_id' ], 10 ) );
 
-                        $model->setPersonNameId( $row[ 'person_name_id' ] );
-                        $model->setPersonAddressId( $row[ 'person_address_id' ] );
-                        $model->setPersonEmailId( $row[ 'person_email_id' ] );
+                        $model->setPersonNameId( intval( $row[ 'person_name_id' ], 10 ) );
+                        $model->setPersonAddressId( intval( $row[ 'person_address_id' ], 10 ) );
+                        $model->setPersonEmailId( intval( $row[ 'person_email_id' ], 10 ) );
 
-                        $model->setPersonPhone( $row[ 'person_phone' ] );
-                        $model->setBirthday( $row[ 'birthday' ] );
+                        $model->setPersonPhone( strval( $row[ 'person_phone' ] ) );
+                        $model->setBirthday( strval( $row[ 'birthday' ] ) );
 
                         $model->setRegistered( $row[ 'registered' ] );
 
@@ -200,7 +200,7 @@
                 $stmt->bind_param( "i",
                                     $stmt_profile_id );
 
-                $stmt_profile_id = $model->getProfileId();
+                $stmt_profile_id = intval( $model->getProfileId(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -211,16 +211,16 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setProfileId( $row[ 'profile_id' ] );
+                        $model->setProfileId( intval( $row[ 'profile_id' ], 10 ) );
 
-                        $model->setPersonNameId( $row[ 'person_name_id' ] );
-                        $model->setPersonAddressId( $row[ 'person_address_id' ] );
-                        $model->setPersonEmailId( $row[ 'person_email_id' ] );
+                        $model->setPersonNameId( intval( $row[ 'person_name_id' ], 10 ) );
+                        $model->setPersonAddressId( intval( $row[ 'person_address_id' ], 10 ) );
+                        $model->setPersonEmailId( intval( $row[ 'person_email_id' ], 10 ) );
 
-                        $model->setPersonPhone( $row[ 'person_phone' ] );
-                        $model->setBirthday( $row[ 'birthday' ] );
+                        $model->setPersonPhone( strval( $row[ 'person_phone' ] ) );
+                        $model->setBirthday( strval( $row[ 'birthday' ] ) );
 
                         $model->setRegistered( $row[ 'registered' ] );
 
@@ -281,11 +281,11 @@
                                     $stmt_birthday );
 
                 //
-                $stmt_profile_id        = $model->getProfileId();
+                $stmt_profile_id        = intval( $model->getProfileId(), 10);
 
-                $stmt_person_name_id    = $model->getPersonNameId();
-                $stmt_person_address_id = $model->getPersonAddressId();
-                $stmt_person_email_id   = $model->getPersonEmailId();
+                $stmt_person_name_id    = intval( $model->getPersonNameId(), 10 );
+                $stmt_person_address_id = intval( $model->getPersonAddressId(), 10 );
+                $stmt_person_email_id   = intval( $model->getPersonEmailId(), 10 );
 
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
@@ -294,9 +294,7 @@
                 $stmt->execute();
 
                 //
-                $model->setIdentity( $this->getConnector()->finish_insert() );
-
-                //
+                $model->setIdentity( intval( $this->getConnector()->finish_insert( $stmt ), 10) );
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -361,11 +359,11 @@
                                     $stmt_identity );
 
                 //
-                $stmt_profile_id        = $model->getProfileId();
+                $stmt_profile_id        = intval( $model->getProfileId(), 10 );
                 
-                $stmt_person_name_id    = $model->getPersonNameId();
-                $stmt_person_address_id = $model->getPersonAddressId();
-                $stmt_person_email_id   = $model->getPersonEmailId();
+                $stmt_person_name_id    = intval( $model->getPersonNameId(), 10 );
+                $stmt_person_address_id = intval( $model->getPersonAddressId(), 10 );
+                $stmt_person_email_id   = intval( $model->getPersonEmailId(), 10);
 
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
@@ -424,7 +422,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -456,8 +454,9 @@
         final public function length()
         {
             $retVal = CONSTANT_ZERO;
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 

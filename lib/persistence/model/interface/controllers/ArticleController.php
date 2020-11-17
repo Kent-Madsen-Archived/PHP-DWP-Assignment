@@ -17,11 +17,13 @@
          */
         public function controllerTitle( $var );
 
+
         /**
          * @param $var
          * @return mixed
          */
         public function controllerContent( $var );
+
 
         /**
          * @param $var
@@ -29,6 +31,7 @@
          */
         public function controllerCreatedOn( $var );
 
+        
         /**
          * @param $var
          * @return mixed

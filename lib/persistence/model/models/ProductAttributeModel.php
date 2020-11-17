@@ -5,8 +5,7 @@
      */
     class ProductAttributeModel 
         extends DatabaseModel
-            implements ProductAttributeController,
-                       ProductAttributeView
+            implements ProductAttributeController
     {
         // Constructors
         /**
@@ -48,16 +47,6 @@
             }
 
             return boolval( $retVal );
-        }
-
-
-        /**
-         * @return mixed|void
-         */
-        final public function viewContent()
-        {
-            // TODO: Implement viewContent() method.
-            return null;
         }
 
 

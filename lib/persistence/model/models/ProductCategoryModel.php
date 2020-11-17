@@ -5,8 +5,7 @@
      */
     class ProductCategoryModel 
         extends DatabaseModel
-            implements ProductCategoryController,
-                       ProductCategoryView
+            implements ProductCategoryController
     {
         // Constructors
         /**
@@ -60,17 +59,7 @@
 
             return $retVal;
         }
-
-
-        /**
-         * @return mixed|void
-         */
-        final public function viewContent()
-        {
-            // TODO: Implement viewContent() method.
-            return null;
-        }
-
+        
 
         /**
          * @param $var

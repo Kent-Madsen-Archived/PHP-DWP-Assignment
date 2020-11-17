@@ -5,8 +5,7 @@
      */
     class PersonEmailModel 
         extends DatabaseModel
-            implements PersonEmailController, 
-                       PersonEmailView
+            implements PersonEmailController
     {
         // Constructor
         /**
@@ -48,15 +47,6 @@
             }
 
             return $retVal;
-        }
-
-
-        /**
-         * @return false|mixed
-         */
-        final public function viewContent()
-        {
-            return false;
         }
 
 

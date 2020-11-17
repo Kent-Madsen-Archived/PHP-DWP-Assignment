@@ -131,8 +131,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit  = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -145,11 +145,11 @@
                     {
                         $productModel = $this->createModel();
 
-                        $productModel->setIdentity( $row[ 'identity' ] );
+                        $productModel->setIdentity( intval( $row[ 'identity' ], 10 ) );
                         
-                        $productModel->setTitle( $row[ 'title' ] );
-                        $productModel->setDescription( $row[ 'product_description' ] );
-                        $productModel->setPrice( $row[ 'product_price' ] );
+                        $productModel->setTitle( strval(  $row[ 'title' ] ) );
+                        $productModel->setDescription( strval( $row[ 'product_description' ] ) );
+                        $productModel->setPrice( doubleval( $row[ 'product_price' ] ) );
 
                         array_push( $retVal, $productModel );
                     }
@@ -208,6 +208,7 @@
             // prepare statement variables
             $stmt_title         = null;
             $stmt_description   = null;
+
             $stmt_price         = null;
 
             $connection = $this->getConnector()->connect();
@@ -222,13 +223,13 @@
                                     $stmt_price );
 
                 $stmt_title         = $model->getTitle();
-                $stmt_description   = $model->getDescription();
-                $stmt_price         = $model->getPrice();
+                $stmt_description   = $model->getDescription() ;
+
+                $stmt_price         = doubleval( $model->getPrice() );
 
                 $stmt->execute();
 
-                $model->setIdentity( $this->getConnector()->finish_insert( $stmt ) );
-
+                $model->setIdentity( intval( $this->getConnector()->finish_insert( $stmt ), 10 ) );
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -240,7 +241,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -285,15 +286,14 @@
                 $stmt_title         = $model->getTitle();
                 $stmt_description   = $model->getDescription();
                 
-                $stmt_price         = $model->getPrice();
+                $stmt_price         = doubleval( $model->getPrice() );
 
-                $stmt_identity      = $model->getIdentity();
+                $stmt_identity      = intval( $model->getIdentity(), 10 );
 
                 $stmt->execute();
 
                 // commits the statement
                 $this->getConnector()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -339,14 +339,13 @@
                                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
                 $this->getConnector()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -372,8 +371,9 @@
         final public function length()
         {
             $retVal = CONSTANT_ZERO;
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getConnector()->connect();
 
@@ -388,7 +388,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = $row[ 'number_of_rows' ];
+                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
                     }
                 }  
             }

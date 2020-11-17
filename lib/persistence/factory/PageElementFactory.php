@@ -110,7 +110,7 @@
         final public function read()
         {
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM page_element LIMIT ? OFFSET ?;";
@@ -138,6 +138,8 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $brought = $this->createModel();
@@ -147,10 +149,10 @@
                         $brought->setAreaKey( $row[ 'area_key' ] );
                         
                         $brought->setTitle( $row[ 'title' ] );
-                        $brought->setContent( $row[ 'content' ] );
+                        $brought->setContent( $row[ 'content' ]  );
                         
                         $brought->setCreatedOn( $row[ 'created_on' ] );
-                        $brought->setLastUpdate( $row[ 'last_updated' ] );
+                        $brought->setLastUpdated( $row[ 'last_updated' ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -238,8 +240,9 @@
         {
             $retVal = CONSTANT_ZERO;
 
-            // sql query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            //
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // Opens a connection to a database
             $connection = $this->getConnector()->connect();
@@ -265,7 +268,6 @@
             }
             finally
             {
-                //
                 $this->getConnector()->disconnect();
             }
 

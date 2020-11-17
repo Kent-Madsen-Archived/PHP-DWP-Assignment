@@ -282,13 +282,13 @@
          */
         final public function length()
         {
-            // sql query
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+
+            $retVal = CONSTANT_ZERO;
 
             //
             $connection = $this->getConnector()->connect();
-
-            $retVal = CONSTANT_ZERO;
 
             try 
             {

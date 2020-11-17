@@ -14,7 +14,7 @@
         /**
          * @return mixed
          */
-        public function length();  
+        public function length();
     }
 
 ?>

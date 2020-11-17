@@ -5,8 +5,7 @@
      */
     class AssociatedCategoryModel 
         extends DatabaseModel
-            implements AssociatedCategoryView,
-                       AssociatedCategoryController
+            implements AssociatedCategoryController
     {
         // Constructors
         /**
@@ -59,34 +58,7 @@
             return boolval( $retVal );
         }
 
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewProduct()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewAttribute()
-        {
-            return null;
-        }
-
-
-        /**
-         * @return mixed|null
-         */
-        final public function viewCategory()
-        {
-            return null;
-        }
-
-
+        
         /**
          * @param $var
          * @return mixed|null
