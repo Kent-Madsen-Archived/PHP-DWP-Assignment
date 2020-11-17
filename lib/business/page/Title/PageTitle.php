@@ -18,7 +18,7 @@
          */
         public function __construct( $title = WEBPAGE_DEFAULT_PAGE_TITLE )
         {
-            if( $title == null )
+            if( is_null( $title ) )
             {
                 $this->setTitle( WEBPAGE_DEFAULT_PAGE_TITLE );
             }
@@ -30,6 +30,7 @@
 
         // Internal Variables
         private $title = null;
+
 
         // Accessors
         /**
@@ -76,7 +77,7 @@
          */
         public function clear(): ?string
         {
-            $this->setTitle(null );
+            $this->setTitle( null );
             return $this->getTitle();
         }
 
