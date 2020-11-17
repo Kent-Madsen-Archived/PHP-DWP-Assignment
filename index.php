@@ -43,89 +43,89 @@
     $setup_route->appendValidationObject( $router_validate_root );
     $setup_route->appendValidationObject( $router_validate_setup_view );
 
-    $router->appendRoutes( $setup_route );
+    $router->appendToRoutes( $setup_route );
 
 
 
     $homepage = new Route( 'homepage', 'views/index.php' );
-    $router->appendRoutes( $homepage );
+    $router->appendToRoutes( $homepage );
     $homepage->appendValidationObject( $router_validate_root );
 
 
     $product = new Route( 'product', 'views/product.php');
-    $router->appendRoutes( $product );
+    $router->appendToRoutes( $product );
     $product->appendValidationObject( $router_validate_root );
 
 
 
     $shop = new Route( 'shop', 'views/shop.php' );
-    $router->appendRoutes( $shop );
+    $router->appendToRoutes( $shop );
     $shop->appendValidationObject( $router_validate_root );
 
 
 
     $checkout = new Route( 'checkout', 'views/checkout.php' );
-    $router->appendRoutes( $checkout );
+    $router->appendToRoutes( $checkout );
     $checkout->appendValidationObject( $router_validate_root );
 
 
 
     $about = new Route( 'about', 'views/about.php' );
-    $router->appendRoutes( $about );
+    $router->appendToRoutes( $about );
     $about->appendValidationObject( $router_validate_root );
 
 
 
     $contact = new Route( 'contact', 'views/contact.php' ) ;
-    $router->appendRoutes( $contact );
+    $router->appendToRoutes( $contact );
     $contact->appendValidationObject( $router_validate_root );
 
 
 
     $profile = new Route( 'profile', 'views/profile.php' ) ;
-    $router->appendRoutes( $profile );
+    $router->appendToRoutes( $profile );
     $profile->appendValidationObject( $router_validate_root );
 
 
 
     $login = new Route( 'login', 'views/login.php' );
-    $router->appendRoutes( $login );
+    $router->appendToRoutes( $login );
     $login->appendValidationObject( $router_validate_root );
 
 
 
     $logout = new Route( 'logout', 'views/logout.php' );
-    $router->appendRoutes( $logout );
+    $router->appendToRoutes( $logout );
     $logout->appendValidationObject( $router_validate_root );
 
 
 
     $register = new Route( 'register', 'views/register.php' );
-    $router->appendRoutes( $register );
+    $router->appendToRoutes( $register );
     $register->appendValidationObject( $router_validate_root );
 
 
 
     $forgot_my_password = new Route( 'forgot-my-password', 'views/forgot_password.php' );
-    $router->appendRoutes( $forgot_my_password );
+    $router->appendToRoutes( $forgot_my_password );
     $forgot_my_password->appendValidationObject( $router_validate_root );
 
 
 
     $news = new Route( 'news', 'views/news.php' ) ;
-    $router->appendRoutes( $news );
+    $router->appendToRoutes( $news );
     $news->appendValidationObject( $router_validate_root );
 
 
 
     $invoice = new Route( 'invoice', 'views/invoices.php' );
-    $router->appendRoutes( $invoice );
+    $router->appendToRoutes( $invoice );
     $invoice->appendValidationObject( $router_validate_root );
 
 
 
     $admin = new Route( 'admin', 'views/admin.php' );
-    $router->appendRoutes( $admin );
+    $router->appendToRoutes( $admin );
     $admin->appendValidationObject( $router_validate_root );
 
 
@@ -134,9 +134,9 @@
     $special_404 = new Route( '404', 'views/404.php' );
     
     $router->setSpecialPage404( $special_404 );
-    $router->appendRoutes( $special_404 );
+    $router->appendToRoutes( $special_404 );
 
 
     //
-    RouterSingleton::getInstance()->load_view();
+    RouterSingleton::getInstance()->loadView();
 ?>

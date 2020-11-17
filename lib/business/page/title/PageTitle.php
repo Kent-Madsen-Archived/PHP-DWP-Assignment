@@ -1,6 +1,6 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -124,7 +124,7 @@
 
             if( !is_array( $var ) )
             {
-                throw new Exception('');
+                throw new Exception('The parameter value is not an array');
             }
 
             foreach ( $var as $value )

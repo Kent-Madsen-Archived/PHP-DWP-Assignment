@@ -1,6 +1,6 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -57,12 +57,14 @@
         {
             if( !$value instanceof RouterValidateArgument )
             {
-                throw new Exception('');
+                throw new Exception( 'Parameter value is not an instance of RouterValidateArgument' );
             }
 
+            // initiates array, incase it's null
             $this->initiateValidationTree();
 
-            array_push($this->validation_tree, $value );
+            // push element to tree
+            array_push( $this->validation_tree, $value );
         }
 
 
@@ -112,7 +114,7 @@
         {
             if( !is_int( $lvl ) )
             {
-                throw new Exception('');
+                throw new Exception('parameter value - lvl: only int is allowed');
             }
 
             $retVal = false;
@@ -132,7 +134,7 @@
             for( $idx = CONSTANT_ZERO;
                  $idx < count( $this->getValidationTree() );
                  $idx ++ )
-            {;
+            {
                 $current = $this->getValidationTree()[ $idx ];
                 $current_state = false;
 

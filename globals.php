@@ -1,10 +1,10 @@
-<?php 
+<?php
     /**
      *  Title:
      *  Author:
      *  Type: PHP Script
      */
-    
+
     define( "WEBPAGE_DEFAULT_PAGE_TITLE", "PHP DWP Assignment" );
     define( "WEBPAGE_DEFAULT_MAILTO", "kent.vejrup.madsen@protonmail.com" );
 
@@ -21,7 +21,12 @@
     
     define( "WEBPAGE_DATABASE_PORT", 3600 );
 
+    define('S_REQUEST', 'REQUEST_URI');
+    define('S_HOST', 'HTTP_HOST');
+
+
     define( "BASE_10", 10 );
+
     define( 'CONSTANT_ZERO', 0 );
     define( 'CONSTANT_ONE', 1 );
 ?>

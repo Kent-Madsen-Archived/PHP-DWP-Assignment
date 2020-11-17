@@ -3,7 +3,7 @@
     require 'forms/contact_process.php';
     
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */

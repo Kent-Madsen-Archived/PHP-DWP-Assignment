@@ -5,13 +5,8 @@
      *  Type: PHP Script
      */
 
-    //
     require 'globals.php';
-    
-    //
     require 'functions.php';
-
-    //
     require 'autoloader.php';
 
     // Autoloader script for loading classes automaticly.
@@ -28,6 +23,6 @@
 
     require 'vendor/autoload.php';
 
-    // Setup Globals
+    // Setup Singletons
     PageTitleSingleton::getInstance();
 ?>
