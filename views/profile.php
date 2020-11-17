@@ -5,13 +5,9 @@
      *  Type: PHP Script
      */
 
-     $domain = new ProfileDomain();
+    $domain = new ProfileDomain();
 
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Profile');
+    PageTitleController::getSingletonController()->append(' - Profile');
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +18,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
     <body>

@@ -17,6 +17,7 @@
             $this->setSecurityPublicField( $public );
         }
 
+
         // Variables
             //  $secretCapchaKey = GOOGLE_V2_RECAPTCHA_PRIVATE;
         private $security_private_field = null;
@@ -29,6 +30,7 @@
 
             // $_POST['g-recaptcha-response']
         private $response_key = null;
+
 
         // Functions
         /**
@@ -43,8 +45,8 @@
             $this->setJSONResponse( json_decode( $get_file, true ) );
         }
 
-        // Validates the result, if it isn't a success it will throw an error.
 
+        // Validates the result, if it isn't a success it will throw an error.
         /**
          * @throws Exception
          */
@@ -56,6 +58,7 @@
             }
         }
 
+
         // globals
         /**
          *
@@ -65,8 +68,8 @@
             echo GOOGLE_V2_RECAPTCHA_PUBLIC;
         }
 
-        // Accessors
 
+        // Accessors
         /**
          * @return null
          */
@@ -74,6 +77,7 @@
         {
             return $this->security_private_field;
         }
+
 
         /**
          * @return null
@@ -83,6 +87,7 @@
             return $this->security_public_field;
         }
 
+
         /**
          * @return null
          */
@@ -90,6 +95,7 @@
         {
             return $this->json_response;
         }
+
 
         /**
          * @return null
@@ -99,6 +105,7 @@
             return $this->response_key;
         }
 
+
         /**
          * @param $var
          */
@@ -106,6 +113,7 @@
         {
             $this->security_private_field = $var;
         }
+
 
         /**
          * @param $var
@@ -115,6 +123,7 @@
             $this->security_public_field = $var;
         }
 
+
         /**
          * @param $var
          */
@@ -122,6 +131,7 @@
         {
             $this->json_response = $var;
         }
+
 
         /**
          * @param $var

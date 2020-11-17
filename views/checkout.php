@@ -4,8 +4,7 @@
      *  Author:
      *  Type: PHP Script
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Checkout' );
+    PageTitleController::getSingletonController()->append( ' - Checkout' );
 
     $domain = new CheckoutDomain();
 ?>
@@ -18,9 +17,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
     <body>

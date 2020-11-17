@@ -20,13 +20,12 @@
     /**
      * 
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Register' );
-
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
     $fss = new FormSpoofSecurity();
     $fss->apply_to_session();
+
+    PageTitleController::getSingletonController()->append( ' - Register' );
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +38,8 @@
 
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
     <body>

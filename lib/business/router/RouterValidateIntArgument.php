@@ -9,24 +9,38 @@
         /**
          * @param $arg
          * @return bool
+         * @throws Exception
          */
-        final public function validateArgumentLevel( $arg )
+        final public function validateArgumentLevel( $arg ): bool
         {
+            $retVal = false;
             $value = filter_var( $arg, FILTER_VALIDATE_INT );
+
+            if( is_null( $arg ) )
+            {
+                $this->setValue( null );
+                $this->setIsValidated( false );
+
+                return boolval( $retVal );
+            }
 
             if( empty( $arg ) )
             {
                 $this->setValue( null );
-                return true;
+                $this->setIsValidated(false );
+
+                return boolval( $retVal );
             }
 
-            if( is_null( $arg ) || $value )
+            if( is_numeric( $value ) )
             {
                 $this->setValue( $value );
-                return true;
+                $this->setIsValidated(true );
+
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
     }

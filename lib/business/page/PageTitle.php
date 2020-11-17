@@ -13,9 +13,10 @@
         // constructors
         /**
          * PageTitle constructor.
-         * @param $title
+         * @param string $title
+         * @throws Exception
          */
-        public function __construct( $title )
+        public function __construct( $title = WEBPAGE_DEFAULT_PAGE_TITLE )
         {
             if( $title == null )
             {
@@ -31,47 +32,104 @@
         private $title = null;
 
         // Accessors
-
         /**
-         * @return null
+         * @return string|null
          */
-        public function getTitle()
+        public function getTitle(): ?string
         {
-            return $this->title;
+            if( is_null( $this->title ) )
+            {
+                return null;
+            }
+
+            return strval( $this->title );
         }
+
 
         /**
          * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        public function setTitle( $var )
+        public function setTitle( $var ): ?string
         {
-            $this->title = $var;
+            if( is_null( $var ) )
+            {
+                $this->title = null;
+                return $this->getTitle();
+            }
+
+            if( !is_string( $var ) )
+            {
+                throw new Exception('only string is allowed as parameter');
+            }
+
+            $this->title = strval( $var );
+
+            return $this->getTitle();
         }
 
+
         /**
-         *
+         * @return string|null
+         * @throws Exception
          */
-        public function clear()
+        public function clear(): ?string
         {
-            $this->title = '';
+            $this->setTitle(null );
+            return $this->getTitle();
         }
+
 
         /**
          * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        public function appendToTitle( $var )
+        final public function appendToTitle( $var ): ?string
         {
-            $this->title = $this->title . $var;
+            if( is_null( $var ) )
+            {
+                return $this->getTitle();
+            }
+
+            if(! is_string( $var ) )
+            {
+                throw new Exception('Input parameter is not a string');
+            }
+
+            if( is_null( $this->getTitle() ) )
+            {
+                $this->setTitle('');
+            }
+
+            $this->title .= $var;
+
+            return strval( $this->title );
         }
 
-        // Placeholder functions
 
         /**
-         *
+         * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        public function printDocumentTitle()
+        final public function appendToTitleArray( $var ): ?string
         {
-            echo "<title>" . $this->getTitle() . "</title>";
+            if( is_null( $var ) )
+            {
+                return $this->getTitle();
+            }
+
+            if( !is_array( $var ) )
+            {
+                throw new Exception('');
+            }
+
+            foreach ( $var as $value )
+            {
+                $this->appendToTitle( $value );
+            }
         }
     }
 ?>

@@ -7,7 +7,7 @@
 
 
     /**
-     * Class Factory
+     * Class FactoryTemplate
      */
     abstract class FactoryTemplate
         implements FactoryCRUD,
@@ -27,13 +27,18 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsValidConnector( $var ) : bool
+        final protected function validateAsValidConnector( $var ): bool
         {
             $retVal = false;
 
             if( is_null( $var ) )
             {
                 $retVal = true;
+                return boolval( $retVal );
+            }
+
+            if( is_scalar( $var ) )
+            {
                 return boolval( $retVal );
             }
 
@@ -45,10 +50,11 @@
             return boolval( $retVal );
         }
 
+
         /**
-         * @param $connector
          * @param $value
          * @return string
+         * @throws Exception
          */
         final protected function escape( $value ) : string
         {
@@ -73,7 +79,7 @@
          * @param $interface_name
          * @return bool
          */
-        final static public function ModelImplements( $Class, $interface_name )
+        final static public function ModelImplements( $Class, $interface_name ): bool
         {
             $retVal = false;
 
@@ -97,7 +103,7 @@
          * @return int
          * @throws Exception
          */
-        final public function CalculateOffset()
+        final public function CalculateOffset(): int
         {
             if( is_null( $this->limit ) && is_null( $this->pagination_index ) )
             {
@@ -115,7 +121,17 @@
         final public function next(): ?int
         {
             $this->next_jump( CONSTANT_ONE );
+            return $this->getPaginationIndex();
+        }
 
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        final public function previous(): ?int
+        {
+            $this->previous_jump( CONSTANT_ONE );
             return $this->getPaginationIndex();
         }
 
@@ -132,24 +148,17 @@
                 return null;
             }
 
+            if( !is_numeric( $value ) )
+            {
+                throw new Exception('Parameter value is not a numeric.');
+            }
+
             if( !is_int( $value ) )
             {
                 throw new Exception('Variable is not null, or an Integer value.');
             }
 
             $this->setPaginationIndex( intval( $this->getPaginationIndex() + $value ) );
-
-            return $this->getPaginationIndex();
-        }
-
-
-        /**
-         * @return int|null
-         * @throws Exception
-         */
-        final public function previous(): ?int
-        {
-            $this->previous_jump( CONSTANT_ONE );
 
             return $this->getPaginationIndex();
         }
@@ -165,6 +174,11 @@
             if( is_null( $value ) )
             {
                 return null;
+            }
+
+            if( !is_numeric( $value ) )
+            {
+                throw new Exception('Parameter value is not a numeric.');
             }
 
             if( !is_int( $value ) )
@@ -273,6 +287,11 @@
                 return $this->pagination_index;
             }
 
+            if( !is_numeric( $idx ) )
+            {
+                throw new Exception('Parameter value is not a numeric.');
+            }
+
             if( ( is_numeric( $idx ) && is_integer( $idx ) )  )
             {
                 $this->pagination_index = intval( $idx );
@@ -297,6 +316,11 @@
             {
                 $this->limit = null;
                 return $this->limit;
+            }
+
+            if( !is_numeric( $var ) )
+            {
+                throw new Exception('Parameter value is not a numeric.');
             }
 
             if( ( is_numeric( $var ) && is_integer( $var ) ) )

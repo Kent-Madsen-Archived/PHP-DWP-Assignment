@@ -8,27 +8,31 @@
         // Constructors
         /**
          * FormSpoofSecurity constructor.
+         * @throws Exception
          */
         public function __construct()
         {
             $this->generate();
         }
 
+
         // Variables
         private $token = null;
 
-        // Stages
 
+        // Stages
         /**
-         * @return null
+         * @return string
+         * @throws Exception
          */
-        final public function generate()
+        final public function generate(): string
         {
             $value = md5( uniqid( mt_rand(), true ) );
             $this->setToken( $value );
 
             return $this->getToken();
         }
+
 
         /**
          *
@@ -38,21 +42,32 @@
             $_SESSION[ 'fss_token' ] = $this->getToken();
         }
 
+
         // Accessors
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getToken()
+        final public function getToken(): ?string
         {
             return $this->token;
         }
 
+
         /**
          * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        final public function setToken( $var )
+        final public function setToken( $var ): ?string
         {
-            $this->token = $var;
+            if( !is_string( $var ) )
+            {
+                throw new Exception('Input token is not a string');
+            }
+
+            $this->token = strval( $var );
+
+            return $this->getToken();
         }
     }
 ?>

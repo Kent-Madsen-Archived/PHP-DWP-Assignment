@@ -4,8 +4,8 @@
      *  Author:
      *  Type: PHP Script
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Admin Panel' );
+    PageTitleController::getSingletonController()->append( ' - Admin Panel' );
+
 
     $domain = new AdminDomain();
 ?>
@@ -18,8 +18,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
     <body>

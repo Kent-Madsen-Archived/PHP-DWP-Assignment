@@ -5,13 +5,8 @@
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Setup');
 
-    $router = RouterSingleton::getInstance();
+    PageTitleController::getSingletonController()->append(' - Setup' );
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +17,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-                $title->printDocumentTitle();
+        <?php
+                PageTitleView::getSingletonView()->PrintHTML();
 
                 $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );
                 $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );

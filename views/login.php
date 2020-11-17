@@ -17,16 +17,13 @@
         // Then process the form and upload it to the database
     require_once 'forms/login_process_form.php';
 
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Login' );
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
     $fss = new FormSpoofSecurity();
     $fss->apply_to_session();
+
+    PageTitleController::getSingletonController()->append( ' - Login' );
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +35,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
 
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML()
         ?>
     </head>
     <body>

@@ -21,8 +21,8 @@
     /**
      * 
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Forgot my password' );
+    PageTitleController::getSingletonController()->append( ' - Forgot my password' );
+
 ?>
 <!DOCTYPE html>
 
@@ -33,8 +33,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
 
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
 
             // Makes sure when the user press login, that it is intentionally, also forces the user to
             // relogin, if it's a refresh

@@ -32,6 +32,8 @@
     // Adds predfined routes, to the router.
     $setup_route = new Route( 'setup', 'views/setup.php' );
 
+
+
     $router_validate_root = new RouterValidateStringArgument();
     $router_validate_root->setLevel(0 );
 
@@ -48,8 +50,6 @@
     $homepage = new Route( 'homepage', 'views/index.php' );
     $router->appendRoutes( $homepage );
     $homepage->appendValidationObject( $router_validate_root );
-
-
 
 
     $product = new Route( 'product', 'views/product.php');
@@ -135,6 +135,7 @@
     
     $router->setSpecialPage404( $special_404 );
     $router->appendRoutes( $special_404 );
+
 
     //
     RouterSingleton::getInstance()->load_view();

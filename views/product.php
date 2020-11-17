@@ -8,8 +8,8 @@
     /**
      * 
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - Product');
+
+    PageTitleController::getSingletonController()->append(' - Product');
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +20,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
     <body>

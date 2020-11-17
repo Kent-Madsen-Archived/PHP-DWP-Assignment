@@ -7,8 +7,8 @@
      *  Author:
      *  Type: PHP Script
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Contact' );
+    PageTitleController::getSingletonController()->append( ' - Contact' );
+
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
@@ -27,8 +27,8 @@
 
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
             
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->PrintHTML();
         ?>
     </head>
 
