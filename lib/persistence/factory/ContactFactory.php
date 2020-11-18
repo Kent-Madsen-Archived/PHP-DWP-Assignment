@@ -61,12 +61,12 @@
 
 
         /**
-         * @return ContactModel|mixed
+         * @return ContactModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ContactModel
         {
             $model = new ContactModel( $this );
-
             return $model;
         }
         
@@ -206,7 +206,7 @@
             
             $retVal = false;
 
-            $sql = "INSERT INTO contact( subject_title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
+            $sql = "INSERT INTO contact( title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
 
             $stmt_subject = null;
             $stmt_message = null;
@@ -242,7 +242,7 @@
                 $stmt->execute();
 
                 // Apply Identity
-                $model->setIdentity( $this->getWrapper()->finish_insert( $stmt ) );
+                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
                 $retVal = true;
             }
             catch( Exception $ex )

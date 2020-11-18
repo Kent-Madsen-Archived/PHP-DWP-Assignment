@@ -10,38 +10,34 @@
      */
     interface AuthInteraction
     {
+        // login as user
         /**
-         * @param $username
-         * @param $password
-         * @return mixed
+         * @return ProfileModel|null
          */
-        public function login( $username, $password );
+        public function login(): ?ProfileModel;
+
+
+        // registration process
+        /**
+         * @return ProfileModel|null
+         */
+        public function register(): ?ProfileModel;
+
+        /**
+         * @return bool
+         */
+        public function forgotMyPassword(): bool;
 
         // Forgot my password
         /**
-         * @param $email
-         * @return mixed
+         * @return bool
          */
-        public function forgot_my_password_by_email( $email );
+        public function forgotMyPasswordUseEmail(): bool;
 
 
         /**
-         * @param $username
-         * @return mixed
+         * @return bool
          */
-        public function forgot_my_password_by_username( $username );
-
-
-        /**
-         * @param $profile
-         * @param $name
-         * @param $email
-         * @param $birthday
-         * @param $phone_number
-         * @param $address
-         * @return mixed
-         */
-        public function register( $profile, $name, $email, $birthday, $phone_number, $address );
+        public function forgotMyPasswordUseUsername( ): bool;
     }
-
 ?>

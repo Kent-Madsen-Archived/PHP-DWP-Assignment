@@ -231,7 +231,7 @@
                 $stmt->execute();
 
                 // commits the statement
-                $model->finish_insert( $this->getWrapper()->finish() );
+                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
 
                 $retVal = true;
             }

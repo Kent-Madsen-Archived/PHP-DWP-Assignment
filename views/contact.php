@@ -4,29 +4,20 @@
      *  Author:
      *  Type: PHP Script
      */
-    if( ContactDomainFormView::validateIsSubmitted() )
+    if( ContactDomainView::validateIsSubmitted() )
     {
-        $comparedFSSToken = false;
-
-        if( ContactDomainFormView::validateFSSTokenExist() )
-        {
-            $comparedFSSToken = ContactDomainFormView::validateSecurityFSS();
-        }
-
-        $recaptcha_v2 = ContactDomainFormView::validateSecurityCaptcha();
-
-        $spoof = ContactDomainFormView::validateSecuritySpoof();
-
-        $domain = new ContactDomainForm();
+        $domain = new ContactDomain();
         $domain->makeReadyForSending();
     }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
     $fss = new FormSpoofSecurity();
-    $fss->apply_to_session();
 
-    PageTitleController::getSingletonController()->append( ' - Contact' );
+    $fss->generate();
+    $fss->applyToSession();
+
+    PageTitleController::getSingletonController()->append( ' - contact' );
 ?>
 
 <!DOCTYPE html>
@@ -57,9 +48,9 @@
 
                     <h3> Contact us </h3>
 
-                    <input type="hidden" 
-                           name="security_token" 
-                           value="<?php echo $_SESSION['fss_token']; ?>" >
+                    <input type="hidden"
+                           name="security_token"
+                           <?php FormSpoofSecurity::printSessionFSSToken(); ?> >
 
                     <input type="hidden" 
                            name="security_empty" 

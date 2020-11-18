@@ -294,7 +294,7 @@
                 $stmt->execute();
 
                 //
-                $model->setIdentity( intval( $this->getWrapper()->finish_insert( $stmt ), 10) );
+                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
                 $retVal = true;
             }
             catch( Exception $ex )

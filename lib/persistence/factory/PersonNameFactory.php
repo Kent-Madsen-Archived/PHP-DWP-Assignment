@@ -224,7 +224,7 @@
                 // Executes the query
                 $stmt->execute();
 
-                $model->setIdentity( $this->getWrapper()->finish_insert( $stmt ) );
+                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
             }
             catch( Exception $ex )
             {

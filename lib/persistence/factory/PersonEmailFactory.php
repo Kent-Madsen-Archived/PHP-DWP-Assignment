@@ -20,8 +20,8 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
         }
 
 
@@ -40,15 +40,6 @@
         final public function getFactoryTableName():string
         {
             return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'PersonEmailView';
         }
 
 
@@ -77,12 +68,12 @@
 
 
         /**
-         * @return mixed|PersonEmailModel
+         * @return PersonEmailModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): PersonEmailModel
         {
             $model = new PersonEmailModel( $this );
-
             return $model;
         }
 
@@ -142,7 +133,7 @@
                 $this->getWrapper()->finish();
 
                 $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -154,7 +145,7 @@
                 $this->getWrapper()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -284,7 +275,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function read_by_name( $model )
+        final public function read_by_name( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -316,7 +307,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {   
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ] ) );
                     }
                 }
 

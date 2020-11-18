@@ -1,6 +1,6 @@
 <?php
 
-    class ContactDomainFormView
+    class ContactDomainView
     {
         public function __construct()
         {
@@ -75,7 +75,7 @@
          * @return bool|null
          * @throws Exception
          */
-        final public static function validateIsMail( $mail ): ?bool
+        final protected static function validateIsMail( $mail ): ?bool
         {
             $value = false;
 
@@ -116,12 +116,9 @@
         {
             $retVal = false;
 
-            $recaptcha_v2 = new ReCaptchaV2( GOOGLE_V2_RECAPTCHA_PRIVATE, GOOGLE_V2_RECAPTCHA_PUBLIC );
-            $recaptcha_v2->setResponseKey( $_POST[ 'g-recaptcha-response' ] );
+            $recaptcha_v2 = new ReCaptchaV2( null, null );
 
-            $recaptcha_v2->retrieve_response();
-
-            if( $recaptcha_v2->validate() )
+            if( $recaptcha_v2->validateSecurity() )
             {
                 $retVal = true;
             }
@@ -138,7 +135,9 @@
         {
             $retVal = false;
 
-            if( !strlen( $_POST[ 'security_empty' ] ) == CONSTANT_ZERO )
+            $spoof = new SpoofSecurity();
+
+            if( !$spoof->validateSecurity() )
             {
                 throw new Exception( 'Empty field is not empty' );
             }
@@ -159,10 +158,11 @@
         {
             $retVal = false;
 
-            if( self::validateFSSTokenExist() )
+            if( FormSpoofSecurity::existSessionFSSToken() )
             {
-                // Compare strings
-                if( !( $_SESSION[ 'fss_token' ] == $_POST[ 'security_token' ] ) )
+                $fss = new FormSpoofSecurity();
+
+                if( !$fss->validateSecurity() )
                 {
                     throw new Exception( 'Security Error: FSS Token does not match with its form' );
                 }
@@ -170,22 +170,6 @@
                 {
                     $retVal = true;
                 }
-            }
-
-            return boolval( $retVal );
-        }
-
-
-        /**
-         * @return bool
-         */
-        final public static function validateFSSTokenExist(): bool
-        {
-            $retVal = false;
-
-            if( isset( $_SESSION[ 'fss_token' ] ) )
-            {
-                $retVal = true;
             }
 
             return boolval( $retVal );

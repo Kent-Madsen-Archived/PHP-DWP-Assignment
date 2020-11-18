@@ -5,19 +5,21 @@
      *  Type: PHP Script
      */
     $access = new AccessPrivilegesDomain();
-    $domain = new AuthDomain();
 
     if( $access->is_logged_in() )
     {
         redirect_to_local_page( 'homepage' );
     }
-    
-    // First validate the users input
-    require 'forms/forgot_my_password_validation.php';
 
-    // Then process the form and upload it to the database
-    require 'forms/forgot_my_password_process.php';
+    $domain = new AuthDomain();
+    $domain->forgotMyPassword();
 
+    // Makes sure when the user press login, that it is intentionally, also forces the user to
+    // relogin, if it's a refresh
+    $fss = new FormSpoofSecurity();
+
+    $fss->generate();
+    $fss->applyToSession();
     
     PageTitleController::getSingletonController()->append( ' - Forgot my password' );
 ?>
@@ -37,7 +39,9 @@
             // Makes sure when the user press login, that it is intentionally, also forces the user to
             // relogin, if it's a refresh
             $fss = new FormSpoofSecurity();
-            $fss->apply_to_session();
+
+            $fss->generate();
+            $fss->applyToSession();
         ?>
     </head>
     <body>
