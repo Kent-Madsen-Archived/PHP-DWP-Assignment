@@ -1,13 +1,25 @@
-<?php 
-    require 'forms/contact_validation.php';
-    require 'forms/contact_process.php';
-    
+<?php
     /**
-     *  title:
+     *  Title:
      *  Author:
      *  Type: PHP Script
      */
+    if( ContactDomainFormView::validateIsSubmitted() )
+    {
+        $comparedFSSToken = false;
 
+        if( ContactDomainFormView::validateFSSTokenExist() )
+        {
+            $comparedFSSToken = ContactDomainFormView::validateSecurityFSS();
+        }
+
+        $recaptcha_v2 = ContactDomainFormView::validateSecurityCaptcha();
+
+        $spoof = ContactDomainFormView::validateSecuritySpoof();
+
+        $domain = new ContactDomainForm();
+        $domain->makeReadyForSending();
+    }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
@@ -29,7 +41,7 @@
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
             
         <?php
-            PageTitleView::getSingletonView()->PrintHTML();
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
 

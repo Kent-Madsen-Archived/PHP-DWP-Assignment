@@ -39,7 +39,7 @@
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
         
         <?php
-            PageTitleView::getSingletonView()->PrintHTML();
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
     <body>

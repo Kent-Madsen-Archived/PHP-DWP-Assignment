@@ -37,7 +37,7 @@
         <link rel="stylesheet" href="/assets/css/style.css">
 
         <?php
-            PageTitleView::getSingletonView()->PrintHTML()
+            PageTitleView::getSingletonView()->printHTML()
         ?>
     </head>
     <body>

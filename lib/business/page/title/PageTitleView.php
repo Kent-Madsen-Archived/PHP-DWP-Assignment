@@ -20,7 +20,7 @@
          * @return string
          * @throws Exception
          */
-        public function PrintHTML(): string
+        public function printHTML(): string
         {
             if( is_null( $this->pageTitle ) )
             {

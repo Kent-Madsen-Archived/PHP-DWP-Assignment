@@ -48,14 +48,23 @@
 
         // Validates the result, if it isn't a success it will throw an error.
         /**
+         * @return bool
          * @throws Exception
          */
-        final public function validate()
+        final public function validate(): bool
         {
+            $retVal = false;
+
             if( !$this->getJSONResponse()[ 'success' ] ) 
             {
                 throw new Exception( 'Security Error: Capcha failed' );
             }
+            else
+            {
+                $retVal = true;
+            }
+
+            return boolval( $retVal );
         }
 
 

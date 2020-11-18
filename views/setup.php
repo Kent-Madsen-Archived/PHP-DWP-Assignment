@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         
         <?php
-                PageTitleView::getSingletonView()->PrintHTML();
+                PageTitleView::getSingletonView()->printHTML();
 
                 $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );
                 $user_credential = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );

@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="/assets/css/style.css">
 
         <?php
-            PageTitleView::getSingletonView()->PrintHTML();
+            PageTitleView::getSingletonView()->printHTML();
 
             // Makes sure when the user press login, that it is intentionally, also forces the user to
             // relogin, if it's a refresh
