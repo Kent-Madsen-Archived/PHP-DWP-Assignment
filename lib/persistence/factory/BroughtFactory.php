@@ -19,24 +19,25 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
         }
 
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        final public static function getTableName(): string
         {
             return 'brought_product';
         }
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName():string
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
@@ -60,18 +61,18 @@
 
 
         /**
-         * @return BroughtProductModel|mixed
+         * @return BroughtProductModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): BroughtProductModel
         {
             $model = new BroughtProductModel( $this );
-
             return $model;
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -89,7 +90,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -103,10 +104,10 @@
 
 
         /**
-         * @return array|mixed|null
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
@@ -172,25 +173,74 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM brought_product WHERE identity = ?;";
 
-            return $retVal;
+            // prepare statement variables
+            $stmt_identity  = null;
+
+            // return array
+            $retVal = false;
+
+            // get a local connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = intval( $model->getIdentity(), BASE_10 );
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+                        $model->setInvoiceId( intval( $row[ 'invoice_id' ], BASE_10 ) );
+
+                        $model->setNumberOfProducts( intval( $row[ 'number_of_products' ], BASE_10 ) );
+
+                        $model->setPrice( doubleval( $row[ 'price' ] ) );
+
+                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+                        $model->setRegistered( $row[ 'registered' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ):bool
@@ -200,8 +250,53 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            // Return Values
+            $retVal = false;
 
-            return false;
+            // Statement Variables
+            $stmt_invoice_id            = null;
+            $stmt_number_of_products    = null;
+            $stmt_price                 = null;
+            $stmt_product_id            = null;
+
+            $sql = "INSERT INTO brought_product( invoice_id, number_of_products, price, product_id ) VALUES( ?, ?, ?, ? );";
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iidi",
+                    $stmt_invoice_id,
+                    $stmt_number_of_products,
+                        $stmt_price,
+                        $stmt_product_id );
+
+                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
+                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
+                $stmt_price                 = doubleval( $model->getPrice() );
+                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+            
+            return boolval( $retVal );
         }
 
 
@@ -223,10 +318,10 @@
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
