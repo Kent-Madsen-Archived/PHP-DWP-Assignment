@@ -171,7 +171,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( &$model )
+        final public function readModel(&$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -224,12 +224,12 @@
                 // Executes the query
                 $stmt->execute();
 
-                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }
@@ -295,7 +295,7 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -351,7 +351,7 @@
                 $retVal = false;
 
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }
@@ -403,35 +403,6 @@
             }
 
             return intval( $retVal );
-        }
-
-
-        /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
-         */
-        final public function classHasImplementedController( $classObject )
-        {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
         }
 
 

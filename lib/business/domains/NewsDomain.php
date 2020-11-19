@@ -37,7 +37,7 @@
 
             $factory->setLimit(6);
 
-            return $factory->read_ordered_by_creation_date();
+            return $factory->readOrderedByCreationDate();
         }
 
 
@@ -51,7 +51,7 @@
 
             $factory->setLimit(3);
 
-            return $factory->read_ordered_by_creation_date();
+            return $factory->readOrderedByCreationDate();
         }
 
 

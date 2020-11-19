@@ -27,7 +27,7 @@
          * @param $model
          * @return mixed
          */
-        public function read_model( &$model );
+        public function readModel(&$model );
 
 
 

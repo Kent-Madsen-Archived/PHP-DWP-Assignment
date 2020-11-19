@@ -99,7 +99,7 @@
         /**
          *
          */
-        final public function undo_state()
+        final public function undoState()
         {
             $this->getConnector()->rollback();
         }
@@ -118,7 +118,7 @@
          * @param $stmt
          * @return int|null
          */
-        public function finish_commit_and_retrieve_insert_id( $stmt ) : ?int
+        public function finishCommitAndRetrieveInsertId($stmt ) : ?int
         {
             $this->getConnector()->commit();
 

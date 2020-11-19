@@ -86,7 +86,7 @@
             catch( Exception $ex )
             {   
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }

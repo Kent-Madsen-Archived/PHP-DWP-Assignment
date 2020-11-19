@@ -170,19 +170,62 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( &$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $connection = $this->getWrapper()->connect();
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM article where identity = ?;";
+
+            // return array
+            $retVal = false;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setTitle( $row[ 'title' ]  );
+                        $model->setContent( $row[ 'content' ]  );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -190,7 +233,7 @@
          * @return array
          * @throws Exception
          */
-        final public function read_ordered_by_creation_date()
+        final public function readOrderedByCreationDate()
         {
             $connection = $this->getWrapper()->connect();
 
@@ -256,7 +299,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -289,13 +332,14 @@
                 // Executes the query
                 $stmt->execute();
 
-                $model->setIdentity( $this->getWrapper()->finish_commit_and_retrieve_insert_id( $stmt ) );
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+
                 $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -312,7 +356,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -354,7 +398,7 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -371,7 +415,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -410,7 +454,7 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -464,35 +508,6 @@
             }
 
             return intval( $retVal );
-        }
-
-
-        /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
-         */
-        final public function classHasImplementedController( $classObject )
-        {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception( 'ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes' );
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception( 'ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.' );
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
         }
 
 

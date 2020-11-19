@@ -19,8 +19,9 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+            
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
         }
 
 
@@ -61,7 +62,7 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -76,12 +77,12 @@
 
 
         /**
-         * @return AssociatedCategoryModel|mixed
+         * @return AssociatedCategoryModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): AssociatedCategoryModel
         {
             $model = new AssociatedCategoryModel( $this );
-
             return $model;
         }
 
@@ -90,7 +91,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +105,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             //
             $sql = "SELECT * FROM associated_category LIMIT ? OFFSET ?;";
@@ -130,8 +131,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->CalculateOffset();
+                $stmt_limit  = intval( $this->getLimit(), BASE_10 );
+                $stmt_offset = intval( $this->CalculateOffset(), BASE_10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -146,12 +147,12 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
 
-                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], 10 ) );
-                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], 10 ) );
+                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], BASE_10 ) );
+                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], BASE_10 ) );
                         
-                        $model->setProductId( intval( $row[ 'product_id' ], 10) );
+                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
 
                         array_push( $retVal, $model );
                     }
@@ -172,43 +173,188 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( &$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $sql = "SELECT * FROM associated_category WHERE identity = ?;";
+            
+            $retVal = false;
+
+            // Connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+
+                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], BASE_10 ) );
+                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], BASE_10 ) );
+
+                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
-         */
-        final public function create( &$model ):bool
-        {
-            
-        }
-
-
-        /**
-         * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
+
+            // Statement Variables
+            $stmt_attribute_id  = null;
+            $stmt_category_id   = null;
+            $stmt_product_id    = null;
+
+            // Return Values
+            $retVal = false;
+
+            $sql = "INSERT INTO associated_category( product_attribute_id, product_category_id, product_id ) VALUES( ?, ?, ? );";
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iii",
+                    $stmt_attribute_id,
+                    $stmt_category_id,
+                           $stmt_product_id );
+
+                $stmt_attribute_id  = intval( $model->getProductAttributeId(), BASE_10 );
+                $stmt_category_id   = intval( $model->getProductCategoryId(), BASE_10 );
+
+                $stmt_product_id    = intval( $model->getProductId(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        final public function update( &$model ): bool
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            // Statement Variables
+            $stmt_attribute_id  = null;
+            $stmt_category_id   = null;
+            $stmt_product_id    = null;
+
+            $stmt_identity      = null;
+
+            // Return Values
+            $retVal = false;
+
+            $sql = "UPDATE associated_category, set product_attribute_id = ?, product_category_id = ?, product_id = ? WHERE identity = ?;";
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iiii",
+                    $stmt_attribute_id,
+                    $stmt_category_id,
+                    $stmt_product_id,
+                    $stmt_identity );
+
+                $stmt_attribute_id  = intval( $model->getProductAttributeId(), BASE_10 );
+                $stmt_category_id   = intval( $model->getProductCategoryId(), BASE_10 );
+
+                $stmt_product_id    = intval( $model->getProductId(), BASE_10 );
+
+                $stmt_identity      = intval( $model->getIdentity(), BASE_10 );
+
+
+                // Executes the query
+                $stmt->execute();
+                $this->getWrapper()->finish();
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
 
         }
 
@@ -246,7 +392,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = intval( $model->getIdentity(), BASE_10 );
 
                 // Executes the query
                 $stmt->execute();
@@ -258,7 +404,7 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -304,7 +450,7 @@
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getWrapper()->undo_state();
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -314,35 +460,6 @@
             }
 
             return intval( $retVal );
-        }
-
-
-        /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
-         */
-        final public function classHasImplementedController( $classObject )
-        {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedController, classObject is not a object. function only accepts classes.');
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getControllerName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
         }
 
 

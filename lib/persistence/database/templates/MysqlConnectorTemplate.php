@@ -14,7 +14,7 @@
         /**
          * @return mixed
          */
-        public function undo_state();
+        public function undoState();
 
 
         /**
@@ -26,7 +26,7 @@
         /**
          * @return mixed
          */
-        public function finish_commit_and_retrieve_insert_id( $stmt );
+        public function finishCommitAndRetrieveInsertId($stmt );
 
 
         /**
