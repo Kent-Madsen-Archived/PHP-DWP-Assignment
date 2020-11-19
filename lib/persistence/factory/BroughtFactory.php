@@ -200,7 +200,7 @@
                 $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "i",
-                    $stmt_identity );
+                                    $stmt_identity );
 
                 $stmt_identity  = intval( $model->getIdentity(), BASE_10 );
 
@@ -219,6 +219,7 @@
                         $model->setPrice( doubleval( $row[ 'price' ] ) );
 
                         $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+
                         $model->setRegistered( $row[ 'registered' ] );
 
                         $retVal = true;
@@ -243,7 +244,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -269,10 +270,10 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "iidi",
-                    $stmt_invoice_id,
-                    $stmt_number_of_products,
-                        $stmt_price,
-                        $stmt_product_id );
+                                    $stmt_invoice_id,
+                                    $stmt_number_of_products,
+                                    $stmt_price,
+                                    $stmt_product_id );
 
                 $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
                 $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
@@ -295,7 +296,7 @@
             {
                 $this->getWrapper()->disconnect();
             }
-            
+
             return boolval( $retVal );
         }
 
@@ -305,14 +306,67 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            return false;
+            // Return Values
+            $retVal = false;
+
+            // Statement Variables
+            $stmt_invoice_id            = null;
+            $stmt_number_of_products    = null;
+            $stmt_price                 = null;
+            $stmt_product_id            = null;
+
+            $stmt_identity              = null;
+
+            $sql = "UPDATE brought_product SET invoice_id = ?, number_of_products = ?, price = ?, product_id = ? WHERE identity = ?;";
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iidii",
+                    $stmt_invoice_id,
+                    $stmt_number_of_products,
+                    $stmt_price,
+                    $stmt_product_id,
+                    $stmt_identity );
+
+                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
+                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
+                
+                $stmt_price                 = doubleval( $model->getPrice() );
+
+                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+
+                $stmt_identity              = intval( $model->getIdentity(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+                $this->getWrapper()->finish();
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -375,7 +429,7 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int
