@@ -176,19 +176,71 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            // Return value
             $retVal = null;
 
-            return $retVal;
+            // SQL Query
+            $sql = "SELECT * FROM contact WHERE identity = ?;";
+
+            //
+            $stmt_identity = null;
+
+            // opens a connection to the database
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = intval( $model->getIdentity(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+
+                        $model->setSubject( strval( $row[ 'title' ] ) );
+                        $model->setMessage( strval( $row[ 'message' ] ) );
+
+                        $model->setToMail( intval( $row[ 'to_id' ], BASE_10 ) );
+                        $model->setFromMail( intval( $row[ 'from_id' ], BASE_10 ) );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception('Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 

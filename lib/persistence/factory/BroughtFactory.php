@@ -342,7 +342,7 @@
 
                 $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
                 $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
-                
+
                 $stmt_price                 = doubleval( $model->getPrice() );
 
                 $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
