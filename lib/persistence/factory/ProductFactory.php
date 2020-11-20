@@ -79,8 +79,9 @@
 
         /**
          * @return ProductModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProductModel
         {
             $model = new ProductModel( $this );
 
@@ -92,7 +93,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -106,10 +107,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read( )
+        final public function read( ): ?array
         {
             // return array
             $retVal = null;
@@ -171,19 +172,63 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
             
-            $retVal = null;
+            $retVal = false;
 
-            return $retVal;
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM product WHERE identity = ?;";
+
+            // prepare statement variables
+            $stmt_identity  = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = intval( $model->getIdentity(), 10 );
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+
+                        $model->setTitle( strval(  $row[ 'title' ] ) );
+                        $model->setDescription( strval( $row[ 'product_description' ] ) );
+                        $model->setPrice( doubleval( $row[ 'product_price' ] ) );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 

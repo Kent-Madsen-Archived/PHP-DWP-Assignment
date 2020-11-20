@@ -79,7 +79,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsValidModel( $var )
+        final protected function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -93,12 +93,12 @@
 
 
         /**
-         * @return mixed|ProductInvoiceModel
+         * @return ProductInvoiceModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProductInvoiceModel
         {
             $model = new ProductInvoiceModel( $this );
-
             return $model;
         }
 
@@ -166,19 +166,64 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $retVal = false;
+
+            $sql = "SELECT * FROM product_invoice WHERE identity = ?;";
+
+            $stmt_identity  = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = intval( $model->getIdentity(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModel();
+
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+
+                        $model->setTotalPrice( doubleval( $row[ 'total_price' ] ) );
+                        $model->setRegistered( $row[ 'invoice_registered' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -228,8 +273,44 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "DELETE FROM product_invoice WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                // Sets Statement Variables
+                $stmt_identity = intval( $model->getIdentity(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
