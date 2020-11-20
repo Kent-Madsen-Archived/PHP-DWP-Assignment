@@ -102,10 +102,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array
          * @throws Exception
          */
-        final public function read()
+        final public function read(): array
         {
             $connection = $this->getWrapper()->connect();
 
@@ -163,19 +163,59 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
+            // return array
+            $retVal = false;
 
-            return $retVal;
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM image_type WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setContent( $row[ 'content' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -184,49 +224,166 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $sql = "INSERT INTO image_type( content ) VALUES( ? );";
 
-            return false;
+            // Statement Variables
+            $stmt_image_type_content = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "s",
+                    $stmt_image_type_content );
+
+                //
+                $stmt_image_type_content = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "DELETE FROM image_type WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "i",
+                            $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            //
+            $retVal = false;
 
-            return false;
+            //
+            $sql = "UPDATE image_type SET content = ? WHERE identity = ?;";
+
+            $stmt_image_type_content  = null;
+            $stmt_identity            = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "si",
+                    $stmt_image_type_content,
+                    $stmt_identity );
+
+                //
+                $stmt_image_type_content = $model->getContent();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 

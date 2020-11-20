@@ -104,10 +104,10 @@
 
 
         /**
-         * @return array|mixed|null
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             //
             $retVal = null;
@@ -176,19 +176,71 @@
 
         /**
          * @param $model
-         * @return null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            //
+            $retVal = false;
+
+            // SQL Query
+            $sql = "SELECT * FROM person_address WHERE identity = ?;";
+
+            //
+            $stmt_identity  = null;
+
+            //
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setStreetName(  $row[ 'street_name' ]  );
+                        $model->setStreetAddressNumber( $row[ 'street_address_number' ] );
+
+                        $model->setZipCode(  $row[ 'zip_code' ]  );
+                        $model->setCountry(  $row[ 'country' ]  );
+
+                        $model->setStreetFloor( $row['street_address_floor']  );
+
+                        $retVal = true;
+                    }
+                }
+
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
