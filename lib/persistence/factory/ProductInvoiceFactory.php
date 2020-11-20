@@ -222,7 +222,7 @@
             {
                 $this->getWrapper()->disconnect();
             }
-            
+
             return boolval( $retVal );
         }
 
@@ -273,8 +273,44 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "DELETE FROM product_invoice WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                // Sets Statement Variables
+                $stmt_identity = intval( $model->getIdentity(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
