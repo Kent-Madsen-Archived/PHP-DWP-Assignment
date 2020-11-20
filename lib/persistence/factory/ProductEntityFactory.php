@@ -304,9 +304,6 @@
             }
 
             return boolval( $retVal );
-
-
-            return false;
         }
 
 
