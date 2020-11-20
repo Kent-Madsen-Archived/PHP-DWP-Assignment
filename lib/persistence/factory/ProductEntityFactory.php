@@ -62,9 +62,10 @@
 
 
         /**
-         * @return mixed|ProductEntityModel
+         * @return ProductEntityModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProductEntityModel
         {
             $model = new ProductEntityModel( $this );
             return $model;
@@ -72,7 +73,7 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -104,10 +105,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             //
             $sql = "SELECT * FROM product_entity LIMIT ? OFFSET ?;";
@@ -147,7 +148,7 @@
 
                         $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setArrived( strval( $row[ 'arrived' ] ) );
+                        $model->setArrived( $row[ 'arrived' ] );
                         $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
 
                         $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
@@ -172,19 +173,67 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            //
+            $sql = "SELECT * FROM product_entity WHERE identity = ?;";
+            $stmt_identity  = null;
+
+            //
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = intval( $this->getLimit(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+
+                        $model->setArrived( $row[ 'arrived' ] );
+
+                        $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
+
+                        $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
+                        $model->setBrought( intval( $row[ 'brought_id' ], 10 ) );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -227,13 +276,14 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( &$model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+            return false;
         }
 
 
