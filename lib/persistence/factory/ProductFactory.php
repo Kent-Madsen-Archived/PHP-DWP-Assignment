@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -10,8 +10,21 @@
      * Class ProductFactory
      */
     class ProductFactory 
-        extends Factory
+        extends FactoryTemplate
     {
+        /**
+         * ProductFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {
+            $this->setWrapper( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
+        }
+
+
         /**
          * @return string
          */
@@ -24,62 +37,43 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
 
 
         /**
-         * ProductFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
+         * @return string
          */
-        public function __construct( $mysql_connector )
+        final public static function getViewName()
         {
-            $this->setConnector( $mysql_connector );
+            return 'ProductView';
         }
 
 
         /**
-         * TODO: This
+         * @return string
          */
-        final public function setup()
+        final public static function getControllerName()
         {
-            
+            return 'ProductController';
         }
 
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
-        }
 
 
         /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;         
+            return boolval( $value );
         }
 
 
@@ -100,12 +94,14 @@
          */
         final public function validateAsValidModel( $var )
         {
+            $retVal = false;
+
             if( $var instanceof ProductModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -115,17 +111,8 @@
          */
         final public function read( )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM product LIMIT ? OFFSET ?;";
@@ -133,6 +120,8 @@
             // prepare statement variables
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -142,23 +131,25 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_limit  = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $productModel = $this->createModel();
 
-                        $productModel->setIdentity( $row[ 'identity' ] );
+                        $productModel->setIdentity( intval( $row[ 'identity' ], 10 ) );
                         
-                        $productModel->setTitle( $row[ 'title' ] );
-                        $productModel->setDescription( $row[ 'product_description' ] );
-                        $productModel->setPrice( $row[ 'product_price' ] );
+                        $productModel->setTitle( strval(  $row[ 'title' ] ) );
+                        $productModel->setDescription( strval( $row[ 'product_description' ] ) );
+                        $productModel->setPrice( doubleval( $row[ 'product_price' ] ) );
 
                         array_push( $retVal, $productModel );
                     }
@@ -171,7 +162,7 @@
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -183,7 +174,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel(&$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -198,23 +189,14 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool|mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
-            }
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
             }
 
             // return array
@@ -226,7 +208,10 @@
             // prepare statement variables
             $stmt_title         = null;
             $stmt_description   = null;
+
             $stmt_price         = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -238,16 +223,14 @@
                                     $stmt_price );
 
                 $stmt_title         = $model->getTitle();
-                $stmt_description   = $model->getDescription();
-                $stmt_price         = $model->getPrice();
+                $stmt_description   = $model->getDescription() ;
+
+                $stmt_price         = doubleval( $model->getPrice() );
 
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
-
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -255,11 +238,10 @@
             }
             finally
             {
-                //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -268,33 +250,28 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             // return array
-            $retVal = null;
+            $retVal = false;
 
             // sql, that the prepared statement uses
             $sql = "UPDATE product SET title = ?, product_description = ?, product_price = ? WHERE identity = ?;";
 
             // prepare statement variables
             $stmt_identity      = null;
+
             $stmt_title         = null;
             $stmt_description   = null;
             $stmt_price         = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -309,16 +286,15 @@
                 $stmt_title         = $model->getTitle();
                 $stmt_description   = $model->getDescription();
                 
-                $stmt_price         = $model->getPrice();
+                $stmt_price         = doubleval( $model->getPrice() );
 
-                $stmt_identity      = $model->getIdentity();
+                $stmt_identity      = intval( $model->getIdentity(), 10 );
 
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $retVal = $model;
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
@@ -327,11 +303,10 @@
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -340,26 +315,20 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
             
-            $retVal = null;
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $retVal = false;
 
             $sql = "DELETE FROM product WHERE identity = ?;";
+
             $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -370,31 +339,28 @@
                                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $retVal = TRUE;
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -402,21 +368,14 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
+            $retVal = CONSTANT_ZERO;
             
-            $retVal = 0;
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -425,28 +384,53 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = $row[ 'number_of_rows' ];
+                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
                     }
                 }  
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
         }
 
     }

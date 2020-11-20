@@ -13,20 +13,41 @@
         // Constructors
         /**
          * Router constructor.
+         * @throws Exception
          */
         public function __construct()
         {
             $this->update();
         }
 
+
         /**
-         *
+         * @throws Exception
          */
         final public function update()
         {
-            $this->setCurrentRequest( $_SERVER[ 'REQUEST_URI' ] );
-            $this->setCurrentRequestedHostname( $_SERVER[ 'HTTP_HOST' ] );   
+            $this->setCurrentRequest( self::callRequest() );
+            $this->setCurrentRequestedHostname( self::callHost() );
         }
+
+
+        /**
+         * @return string|null
+         */
+        protected static function callRequest(): ?string
+        {
+            return $_SERVER[ S_REQUEST ];
+        }
+
+
+        /**
+         * @return string|null
+         */
+        protected static function callHost(): ?string
+        {
+            return $_SERVER[ S_HOST ];
+        }
+
 
         // Variables
         private $current_request = null;
@@ -40,48 +61,52 @@
 
             // Special Routes
         private $special_page_404 = null;
-        private $type = null;
+
 
         // Stages
         /**
          * @throws Exception
          */
-        final public function load_view()
+        final public function loadView()
         {
             // Retrieves the current request
             $request_uri = $this->getCurrentRequest();
 
             // Request is a shortcut
-            if( $this->is_shortcut() )
+            if( $this->isShortcut() )
             {
                 return;
             }
 
             // 
-            $this->split_request_into_arguments();        
+            $this->splitRequestIntoArguments();
 
             //
-            $this->route_domain( );
+            $this->routeDomain( );
         }
+
 
         /**
          * @return bool
          */
-        final public function is_shortcut()
+        final public function isShortcut(): bool
         {
+            $retVal = false;
+
             if( $this->getCurrentRequest() == '/' )
             {
                 require 'views/index.php';
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
+
 
         /**
          *
          */
-        final public function split_request_into_arguments()
+        final public function splitRequestIntoArguments()
         {
             // splits the url into an array, for each character / in the url
             $split_uri = explode( '/', $this->getCurrentRequest() );
@@ -95,16 +120,17 @@
             $this->setArgs( $values );
         }
 
+
         /**
          * @return mixed
          * @throws Exception
          */
-        final public function route_domain()
+        final public function routeDomain()
         {
-            $root_routing_level_idx = 0;
+            $root_routing_level_idx = CONSTANT_ZERO;
 
             //
-            for( $idx = 0; 
+            for( $idx = CONSTANT_ZERO;
                  $idx < $this->getLengthOfRoutes();
                  $idx ++ )
             {
@@ -121,7 +147,7 @@
 
                     // Validates the url routes, if it get a false, ie. nothing is valid. it will return to Page 404;
                     // if it's validated, the view can fetch the route data.
-                    for( $idx = 0;
+                    for( $idx = CONSTANT_ZERO;
                          $idx < $this->getArgsSize();
                          $idx ++ )
                     {
@@ -145,53 +171,66 @@
 
             //
             $page_404 = $this->getSpecialPage404();
+
             $page_404->load();
         }
+
 
         // Accessors
             // Getters
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getCurrentRequest()
+        final public function getCurrentRequest(): ?string
         {
-            return $this->current_request;
+            if ( is_null( $this->current_request ) )
+            {
+                return null;
+            }
+
+            return strval( $this->current_request );
         }
 
-        /**
-         * @return null
-         */
-        final public function getCurrentRequestedHostname()
-        {
-            return $this->current_requested_hostname;
-        }
 
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getArgs()
+        final public function getCurrentRequestedHostname(): ?string
         {
+            if( is_null( $this->current_requested_hostname ) )
+            {
+                return null;
+            }
+
+            return strval( $this->current_requested_hostname );
+        }
+
+
+        /**
+         * @return array|null
+         */
+        final public function getArgs(): ?array
+        {
+            if ( is_null( $this->args ) )
+            {
+                return null;
+            }
+
             return $this->args;
         }
 
-        /**
-         * @return null
-         */
-        final public function getType()
-        {
-            return $this->type;
-        }
+
 
         /**
-         * @param $idx
-         * @return mixed
+         * @param int $idx
+         * @return string|null
          * @throws Exception
          */
-        final public function getArg( $idx )
+        final public function getArg( $idx = CONSTANT_ZERO ): ?string
         {
             if( $idx < $this->getArgsSize() )
             {
-                return $this->getArgs()[ $idx ];
+                return strval( $this->getArgs()[ $idx ] );
             }
             else
             {
@@ -199,13 +238,14 @@
             }
         }
 
+
         /**
-         * @param $idx
-         * @param $closesest_lvl
-         * @return mixed|null
+         * @param int $idx
+         * @param bool $selectClosesLvl
+         * @return string|null
          * @throws Exception
          */
-        final public function getArgLevel( $idx, $closesest_lvl )
+        final public function getArgLevel( $idx = CONSTANT_ZERO, $selectClosesLvl = true ): ?string
         {
             try
             {
@@ -213,9 +253,9 @@
             }
             catch ( Exception $ex )
             {
-                if( $closesest_lvl )
+                if( $selectClosesLvl )
                 {
-                    return $this->getArg( $this->max_arguments() );
+                    return strval( $this->getArg( $this->getMaximumArguments() ) );
                 }
                 else
                 {
@@ -224,129 +264,267 @@
             }
         }
 
+
         /**
-         * @return int
+         * @return int|null
          */
-        final public function getArgsSize()
+        final public function getArgsSize(): ?int
         {
-            return count( $this->getArgs() );
+            if( is_null( $this->args ) )
+            {
+                return null;
+            }
+
+            return intval( count( $this->getArgs() ) );
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
-        final public function max_arguments()
+        final public function getMaximumArguments(): ?int
         {
-            return count( $this->getArgs() ) - 1;
+            if( is_null( $this->args ) )
+            {
+                return null;
+            }
+
+            if( count( $this->args ) == CONSTANT_ZERO )
+            {
+                return intval(CONSTANT_ZERO );
+            }
+
+            return intval( count( $this->getArgs() ) - CONSTANT_ONE );
         }
 
 
         /**
-         * @return null
+         * @return array|null
          */
-        final public function getRoutes()
+        final public function getRoutes(): ?array
         {
+            if( is_null( $this->routes ) )
+            {
+                return null;
+            }
+
             return $this->routes;
         }
 
 
         /**
-         * @return int
+         * @return int|null
          */
-        final public function getLengthOfRoutes()
+        final public function getLengthOfRoutes(): ?int
         {
-            return sizeof( $this->routes );
+            if( is_null( $this->routes ) )
+            {
+                return null;
+            }
+
+            return intval( sizeof( $this->routes ) );
         }
 
 
         /**
-         * @return null
+         * @return Route|null
          */
-        final public function getSpecialPage404()
+        final public function getSpecialPage404(): ?Route
         {
+            if( is_null( $this->special_page_404 ) )
+            {
+                return null;
+            }
+
             return $this->special_page_404;
         }
 
 
             // Setters
-
         /**
          * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        final public function setCurrentRequest( $var )
+        final public function setCurrentRequest( $var ): ?string
         {
-            $this->current_request = $var;
+            if( is_null( $var ) )
+            {
+                $this->current_request = null;
+                return $this->getCurrentRequest();
+            }
+
+            if( !is_string( $var ) )
+            {
+                throw new Exception('');
+            }
+
+            $this->current_request = strval( $var );
+
+            return $this->getCurrentRequest();
         }
 
-        /**
-         * @param $var
-         */
-        final public function setCurrentRequestedHostname( $var )
-        {
-            $this->current_requested_hostname = $var;
-        }
 
         /**
          * @param $var
+         * @return string|null
+         * @throws Exception
          */
-        final public function setArgs( $var )
+        final public function setCurrentRequestedHostname( $var ): ?string
         {
+            if( is_null( $var ) )
+            {
+                $this->current_requested_hostname = null;
+                return $this->getCurrentRequestedHostname();
+            }
+
+            if( !is_string( $var ) )
+            {
+                throw new Exception('parameter value: only strings are allowed');
+            }
+
+            $this->current_requested_hostname = strval( $var );
+            return $this->getCurrentRequestedHostname();
+        }
+
+
+        /**
+         * @param $var
+         * @return array|null
+         * @throws Exception
+         */
+        final public function setArgs( $var ): ?array
+        {
+            if( is_null( $var ) )
+            {
+                $this->args = null;
+                return $this->getArgs();
+            }
+
+            if( !is_array( $var ) )
+            {
+                throw new Exception('input value is not an array');
+            }
+
+            if( !is_array( $var ) )
+            {
+                throw new Exception('');
+            }
+
             $this->args = $var;
+
+            return $this->getArgs();
         }
 
 
         /**
          * @param $var
+         * @return array|null
+         * @throws Exception
          */
-        final public function setRoutes( $var )
+        final public function setRoutes( $var ): ?array
         {
+            if( is_null( $var ) )
+            {
+                $this->routes = null;
+                return $this->getRoutes();
+            }
+
+            if( !is_array( $var ) )
+            {
+                throw new Exception('input value is not an array');
+            }
+
             $this->routes = $var;
+            return $this->getRoutes();
         }
 
 
         /**
          * @param $var
+         * @return Route|null
+         * @throws Exception
          */
-        final public function setType( $var )
+        final public function setSpecialPage404( $var ): ?Route
         {
-            $this->type = $var;
-        }
+            if( is_null( $this->special_page_404 ) )
+            {
+                $this->special_page_404 = null;
+                return $this->getSpecialPage404();
+            }
 
+            if(! ( $this->special_page_404 instanceof Route ) )
+            {
+                throw new Exception('');
+            }
 
-        /**
-         * @param $var
-         */
-        final public function setSpecialPage404( $var )
-        {
             $this->special_page_404 = $var;
+            return $this->getSpecialPage404();
         }
+
 
         // States
-
         /**
-         * @return bool
+         * @return array|null
+         * @throws Exception
          */
-        final public function isRoutesNull()
+        final public function initiateRoutes(): ?array
         {
-            return is_null( $this->getRoutes() );
-        }
-
-        // Edit Accessors
-
-        /**
-         * @param $var
-         */
-        final public function appendRoutes( $var )
-        {
-            // if it's not present, create an array
-            if( $this->isRoutesNull() )
+            if( is_null( $this->routes ) )
             {
                 $this->setRoutes( array() );
             }
 
+            return $this->getRoutes();
+        }
+
+
+        // Edit Accessors
+        /**
+         * @param $var
+         * @return array|null
+         * @throws Exception
+         */
+        final public function appendToRoutes( $var ): ?array
+        {
+            // if it's not present, create an array
+            $this->initiateRoutes();
+
+            if( !( $var instanceof Route ) )
+            {
+                throw new Exception('input parameter');
+            }
+
             // push element
             array_push( $this->routes, $var );
+
+            return $this->getArgs();
+        }
+
+
+        /**
+         * @param $var
+         * @return array|null
+         * @throws Exception
+         */
+        final public function appendToRoutesArray( $var ): ?array
+        {
+            if( is_null( $var ) )
+            {
+                return $this->getRoutes();
+            }
+
+            if(! is_array( $var ) )
+            {
+                throw new Exception('');
+            }
+
+            foreach ( $var as $value )
+            {
+                $this->appendToRoutes( $value );
+            }
+
+            return $this->getRoutes();
         }
     }
 ?>

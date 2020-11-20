@@ -1,15 +1,12 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
 
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Shop' );
+    
+    PageTitleController::getSingletonController()->append( ' - Shop' );
 ?>
 
 <!DOCTYPE html>
@@ -20,8 +17,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
     <body>

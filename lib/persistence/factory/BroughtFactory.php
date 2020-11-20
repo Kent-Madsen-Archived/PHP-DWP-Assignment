@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,26 +9,8 @@
      * Class BroughtFactory
      */
     class BroughtFactory
-        extends Factory
+        extends FactoryTemplate
     {
-        /**
-         * @return string
-         */
-        final public static function getTableName()
-        {
-            return 'brought_product';
-        }
-
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName()
-        {
-            return self::getTableName();
-        }
-
-
         /**
          * BroughtFactory constructor.
          * @param $mysql_connector
@@ -36,60 +18,71 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
+
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
         }
 
 
         /**
-         * @return BroughtProductModel|mixed
+         * @return string
          */
-        final public function createModel()
+        final public static function getTableName(): string
+        {
+            return 'brought_product';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public function getFactoryTableName(): string
+        {
+            return self::getTableName();
+        }
+
+        /**
+         * @return string
+         */
+        final public static function getViewName()
+        {
+            return 'BroughtProductView';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getControllerName()
+        {
+            return 'BroughtProductController';
+        }
+
+
+        /**
+         * @return BroughtProductModel
+         * @throws Exception
+         */
+        final public function createModel(): BroughtProductModel
         {
             $model = new BroughtProductModel( $this );
-
             return $model;
         }
 
 
         /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;   
+            return boolval( $value );
         }
 
 
@@ -97,36 +90,25 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
+            $retVal = false;
+
             if( $var instanceof BroughtProductModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            // return array
-            $retVal = array();
-
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
 
@@ -134,22 +116,30 @@
             $stmt_limit  = null;
             $stmt_offset = null;
 
+            // return array
+            $retVal = null;
+
+            // get a local connection
+            $local_connection = $this->getWrapper()->connect();
+
             try
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
                                     $stmt_limit,
                                     $stmt_offset );
 
                 $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $brought = $this->createModel();
@@ -174,7 +164,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -183,80 +173,229 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM brought_product WHERE identity = ?;";
 
-            return $retVal;
+            // prepare statement variables
+            $stmt_identity  = null;
+
+            // return array
+            $retVal = false;
+
+            // get a local connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                                    $stmt_identity );
+
+                $stmt_identity  = intval( $model->getIdentity(), BASE_10 );
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+                        $model->setInvoiceId( intval( $row[ 'invoice_id' ], BASE_10 ) );
+
+                        $model->setNumberOfProducts( intval( $row[ 'number_of_products' ], BASE_10 ) );
+
+                        $model->setPrice( doubleval( $row[ 'price' ] ) );
+
+                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+
+                        $model->setRegistered( $row[ 'registered' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function create( $model )
-        {
-            if( !$this->validateAsValidModel( $model ) )
-            {
-                throw new Exception( 'Not accepted model' );
-            }
-            
-        }
-
-
-        /**
-         * @param $model
-         * @return mixed|void
-         * @throws Exception
-         */
-        final public function update( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-        }
+            // Return Values
+            $retVal = false;
 
+            // Statement Variables
+            $stmt_invoice_id            = null;
+            $stmt_number_of_products    = null;
+            $stmt_price                 = null;
+            $stmt_product_id            = null;
 
-        /**
-         * @param $model
-         * @return bool|mixed
-         * @throws Exception
-         */
-        final public function delete( $model )
-        {
-            if( !$this->validateAsValidModel( $model ) )
-            {
-                throw new Exception( 'Not accepted model' );
-            }
-            
-            $retVal = null;
+            $sql = "INSERT INTO brought_product( invoice_id, number_of_products, price, product_id ) VALUES( ?, ?, ?, ? );";
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "DELETE FROM brought_product WHERE identity = ?;";
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
                 $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iidi",
+                                    $stmt_invoice_id,
+                                    $stmt_number_of_products,
+                                    $stmt_price,
+                                    $stmt_product_id );
+
+                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
+                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
+                $stmt_price                 = doubleval( $model->getPrice() );
+                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        final public function update( &$model ): bool
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            // Return Values
+            $retVal = false;
+
+            // Statement Variables
+            $stmt_invoice_id            = null;
+            $stmt_number_of_products    = null;
+            $stmt_price                 = null;
+            $stmt_product_id            = null;
+
+            $stmt_identity              = null;
+
+            $sql = "UPDATE brought_product SET invoice_id = ?, number_of_products = ?, price = ?, product_id = ? WHERE identity = ?;";
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "iidii",
+                    $stmt_invoice_id,
+                    $stmt_number_of_products,
+                    $stmt_price,
+                    $stmt_product_id,
+                    $stmt_identity );
+
+                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
+                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
+
+                $stmt_price                 = doubleval( $model->getPrice() );
+
+                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+
+                $stmt_identity              = intval( $model->getIdentity(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+                $this->getWrapper()->finish();
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        final public function delete( &$model ): bool
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            $sql = "DELETE FROM brought_product WHERE identity = ?;";
+
+            // Return value
+            $retVal = false;
+
+            // statement variables
+            $stmt_identity = null;
+
+            // opens a connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
                 
                 //
                 $stmt->bind_param( "i",  
@@ -269,46 +408,39 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
 
-                $retVal = TRUE;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
-            $retVal = 0;
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $this->getConnector()->connect();
+            $retVal = CONSTANT_ZERO;
 
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            //
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -317,7 +449,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -327,19 +459,44 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
         }
-        
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
     }
 
 ?>

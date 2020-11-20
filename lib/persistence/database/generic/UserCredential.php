@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -23,54 +23,88 @@
             $this->setPassword( $password );
         }
 
+
         // Variables
-        private $username;
-        private $password;
+        private $username = null;
+        private $password = null;
+
 
         // Accessors
         /**
-         * @return mixed
+         * @return string|null
          */
-        final public function getUsername()
+        final public function getUsername(): ?string
         {
-            return $this->username;
+            if( is_null( $this->username ) )
+            {
+                return  null;
+            }
+
+            return strval( $this->username );
         }
 
-        /**
-         * @return mixed
-         */
-        final public function getPassword()
-        {
-            return $this->password;
-        }
 
         /**
-         * @param $var
+         * @return string|null
+         */
+        final public function getPassword(): ?string
+        {
+            if( is_null( $this->password ) )
+            {
+                return null;
+            }
+
+            return strval( $this->password );
+        }
+
+
+        /**
+         * @param string $var
+         * @return string|null
          * @throws Exception
          */
-        final public function setUsername( $var )
+        final public function setUsername( $var = "root" ): ?string
         {
+            if( is_null( $var ) )
+            {
+                $this->username = $var;
+                return $this->getUsername();
+            }
+
             if( !is_string( $var ) )
             {
                 throw new Exception( 'User Credential - setUsername: Only string are allowed' );
             }
 
-            $this->username = $var;
+            $this->username = strval( $var );
+
+            return $this->getUsername();
         }
 
+
         /**
-         * @param $var
+         * @param string $var
+         * @return string|null
          * @throws Exception
          */
-        final public function setPassword( $var )
+        final public function setPassword( $var = "" ): ?string
         {
+            if( is_null( $var ) )
+            {
+                $this->password = $var;
+                return $this->getPassword();
+            }
+
             if( !is_string( $var ) )
             {
                 throw new Exception( 'User Credential - setPassword: Only string are allowed' );
             }
 
-            $this->password = $var;
+            $this->password = strval( $var );
+
+            return $this->getPassword();
         }
+
 
         /**
          * @return string
@@ -80,13 +114,14 @@
             return "root";
         }
 
+
         /**
          * @return UserCredential
          * @throws Exception
          */
         final public static function generateDefaultUserCredential()
         {
-            return new UserCredential(self::getDefaultUsername(), '');
+            return new UserCredential( self::getDefaultUsername(), '' );
         }
     }
 ?>

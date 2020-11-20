@@ -1,6 +1,6 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,25 +9,29 @@
      * Interface MysqlConnectorTemplate
      */
     interface MysqlConnectorTemplate
+        extends ConnectorTemplate
     {
         /**
          * @return mixed
          */
-        public function connect();
+        public function undoState();
 
-        /**
-         * @return mixed
-         */
-        public function disconnect();
-
-        /**
-         * @return mixed
-         */
-        public function undo_state();
 
         /**
          * @return mixed
          */
         public function finish();
+
+
+        /**
+         * @return mixed
+         */
+        public function finishCommitAndRetrieveInsertId($stmt );
+
+
+        /**
+         * @return mixed
+         */
+        public function is_open();
     }
 ?>

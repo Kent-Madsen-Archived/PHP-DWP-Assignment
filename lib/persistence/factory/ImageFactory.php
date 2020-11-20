@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -10,8 +10,21 @@
      * Class ImageFactory
      */
     class ImageFactory 
-        extends Factory
+        extends FactoryTemplate
     {
+        /**
+         * ImageFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {
+            $this->setWrapper( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
+        }
+
+
         /**
          * @return string
          */
@@ -24,47 +37,27 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
 
 
         /**
-         * ImageFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
+         * @return string
          */
-        public function __construct( $mysql_connector )
+        final public static function getViewName()
         {
-            $this->setConnector( $mysql_connector );
+            return 'ImageView';
         }
 
 
         /**
-         * TODO: This
+         * @return string
          */
-        final public function setup()
+        final public static function getControllerName()
         {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-        
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
+            return 'ImageController';
         }
 
 
@@ -72,24 +65,23 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;
+            return boolval( $value );
         }
 
 
         /**
          * @return ImageModel|mixed
          */
-        final public function createModel()
+        final public function createModel(): ImageModel
         {
             $model = new ImageModel( $this );
-
             return $model;
         }
 
@@ -98,34 +90,27 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
+            $retVal = false;
+
             if( $var instanceof ImageModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        public function read()
+        final public function read(): ?array
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM image LIMIT ? OFFSET ?;";
@@ -133,6 +118,9 @@
             // prepare statement variables
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            // opens a connection to a mysql database
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -143,13 +131,15 @@
                                     $stmt_offset );
 
                 $stmt_limit  = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $brought = $this->createModel();
@@ -178,7 +168,7 @@
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -187,19 +177,72 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            // return array
+            $retVal = false;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM image WHERE identity = ?;";
+
+            // prepare statement variables
+            $stmt_identity  = null;
+
+            // opens a connection to a mysql database
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = $this->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setImageSrc( $row[ 'image_src' ] );
+                        $model->setImageTypeId( $row[ 'image_type_id' ] );
+
+                        $model->setTitle( $row[ 'title' ] );
+                        $model->setAlt( $row[ 'alt' ] );
+
+                        $model->setParentId( $row[ 'parent_id' ] );
+
+                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -208,74 +251,219 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
+
+            $sql = "INSERT INTO image( image_src, image_type_id, title, alt, parent_id ) VALUES( ?, ?, ?, ?, ? );";
+
+            $stmt_image_src = null;
+            $stmt_image_type_id = null;
+
+            $stmt_title = null;
+            $stmt_alt     = null;
+
+            $stmt_parent_id   = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "sissi",
+                    $stmt_image_src,
+                    $stmt_image_type_id,
+                    $stmt_title,
+                    $stmt_alt,
+                    $stmt_parent_id );
+
+                // Setup variables
+                $stmt_image_src     = $model->getImageSrc();
+                $stmt_image_type_id = $model->getImageTypeId();
+
+                $stmt_title     = $model->getTitle();
+                $stmt_alt       = $model->getAlt();
+
+                $stmt_parent_id   = $model->getParentId();
+
+                // Executes the query
+                $stmt->execute();
+
+                // Apply Identity
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+            $retVal = false;
+
+            $sql = "DELETE FROM image WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+            $retVal = false;
+
+            $sql = "UPDATE image SET image_src = ?, image_type_id = ?, title = ?, alt = ?, parent_id = ? WHERE identity = ?;";
+
+            $stmt_image_src     = null;
+            $stmt_image_type_id = null;
+
+            $stmt_title     = null;
+            $stmt_alt       = null;
+            $stmt_parent_id = null;
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "sissi",
+                    $stmt_image_src,
+                    $stmt_image_type_id,
+                    $stmt_title,
+                    $stmt_alt,
+                    $stmt_parent_id,
+                    $stmt_identity );
+
+                // Setup variables
+                $stmt_image_src     = $model->getImageSrc();
+                $stmt_image_type_id = $model->getImageTypeId();
+
+                $stmt_title     = $model->getTitle();
+                $stmt_alt       = $model->getAlt();
+
+                $stmt_parent_id   = $model->getParentId();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // Apply Identity
+                $model->setIdentity( $this->getWrapper()->finish() );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
-            
-            $retVal = 0;
+            $retVal = CONSTANT_ZERO;
 
-            $this->getConnector()->connect();
+            // SQL query
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            // opens a connection to the database
+            $local_connection = $this->getWrapper()->connect();
 
             try 
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -285,18 +473,44 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
         }
     }
 

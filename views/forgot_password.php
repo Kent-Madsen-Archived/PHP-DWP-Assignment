@@ -1,29 +1,29 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
     $access = new AccessPrivilegesDomain();
-    $domain = new AuthDomain();
 
     if( $access->is_logged_in() )
     {
         redirect_to_local_page( 'homepage' );
     }
+
+    $domain = new AuthDomain();
+    $domain->forgotMyPassword();
+
+    // Makes sure when the user press login, that it is intentionally, also forces the user to
+    // relogin, if it's a refresh
+    $fss = new FormSpoofSecurity();
+
+    $fss->generate();
+    $fss->applyToSession();
     
-    // First validate the users input
-    require 'forms/forgot_my_password_validation.php';
-
-    // Then process the form and upload it to the database
-    require 'forms/forgot_my_password_process.php';
-
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Forgot my password' );
+    PageTitleController::getSingletonController()->append( ' - Forgot my password' );
 ?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -33,13 +33,15 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
 
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML();
 
             // Makes sure when the user press login, that it is intentionally, also forces the user to
             // relogin, if it's a refresh
             $fss = new FormSpoofSecurity();
-            $fss->apply_to_session();
+
+            $fss->generate();
+            $fss->applyToSession();
         ?>
     </head>
     <body>

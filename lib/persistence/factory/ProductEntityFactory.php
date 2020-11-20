@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,8 +9,22 @@
      * Class ProductEntityFactory
      */
     class ProductEntityFactory
-        extends Factory
+        extends FactoryTemplate
     {
+        /**
+         * ProductEntityFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {   
+            $this->setWrapper( $mysql_connector );
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
+        }
+
+
         /**
          * @return string
          */
@@ -21,22 +35,29 @@
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
 
 
         /**
-         * ProductEntityFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
+         * @return string
          */
-        public function __construct( $mysql_connector )
-        {   
-            $this->setConnector( $mysql_connector );
+        final public static function getViewName()
+        {
+            return 'ProductEntityView';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getControllerName()
+        {
+            return 'ProductEntityController';
         }
 
 
@@ -46,26 +67,7 @@
         final public function createModel()
         {
             $model = new ProductEntityModel( $this );
-
             return $model;
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
         }
 
 
@@ -73,23 +75,14 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;      
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
+            return boolval( $value );
         }
 
 
@@ -99,12 +92,14 @@
          */
         final public function validateAsValidModel( $var )
         {
+            $retVal = false;
+
             if( $var instanceof ProductEntityModel )
             {
-                return true;
+                return $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -114,21 +109,17 @@
          */
         final public function read()
         {
-            $retVal = array();
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            //
             $sql = "SELECT * FROM product_entity LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            //
+            $retVal = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -138,27 +129,29 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_limit = intval( $this->getLimit(), 10 );
+                $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
-                        $model->setArrived( $row[ 'arrived' ] );
-                        $model->setEntityCode( $row[ 'entity_code' ] );
+                        $model->setArrived( strval( $row[ 'arrived' ] ) );
+                        $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
 
-                        $model->setProductId( $row[ 'product_id' ] );
-                        $model->setBrought( $row[ 'brought_id' ] );
+                        $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
+                        $model->setBrought( intval( $row[ 'brought_id' ], 10 ) );
 
                         array_push( $retVal, $model );
                     }
@@ -170,7 +163,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -182,7 +175,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel(&$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -200,13 +193,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+
+            return false;
         }
 
 
@@ -215,13 +210,15 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+
+            return false;
         }
 
 
@@ -230,7 +227,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -244,21 +241,14 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
+            $retVal = CONSTANT_ZERO;
+
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
             
-            $retVal = 0;
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -267,29 +257,56 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = $row[ 'number_of_rows' ];
+                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
                     }
                 }  
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
         }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
+
     }
 
 ?>

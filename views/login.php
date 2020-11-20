@@ -1,32 +1,29 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
     $access = new AccessPrivilegesDomain();
+
 
     if( $access->is_logged_in() )
     {
         redirect_to_local_page( 'homepage' );
     }
 
-        // First validate the users input
-    require_once 'forms/login_validation.php';
-
-        // Then process the form and upload it to the database
-    require_once 'forms/login_process_form.php';
-
-    /**
-     * 
-     */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Login' );
+    $domain = new AuthDomain();
+    $domain->login();
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
     $fss = new FormSpoofSecurity();
-    $fss->apply_to_session();
+
+    $fss->generate();
+    $fss->applyToSession();
+
+    
+    PageTitleController::getSingletonController()->append( ' - Login' );
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +35,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
 
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML()
         ?>
     </head>
     <body>
@@ -54,8 +51,8 @@
                       id="">
 
                     <input type="hidden" 
-                           name="security_token" 
-                           value="<?php echo $_SESSION[ 'fss_token' ]; ?>" >
+                           name="security_token"
+                           <?php FormSpoofSecurity::printSessionFSSToken(); ?> >
 
                     <h3> Login </h3>
                     

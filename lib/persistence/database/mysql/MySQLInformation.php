@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,9 +9,9 @@
      * Class MySQLInformation
      */
     class MySQLInformation
+        implements MySQLInformationInterface
     {
         // Constructors
-
         /**
          * MySQLInformation constructor.
          * @param $access
@@ -28,92 +28,120 @@
 
             $this->setDatabase( $database );
         }
+
         
         // internal variables
-        private $credential;        
-        private $database;
+        private $credential = null;
+        private $database = null;
 
-        private $access;
+        private $access = null;
+
 
         // Accessor
         /**
-         * @return mixed
+         * @return string|null
          */
-        final public function retrieve_username()
+        final public function retrieveUsername() : ? string
         {
-            return $this->credential->getUsername();
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
+            return strval( $this->credential->getUsername() );
         }
 
-        /**
-         * @return mixed
-         */
-        final public function retrieve_password()
-        {
-            return $this->credential->getPassword();
-        }
 
         /**
-         * @return mixed
+         * @return string|null
          */
-        final public function retrieve_hostname()
+        final public function retrievePassword() : ? string
         {
-            return $this->access->getHostname();
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
+            return strval( $this->credential->getPassword() );
         }
 
-        /**
-         * @return mixed
-         */
-        final public function retrieve_port()
-        {
-            return $this->access->getPort();
-        }
 
         /**
-         * @return mixed
+         * @return string|null
          */
-        final public function retrieve_database()
+        final public function retrieveHostname() : ? string
         {
-            return $this->getDatabase();
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
+            return strval( $this->access->getHostname() );
         }
+
+
+        /**
+         * @return int|null
+         */
+        final public function retrievePort() : ? int
+        {
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
+            return intval( $this->access->getPort() );
+        }
+
+
+        /**
+         * @return string|null
+         */
+        final public function retrieveDatabase() : ? string
+        {
+            if( is_null( $this->database ) )
+            {
+                return null;
+            }
+
+            return strval( $this->getDatabase() );
+        }
+
 
         // Functions
         /**
          * @param $var
          * @return bool
          */
-        final protected function validateAsCredential( $var )
+        final protected function validateAsCredential( $var ) : bool
         {
-            if( is_null( $var ) )
-            {
-                return true;
-            }
+            $retval = false;
 
             if( $var instanceof UserCredential )
             {
-                return true;
+                $retval = true;
             }
 
-            return false;
+            return boolval( $retval );
         }
+
 
         /**
          * @param $var
          * @return bool
          */
-        final protected function validateAsAccess( $var )
+        final protected function validateAsAccess( $var ) : bool
         {
-            if( is_null( $var ) )
-            {
-                return true;
-            }
+            $retVal = false;
 
             if( $var instanceof NetworkAccess )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
+
 
         /**
          * @return MySQLInformation
@@ -121,74 +149,116 @@
          */
         final public static function generateDefaultMysql()
         {
-            return new MySQLInformation(NetworkAccess::generateNetworkAccess(), UserCredential::generateDefaultUserCredential(), 'mysql');
+            return new MySQLInformation( NetworkAccess::generateNetworkAccess(),
+                                         UserCredential::generateDefaultUserCredential(),
+                                'mysql' );
         }
-        
+
+
         // Accessors
             // Getters
         /**
          * @return mixed
          */
-        final public function getCredential()
+        final public function getCredential(): ?UserCredential
         {
+            if( is_null( $this->credential ) )
+            {
+                return null;
+            }
+
             return $this->credential;
         }
 
-        /**
-         * @return mixed
-         */
-        final public function getAccess()
-        {
-            return $this->access;
-        }
 
         /**
          * @return mixed
          */
-        final public function getDatabase()
+        final public function getAccess(): ?NetworkAccess
         {
-            return $this->database;
+            if( is_null( $this->access ) )
+            {
+                return null;
+            }
+
+            return $this->access;
         }
+
+
+        /**
+         * @return string|null
+         */
+        final public function getDatabase() : ?string
+        {
+            if( is_null( $this->database ) )
+            {
+                return null;
+            }
+
+            return strval( $this->database );
+        }
+
 
             // Setters
         /** Result: Allowed to be null or a instance of NetworkAccess
          * @param $value
+         * @return NetworkAccess|null
          * @throws Exception
          */
-        final public function setAccess( $value )
+        final public function setAccess( $value ): ?NetworkAccess
         {
+            if( is_null( $value ) )
+            {
+                $this->access = $value;
+                return $this->getAccess();
+            }
+
             if( !$this->validateAsAccess( $value ) )
             {
                 throw new Exception( 'MySQLInformation - setAccess: Only NetworkAccess class or Null is allowed' );
             }
 
             $this->access = $value;
+
+            return $this->getAccess();
         }
+
 
         /** Result: Allowed to be null or a instance of UserCredential
          * @param $value
+         * @return UserCredential|null
          * @throws Exception
          */
-        final public function setCredential( $value )
+        final public function setCredential( $value ): ?UserCredential
         {
+            if( is_null( $this->credential ) )
+            {
+                $this->credential = $value;
+                return $this->getCredential();
+            }
+
             if( !$this->validateAsCredential( $value ) )
             {
                 throw new Exception( 'MySQLInformation - setCredential: Only UserCredential class or Null is allowed' );
             }
 
             $this->credential = $value;
+
+            return $this->getCredential();
         }
+
 
         /** Result: Allowed to be null, or a instance of a string.
          * @param $value
+         * @return string|null
          * @throws Exception
          */
-        final public function setDatabase( $value )
+        final public function setDatabase( $value ) : ?string
         {
             if( is_null( $value ) )
             {
-                $this->credential = $value;   
-                return;
+                $this->database = $value;
+                return $this->getDatabase();
             }
 
             if( !is_string( $value ) )
@@ -196,7 +266,9 @@
                 throw new Exception( 'MySQLInformation - setDatabase: Only string or null is allowed' );
             }
 
-            $this->database = $value;
+            $this->database = strval( $value );
+
+            return $this->getDatabase();
         }
 
     }

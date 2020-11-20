@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -10,8 +10,22 @@
      * Class ProfileTypeFactory
      */
     class ProfileTypeFactory 
-        extends Factory 
+        extends FactoryTemplate
     {
+        /**
+         * ProfileTypeFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {
+            $this->setWrapper( $mysql_connector );
+
+            $this->setLimit( CONSTANT_ZERO );
+            $this->setPaginationIndex( CONSTANT_ZERO );
+        }
+
+
         /**
          * @return string
          */
@@ -24,47 +38,27 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
 
 
         /**
-         * ProfileTypeFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
+         * @return string
          */
-        public function __construct( $mysql_connector )
+        final public static function getViewName()
         {
-            $this->setConnector( $mysql_connector );
+            return 'ProfileTypeView';
         }
 
 
         /**
-         * TODO: setup
+         * @return string
          */
-        final public function setup()
+        final public static function getControllerName()
         {
-            
-        }
-
-
-        /**
-         * TODO: setupSecondaries
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
-         * TODO: insert_base_data 
-         */
-        final public function insert_base_data()
-        {
-
+            return 'ProfileTypeController';
         }
 
 
@@ -72,19 +66,20 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;  
+            return boolval( $value );
         }
 
 
         /**
          * @return mixed|ProfileTypeModel
+         * @throws Exception
          */
         final public function createModel()
         {
@@ -100,12 +95,14 @@
          */
         final public function validateAsValidModel( $var )
         {
+            $retVal = false;
+
             if( $var instanceof ProfileTypeModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
@@ -113,23 +110,18 @@
          * @return array|mixed
          * @throws Exception
          */
-        final public function read( )
+        final public function read()
         {
-            $retVal = array();
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            //
             $sql = "SELECT * FROM profile_type LIMIT ? OFFSET ?;";
 
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
+
+            // Return Value
+            $retVal = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -139,16 +131,18 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_limit  = $this->getLimit();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
@@ -166,7 +160,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -178,7 +172,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel(&$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -196,25 +190,23 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             $sql = "INSERT INTO profile_type( content ) VALUES( ? );";
+
+            // Statement Variables
+            $stmt_profile_type_content = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -231,24 +223,21 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
             
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -257,25 +246,24 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = array();
+            //
+            $retVal = false;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            //
             $sql = "UPDATE profile_type SET content = ? WHERE identity = ?;";
+
+            $stmt_profile_type_content  = null;
+            $stmt_identity              = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -288,31 +276,27 @@
 
                 //
                 $stmt_profile_type_content = $model->getContent();
-
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -321,25 +305,23 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            $this->getConnector()->connect();
+            //
+            $retVal = false;
 
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            //
             $sql = "DELETE FROM profile_type WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -350,31 +332,28 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = $model->getIdentity();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
 
                 // Executes the query
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $retVal = TRUE;
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
+                $this->getWrapper()->undoState();
 
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -382,21 +361,14 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
+            $retVal = CONSTANT_ZERO;
             
-            $retVal = 0;
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -405,7 +377,7 @@
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -415,20 +387,44 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
         }
 
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
 
     }
 

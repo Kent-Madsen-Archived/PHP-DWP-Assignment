@@ -18,6 +18,7 @@
         // Variables
         private $connector = null;
 
+
         /**
          * @param $name
          * @return bool
@@ -25,9 +26,7 @@
          */
         final public function getDatabaseStatus( $name )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
+            $connection = $this->getConnector()->connect();
 
             $retVal = false;
 
@@ -38,6 +37,9 @@
 
             $sql = "SELECT SCHEMA_NAME = ? AS validation FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ?;";
 
+            $stmt_compare_name          = null;
+            $stmt_where_schema_name_is  = null;
+
             try 
             {
                 $stmt = $connection->prepare( $sql );
@@ -46,7 +48,8 @@
                                     $stmt_compare_name,
                                     $stmt_where_schema_name_is );
 
-                $stmt_compare_name = $name;
+                //
+                $stmt_compare_name         = $name;
                 $stmt_where_schema_name_is = $name;
 
                 // Executes the query
@@ -54,7 +57,7 @@
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > Factory::Zero() )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -64,11 +67,9 @@
                         }
                     }
                 }
-
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -76,8 +77,9 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
+
 
         /**
          * @param $schema
@@ -87,18 +89,16 @@
          */
         final public function getStatusOnTable( $schema, $table )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
             $retVal = false;
 
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $connection = $this->getConnector()->connect();
 
             $sql = "SELECT TABLE_NAME = ? AS validation FROM information_schema.tables WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = ? AND TABLE_NAME = ?;";
+
+            $stmt_compare_name = null;
+            $stmt_table_schema = null;
+            $stmt_table_type   = null;
+            $stmt_table_name   = null;
 
             try 
             {
@@ -110,19 +110,18 @@
                                     $stmt_table_type, 
                                     $stmt_table_name );
 
-                $stmt_table_schema = $schema;
-                $stmt_table_type = 'BASE TABLE';
+                $stmt_table_schema  = $schema;
+                $stmt_table_type    = 'BASE TABLE';
 
-                $stmt_table_name = $table;
-                $stmt_compare_name = $table;
-
+                $stmt_table_name    = $table;
+                $stmt_compare_name  = $table;
 
                 // Executes the query
                 $stmt->execute();
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -136,7 +135,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -144,7 +142,7 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -156,18 +154,16 @@
          */
         final public function getStatusOnView( $schema, $view )
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
+            $connection = $this->getConnector()->connect();
 
             $retVal = false;
 
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             $sql = "SELECT TABLE_NAME = ? AS validation FROM information_schema.tables WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = ? AND TABLE_NAME = ?;";
+
+            $stmt_compare_name = null;
+            $stmt_table_schema = null;
+            $stmt_table_type   = null;
+            $stmt_table_name   = null;
 
             try 
             {
@@ -205,7 +201,6 @@
             }
             catch( Exception $ex )
             {
-                echo $ex;
                 throw new Exception( 'Error:' . $ex );
             }
             finally
@@ -213,11 +208,11 @@
                 $this->getConnector()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
-        // Accessors
 
+        // Accessors
         /**
          * @return null
          */
@@ -225,6 +220,7 @@
         {
             return $this->connector;
         }
+
 
         /**
          * @param $connector

@@ -1,13 +1,13 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle( ' - Checkout' );
 
     $domain = new CheckoutDomain();
+
+    PageTitleController::getSingletonController()->append( ' - Checkout' );
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +18,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
     <body>

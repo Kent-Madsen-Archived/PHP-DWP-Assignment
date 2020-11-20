@@ -10,18 +10,28 @@
          * @param $arg
          * @return bool
          */
-        public function validateArgumentLevel( $arg )
+        public function validateArgumentLevel( $arg ) : bool
         {
+            $retVal = false;
+
+            if( is_null( $arg ) )
+            {
+                $this->setValue(null );
+                return boolval( $retVal );
+            }
+
             $value = filter_var( $arg, FILTER_SANITIZE_STRING );
 
             // Validate character set
-            if( is_null( $arg ) | is_string( $value ) )
+            if( is_string( $value ) )
             {
-                $this->setValue( $value );
-                return true;
+                $this->setValue( urldecode( $value ) );
+                $this->setIsValidated(true );
+
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
     }

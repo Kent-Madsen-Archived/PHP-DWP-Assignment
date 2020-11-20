@@ -1,5 +1,5 @@
 /**
- * Name: Contact Validate Form
+ * Name: contact Validate Form
  * Type: JavaScript
  * Purpose: 
  */

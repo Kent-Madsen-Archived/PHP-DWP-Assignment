@@ -1,13 +1,13 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
-    $title = PageTitleSingleton::getInstance();
-    $title->appendToTitle(' - About us');
 
     $domain = new AboutDomain();
+    
+    PageTitleController::getSingletonController()->append( ' - About us' );
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +18,8 @@
 
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
     <body>

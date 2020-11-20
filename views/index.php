@@ -1,13 +1,11 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
-     $title = PageTitleSingleton::getInstance();
-     $title->appendToTitle( ' - Homepage' );
 
-     $domain = new NewsDomain();
+    PageTitleController::getSingletonController()->append( ' - Homepage' );
 ?>
 
 <!DOCTYPE html>
@@ -18,16 +16,18 @@
         
         <link rel="stylesheet" href="/assets/css/style.css">
         
-        <?php 
-            $title->printDocumentTitle();
+        <?php
+            PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>
     <body>
         <?php get_header(); ?>
-
         <main> 
 
+<?php  
+/**
             <?php $arrNews = $domain->frontpage_news(); ?>
+
 
             <section class="news"> 
                 <?php 
@@ -44,6 +44,7 @@
                     endforeach;
                 ?>
             </section>
+             */?>
         </main>
         
         <?php get_footer(); ?>

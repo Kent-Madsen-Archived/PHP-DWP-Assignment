@@ -1,6 +1,6 @@
 <?php 
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,26 +9,8 @@
      * Class ArticleFactory
      */
     class ArticleFactory 
-        extends Factory
+        extends FactoryTemplate
     {
-        /**
-         * @return string
-         */
-        final public static function getTableName()
-        {
-            return 'article';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public function getFactoryTableName()
-        {
-            return self::getTableName();
-        }
-
-
         /**
          * ArticleFactory constructor.
          * @param $mysql_connector
@@ -36,45 +18,56 @@
          */
         public function __construct( $mysql_connector )
         {
-            $this->setConnector( $mysql_connector );
+            $this->setWrapper( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getViewName(): string
+        {
+            return 'ArticleView';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getControllerName(): string
+        {
+            return 'ArticleController';
+        }
+
+
+        /**
+         * @return string
+         */
+        final public static function getTableName(): string
+        {
+            return strval('article');
+        }
+
+
+        /**
+         * @return string
+         */
+        final public function getFactoryTableName(): string
+        {
+            return strval( self::getTableName() );
         }
 
 
         /**
          * @return ArticleModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ArticleModel
         {
             $model = new ArticleModel( $this );
-
             return $model;
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
         }
 
 
@@ -82,14 +75,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;
+            return boolval( $value );
         }
 
 
@@ -97,41 +90,36 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
+            $retVal = false;
+
             if( $var instanceof ArticleModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return array
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             // return array
-            $retVal = array();
+            $retVal = null;
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM article LIMIT ? OFFSET ?;";
 
             // prepare statement variables
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -141,14 +129,16 @@
                                    $stmt_limit, 
                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_limit  = $this->getLimit();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $articleModel = $this->createModel();
@@ -156,10 +146,10 @@
                         $articleModel->setIdentity( $row[ 'identity' ] );
                         
                         $articleModel->setTitle( $row[ 'title' ] );
-                        $articleModel->setContent( $row[ 'article_content' ] );
+                        $articleModel->setContent( $row[ 'content' ] );
 
                         $articleModel->setCreatedOn( $row[ 'created_on' ] );
-                        $articleModel->setLastUpdated( $row[ 'last_update' ] );
+                        $articleModel->setLastUpdated( $row[ 'last_updated' ] );
     
                         array_push( $retVal, $articleModel );
                     }
@@ -171,7 +161,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();   
+                $this->getWrapper()->disconnect();
             }
 
             return $retVal;
@@ -180,19 +170,62 @@
 
         /**
          * @param $model
-         * @return null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $connection = $this->getWrapper()->connect();
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM article where identity = ?;";
+
+            // return array
+            $retVal = false;
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setTitle( $row[ 'title' ]  );
+                        $model->setContent( $row[ 'content' ]  );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -200,19 +233,9 @@
          * @return array
          * @throws Exception
          */
-        final public function read_ordered_by_creation_date()
+        final public function readOrderedByCreationDate(): array
         {
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            // return array
-            $retVal = array();
+            $connection = $this->getWrapper()->connect();
 
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM article ORDER BY created_on DESC LIMIT ? OFFSET ?;";
@@ -220,6 +243,9 @@
             // prepare statement variables
             $stmt_limit  = null;
             $stmt_offset = null;
+
+            // return array
+            $retVal = null;
 
             try 
             {
@@ -230,24 +256,26 @@
                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+                    
                     while( $row = $result->fetch_assoc() )
                     {
                         $articleModel = $this->createModel();
                         
                         $articleModel->setIdentity( $row[ 'identity' ] );
                         
-                        $articleModel->setTitle( $row[ 'title' ] );
-                        $articleModel->setContent( $row[ 'article_content' ] );
+                        $articleModel->setTitle( $row[ 'title' ]  );
+                        $articleModel->setContent( $row[ 'content' ]  );
 
                         $articleModel->setCreatedOn( $row[ 'created_on' ] );
-                        $articleModel->setLastUpdated( $row[ 'last_update' ] );
+                        $articleModel->setLastUpdated( $row[ 'last_updated' ] );
     
                         array_push( $retVal, $articleModel );
                     }
@@ -259,7 +287,7 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }   
 
             return $retVal;
@@ -271,25 +299,24 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $this->getConnector()->connect();
+            // Statement Variables
+            $stmt_title   = null;
+            $stmt_content = null;
 
-            $connection = $this->getConnector()->getConnector();
+            // Return Values
+            $retVal = false;
 
-            $retVal = null;
+            $sql = "INSERT INTO article( title, article_content ) VALUES( ?, ? );";
 
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "INSERT INTO article( title, article_content ) VALUES( ?, ? )";
+            //
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -299,31 +326,28 @@
                                     $stmt_title, 
                                     $stmt_content );
 
-                $stmt_title = $model->getTitle();
+                $stmt_title   = $model->getTitle();
                 $stmt_content = $model->getContent();
 
                 // Executes the query
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
 
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -332,23 +356,24 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception('Not accepted model');
             }
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             $sql = "UPDATE article SET title = ?, article_content = ? WHERE identity = ?";
+
+            $stmt_title     = null;
+            $stmt_content   = null;
+            $stmt_identity  = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -367,49 +392,52 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $model;
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
+         * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $this->getConnector()->connect();
 
-            $connection = $this->getConnector()->getConnector();
+            // return value
+            $retVal = false;
 
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            // sql query
             $sql = "DELETE FROM article WHERE identity = ?;";
+
+            // Statement Variables
+            $stmt_identity = null;
+
+            // opens a connection to the mysql database
+            $local_connection = $this->getWrapper()->connect();
+
 
             try 
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "i", 
                                     $stmt_identity );
@@ -419,19 +447,22 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();   
+                $this->getWrapper()->finish();
+
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
+
+            return boolval( $retVal );
         }
 
 
@@ -439,29 +470,26 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
-            $retVal = 0;
+            // SQL Query
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+            
+            // Connection to the mysql Database
+            $local_connection = $this->getWrapper()->connect();
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            // Return Value
+            $retVal = CONSTANT_ZERO;
 
             try 
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -471,18 +499,44 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
+        }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
         }
 
     }

@@ -1,6 +1,6 @@
 <?php
     /**
-     *  Title:
+     *  title:
      *  Author:
      *  Type: PHP Script
      */
@@ -9,8 +9,21 @@
      * Class ContactFactory
      */
     class ContactFactory 
-        extends Factory
+        extends FactoryTemplate
     {
+        /**
+         * ContactFactory constructor.
+         * @param $mysql_connector
+         * @throws Exception
+         */
+        public function __construct( $mysql_connector )
+        {
+            $this->setWrapper( $mysql_connector );
+            $this->setPaginationIndex(CONSTANT_ZERO);
+            $this->setLimit(CONSTANT_ZERO);
+        }
+
+
         /**
          * @return string
          */
@@ -23,73 +36,53 @@
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName():string
         {
             return self::getTableName();
         }
 
 
         /**
-         * ContactFactory constructor.
-         * @param $mysql_connector
-         * @throws Exception
+         * @return string
          */
-        public function __construct( $mysql_connector )
+        final public static function getViewName()
         {
-            $this->setConnector( $mysql_connector );
+            return 'ContactView';
         }
 
 
         /**
-         * @return ContactModel|mixed
+         * @return string
          */
-        final public function createModel()
+        final public static function getControllerName()
+        {
+            return 'ContactController';
+        }
+
+
+        /**
+         * @return ContactModel
+         * @throws Exception
+         */
+        final public function createModel(): ContactModel
         {
             $model = new ContactModel( $this );
-
             return $model;
         }
-        
-
-        /**
-         * TODO: This
-         */
-        final public function setup()
-        {
-            
-        }
 
 
         /**
-         * TODO: This
-         */
-        final public function setupSecondaries()
-        {
-            
-        }
-
-
-        /**
-         * TODO: This
-         */
-        final public function insert_base_data()
-        {
-
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist_database()
+        final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getConnector() );
+            $status_factory = new StatusFactory( $this->getWrapper() );
             
-            $database = $this->getConnector()->getInformation()->getDatabase();
+            $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return $value;
+            return boolval( $value );
         }
 
 
@@ -97,35 +90,37 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
+            $retVal = false;
+
             if( $var instanceof ContactModel )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
-            $retVal = array();
+            // Return value
+            $retVal = null;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
+            // SQL Query
             $sql = "SELECT * FROM contact LIMIT ? OFFSET ?;";
+
+            //
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            // opens a connection to the database
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -136,22 +131,24 @@
                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
-                $stmt_offset = $this->calculateOffset();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
 
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
+                    $retVal = array();
+
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
 
-                        $model->setSubject( $row[ 'subject_title' ] );
+                        $model->setSubject( $row[ 'title' ] );
                         $model->setMessage( $row[ 'message' ] );
 
                         $model->setToMail( $row[ 'to_id' ] );
@@ -170,9 +167,8 @@
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
-
 
             return $retVal;   
         }
@@ -180,19 +176,71 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function read_model( $model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            // Return value
             $retVal = null;
 
-            return $retVal;
+            // SQL Query
+            $sql = "SELECT * FROM contact WHERE identity = ?;";
+
+            //
+            $stmt_identity = null;
+
+            // opens a connection to the database
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = intval( $model->getIdentity(), BASE_10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+
+                        $model->setSubject( strval( $row[ 'title' ] ) );
+                        $model->setMessage( strval( $row[ 'message' ] ) );
+
+                        $model->setToMail( intval( $row[ 'to_id' ], BASE_10 ) );
+                        $model->setFromMail( intval( $row[ 'from_id' ], BASE_10 ) );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception('Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -201,25 +249,26 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( $model )
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
             
-            $retVal = null;
+            $retVal = false;
 
-            $this->getConnector()->connect();
+            $sql = "INSERT INTO contact( title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
 
-            $connection = $this->getConnector()->getConnector();
+            $stmt_subject = null;
+            $stmt_message = null;
 
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $stmt_has_been_send = null;
 
-            $sql = "INSERT INTO contact( subject_title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
+            $stmt_to_id     = null;
+            $stmt_from_id   = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try 
             {
@@ -233,7 +282,7 @@
                                    $stmt_from_id );
 
                 // Setup variables
-                $stmt_subject = $model->getSubject() ;
+                $stmt_subject = $model->getSubject();
                 $stmt_message = $model->getMessage();
                 
                 $stmt_has_been_send = $model->getHasBeenSend();
@@ -244,27 +293,23 @@
                 // Executes the query
                 $stmt->execute();
 
-                // commits the statement
-                $this->getConnector()->finish();
-
                 // Apply Identity
-                $model->setIdentity( $stmt->insert_id );
-                $retVal = $model;
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( "Error: " . $ex );
             }
             finally 
             {
                 // Leaves the connection.
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
@@ -273,25 +318,20 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( $model )
+        final public function delete( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
-
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
+            $retVal = false;
 
             $sql = "DELETE FROM contact WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -308,34 +348,30 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
-
-                $retVal = TRUE;
+                $this->getWrapper()->finish();
+                $retVal = true;
             }
             catch( Exception $ex )
             {
-                $retVal = FALSE;
-
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool|mixed
          * @throws Exception
          */
-        final public function update( $model )
+        final public function update( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -344,16 +380,18 @@
 
             $retVal = null;
 
-            $this->getConnector()->connect();
-
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
             $sql = "UPDATE contact SET subject_title = ?, message = ?, has_been_send = ?, to_id = ?, from_id = ? WHERE identity = ?;";
+
+            $stmt_subject = null;
+            $stmt_message = null;
+            $stmt_has_been_send = null;
+
+            $stmt_to_id = null;
+            $stmt_from_id = null;
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
 
             try
             {
@@ -382,54 +420,48 @@
                 $stmt->execute();
 
                 // commits the statement
-                $this->getConnector()->finish();
+                $this->getWrapper()->finish();
 
-                $retVal = $model;
+                $retVal = true;
             }
             catch( Exception $ex )
             {
                 // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
+                $this->getWrapper()->undoState();
                 throw new Exception( "Error: " . $ex );
             }
             finally
             {
                 // Leaves the connection.
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length()
+        final public function length(): int
         {
-            $retVal = 0;
+            $retVal = CONSTANT_ZERO;
 
-            $this->getConnector()->connect();
+            $table_name = self::getTableName();
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
-            $connection = $this->getConnector()->getConnector();
-
-            if( $connection->connect_error )
-            {
-                throw new Exception( 'Error: ' . $connection->connect_error );
-            }
-
-            $sql = "SELECT count( * ) AS number_of_rows FROM " . self::getTableName() . ";";
+            // Opens a connection to the database
+            $local_connection = $this->getWrapper()->connect();
 
             try 
             {
-                $stmt = $connection->prepare( $sql );
+                $stmt = $local_connection->prepare( $sql );
                 
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                if( $result->num_rows > 0 )
+                if( $result->num_rows > CONSTANT_ZERO )
                 {
                     while( $row = $result->fetch_assoc() )
                     {
@@ -439,19 +471,46 @@
             }
             catch( Exception $ex )
             {
-                // Rolls back, the changes
-                $this->getConnector()->undo_state();
-
                 throw new Exception( 'Error:' . $ex );
             }
             finally
             {
                 //
-                $this->getConnector()->disconnect();
+                $this->getWrapper()->disconnect();
             }
 
-            return $retVal;
+            return intval( $retVal );
         }
+
+
+        /**
+         * @param $classObject
+         * @return bool
+         * @throws Exception
+         */
+        final public function classHasImplementedView( $classObject )
+        {
+            $retVal = false;
+
+            if( is_null( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
+            }
+
+            if( !is_object( $classObject ) )
+            {
+                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
+            }
+
+            if( FactoryTemplate::modelImplements( $classObject, self::getViewName() ) )
+            {
+                $retVal = true;
+                return boolval( $retVal );
+            }
+
+            return boolval( $retVal );
+        }
+
     }
 
 ?>
