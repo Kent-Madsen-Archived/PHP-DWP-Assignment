@@ -61,12 +61,12 @@
 
 
         /**
-         * @return mixed|ProductAttributeModel
+         * @return ProductAttributeModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProductAttributeModel
         {
             $model = new ProductAttributeModel( $this );
-
             return $model;
         }
 
@@ -90,7 +90,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +104,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             $retVal = null;
 
@@ -162,21 +162,61 @@
         }
 
 
-        /**7
+        /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $retVal = false;
+
+            $sql = "SELECT * FROM product_attribute WHERE identity = ?;";
+
+            $stmt_identity  = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setContent( $row[ 'content' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -209,8 +249,50 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            //
+            $retVal = false;
 
-            return false;
+            //
+            $sql = "UPDATE product_attribute SET content = ? WHERE identity = ?;";
+
+            $stmt_product_attribute_content  = null;
+            $stmt_identity              = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "si",
+                    $stmt_product_attribute_content,
+                    $stmt_identity );
+
+                //
+                $stmt_product_attribute_content = $model->getContent();
+                $stmt_identity = intval( $model->getIdentity(), 10 );
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
