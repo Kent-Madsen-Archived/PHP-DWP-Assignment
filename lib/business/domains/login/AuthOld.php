@@ -129,7 +129,7 @@ class AuthOld
             $email->setFactory( $person_email_factory );
         }
 
-        $email_found = $person_email_factory->read_by_name( $email );
+        $email_found = $person_email_factory->readModelByName( $email );
 
         if( is_null( $email_found->getIdentity() ) )
         {

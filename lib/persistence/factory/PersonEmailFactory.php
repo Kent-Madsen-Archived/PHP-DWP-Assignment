@@ -82,7 +82,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -97,10 +97,69 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function validateIfMailExist( $model ): bool
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            $retVal = false;
+
+            $sql = "SELECT exists_email( ? ) as validation;";
+
+            $stmt_mail = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "s",
+                    $stmt_mail );
+
+                $stmt_mail = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        if( $row[ 'validation' ] )
+                        {
+                            $retVal = true;
+                        }
+                    }
+                }
+
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -150,69 +209,10 @@
 
 
         /**
-         * @param $model
-         * @return bool
+         * @return array|null
          * @throws Exception
          */
-        final public function validate_if_mail_exist( $model )
-        {
-            if( !$this->validateAsValidModel( $model ) )
-            {
-                throw new Exception( 'Not accepted model' );
-            }
-
-            $retVal = false;
-
-            $sql = "SELECT exists_email( ? ) as validation;";
-
-            $stmt_mail = null;
-
-            $connection = $this->getWrapper()->connect();
-
-            try
-            {
-                $stmt = $connection->prepare( $sql );
-
-                $stmt->bind_param( "s",
-                                    $stmt_mail );
-                
-                $stmt_mail = $model->getContent();
-
-                // Executes the query
-                $stmt->execute();
-
-                $result = $stmt->get_result();
-
-                if( $result->num_rows > CONSTANT_ZERO )
-                {
-                    while( $row = $result->fetch_assoc() )
-                    {
-                        if( $row[ 'validation' ] )
-                        {
-                            $retVal = true;
-                        }
-                    }
-                }
-
-            }
-            catch( Exception $ex )
-            {
-                throw new Exception( 'Error:' . $ex );
-            }
-            finally
-            {
-                $this->getWrapper()->disconnect();
-            }
-
-            return boolval( $retVal );
-        }
-
-
-        /**
-         * @return array|mixed
-         * @throws Exception
-         */
-        final public function read()
+        final public function read(): ?array
         {
             $retVal = null;
 
@@ -272,10 +272,10 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function read_by_name( &$model ): bool
+        final public function readModelByName( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -328,28 +328,67 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $retVal = false;
+
+            $sql = "SELECT * FROM person_email WHERE identity = ?;";
+
+            $stmt_id = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_id );
+
+                $stmt_id = $model->getIdentity();
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( intval( $row[ 'identity' ] ) );
+                        $model->setContent( intval( $row[ 'content' ] ) );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -400,10 +439,10 @@
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -452,7 +491,7 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int
