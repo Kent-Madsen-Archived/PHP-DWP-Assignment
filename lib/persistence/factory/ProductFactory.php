@@ -79,8 +79,9 @@
 
         /**
          * @return ProductModel
+         * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProductModel
         {
             $model = new ProductModel( $this );
 
@@ -92,7 +93,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -106,10 +107,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read( )
+        final public function read( ): ?array
         {
             // return array
             $retVal = null;
