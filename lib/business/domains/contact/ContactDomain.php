@@ -93,9 +93,9 @@
             $mailModel = $factory->createModel();
             $mailModel->setContent( $mail_content );
 
-            if( $factory->validate_if_mail_exist( $mailModel ) )
+            if( $factory->validateIfMailExist( $mailModel ) )
             {
-                $factory->read_by_name( $mailModel );
+                $factory->readModelByName( $mailModel );
             }
             else 
             {

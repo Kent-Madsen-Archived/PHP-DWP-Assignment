@@ -78,6 +78,7 @@
 
         /**
          * @return PersonAddressModel
+         * @throws Exception
          */
         final public function createModel(): PersonAddressModel
         {
@@ -249,7 +250,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -317,7 +318,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -392,7 +393,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
