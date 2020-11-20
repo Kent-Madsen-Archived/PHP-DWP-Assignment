@@ -79,10 +79,9 @@
         /**
          * @return mixed|PersonNameModel
          */
-        final public function createModel()
+        final public function createModel(): PersonNameModel
         {
             $model = new PersonNameModel( $this );
-
             return $model;
         }
 

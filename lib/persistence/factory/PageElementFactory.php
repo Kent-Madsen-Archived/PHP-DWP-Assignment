@@ -78,7 +78,7 @@
         /**
          * @return mixed|PageElementModel
          */
-        final public function createModel()
+        final public function createModel(): PageElementModel
         {
             $model = new PageElementModel( $this );
 

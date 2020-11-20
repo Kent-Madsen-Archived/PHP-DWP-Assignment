@@ -69,10 +69,10 @@
             $model = new ContactModel( $this );
             return $model;
         }
-        
+
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -90,7 +90,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +104,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             // Return value
             $retVal = null;
@@ -249,7 +249,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -441,7 +441,7 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int

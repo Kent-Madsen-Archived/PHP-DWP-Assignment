@@ -77,10 +77,9 @@
         /**
          * @return ImageTypeModel|mixed
          */
-        final public function createModel()
+        final public function createModel(): ImageTypeModel
         {
             $model = new ImageTypeModel( $this );
-
             return $model;
         }
 

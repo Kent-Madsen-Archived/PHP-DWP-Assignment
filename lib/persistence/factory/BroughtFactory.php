@@ -303,7 +303,7 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function update( &$model ): bool

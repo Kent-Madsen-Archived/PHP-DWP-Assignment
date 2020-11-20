@@ -28,7 +28,7 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        final public static function getTableName(): string
         {
             return 'associated_category';
         }
@@ -46,7 +46,7 @@
         /**
          * @return string
          */
-        final public static function getViewName()
+        final public static function getViewName(): string
         {
             return 'AssociatedCategoryView';
         }
@@ -55,7 +55,7 @@
         /**
          * @return string
          */
-        final public static function getControllerName()
+        final public static function getControllerName(): string
         {
             return 'AssociatedCategoryController';
         }
@@ -361,10 +361,10 @@
 
         /**
          * @param $model
-         * @return bool|null
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -417,7 +417,7 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int

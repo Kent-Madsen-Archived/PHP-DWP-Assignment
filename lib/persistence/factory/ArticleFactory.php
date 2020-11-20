@@ -19,15 +19,15 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+            $this->setPaginationIndex(CONSTANT_ZERO );
+            $this->setLimit(CONSTANT_ZERO );
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        final public static function getViewName(): string
         {
             return 'ArticleView';
         }
@@ -36,7 +36,7 @@
         /**
          * @return string
          */
-        final public static function getControllerName()
+        final public static function getControllerName(): string
         {
             return 'ArticleController';
         }
@@ -45,26 +45,26 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        final public static function getTableName(): string
         {
             return strval('article');
         }
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName()
+        final public function getFactoryTableName(): string
         {
             return strval( self::getTableName() );
         }
 
 
         /**
-         * @return ArticleModel|mixed
+         * @return ArticleModel
          * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ArticleModel
         {
             $model = new ArticleModel( $this );
             return $model;
@@ -72,7 +72,7 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -90,7 +90,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +104,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             // return array
             $retVal = null;
@@ -233,7 +233,7 @@
          * @return array
          * @throws Exception
          */
-        final public function readOrderedByCreationDate()
+        final public function readOrderedByCreationDate(): array
         {
             $connection = $this->getWrapper()->connect();
 

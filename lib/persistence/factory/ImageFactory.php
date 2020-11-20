@@ -79,10 +79,9 @@
         /**
          * @return ImageModel|mixed
          */
-        final public function createModel()
+        final public function createModel(): ImageModel
         {
             $model = new ImageModel( $this );
-
             return $model;
         }
 
@@ -91,7 +90,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -105,10 +104,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        public function read()
+        final public function read(): ?array
         {
             // return array
             $retVal = null;
@@ -178,19 +177,72 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            // return array
+            $retVal = false;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM image WHERE identity = ?;";
+
+            // prepare statement variables
+            $stmt_identity  = null;
+
+            // opens a connection to a mysql database
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity  = $this->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setImageSrc( $row[ 'image_src' ] );
+                        $model->setImageTypeId( $row[ 'image_type_id' ] );
+
+                        $model->setTitle( $row[ 'title' ] );
+                        $model->setAlt( $row[ 'alt' ] );
+
+                        $model->setParentId( $row[ 'parent_id' ] );
+
+                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -199,54 +251,198 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "INSERT INTO image( image_src, image_type_id, title, alt, parent_id ) VALUES( ?, ?, ?, ?, ? );";
+
+            $stmt_image_src = null;
+            $stmt_image_type_id = null;
+
+            $stmt_title = null;
+            $stmt_alt     = null;
+
+            $stmt_parent_id   = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "sissi",
+                    $stmt_image_src,
+                    $stmt_image_type_id,
+                    $stmt_title,
+                    $stmt_alt,
+                    $stmt_parent_id );
+
+                // Setup variables
+                $stmt_image_src     = $model->getImageSrc();
+                $stmt_image_type_id = $model->getImageTypeId();
+
+                $stmt_title     = $model->getTitle();
+                $stmt_alt       = $model->getAlt();
+
+                $stmt_parent_id   = $model->getParentId();
+
+                // Executes the query
+                $stmt->execute();
+
+                // Apply Identity
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "DELETE FROM image WHERE identity = ?;";
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                //
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        final public function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            $sql = "UPDATE image SET image_src = ?, image_type_id = ?, title = ?, alt = ?, parent_id = ? WHERE identity = ?;";
+
+            $stmt_image_src     = null;
+            $stmt_image_type_id = null;
+
+            $stmt_title     = null;
+            $stmt_alt       = null;
+            $stmt_parent_id = null;
+
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "sissi",
+                    $stmt_image_src,
+                    $stmt_image_type_id,
+                    $stmt_title,
+                    $stmt_alt,
+                    $stmt_parent_id,
+                    $stmt_identity );
+
+                // Setup variables
+                $stmt_image_src     = $model->getImageSrc();
+                $stmt_image_type_id = $model->getImageTypeId();
+
+                $stmt_title     = $model->getTitle();
+                $stmt_alt       = $model->getAlt();
+
+                $stmt_parent_id   = $model->getParentId();
+
+                $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // Apply Identity
+                $model->setIdentity( $this->getWrapper()->finish() );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int

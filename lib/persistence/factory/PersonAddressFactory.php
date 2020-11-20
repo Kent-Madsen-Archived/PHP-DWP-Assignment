@@ -79,10 +79,9 @@
         /**
          * @return PersonAddressModel
          */
-        final public function createModel()
+        final public function createModel(): PersonAddressModel
         {
             $model = new PersonAddressModel( $this );
-
             return $model;
         }
 
