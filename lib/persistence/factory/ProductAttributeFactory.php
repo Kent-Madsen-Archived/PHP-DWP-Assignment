@@ -222,7 +222,7 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ):bool
@@ -232,8 +232,47 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $sql = "INSERT INTO product_attribute( content ) VALUES( ? );";
 
-            return false;
+            // Statement Variables
+            $stmt_product_attribute_content = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "s",
+                    $stmt_product_attribute_content );
+
+                //
+                $stmt_product_attribute_content = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
