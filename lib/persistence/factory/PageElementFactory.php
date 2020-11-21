@@ -76,7 +76,8 @@
 
 
         /**
-         * @return mixed|PageElementModel
+         * @return PageElementModel
+         * @throws Exception
          */
         final public function createModel(): PageElementModel
         {
@@ -90,7 +91,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +105,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             // return array
             $retVal = null;
@@ -173,10 +174,10 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -246,7 +247,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
