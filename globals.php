@@ -39,4 +39,8 @@
 
     define( 'CONSTANT_ZERO', 0 );
     define( 'CONSTANT_ONE', 1 );
+    define( 'CONSTANT_TWO', 2 );
+    define( 'CONSTANT_THREE', 3 );
+    define( 'CONSTANT_FOUR', 4 );
+    define( 'CONSTANT_FIVE', 5 );
 ?>

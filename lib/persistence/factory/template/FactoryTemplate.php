@@ -20,8 +20,14 @@
 
         // Useful when implementing pagination
         private $pagination_index = 0;
-        private $limit = 5;
+        private $limit = 0;
 
+        //
+        protected function setPaginationAndLimit( $limit, $pagination_index ): void
+        {
+            $this->setLimit( $limit );
+            $this->setPaginationIndex( $pagination_index );
+        }
 
         // Validation of objects
         /**

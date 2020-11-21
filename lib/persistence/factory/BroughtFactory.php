@@ -20,9 +20,8 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
+            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
 
-            $this->setPaginationIndex(CONSTANT_ZERO );
-            $this->setLimit(CONSTANT_ZERO );
         }
 
 

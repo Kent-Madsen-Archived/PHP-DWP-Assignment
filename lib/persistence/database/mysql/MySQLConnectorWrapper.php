@@ -46,11 +46,14 @@
                                             $information->retrieveUsername(), $information->retrievePassword(),
                                             $information->retrieveDatabase(),
                                             $information->retrievePort() );
-            
+
             // by default is true. it's set to false so it won't update the mysql state automaticly
             // consequence is that factory classes have to call commit. inorder for change to 
             // be updated.
             $local_connection->autocommit( FALSE );
+
+            //
+            $this->setConnector( $local_connection );
 
             //
             if( $local_connection->connect_error )
@@ -58,8 +61,6 @@
                 throw new Exception( 'Error: ' . $local_connection->connect_error );
             }
 
-            // 
-            $this->setConnector( $local_connection );
             return $this->getConnector();
         }
 
@@ -76,7 +77,6 @@
 
             // clears the connection session
             $this->setConnector(null );
-
             return $this->getConnector();
         }
 
@@ -145,7 +145,7 @@
 
 
         /**
-         * @return mixed
+         * @return mysqli|null
          */
         final public function getConnector() : ?mysqli
         {
@@ -155,6 +155,7 @@
 
         /**
          * @param $var
+         * @return MySQLInformation|null
          * @throws Exception
          */
         final public function setInformation( $var ) : ?MySQLInformation
