@@ -20,8 +20,7 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationIndex(CONSTANT_ZERO);
-            $this->setLimit(CONSTANT_ZERO);
+            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
 
 
@@ -68,6 +67,16 @@
         final public function createModel(): ContactModel
         {
             $model = new ContactModel( $this );
+            return $model;
+        }
+
+
+        /**
+         * @return ContactModelForm
+         */
+        final public function createFormModel(): ContactModelForm
+        {
+            $model = new ContactModelForm();
             return $model;
         }
 
@@ -172,6 +181,79 @@
             }
 
             return $retVal;   
+        }
+
+
+        /**
+         * @return array|null
+         * @throws Exception
+         */
+        final public function readFormsNotSended(): ?array
+        {
+            // Return value
+            $retVal = null;
+
+            // SQL Query
+            $sql = "SELECT * FROM contact_model_view WHERE has_been_send = 0 LIMIT ? OFFSET ?;";
+
+            //
+            $stmt_limit = null;
+            $stmt_offset = null;
+
+            // opens a connection to the database
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                    $stmt_limit,
+                    $stmt_offset );
+
+                $stmt_limit = $this->getLimit();
+                $stmt_offset = $this->CalculateOffset();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createFormModel();
+
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setTitle( $row[ 'title' ] );
+                        $model->setMessage( $row[ 'message' ] );
+
+                        $model->setToEmail( $row[ 'to_mail' ] );
+                        $model->setFromEmail( $row[ 'from_mail' ] );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+
+                        $model->done();
+
+                        array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception('Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
         }
 
 
@@ -416,6 +498,57 @@
                 $stmt_from_id = $model->getFromMail();
 
                 $stmt_identity = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
+         * @param $id
+         * @return bool
+         * @throws Exception
+         */
+        final public function updateIsFinished( $id ):bool
+        {
+            $retVal = null;
+
+            $sql = "UPDATE contact SET has_been_send = ? WHERE identity = ?;";
+
+            $stmt_has_been_send = null;
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                    $stmt_has_been_send,
+                    $stmt_identity );
+
+                $stmt_has_been_send = 1;
+                $stmt_identity = $id;
 
                 // Executes the query
                 $stmt->execute();
