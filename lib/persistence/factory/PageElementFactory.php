@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: PageElementFactory
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
 
     /**
@@ -27,16 +28,16 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        final public static function getTableName(): string
         {
             return 'page_element';
         }
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName():string
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
@@ -45,7 +46,7 @@
         /**
          * @return string
          */
-        final public static function getViewName()
+        final public static function getViewName(): string
         {
             return 'PageElementView';
         }
@@ -54,7 +55,7 @@
         /**
          * @return string
          */
-        final public static function getControllerName()
+        final public static function getControllerName(): string
         {
             return 'PageElementController';
         }
@@ -76,7 +77,8 @@
 
 
         /**
-         * @return mixed|PageElementModel
+         * @return PageElementModel
+         * @throws Exception
          */
         final public function createModel(): PageElementModel
         {
@@ -90,7 +92,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -104,10 +106,10 @@
 
 
         /**
-         * @return array|mixed
+         * @return array
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             // return array
             $retVal = null;
@@ -173,19 +175,71 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+
+            // return array
+            $retVal = false;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM page_element WHERE identity = ?;";
+
+            // prepare statement variables
+            $stmt_identity = null;
+
+            // opens a connection the mysql server
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity     = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setAreaKey( $row[ 'area_key' ] );
+
+                        $model->setTitle( $row[ 'title' ] );
+                        $model->setContent( $row[ 'content' ]  );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -194,7 +248,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        final public function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -211,7 +265,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {

@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Profile
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
 
     $domain = new ProfileDomain();

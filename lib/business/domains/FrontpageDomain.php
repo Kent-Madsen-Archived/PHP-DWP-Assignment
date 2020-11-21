@@ -1,4 +1,10 @@
 <?php
+    /**
+     *  Title: FrontpageDomain
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
+     */
 
     /**
      * Class FrontpageDomain

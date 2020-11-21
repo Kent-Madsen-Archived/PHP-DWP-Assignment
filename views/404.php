@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: 404 View
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
     
     PageTitleController::getSingletonController()->append( ' - 404 Page' );

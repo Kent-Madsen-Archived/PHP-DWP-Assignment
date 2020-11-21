@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Autoloader
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
 
     class Autoloader

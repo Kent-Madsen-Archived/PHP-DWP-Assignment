@@ -1,11 +1,10 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: RouterSingleton
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
-
-    require_once 'router.php';
 
     /**
      * Class RouterSingleton

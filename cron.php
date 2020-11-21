@@ -1,10 +1,9 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
-     */
-    require 'bootstrap.php'; 
-
-    
+     *  Title: Cron Job
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Page
+     *  Project: DWP-Assignment
+    */
+    require 'bootstrap.php';
 ?>

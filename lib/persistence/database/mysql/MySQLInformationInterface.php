@@ -1,4 +1,10 @@
 <?php
+    /**
+     *  Title: MySQLInformationInterface
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Interface
+     *  Project: DWP-Assignment
+     */
 
     /**
      * Interface MySQLInformationInterface

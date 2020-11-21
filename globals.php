@@ -1,8 +1,9 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Global Variables
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Page
+     *  Project: DWP-Assignment
      */
     // -----------------------------------------------------------------------------------------
     define( "WEBPAGE_DEFAULT_PAGE_TITLE", "PHP DWP Assignment" );

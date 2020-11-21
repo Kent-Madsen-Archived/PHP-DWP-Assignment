@@ -1,6 +1,19 @@
 <?php
+    /**
+     *  Title: RegisterDomainFormView
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
+     */
+
+    /**
+     * Class RegisterDomainFormView
+     */
     class RegisterDomainFormView
     {
+        /**
+         * RegisterDomainFormView constructor.
+         */
         public function __construct()
         {
 

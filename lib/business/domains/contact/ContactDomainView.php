@@ -1,72 +1,22 @@
 <?php
+    /**
+     *  Title: ContactDomainView
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
+     */
 
+    /**
+     * Class ContactDomainView
+     */
     class ContactDomainView
     {
+        /**
+         * ContactDomainView constructor.
+         */
         public function __construct()
         {
 
-        }
-
-
-        /**
-         * @return string|null
-         */
-        final static public function getFormSubject(): ?string
-        {
-            $value = $_POST[ 'form_contact_subject' ];
-
-            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
-
-            return $sanitized_value;
-        }
-
-
-        /**
-         * @return string|null
-         */
-        final static public function getFormMessage(): ?string
-        {
-            $value = $_POST[ 'form_contact_message' ];
-
-            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
-
-            return strval( $sanitized_value );
-        }
-
-
-        /**
-         * @return string|null
-         * @throws Exception
-         */
-        final public static function getFormFromMail(): ?string
-        {
-            $fromMail = $_POST[ 'form_contact_from' ];
-            $sanitizedFromMail = filter_var( $fromMail, FILTER_SANITIZE_EMAIL );
-
-            if( self::validateIsMail( $sanitizedFromMail ) )
-            {
-                return strval( $sanitizedFromMail );
-            }
-
-            return null;
-        }
-
-
-        /**
-         * @return string|null
-         * @throws Exception
-         */
-        final public static function getFormToMail(): ?string
-        {
-            $toMailFromForm = WEBPAGE_DEFAULT_MAILTO;
-            $sanitizedToMail = filter_var( $toMailFromForm, FILTER_SANITIZE_EMAIL );
-
-            if( self::validateIsMail( $sanitizedToMail ) )
-            {
-                return strval( $sanitizedToMail );
-            }
-
-            return null;
         }
 
 
@@ -175,6 +125,68 @@
             return boolval( $retVal );
         }
 
+
+        // Accessors
+        /**
+         * @return string|null
+         */
+        final static public function getFormSubject(): ?string
+        {
+            $value = $_POST[ 'form_contact_subject' ];
+
+            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
+
+            return $sanitized_value;
+        }
+
+
+        /**
+         * @return string|null
+         */
+        final static public function getFormMessage(): ?string
+        {
+            $value = $_POST[ 'form_contact_message' ];
+
+            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
+
+            return strval( $sanitized_value );
+        }
+
+
+        /**
+         * @return string|null
+         * @throws Exception
+         */
+        final public static function getFormFromMail(): ?string
+        {
+            $fromMail = $_POST[ 'form_contact_from' ];
+            $sanitizedFromMail = filter_var( $fromMail, FILTER_SANITIZE_EMAIL );
+
+            if( self::validateIsMail( $sanitizedFromMail ) )
+            {
+                return strval( $sanitizedFromMail );
+            }
+
+            return null;
+        }
+
+
+        /**
+         * @return string|null
+         * @throws Exception
+         */
+        final public static function getFormToMail(): ?string
+        {
+            $toMailFromForm = WEBPAGE_DEFAULT_MAILTO;
+            $sanitizedToMail = filter_var( $toMailFromForm, FILTER_SANITIZE_EMAIL );
+
+            if( self::validateIsMail( $sanitizedToMail ) )
+            {
+                return strval( $sanitizedToMail );
+            }
+
+            return null;
+        }
 
 
     }

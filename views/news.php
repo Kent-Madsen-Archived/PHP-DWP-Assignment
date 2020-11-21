@@ -1,10 +1,10 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: News
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
-
      
     PageTitleController::getSingletonController()->append( ' - News' );
 ?>

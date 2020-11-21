@@ -1,8 +1,9 @@
 <?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: FactoryCRUD
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Interface
+     *  Project: DWP-Assignment
      */
 
     /**

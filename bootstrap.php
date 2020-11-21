@@ -1,10 +1,10 @@
-<?php 
+<?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Bootstrap
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Page
+     *  Project: DWP-Assignment
      */
-
     require 'globals.php';
     require 'functions.php';
     require 'autoloader.php';

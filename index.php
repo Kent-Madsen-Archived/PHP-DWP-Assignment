@@ -1,11 +1,12 @@
 <?php
-    header('Content-Type: text/html; charset=UTF-8');
-
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Index
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Page
+     *  Project: DWP-Assignment
      */
+
+    header('Content-Type: text/html; charset=UTF-8');
 
     // Set's it so, that sessions can only be used by cookies and disallows it in the url.
     // It removes URL based attacks 
@@ -17,8 +18,7 @@
 ?>
 <?php 
     // Internal Libraries
-    require 'bootstrap.php'; 
-    require 'router_singleton.php';
+    require 'bootstrap.php';
 
     //
     $session_fixation = new SessionFixationSecurity();

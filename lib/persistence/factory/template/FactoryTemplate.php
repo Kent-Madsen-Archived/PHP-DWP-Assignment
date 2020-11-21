@@ -1,8 +1,9 @@
 <?php 
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: FactoryTemplate
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Abstract Class
+     *  Project: DWP-Assignment
      */
 
 
@@ -56,7 +57,7 @@
          * @return string
          * @throws Exception
          */
-        final protected function escape( $value ) : string
+        final protected function escape( $value ): string
         {
             $connector = $this->getWrapper()->getConnector();
 

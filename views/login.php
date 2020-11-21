@@ -1,8 +1,9 @@
 <?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Login
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
     $access = new AccessPrivilegesDomain();
 
