@@ -1,10 +1,10 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: ProductCategoryFactory
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
-
 
     /**
      * Class ProductCategoryFactory

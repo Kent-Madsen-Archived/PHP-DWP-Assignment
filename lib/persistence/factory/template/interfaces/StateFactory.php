@@ -1,4 +1,10 @@
 <?php
+    /**
+     *  Title: StateFactory
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Interface
+     *  Project: DWP-Assignment
+     */
 
     /**
      * Interface StateFactory

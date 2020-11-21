@@ -1,10 +1,10 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
-     */
-
+    *  Title: ProfileInformationFactory
+    *  Author: Kent vejrup Madsen
+    *  Type: PHP Script, Class
+    *  Project: DWP-Assignment
+    */
 
     /**
      * Class ProfileInformationFactory

@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: PageElementFactory
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
 
     /**
@@ -27,16 +28,16 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        final public static function getTableName(): string
         {
             return 'page_element';
         }
 
 
         /**
-         * @return mixed|string
+         * @return string
          */
-        final public function getFactoryTableName():string
+        final public function getFactoryTableName(): string
         {
             return self::getTableName();
         }
@@ -45,7 +46,7 @@
         /**
          * @return string
          */
-        final public static function getViewName()
+        final public static function getViewName(): string
         {
             return 'PageElementView';
         }
@@ -54,7 +55,7 @@
         /**
          * @return string
          */
-        final public static function getControllerName()
+        final public static function getControllerName(): string
         {
             return 'PageElementController';
         }
