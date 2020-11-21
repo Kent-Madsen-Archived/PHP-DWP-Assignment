@@ -1,8 +1,9 @@
-<?php 
+<?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: AuthInteraction
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Interface
+     *  Project: DWP-Assignment
      */
 
     /**
@@ -23,10 +24,12 @@
          */
         public function register(): ?ProfileModel;
 
+
         /**
          * @return bool
          */
         public function forgotMyPassword(): bool;
+
 
         // Forgot my password
         /**

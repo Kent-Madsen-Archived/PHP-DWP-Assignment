@@ -1,4 +1,10 @@
 <?php
+    /**
+     *  Title: Domain
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Abstract Class
+     *  Project: DWP-Assignment
+     */
 
     /**
      * Class Domain
@@ -14,23 +20,25 @@
          * @param $info
          * @return bool
          */
-        protected function validateInformation( $info )
+        protected function validateInformation( $info ): bool
         {
+            $retVal = false;
+
             if( is_null( $info ) || ( $info instanceof MySQLInformation ) )
             {
-                return true;
+                $retVal = true;
             }
 
-            return false;
+            return boolval( $retVal );
         }
 
 
         // Accessor
             // Getter
         /**
-         * @return null
+         * @return MySQLInformation|null
          */
-        final public function getInformation()
+        final public function getInformation(): ?MySQLInformation
         {
             return $this->information;
         }

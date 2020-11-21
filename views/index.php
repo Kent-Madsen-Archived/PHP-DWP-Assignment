@@ -1,8 +1,9 @@
 <?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Frontpage
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
 
     PageTitleController::getSingletonController()->append( ' - Homepage' );

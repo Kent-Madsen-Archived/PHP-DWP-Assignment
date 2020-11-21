@@ -32,7 +32,7 @@
         /**
          * @return null
          */
-        final public function getValue()
+        public function getValue()
         {
             if( is_null( $this->value ) )
             {
@@ -85,7 +85,7 @@
          * @param $level
          * @return int|null
          */
-        final public function setLevel( $level = 0 ): ?int
+        final public function setLevel( $level = CONSTANT_ZERO ): ?int
         {
             if( is_null( $level ) )
             {

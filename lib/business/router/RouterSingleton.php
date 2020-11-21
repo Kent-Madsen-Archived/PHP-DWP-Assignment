@@ -5,7 +5,6 @@
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
-    require_once 'router.php';
 
     /**
      * Class RouterSingleton

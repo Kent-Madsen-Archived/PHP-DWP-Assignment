@@ -1,4 +1,10 @@
 <?php
+    /**
+     *  Title: AuthDomainView
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
+     */
 
     /**
      * Class AuthDomainView

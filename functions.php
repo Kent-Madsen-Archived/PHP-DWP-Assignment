@@ -33,6 +33,7 @@
         return $retvar;
     }
 
+
     /**
      *
      */
@@ -40,6 +41,7 @@
     {
         require './areas/footer.php';
     }
+
 
     /**
      *
@@ -49,6 +51,7 @@
         require './areas/header.php';
     }
 
+
     /**
      * @param $url
      */
@@ -56,6 +59,7 @@
     {
         header( ( 'Location: ' . $url ), true, 302 );
     }
+
 
     /**
      * @param $protocol
@@ -66,6 +70,7 @@
         header( ('Location: ' . $protocol . '://' . $url) );
     }
 
+
     /**
      * @param $url
      */
@@ -73,6 +78,7 @@
     {
         redirect_to_external_page( 'http', $url );
     }
+
 
     /**
      * @param $url

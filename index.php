@@ -18,8 +18,7 @@
 ?>
 <?php 
     // Internal Libraries
-    require 'bootstrap.php'; 
-    require 'router_singleton.php';
+    require 'bootstrap.php';
 
     //
     $session_fixation = new SessionFixationSecurity();

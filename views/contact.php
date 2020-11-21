@@ -1,9 +1,11 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Contact
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
+
     if( ContactDomainView::validateIsSubmitted() )
     {
         $domain = new ContactDomain();

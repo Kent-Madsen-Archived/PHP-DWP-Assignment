@@ -28,7 +28,6 @@
         private $uri = null;
 
         // Accessors
-
         /**
          * @return null
          */

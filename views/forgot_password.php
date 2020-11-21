@@ -1,9 +1,11 @@
 <?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Forgot my password
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, view
+     *  Project: DWP-Assignment
      */
+
     $access = new AccessPrivilegesDomain();
 
     if( $access->is_logged_in() )

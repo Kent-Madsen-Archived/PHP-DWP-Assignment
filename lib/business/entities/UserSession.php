@@ -1,6 +1,13 @@
 <?php
 
     /**
+     *  Title: UserSession
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
+     */
+
+    /**
      * Class UserSession
      */
     class UserSession
@@ -12,7 +19,12 @@
          */
         public function __construct( $profileModel )
         {
-            if( !( $profileModel == null ) )
+            if( !( $profileModel instanceof ProfileModel ) )
+            {
+                throw new Exception('');
+            }
+
+            if( !( is_null( $profileModel ) ) )
             {
                 $this->setIdentity( $profileModel->getIdentity() );
                 $this->setUsername( $profileModel->getUsername() );
@@ -27,6 +39,8 @@
         private $username = null;
         private $profile_type = 0;
 
+
+        //
         /**
          * @return int
          */
