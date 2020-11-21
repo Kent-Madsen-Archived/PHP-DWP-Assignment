@@ -34,12 +34,6 @@
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
             
         <?php
-            $connector = new MySQLConnectorWrapper(new MySQLInformation(new NetworkAccess(WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT), new UserCredential(WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD), 'dwp_assignment'));
-            $t = new ContactFactory($connector);
-            $r = $t->read();
-
-            $t->readFormsNotSended();
-
             PageTitleView::getSingletonView()->printHTML();
         ?>
     </head>

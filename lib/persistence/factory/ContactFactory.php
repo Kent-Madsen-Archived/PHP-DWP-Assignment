@@ -524,6 +524,57 @@
 
 
         /**
+         * @param $id
+         * @return bool
+         * @throws Exception
+         */
+        final public function updateIsFinished( $id ):bool
+        {
+            $retVal = null;
+
+            $sql = "UPDATE contact SET has_been_send = ? WHERE identity = ?;";
+
+            $stmt_has_been_send = null;
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "ii",
+                    $stmt_has_been_send,
+                    $stmt_identity );
+
+                $stmt_has_been_send = 1;
+                $stmt_identity = $id;
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $this->getWrapper()->finish();
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( "Error: " . $ex );
+            }
+            finally
+            {
+                // Leaves the connection.
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
+        }
+
+
+        /**
          * @return int
          * @throws Exception
          */
