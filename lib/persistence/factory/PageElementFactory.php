@@ -176,16 +176,68 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+
+            // return array
+            $retVal = false;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM page_element WHERE identity = ?;";
+
+            // prepare statement variables
+            $stmt_identity = null;
+
+            // opens a connection the mysql server
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity     = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setAreaKey( $row[ 'area_key' ] );
+
+                        $model->setTitle( $row[ 'title' ] );
+                        $model->setContent( $row[ 'content' ]  );
+
+                        $model->setCreatedOn( $row[ 'created_on' ] );
+                        $model->setLastUpdated( $row[ 'last_updated' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -211,7 +263,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        final public function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
