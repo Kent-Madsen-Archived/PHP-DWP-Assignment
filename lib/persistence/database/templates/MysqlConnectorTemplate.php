@@ -1,8 +1,9 @@
 <?php
     /**
-     *  title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: MysqlConnectorTemplate
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
 
     /**
@@ -26,7 +27,7 @@
         /**
          * @return mixed
          */
-        public function finishCommitAndRetrieveInsertId($stmt );
+        public function finishCommitAndRetrieveInsertId( $stmt );
 
 
         /**
