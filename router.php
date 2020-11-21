@@ -1,8 +1,9 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Router
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Class
+     *  Project: DWP-Assignment
      */
 
     /**

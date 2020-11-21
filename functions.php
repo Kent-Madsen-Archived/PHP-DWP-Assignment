@@ -1,8 +1,9 @@
 <?php
     /**
-     *  Title:
-     *  Author:
-     *  Type: PHP Script
+     *  Title: Functions
+     *  Author: Kent vejrup Madsen
+     *  Type: PHP Script, Page
+     *  Project: DWP-Assignment
      */
 
     /**
