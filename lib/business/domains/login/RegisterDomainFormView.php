@@ -188,6 +188,29 @@
          * @return string|null
          * @throws Exception
          */
+        final public static function getPostStreetAddressFloor(): ?string
+        {
+            if( !isset( $_POST[ 'form_register_street_floor' ] ) )
+            {
+                return '';
+            }
+
+            $value = trim( $_POST[ 'form_register_street_floor' ] );
+
+            if( is_null( $value ) || empty( $value ) )
+            {
+                return '';
+            }
+
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
+            return strval( htmlentities( $sanitizedValue ) );
+        }
+
+
+        /**
+         * @return string|null
+         * @throws Exception
+         */
         final public static function getPostPhone(): ?string
         {
             if( !isset( $_POST[ 'form_register_phone_number' ] ) )
