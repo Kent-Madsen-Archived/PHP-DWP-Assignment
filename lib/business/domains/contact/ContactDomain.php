@@ -102,6 +102,9 @@
         }
 
 
+        /**
+         * @return bool
+         */
         final public function validateSecurity(): bool
         {
             $retVal = false;

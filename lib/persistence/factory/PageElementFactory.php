@@ -244,7 +244,7 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ): bool
@@ -254,8 +254,53 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $sql = "INSERT INTO page_element( area_key, title, content ) VALUES( ?, ?, ? );";
 
-            return false;
+            // Statement Variables
+            $stmt_pe_areakey    = null;
+            $stmt_pe_title      = null;
+            $stmt_pe_content    = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "sss",
+                       $stmt_pe_areakey,
+                    $stmt_pe_title,
+                            $stmt_pe_content );
+
+                //
+                $stmt_pe_areakey    = $model->getAreaKey();
+                $stmt_pe_title      = $model->getTitle();
+                $stmt_pe_content    = $model->getContent();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
