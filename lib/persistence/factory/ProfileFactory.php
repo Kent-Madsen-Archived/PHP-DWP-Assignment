@@ -169,19 +169,62 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $retVal = null;
+            $retVal = false;
 
-            return $retVal;
+            $sql = "SELECT * FROM profile WHERE identity = ?;";
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = $model->getIdentity();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setUsername( $row[ 'username' ] );
+
+                        $model->setPassword( $row[ 'password' ] );
+                        $model->setIsPasswordHashed( TRUE );
+
+                        $model->setProfileType( $row[ 'profile_type' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch ( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -224,7 +267,7 @@
                 $stmt_username = $model->getUsername();
                 $stmt_password = $model->getPassword();
 
-                $stmt_profile_type = intval( $model->getProfileType(), 10 );
+                $stmt_profile_type = $model->getProfileType();
 
                 // Executes the query
                 $stmt->execute();
@@ -288,12 +331,12 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 $stmt_username = $model->getUsername();
                 $stmt_password = $model->getPassword();
 
-                $stmt_profile_type = intval( $model->getProfileType(), 10 );
+                $stmt_profile_type = $model->getProfileType();
 
                 // Executes the query
                 $stmt->execute();
@@ -351,7 +394,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -382,12 +425,11 @@
          * @return ProfileModel
          * @throws Exception
          */
-        final public function get_by_username( $username )
+        final public function readByUsername( $username ): ProfileModel
         {
             $retVal = null;
 
             $sql = "SELECT * FROM profile WHERE username = ?;";
-
             $stmt_username = null;
 
             $connection = $this->getWrapper()->connect();
@@ -409,7 +451,7 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
-                    $retVal = array();
+                    $retVal = null;
 
                     while( $row = $result->fetch_assoc() )
                     {
@@ -423,8 +465,8 @@
                         $model->setIsPasswordHashed( true );
 
                         $model->setProfileType( $row[ 'profile_type' ] );
-                        
-                        array_push( $retVal, $model );
+
+                        $retVal = $model;
                     }
                 }
 
