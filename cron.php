@@ -22,15 +22,17 @@
         $header = null;
 
         $header = "From:{$contact_mail->getFromEmail()} \r\n";
+
         $header .= "CC: \r\n";
         $header .= "MIME-Version: 1.0 \r\n";
         $header .= "Content-type: text/html \r\n";
 
-        $retVal = mail( $contact_mail->getToEmail(), $contact_mail->getTitle(), $contact_mail->getMessage(), $header );
+        $retVal = mail( $contact_mail->getToEmail(), $contact_mail->getTitle(), wordwrap( $contact_mail->getMessage(), 70, "\r\n" ), $header );
 
         //
         if( $retVal == true )
         {
+            // Successfull
             $t->updateIsFinished( $contact_mail->getIdentity() );
         }
         else

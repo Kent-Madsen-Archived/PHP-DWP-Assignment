@@ -192,7 +192,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_identity  = intval( $model->getIdentity(), 10 );
+                $stmt_identity  = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -206,9 +206,9 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( $row[ 'identity' ] );
 
-                        $model->setTotalPrice( doubleval( $row[ 'total_price' ] ) );
+                        $model->setTotalPrice( $row[ 'total_price' ] );
                         $model->setRegistered( $row[ 'invoice_registered' ] );
 
                         $retVal = true;
@@ -240,8 +240,55 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
 
-            return false;
+            //
+            $sql = "INSERT INTO product_invoice( total_price, address_id, mail_id, owner_name_id ) VALUES( ?, ?, ?, ? );";
+
+            $stmt_total_price = null;
+
+            $stmt_addr_id = null;
+            $stmt_mail_id = null;
+            $stmt_owner_id = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "diii",
+                    $stmt_total_price,
+                    $stmt_addr_id,
+                    $stmt_mail_id,
+                    $stmt_owner_id );
+
+                $stmt_total_price   = $model->getTotalPrice();
+                
+                $stmt_addr_id       = $model->getAddressId();
+                $stmt_mail_id       = $model->getMailId();
+                $stmt_owner_id      = $model->getOwnerNameId();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
@@ -291,7 +338,7 @@
                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();

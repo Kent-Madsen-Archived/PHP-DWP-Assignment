@@ -249,8 +249,51 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $sql = "INSERT INTO product_entity( entity_code, product_id, brought_id ) VALUES( ?, ?, ? );";
 
-            return false;
+            // Statement Variables
+            $stmt_entity_code = null;
+            $stmt_product_id  = null;
+            $stmt_brougth_id  = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "sii",
+                    $stmt_entity_code, $stmt_product_id, $stmt_brougth_id );
+
+                //
+                $stmt_entity_code = $model->getEntityCode();
+                $stmt_product_id  = $model->getProductId();
+                $stmt_brougth_id  = $model->getBrought();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 

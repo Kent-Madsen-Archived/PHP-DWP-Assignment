@@ -223,7 +223,7 @@ class AuthOld
         $factory = new ProfileFactory( $connection );
 
         // Retrieves a user by their username
-        $arr = $factory->get_by_username( $username );
+        $arr = $factory->readByUsername( $username );
 
         if( is_null( $arr ) )
         {

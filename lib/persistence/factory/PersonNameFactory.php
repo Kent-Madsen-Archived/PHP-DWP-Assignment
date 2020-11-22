@@ -168,19 +168,62 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
-            $retVal = null;
 
-            return $retVal;
+            $retVal = false;
+
+            $sql = "SELECT * FROM person_name WHERE identity = ?;";
+
+            $stmt_identity  = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_limit  = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ 'identity' ] );
+
+                        $model->setFirstName( $row[ 'first_name' ] );
+                        $model->setLastName( $row[ 'last_name' ] );
+                        $model->setMiddleName( $row[ 'middle_name' ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return boolval( $retVal );
         }
 
 
