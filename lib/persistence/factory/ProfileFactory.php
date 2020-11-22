@@ -21,7 +21,7 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO );
         }
 
 
@@ -82,7 +82,6 @@
         final public function createModel()
         {
             $model = new ProfileModel( $this );
-
             return $model;
         }
 
@@ -141,14 +140,14 @@
                     {
                         $Model = $this->createModel();
 
-                        $Model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $Model->setIdentity( $row[ 'identity' ]);
 
                         $Model->setUsername( strval( $row[ 'username' ] ) );
 
                         $Model->setPassword( strval( $row[ 'password' ] ) );
                         $Model->setIsPasswordHashed( TRUE );
 
-                        $Model->setProfileType( intval( $row[ 'profile_type' ], 10 ) );
+                        $Model->setProfileType( $row[ 'profile_type' ] );
 
                         array_push( $retVal, $Model );
                     }
@@ -422,10 +421,10 @@
 
         /**
          * @param $username
-         * @return ProfileModel
+         * @return ProfileModel|null
          * @throws Exception
          */
-        final public function readByUsername( $username ): ProfileModel
+        final public function readByUsername( $username ): ?ProfileModel
         {
             $retVal = null;
 
@@ -451,8 +450,6 @@
 
                 if( $result->num_rows > CONSTANT_ZERO )
                 {
-                    $retVal = null;
-
                     while( $row = $result->fetch_assoc() )
                     {
                         $model = new ProfileModel( $this );

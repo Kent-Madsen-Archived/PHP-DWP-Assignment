@@ -62,24 +62,91 @@
 
             if( RegisterDomainFormView::validateIsSubmitted() )
             {
+                $value_username = RegisterDomainFormView::getPostUsername();
+                $value_password = RegisterDomainFormView::getPostPassword();
 
-                $username = RegisterDomainFormView::getPostUsername();
-                $password = RegisterDomainFormView::getPostPassword();
+
+                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+
+                if( !is_null( $profile_factory->readByUsername( $value_username ) ) )
+                {
+                    throw new Exception('User already exist');
+                }
+
+                $pmd = $profile_factory->createModel();
+
+                $pmd->setUsername( $value_username );
+                $pmd->setPassword( $this->generate_password( $value_password ) );
+
+                $pmd->setProfileType( 2 );
+
+                $profile_factory->create( $pmd );
+
 
                 //
                 $email      = RegisterDomainFormView::getPostPersonMail();
-                $phone      = RegisterDomainFormView::getPostPhone();
-                $birthday   = RegisterDomainFormView::getPostBirthday();
+
+                $email_factory = new PersonEmailFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $emailModel = $email_factory->createModel();
+                $emailModel->setContent( $email );
+
+                if( $email_factory->validateIfMailExist( $emailModel ) )
+                {
+                    $email_factory->readModelByName( $emailModel );
+                }
+                else 
+                {
+                    $email_factory->create( $emailModel );
+                }
+
+                $name_factory = new PersonNameFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $name_model = $name_factory->createModel();
 
                 // Name
                 $firstname  = RegisterDomainFormView::getPostFirstname();
-                $lastname   = RegisterDomainFormView::getPostLastname();
-                $middle     = RegisterDomainFormView::getPostMiddlename();
+                $name_model->setFirstName( $firstname );
 
+                $lastname   = RegisterDomainFormView::getPostLastname();
+                $name_model->setLastName( $lastname );
+
+                $middle     = RegisterDomainFormView::getPostMiddlename();
+                $name_model->setMiddleName( $middle );
+
+                $name_factory->create( $name_model );
+
+                // 
                 $streetname     = RegisterDomainFormView::getPostStreetname();
                 $street_number  = RegisterDomainFormView::getPostStreetAddressNumber();
                 $streetZipcode  = RegisterDomainFormView::getPostZipCode();
+                $streetFloor    = RegisterDomainFormView::getPostStreetAddressFloor();
                 $country        = RegisterDomainFormView::getPostCountry();
+
+                $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $addr_model = $addr_factory->createModel();
+                $addr_model->setStreetName($streetname);
+                $addr_model->setStreetAddressNumber($street_number);
+                $addr_model->setCountry($country);
+                $addr_model->setStreetFloor($streetFloor);
+                $addr_model->setZipCode($streetZipcode);
+
+                $addr_factory->create( $addr_model );
+
+                //
+                $phone      = RegisterDomainFormView::getPostPhone();
+                $birthday   = RegisterDomainFormView::getPostBirthday();
+
+                $pi_factory = new ProfileInformationFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $pim = $pi_factory->createModel();
+                $pim->setBirthday($birthday);
+                $pim->setPersonPhone($phone);
+                $pim->setPersonAddressId($addr_model->getIdentity());
+                $pim->setPersonNameId($name_model->getIdentity());
+                $pim->setPersonEmailId($emailModel->getIdentity());
+                $pim->setProfileId($pmd->getIdentity());
+
+                $pi_factory->create($pim);
+
+                $retVal = $pmd;
             }
 
             return $retVal;
@@ -88,10 +155,25 @@
         // Login
         /**
          * @return ProfileModel|null
+         * @throws Exception
          */
         final public function login(): ?ProfileModel
         {
+            if( LoginDomainView::validateIsSubmitted() )
+            {
+                $username = LoginDomainView::getPostUsername();
+                $password = LoginDomainView::getPostPassword();
 
+                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+
+                $profile = $profile_factory->readByUsername( $username );
+
+                if( password_verify( $password, $profile->getPassword() ) )
+                {
+                    return $profile;
+                }
+
+            }
 
             return null;
         }

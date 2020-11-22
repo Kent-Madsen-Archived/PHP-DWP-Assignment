@@ -171,6 +171,12 @@
                                           id="form_register_street_zip_code_id">
 
                                    <label> Zip code </label>
+
+                                   <input type="text" 
+                                          name="form_register_street_floor" 
+                                          placeholder="floor"
+                                          id="form_register_street_floor_id">
+                                   <label> Floor </label>
                             </div>
 
                             <div class="g-recaptcha" 
