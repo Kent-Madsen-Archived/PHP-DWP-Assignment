@@ -230,7 +230,7 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ): bool
@@ -266,7 +266,7 @@
                     $stmt_owner_id );
 
                 $stmt_total_price   = $model->getTotalPrice();
-                
+
                 $stmt_addr_id       = $model->getAddressId();
                 $stmt_mail_id       = $model->getMailId();
                 $stmt_owner_id      = $model->getOwnerNameId();
