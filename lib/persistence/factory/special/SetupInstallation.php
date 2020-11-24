@@ -109,7 +109,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function installation_status()
+        final public function installationStatus()
         {
             $retVal = false;
 
@@ -127,15 +127,15 @@
 
             $pageElementFactory = new PageElementFactory( $this->getWrapper() );
 
-
-
             $personAddressFactory   = new PersonAddressFactory( $this->getWrapper() );
             $personNameFactory      = new PersonNameFactory( $this->getWrapper() );
 
             $productAttributeFactory    = new ProductAttributeFactory( $this->getWrapper() );
             $productCategoryFactory     = new ProductCategoryFactory( $this->getWrapper() );
             $productEntityFactory       = new ProductEntityFactory( $this->getWrapper() );
+
             $productFactory             = new ProductFactory( $this->getWrapper() );
+
             $productInvoiceFactory      = new ProductInvoiceFactory( $this->getWrapper() );
             $productUsedImageFactory    = new ProductUsedImageFactory( $this->getWrapper() );
 
@@ -169,25 +169,29 @@
         {
             echo ("<ul>");
 
-            for( $idx = 0;
+            for( $idx = CONSTANT_ZERO;
                  $idx < count( $array );
                  $idx++ )
             {
                 $current = $array[$idx];
 
+                echo "<li>";
+
                 $this->printStatus( $current->getFactoryTableName() );
 
                 if( $current->exist() )
                 {
-                    $this->printRow('table', 'exist');
+                    $this->printRow( 'table', 'exist' );
 
                     $val = $current->length();
-                    $this->printRow('current size', $val);
+                    $this->printRow( 'current size', $val );
                 }
                 else
                 {
-                    echo ( "<li> Table: does not exist </li>" );
+                    echo ( "<p> Table: does not exist </p>" );
                 }
+
+                echo ("</li>");
             }
 
             echo ("</ul>");
@@ -208,7 +212,8 @@
          */
         private function printStatus( $table_name )
         {
-            echo ("<p>currently selected table: { $table_name }</p>");
+            $var = htmlentities( $table_name );
+            echo ("<p> currently selected table: {$var} </p>");
         }
 
 
@@ -221,7 +226,7 @@
             $converted_key = htmlentities( $key );
             $converted_value = htmlentities( $value );
 
-            echo ("<li> { $converted_key }, { $converted_value } </li>");
+            echo ("<p> {$converted_key}, {$converted_value} </p>");
         }
 
 

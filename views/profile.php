@@ -24,7 +24,7 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
         
         <main> 
             <h4> Welcome, <?php echo $_SESSION[ 'user_session_object_username' ]; ?> </h4>
@@ -34,6 +34,6 @@
             </div>
         </main>
 
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

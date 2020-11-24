@@ -22,7 +22,7 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
 
         <?php 
             $access = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );   
@@ -37,6 +37,6 @@
 
         </main>
         
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

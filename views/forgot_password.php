@@ -47,7 +47,7 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
 
         <main> 
             <div id="forgot_form_boundary"> 
@@ -84,6 +84,6 @@
             </div>
         </main>
 
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

@@ -62,6 +62,7 @@
 
             // Special Routes
         private $special_page_404 = null;
+        private $currentRoute = null;
 
 
         // Stages
@@ -70,9 +71,6 @@
          */
         final public function loadView()
         {
-            // Retrieves the current request
-            $request_uri = $this->getCurrentRequest();
-
             // Request is a shortcut
             if( $this->isShortcut() )
             {
@@ -165,7 +163,9 @@
                         break;
                     }
 
+                    $this->setCurrentRoute( $this->getRoutes()[$idx] );
                     $current->load();
+
                     return $retVal;
                 }
             }
@@ -312,6 +312,14 @@
             return $this->routes;
         }
 
+        /**
+         * @return Route
+         */
+        public function getCurrentRoute(): Route
+        {
+            return $this->currentRoute;
+        }
+
 
         /**
          * @return int|null
@@ -438,6 +446,15 @@
 
             $this->routes = $var;
             return $this->getRoutes();
+        }
+
+
+        /**
+         * @param null $currentRoute
+         */
+        public function setCurrentRoute($currentRoute): void
+        {
+            $this->currentRoute = $currentRoute;
         }
 
 

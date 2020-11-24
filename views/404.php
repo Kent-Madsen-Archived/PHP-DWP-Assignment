@@ -22,13 +22,13 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
         
         <main> 
             <h2> 404 </h2>
             <p> Sorry, Page not found </p>
         </main>
 
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

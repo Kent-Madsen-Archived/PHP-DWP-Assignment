@@ -25,12 +25,12 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
         
         <main> 
         
         </main>
         
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

@@ -22,7 +22,7 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
         <main> 
 
 <?php  
@@ -48,6 +48,6 @@
              */?>
         </main>
         
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>
