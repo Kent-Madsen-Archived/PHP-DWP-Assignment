@@ -27,8 +27,8 @@
          */
         final public function update()
         {
-            $this->setCurrentRequest( RouterView::getRequest() );
-            $this->setCurrentRequestedHostname( RouterView::getHost() );
+            $this->setCurrentRequest( RouterState::getRequest() );
+            $this->setCurrentRequestedHostname( RouterState::getHost() );
         }
 
 
