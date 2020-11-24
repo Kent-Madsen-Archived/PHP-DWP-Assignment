@@ -97,4 +97,23 @@
         $code = var_export($var, true);
         echo "<pre>{$code}</pre>";
     }
+
+
+    /**
+     * 
+     */
+    function getEncodingStandard(): string
+    {
+        return mb_internal_encoding();
+    }
+
+
+    /**
+     * @return string
+     */
+    function encodingStandardHTML(): string
+    {
+        $var = '"' . htmlentities( getEncodingStandard() ) . '"';
+        return "<meta charset={$var}>";
+    }
 ?>

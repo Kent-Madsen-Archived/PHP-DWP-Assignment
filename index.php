@@ -6,9 +6,13 @@
      *  Project: DWP-Assignment
      */
 
-    header('Content-Type: text/html; charset=UTF-8');
+    // Internal Libraries
+    require 'inc/bootstrap.php';
 
-    // Set's it so, that sessions can only be used by cookies and disallows it in the url.
+    $encode = htmlentities( getEncodingStandard() );
+    header( "Content-Type: text/html; charset={$encode}" );
+
+    // Set"s it so, that sessions can only be used by cookies and disallows it in the url.
     // It removes URL based attacks 
     ini_set( 'session.use_only_cookies', true );
 
@@ -16,9 +20,7 @@
     // in php.ini set session.auto_start to 1
     session_start();
 ?>
-<?php 
-    // Internal Libraries
-    require 'inc/bootstrap.php';
+<?php
 
     //
     $session_fixation = new SessionFixationSecurity();
@@ -125,9 +127,4 @@
 
     //
     RouterSingleton::getInstance()->loadView();
-
-
-    //
-    $route = $router->getCurrentRoute();
-    debug_var( $route );
 ?>
