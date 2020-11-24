@@ -16,7 +16,8 @@
         "symfony/yaml": "^5.2@beta",
         "stripe/stripe-php": "^7.61",
       "ext-mysqli": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-mbstring": "*"
     },
     "autoload": {
         "classmap": ["/lib"]

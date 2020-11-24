@@ -37,18 +37,18 @@
     /**
      *
      */
-    function get_footer()
+    function getHeader()
     {
-        require './areas/footer.php';
+        require 'views/areas/header.php';
     }
 
 
     /**
      *
      */
-    function get_header()
+    function getFooter()
     {
-        require './areas/header.php';
+        require 'views/areas/footer.php';
     }
 
 
@@ -86,5 +86,34 @@
     function redirect_to_external_page_secure( $url )
     {
         redirect_to_external_page( 'https', $url );
+    }
+
+
+    /**
+     * @param $var
+     */
+    function debug_var( $var )
+    {
+        $code = var_export($var, true);
+        echo "<pre>{$code}</pre>";
+    }
+
+
+    /**
+     * 
+     */
+    function getEncodingStandard(): string
+    {
+        return mb_internal_encoding();
+    }
+
+
+    /**
+     * @return string
+     */
+    function encodingStandardHTML(): string
+    {
+        $var = '"' . htmlentities( getEncodingStandard() ) . '"';
+        return "<meta charset={$var}>";
     }
 ?>

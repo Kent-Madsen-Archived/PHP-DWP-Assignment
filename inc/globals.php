@@ -17,9 +17,6 @@
     define( "WEBPAGE_DEFAULT_SALT", "xQpd78qqjrMe4oIpyRc9BTmGlTAsPgyyNtihoDbaT1ak68Hrs7jXeDETB12PhLZZ2zXF6vq4d8UckBNUhSUILOUr1rIMEPCmuGEF" );
 
 
-    include_once 'database.php';
-
-
     // -----------------------------------------------------------------------------------------
     define('S_REQUEST', 'REQUEST_URI');
     define('S_HOST', 'HTTP_HOST');
@@ -34,4 +31,11 @@
     define( 'CONSTANT_THREE', 3 );
     define( 'CONSTANT_FOUR', 4 );
     define( 'CONSTANT_FIVE', 5 );
+
+
+    if( !( (include 'database.php') == TRUE ) )
+    {
+        throw new Exception('couldn\'t find the database.php file' );
+    }
+
 ?>

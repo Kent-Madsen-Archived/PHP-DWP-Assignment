@@ -7,6 +7,28 @@
      */
 
     /**
+     *  Checks if the class mysqli exists, Throw an error if php can't find it
+     */
+    if( !class_exists('mysqli' ) )
+    {
+        throw new Exception('Couldn\'t find mysqli' );
+    }
+
+    /**
+     *  Checks if the interfaces used exists, Throw an error if php can't find it
+     */
+    if( !( interface_exists('ConnectorTemplate' ) ) )
+    {
+        throw new Exception('Can\'t find the interface ConnectorTemplate' );
+    }
+
+    if( !( interface_exists('MysqlConnectorTemplate' ) ) )
+    {
+        throw new Exception('Can\'t find the interface MysqlConnectorTemplate');
+    }
+
+
+    /**
      * Class MySQLConnectorWrapper
      */
     class MySQLConnectorWrapper

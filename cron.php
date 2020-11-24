@@ -5,10 +5,10 @@
      *  Type: PHP Script, Page
      *  Project: DWP-Assignment
     */
-    require 'bootstrap.php';
+    require 'inc/bootstrap.php';
 
-    $cred   = new UserCredential(WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD);
-    $net    = new NetworkAccess(WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT);
+    $cred   = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
+    $net    = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );
     $info   = new MySQLInformation( $net, $cred, WEBPAGE_DATABASE_NAME );
 
     $connector = new MySQLConnectorWrapper( $info );

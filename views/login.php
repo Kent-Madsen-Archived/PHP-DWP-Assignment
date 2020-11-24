@@ -31,7 +31,7 @@
 
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <?php echo encodingStandardHTML(); ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
@@ -41,7 +41,7 @@
         ?>
     </head>
     <body>
-        <?php get_header(); ?>
+        <?php getHeader(); ?>
 
         <main> 
             <div id="login_form_boundary"> 
@@ -88,6 +88,6 @@
             </div>
         </main>
 
-        <?php get_footer(); ?>
+        <?php getFooter(); ?>
     </body>
 </html>

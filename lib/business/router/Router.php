@@ -27,26 +27,8 @@
          */
         final public function update()
         {
-            $this->setCurrentRequest( self::callRequest() );
-            $this->setCurrentRequestedHostname( self::callHost() );
-        }
-
-
-        /**
-         * @return string|null
-         */
-        protected static function callRequest(): ?string
-        {
-            return $_SERVER[ S_REQUEST ];
-        }
-
-
-        /**
-         * @return string|null
-         */
-        protected static function callHost(): ?string
-        {
-            return $_SERVER[ S_HOST ];
+            $this->setCurrentRequest( RouterState::getRequest() );
+            $this->setCurrentRequestedHostname( RouterState::getHost() );
         }
 
 
@@ -54,7 +36,6 @@
         private $current_request = null;
         private $current_requested_hostname = null;
 
-            // Arguments
         private $args = null;
 
             // Hard Routes
@@ -62,6 +43,7 @@
 
             // Special Routes
         private $special_page_404 = null;
+        private $currentRoute = null;
 
 
         // Stages
@@ -70,9 +52,6 @@
          */
         final public function loadView()
         {
-            // Retrieves the current request
-            $request_uri = $this->getCurrentRequest();
-
             // Request is a shortcut
             if( $this->isShortcut() )
             {
@@ -117,7 +96,6 @@
 
             // Removes empty spaces, when you enter a url, with ////. will leave a empty string for each.
             $values = array_filter( $split_uri );
-
             $this->setArgs( $values );
         }
 
@@ -165,14 +143,15 @@
                         break;
                     }
 
+                    $this->setCurrentRoute( $current );
                     $current->load();
+
                     return $retVal;
                 }
             }
 
             //
             $page_404 = $this->getSpecialPage404();
-
             $page_404->load();
         }
 
@@ -235,7 +214,7 @@
             }
             else
             {
-                throw new Exception('$idx is outside of the arguments range');
+                RouterErrors::throwIsOutOfIndexBoundary();
             }
         }
 
@@ -312,6 +291,19 @@
             return $this->routes;
         }
 
+        /**
+         * @return Route|null
+         */
+        public function getCurrentRoute(): ?Route
+        {
+            if( is_null( $this->currentRoute ) )
+            {
+                return null;
+            }
+
+            return $this->currentRoute;
+        }
+
 
         /**
          * @return int|null
@@ -357,7 +349,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('');
+                RouterErrors::throwIsNotAnString();
             }
 
             $this->current_request = strval( $var );
@@ -381,7 +373,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('parameter value: only strings are allowed');
+                RouterErrors::throwIsNotAnString();
             }
 
             $this->current_requested_hostname = strval( $var );
@@ -404,12 +396,7 @@
 
             if( !is_array( $var ) )
             {
-                throw new Exception('input value is not an array');
-            }
-
-            if( !is_array( $var ) )
-            {
-                throw new Exception('');
+                RouterErrors::throwIsNotAnArray();
             }
 
             $this->args = $var;
@@ -433,11 +420,22 @@
 
             if( !is_array( $var ) )
             {
-                throw new Exception('input value is not an array');
+                RouterErrors::throwIsNotAnArray();
             }
 
             $this->routes = $var;
             return $this->getRoutes();
+        }
+
+
+        /**
+         * @param $currentRoute
+         * @return Route|null
+         */
+        public function setCurrentRoute( $currentRoute ): ?Route
+        {
+            $this->currentRoute = $currentRoute;
+            return $this->getCurrentRoute();
         }
 
 
@@ -456,7 +454,7 @@
 
             if(! ( $this->special_page_404 instanceof Route ) )
             {
-                throw new Exception('');
+                RouterErrors::throwIsNotInstanceOfRoute();
             }
 
             $this->special_page_404 = $var;
@@ -493,7 +491,7 @@
 
             if( !( $var instanceof Route ) )
             {
-                throw new Exception('input parameter');
+                RouterErrors::throwIsNotInstanceOfRoute();
             }
 
             // push element
@@ -517,7 +515,7 @@
 
             if(! is_array( $var ) )
             {
-                throw new Exception('');
+                RouterErrors::throwIsNotAnArray();
             }
 
             foreach ( $var as $value )

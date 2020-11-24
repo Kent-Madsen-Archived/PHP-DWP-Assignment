@@ -72,7 +72,7 @@
 
             if( !is_bool( $var ) )
             {
-                throw new Exception('only boolean is allowed' );
+                RouterErrors::throwIsNotAnBoolean();
             }
 
             $this->is_validated = boolval( $var );

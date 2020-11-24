@@ -57,7 +57,7 @@
 
             if( !( $var instanceof Router ) )
             {
-                throw new Exception('Error, Router set instance');
+                RouterErrors::throwIsNotAnInstanceOfRouter();
             }
 
             self::$instance = $var;

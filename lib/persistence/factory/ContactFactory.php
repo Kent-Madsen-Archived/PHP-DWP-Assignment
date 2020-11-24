@@ -20,7 +20,7 @@
         public function __construct( $mysql_connector )
         {
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+            $this->setPaginationAndLimit( CONSTANT_FIVE, CONSTANT_ZERO );
         }
 
 
@@ -208,8 +208,8 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                    $stmt_limit,
-                    $stmt_offset );
+                                    $stmt_limit,
+                                    $stmt_offset );
 
                 $stmt_limit = $this->getLimit();
                 $stmt_offset = $this->CalculateOffset();

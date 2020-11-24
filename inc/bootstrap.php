@@ -5,9 +5,12 @@
      *  Type: PHP Script, Page
      *  Project: DWP-Assignment
      */
-    require 'globals.php';
-    require 'functions.php';
-    require 'autoloader.php';
+    require 'inc/globals.php';
+    require 'inc/functions.php';
+
+    // Auto loader function, it loads the entirety of the lib/ directory and includes the required classes by name
+    require 'inc/autoloader.php';
+
 
     // Autoloader script for loading classes automaticly.
     // So i don't have to require the files
@@ -16,7 +19,6 @@
         {
             $autoloader = new Autoloader( 'lib/' );
             $autoloader->load();
-            
             $autoloader->extract_class( $class_name );
         }
     );
