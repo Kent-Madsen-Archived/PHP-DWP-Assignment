@@ -2,10 +2,10 @@
 
 class RouterArgument
 {
-    public function __construct($value, $index)
+    public function __construct( $value, $index )
     {
-        $this->setValue($value);
-        $this->setIndex($index);
+        $this->setValue( $value );
+        $this->setIndex( $index );
     }
 
 

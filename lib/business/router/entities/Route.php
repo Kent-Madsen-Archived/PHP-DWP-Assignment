@@ -40,7 +40,7 @@
         {
             if( !is_array( $value ) )
             {
-                throw new Exception('parameter is not a array');
+                RouterErrors::throwIsNotAnArray();
             }
 
             $this->validation_tree = $value;
@@ -57,7 +57,7 @@
         {
             if( !$value instanceof RouterValidateArgument )
             {
-                throw new Exception( 'Parameter value is not an instance of RouterValidateArgument' );
+                RouterErrors::throwIsNotAnInstanceOfRouterValidateArgument();
             }
 
             // initiates array, incase it's null
@@ -77,7 +77,7 @@
         {
             if( !is_array( $values ) )
             {
-                throw new Exception('Not an array');
+                RouterErrors::throwIsNotAnArray();
             }
 
             foreach ( $values as $value )
@@ -114,7 +114,7 @@
         {
             if( !is_int( $lvl ) )
             {
-                throw new Exception('parameter value - lvl: only int is allowed');
+                RouterErrors::throwOnlyIntIsAllowed();
             }
 
             $retVal = false;
