@@ -5,7 +5,6 @@
      */
     class ProductAttributeModel 
         extends DatabaseModel
-            implements ProductAttributeController
     {
         // Constructors
         /**

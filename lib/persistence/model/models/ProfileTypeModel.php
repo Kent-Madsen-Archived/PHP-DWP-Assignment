@@ -5,7 +5,6 @@
      */
     class ProfileTypeModel 
         extends DatabaseModel
-            implements ProfileTypeController
     {
         // constructors
         /**

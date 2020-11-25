@@ -5,7 +5,6 @@
      */
     class BroughtProductModel 
         extends DatabaseModel
-            implements BroughtProductController
     {
         /**
          * BroughtProductModel constructor.

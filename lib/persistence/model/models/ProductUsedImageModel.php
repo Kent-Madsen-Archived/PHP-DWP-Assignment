@@ -5,7 +5,6 @@
      */
     class ProductUsedImageModel
         extends DatabaseModel
-            implements ProductUsedImageController
     {
         /**
          * ProductUsedImageModel constructor.

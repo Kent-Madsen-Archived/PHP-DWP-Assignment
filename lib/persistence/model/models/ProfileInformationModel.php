@@ -4,8 +4,7 @@
      * Class ProfileInformationModel
      */
     class ProfileInformationModel 
-        extends DatabaseModel 
-            implements ProfileInformationController
+        extends DatabaseModel
     {
         // constructors
         /**

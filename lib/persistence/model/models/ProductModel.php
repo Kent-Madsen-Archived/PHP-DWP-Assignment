@@ -5,7 +5,6 @@
      */
     class ProductModel 
         extends DatabaseModel
-            implements ProductController
     {
         // constructors
         /**
