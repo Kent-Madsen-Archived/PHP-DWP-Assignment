@@ -3,8 +3,8 @@
     /**
      * Class ProductInvoiceModel
      */
-    class ProductInvoiceModel 
-        extends DatabaseModel
+    class ProductInvoiceModelEntity
+        extends DatabaseModelEntity
     {
         // Constructors
         /**
@@ -30,8 +30,6 @@
 
 
         // Variables
-        private $identity = null;
-
         private $total_price = null;
         private $invoice_registered = null;
 
@@ -59,19 +57,7 @@
 
 
         // Accessors
-        // getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if (is_null($this->identity)) {
-                return null;
-            }
-
-            return intval($this->identity, self::base());;
-        }
-
+            // getters
 
         /**
          * @return int|null
@@ -135,23 +121,6 @@
 
 
         // Setters
-
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        public function setIdentity($var)
-        {
-            $value = filter_var($var, FILTER_VALIDATE_INT);
-
-            if (!$this->identityValidation($value)) {
-                throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
-            }
-
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          */

@@ -30,7 +30,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ProfileTypeModel )
+            if( $model instanceof ProfileTypeModelEntity )
             {
                 $retval = true;
             }

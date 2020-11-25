@@ -3,8 +3,8 @@
     /**
      * Class ImageModel
      */
-    class ImageModel 
-        extends DatabaseModel
+    class ImageModelEntity
+        extends DatabaseModelEntity
     {
         /**
          * ImageModel constructor.
@@ -29,8 +29,6 @@
 
 
         // Variables
-        private $identity = null;
-
         private $image_src     = null;
         private $image_type_id = null;
 
@@ -63,20 +61,6 @@
         
         // accessors
             // Getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
         /**
          * @return string|null
          */
@@ -166,23 +150,6 @@
 
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ImageModel - setIdentity: null or numeric number is allowed' );
-            }
-
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          * @throws Exception

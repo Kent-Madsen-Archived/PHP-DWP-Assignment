@@ -76,12 +76,12 @@
 
 
         /**
-         * @return PersonAddressModel
+         * @return PersonAddressModelEntity
          * @throws Exception
          */
-        final public function createModel(): PersonAddressModel
+        final public function createModel(): PersonAddressModelEntity
         {
-            $model = new PersonAddressModel( $this );
+            $model = new PersonAddressModelEntity( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof PersonAddressModel )
+            if( $var instanceof PersonAddressModelEntity )
             {
                 $retVal = true;
             }

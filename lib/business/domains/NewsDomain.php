@@ -58,7 +58,7 @@
         final public function getArticle( $idx )
         {
             $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-            $model = new ArticleModel( $factory );
+            $model = new ArticleModelEntity( $factory );
             $model->setIdentity( $idx );
 
             

@@ -28,7 +28,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ProductCategoryModel )
+            if( $model instanceof ProductCategoryModelEntity )
             {
                 $retval = true;
             }

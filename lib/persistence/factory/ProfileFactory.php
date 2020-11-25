@@ -77,11 +77,11 @@
 
 
         /**
-         * @return mixed|ProfileModel
+         * @return mixed|ProfileModelEntity
          */
         final public function createModel()
         {
-            $model = new ProfileModel( $this );
+            $model = new ProfileModelEntity( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProfileModel )
+            if( $var instanceof ProfileModelEntity )
             {
                 $retVal = true;
             }
@@ -421,10 +421,10 @@
 
         /**
          * @param $username
-         * @return ProfileModel|null
+         * @return ProfileModelEntity|null
          * @throws Exception
          */
-        final public function readByUsername( $username ): ?ProfileModel
+        final public function readByUsername( $username ): ?ProfileModelEntity
         {
             $retVal = null;
 
@@ -452,7 +452,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProfileModel( $this );
+                        $model = new ProfileModelEntity( $this );
 
                         $model->setIdentity( $row[ 'identity' ] );
 

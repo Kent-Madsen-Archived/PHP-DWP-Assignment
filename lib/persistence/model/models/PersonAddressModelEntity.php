@@ -3,8 +3,8 @@
     /**
      * Class PersonAddressModel
      */
-    class PersonAddressModel 
-        extends DatabaseModel
+    class PersonAddressModelEntity
+        extends DatabaseModelEntity
     {
         // constructors
         /**
@@ -30,8 +30,6 @@
 
 
         // Variables
-        private $identity = null;
-        
         private $street_name            = null;
         private $street_address_number  = null;
         private $zip_code               = null;
@@ -53,24 +51,10 @@
 
             return false;
         }
-        
+
 
         // Accessors
             // getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
         /**
          * @return string|null
          */
@@ -142,23 +126,6 @@
 
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'PersonAddressModel - setIdentity: null or numeric number is allowed' );
-            }
-            
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          */

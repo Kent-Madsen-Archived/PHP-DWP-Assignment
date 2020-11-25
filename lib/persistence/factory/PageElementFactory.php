@@ -76,12 +76,12 @@
 
 
         /**
-         * @return PageElementModel
+         * @return PageElementModelEntity
          * @throws Exception
          */
-        final public function createModel(): PageElementModel
+        final public function createModel(): PageElementModelEntity
         {
-            $model = new PageElementModel( $this );
+            $model = new PageElementModelEntity( $this );
 
             return $model;
         }
@@ -95,7 +95,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof PageElementModel )
+            if( $var instanceof PageElementModelEntity )
             {
                 $retVal = true;
             }

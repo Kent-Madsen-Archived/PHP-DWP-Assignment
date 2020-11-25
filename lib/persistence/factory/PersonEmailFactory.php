@@ -68,12 +68,12 @@
 
 
         /**
-         * @return PersonEmailModel
+         * @return PersonEmailModelEntity
          * @throws Exception
          */
-        final public function createModel(): PersonEmailModel
+        final public function createModel(): PersonEmailModelEntity
         {
-            $model = new PersonEmailModel( $this );
+            $model = new PersonEmailModelEntity( $this );
             return $model;
         }
 
@@ -86,7 +86,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof PersonEmailModel )
+            if( $var instanceof PersonEmailModelEntity )
             {
                 $retVal = true;
             }

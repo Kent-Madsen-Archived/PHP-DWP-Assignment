@@ -1,30 +1,21 @@
 <?php
-    /**
-     * Class ArticleModel
-     */
-    class ArticleModel 
-        extends DatabaseModel
+
+/**
+ * Class PageElementModel
+ */
+    class PageElementModelEntity
+        extends DatabaseModelEntity
     {
         // Constructors
         /**
-         * ArticleModel constructor.
+         * PageElementModel constructor.
          * @param $factory
          * @throws Exception
          */
         public function __construct( $factory )
         {
-            $this->setFactory( $factory );
+            $this->setFactory( $factory );   
         }
-
-        
-        // Variables
-        private $identity = null;
-
-        private $title      = null;
-        private $content    = null;
-
-        private $created_on     = null;
-        private $last_updated   = null;
 
 
         /**
@@ -37,6 +28,16 @@
             return boolval( $retVal );
         }
 
+        
+        // Variables
+        private $area_key = null;
+        
+        private $title      = null;
+        private $content    = null;
+
+        private $created_on     = null;
+        private $last_updated    = null;
+
 
         // implementation of factory classes
         /**
@@ -47,7 +48,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof ArticleFactory )
+            if( $factory instanceof PageElementFactory )
             {
                 $retval = true;
             }
@@ -56,22 +57,8 @@
         }
 
 
-        // Accessors
-            // Getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, BASE_10 );
-        }
-
-
+        // accessors
+            // getters
         /**
          * @return string|null
          */
@@ -99,11 +86,31 @@
             return strval( $this->content );
         }
 
+
+        /**
+         * @return string|null
+         */
+        final public function getAreaKey()
+        {
+            if( is_null( $this->area_key ) )
+            {
+                return null;
+            }
+
+            return strval( $this->area_key );
+        }
+
+
         /**
          * @return |null
          */
         final public function getCreatedOn()
         {
+            if( is_null( $this->created_on ) )
+            {
+                return null;
+            }
+
             return $this->created_on;
         }
 
@@ -113,58 +120,16 @@
          */
         final public function getLastUpdated()
         {
+            if( is_null( $this->last_updated ) )
+            {
+                return null;
+            }
+
             return $this->last_updated;
         }
 
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !( $this->identityValidation( $value ) ) )
-            {
-                throw new Exception( 'ArticleModel - setIdentity: null or integer number is allowed' );
-            }
-            
-            $this->identity = $value;
-        }
-
-
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setTitle( $var )
-        {
-            if( !$this->genericStringValidation( $var ) )
-            {
-                throw new Exception( 'ArticleModel - setTitle: null or string is allowed' );
-            }
-
-            $this->title = $var;
-        }
-
-
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setContent( $var )
-        {
-            if( !$this->genericStringValidation( $var ) )
-            {
-                 throw new Exception( 'ArticleModel - setContent: null or string is allowed' );
-            }
-
-            $this->content = $var;
-        }
-
-
         /**
          * @param $var
          */
@@ -183,6 +148,49 @@
         }
 
 
+        /**
+         * @param $var
+         * @throws Exception
+         */
+        final public function setAreaKey( $var )
+        {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'PageElementModel - setAreaKey: null or string is allowed' );
+            }
+
+            $this->area_key = $var;
+        }
+
+
+        /**
+         * @param $var
+         * @throws Exception
+         */
+        final public function setContent( $var )
+        {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'PageElementModel - setContent: null or string is allowed' );
+            }
+
+            $this->content = $var;
+        }
+
+
+        /**
+         * @param $var
+         * @throws Exception
+         */
+        final public function setTitle( $var )
+        {
+            if( !$this->genericStringValidation( $var ) )
+            {
+                throw new Exception( 'PageElementModel - setTitle: null or string is allowed' );
+            }
+            
+            $this->title = $var;
+        }
 
     }
 

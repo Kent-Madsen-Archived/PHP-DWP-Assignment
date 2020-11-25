@@ -61,12 +61,12 @@
 
 
         /**
-         * @return ContactModel
+         * @return ContactModelEntity
          * @throws Exception
          */
-        final public function createModel(): ContactModel
+        final public function createModel(): ContactModelEntity
         {
-            $model = new ContactModel( $this );
+            $model = new ContactModelEntity( $this );
             return $model;
         }
 
@@ -104,7 +104,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ContactModel )
+            if( $var instanceof ContactModelEntity )
             {
                 $retVal = true;
             }

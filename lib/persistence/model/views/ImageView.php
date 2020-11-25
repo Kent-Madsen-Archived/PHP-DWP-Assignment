@@ -29,7 +29,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ImageModel )
+            if( $model instanceof ImageModelEntity )
             {
                 $retval = true;
             }

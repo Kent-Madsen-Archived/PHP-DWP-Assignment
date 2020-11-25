@@ -3,8 +3,8 @@
     /**
      * Class PersonNameModel
      */
-    class PersonNameModel 
-        extends DatabaseModel
+    class PersonNameModelEntity
+        extends DatabaseModelEntity
     {
         // Constructors
         /**
@@ -34,9 +34,6 @@
         private $last_name      = null;
         private $middle_name    = null;
 
-        private $identity       = null;
-
-
         // implementation of factory classes
         /**
          * @param $factory
@@ -55,20 +52,6 @@
 
         // accessors
             // getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
         /**
          * @return string|null
          */
@@ -112,23 +95,6 @@
 
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'PersonNameModel - setIdentity: null or numeric number is allowed' );
-            }
-            
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          */

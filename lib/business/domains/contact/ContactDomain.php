@@ -69,10 +69,10 @@
         /**
          * @param $wrapper
          * @param $mail_content
-         * @return PersonEmailModel|null
+         * @return PersonEmailModelEntity|null
          * @throws Exception
          */
-        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModel
+        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModelEntity
         {
             if(!( $wrapper instanceof MySQLConnectorWrapper) )
             {

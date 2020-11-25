@@ -30,7 +30,7 @@
         {
             $retval = false;
 
-            if( $model instanceof ArticleModel )
+            if( $model instanceof ArticleModelEntity )
             {
                 $retval = true;
             }

@@ -75,11 +75,11 @@
 
 
         /**
-         * @return ImageTypeModel|mixed
+         * @return ImageTypeModelEntity|mixed
          */
-        final public function createModel(): ImageTypeModel
+        final public function createModel(): ImageTypeModelEntity
         {
-            $model = new ImageTypeModel( $this );
+            $model = new ImageTypeModelEntity( $this );
             return $model;
         }
 
@@ -92,7 +92,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ImageTypeModel )
+            if( $var instanceof ImageTypeModelEntity )
             {
                 $retVal = true;
             }

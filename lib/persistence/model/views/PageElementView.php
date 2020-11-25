@@ -29,7 +29,7 @@
         {
              $retval = false;
  
-             if( $model instanceof PageElementModel )
+             if( $model instanceof PageElementModelEntity )
              {
                  $retval = true;
              }

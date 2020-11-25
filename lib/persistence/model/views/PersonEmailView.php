@@ -30,14 +30,14 @@
         {
             $retval = false;
  
-            if( $model instanceof PersonEmailModel )
+            if( $model instanceof PersonEmailModelEntity )
             {
                 $retval = true;
             }
  
             return boolval( $retval );
         }
-        
+
 
         /**
          * @return int|mixed|null

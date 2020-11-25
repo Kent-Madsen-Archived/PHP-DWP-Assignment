@@ -29,7 +29,7 @@
         {
             $retval = false;
 
-            if( $model instanceof AssociatedCategoryModel )
+            if( $model instanceof AssociatedCategoryModelEntity )
             {
                 $retval = true;
             }

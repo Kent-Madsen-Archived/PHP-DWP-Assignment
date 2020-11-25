@@ -3,8 +3,8 @@
     /**
      * Class ProfileModel
      */
-    class ProfileModel 
-        extends DatabaseModel
+    class ProfileModelEntity
+        extends DatabaseModelEntity
     {
         // Constructor
         /**
@@ -31,8 +31,6 @@
 
 
         // Variables
-        private $identity = null;
-
         private $username = null;
         private $password = null;
 
@@ -61,20 +59,6 @@
         
         // Accessors
             // Getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
         /**
          * @return string|null
          */
@@ -168,25 +152,6 @@
 
             $this->profile_type = $var;
         }
-
-
-        /**
-         * @param $var
-         * @return mixed|void
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ProfileModel - setIdentity: null or numeric number is allowed' );
-            }
-
-            $this->identity = $value;
-        }
-        
 
     }
 

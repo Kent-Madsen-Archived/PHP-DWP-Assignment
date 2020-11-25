@@ -76,12 +76,12 @@
 
 
         /**
-         * @return AssociatedCategoryModel
+         * @return AssociatedCategoryModelEntity
          * @throws Exception
          */
-        final public function createModel(): AssociatedCategoryModel
+        final public function createModel(): AssociatedCategoryModelEntity
         {
-            $model = new AssociatedCategoryModel( $this );
+            $model = new AssociatedCategoryModelEntity( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof AssociatedCategoryModel )
+            if( $var instanceof AssociatedCategoryModelEntity )
             {
                 $retVal = true;
             }

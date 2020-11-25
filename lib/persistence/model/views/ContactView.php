@@ -29,7 +29,7 @@
          {
              $retval = false;
  
-             if( $model instanceof ContactModel )
+             if( $model instanceof ContactModelEntity )
              {
                  $retval = true;
              }

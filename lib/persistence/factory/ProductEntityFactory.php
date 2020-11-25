@@ -62,12 +62,12 @@
 
 
         /**
-         * @return ProductEntityModel
+         * @return ProductEntityModelEntity
          * @throws Exception
          */
-        final public function createModel(): ProductEntityModel
+        final public function createModel(): ProductEntityModelEntity
         {
-            $model = new ProductEntityModel( $this );
+            $model = new ProductEntityModelEntity( $this );
             return $model;
         }
 
@@ -95,7 +95,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductEntityModel )
+            if( $var instanceof ProductEntityModelEntity )
             {
                 return $retVal = true;
             }

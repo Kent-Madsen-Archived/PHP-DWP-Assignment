@@ -3,8 +3,8 @@
     /**
      * Class BroughtProductModel
      */
-    class BroughtProductModel 
-        extends DatabaseModel
+    class BroughtProductModelEntity
+        extends DatabaseModelEntity
     {
         /**
          * BroughtProductModel constructor.
@@ -29,8 +29,6 @@
 
 
         // Variables
-        private $identity   = null;
-
         private $invoice_id = null;
         private $product_id = null;
         
@@ -112,20 +110,6 @@
         /**
          * @return int|null
          */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
-        /**
-         * @return int|null
-         */
         final public function getInvoiceId()
         {
             if( is_null( $this->invoice_id ) )
@@ -138,23 +122,6 @@
 
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
-            }
-
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          * @throws Exception

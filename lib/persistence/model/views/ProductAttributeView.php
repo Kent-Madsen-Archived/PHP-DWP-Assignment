@@ -28,7 +28,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ProductAttributeModel )
+            if( $model instanceof ProductAttributeModelEntity )
             {
                 $retval = true;
             }

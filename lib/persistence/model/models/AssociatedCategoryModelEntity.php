@@ -3,8 +3,8 @@
     /**
      * Class AssociatedCategoryModel
      */
-    class AssociatedCategoryModel 
-        extends DatabaseModel
+    class AssociatedCategoryModelEntity
+        extends DatabaseModelEntity
     {
         // Constructors
         /**
@@ -19,8 +19,6 @@
 
         
         // Variables
-        private $identity = null;
-
         private $product_id           = null;
 
         private $product_attribute_id = null;
@@ -61,20 +59,6 @@
         /**
          * @return int|null
          */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
-        /**
-         * @return int|null
-         */
         final public function getProductAttributeId()
         {
             if( is_null( $this->product_attribute_id ) )
@@ -82,7 +66,7 @@
                 return null;
             }
 
-            return intval( $this->product_attribute_id, self::base() );
+            return intval( $this->product_attribute_id, BASE_10 );
         }
 
 
@@ -96,7 +80,7 @@
                 return null;
             }
 
-            return intval( $this->product_category_id, self::base() );
+            return intval( $this->product_category_id, BASE_10 );
         }
 
 
@@ -110,76 +94,77 @@
                 return null;
             }
 
-            return intval( $this->product_id, self::base() );
+            return intval( $this->product_id, BASE_10 );
         }
 
 
             // Setters
         /**
          * @param $var
+         * @return int|null
          * @throws Exception
          */
-        final public function setIdentity( $var )
+        final public function setProductAttributeId( $var ): ?int
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( is_null( $var ) )
             {
-                throw new Exception( 'AssociatedCategoryModel - setIdentity: null or numeric number is allowed' );
+                $this->product_attribute_id = null;
+                return $this->product_attribute_id;
             }
 
-            $this->identity = $value;
-        }
-
-
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setProductAttributeId( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductAttributeId: null or numeric number is allowed' );
             }
         
-            $this->product_attribute_id = $value;
+            $this->product_attribute_id = intval( $var, BASE_10 );
+            return $this->product_attribute_id;
         }
 
 
         /**
          * @param $var
+         * @return int|null
          * @throws Exception
          */
-        final public function setProductCategoryId( $var )
+        final public function setProductCategoryId( $var ): ?int
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
+            if( is_null( $var ) )
+            {
+                $this->product_category_id = null;
+                return $this->product_category_id;
+            }
 
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductCategoryId: null or numeric number is allowed' );
             }
 
-            $this->product_category_id = $value;
+            $this->product_category_id = intval( $var, BASE_10 );
+            return $this->product_category_id;
         }
 
 
         /**
          * @param $var
+         * @return int|null
          * @throws Exception
          */
-        final public function setProductId( $var )
+        final public function setProductId( $var ): ?int
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
+            if( is_null( $var ) )
+            {
+                $this->product_id = null;
+                return $this->product_id;
+            }
 
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'AssociatedCategoryModel - setProductId: null or numeric number is allowed' );
             }
 
-            $this->product_id = $value;
+            $this->product_id = intval( $var, BASE_10 );
+            return $this->product_id;
         }
     }
 

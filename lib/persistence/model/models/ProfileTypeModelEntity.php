@@ -3,8 +3,8 @@
     /**
      * Class ProfileTypeModel
      */
-    class ProfileTypeModel 
-        extends DatabaseModel
+    class ProfileTypeModelEntity
+        extends DatabaseModelEntity
     {
         // constructors
         /**
@@ -30,7 +30,6 @@
 
 
         // variables
-        private $identity = null;
         private $content  = null;
         
 
@@ -51,28 +50,28 @@
             return boolval( $retval );
         }
 
+
+        /**
+         * @return bool
+         */
+        final protected function isContentNull(): bool
+        {
+            return boolval( is_null( $this->content ) );
+        }
+
         
         // accessors
             // getters
         /**
-         * @return int|null
+         * @return string|null
          */
-        final public function getIdentity()
+        final public function getContent(): ?string
         {
-            if( is_null( $this->identity ) )
+            if( $this->isContentNull() )
             {
                 return null;
             }
 
-            return intval( $this->identity, self::base() );
-        }
-
-
-        /**
-         * @return string
-         */
-        final public function getContent()
-        {
             return strval( $this->content );
         }
         
@@ -80,32 +79,24 @@
             // setters
         /**
          * @param $var
+         * @return string|null
          * @throws Exception
          */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ProfileTypeModel - setIdentity: null or numeric number is allowed' );
-            }
-
-            $this->identity = $value;
-        }
-
-
-        /**
-         * @param $var
-         */
-        final public function setContent( $var )
+        final public function setContent( $var ): ?string
         {
             if( is_null( $var ) )
             {
-                return null;
+                $this->content = null;
+                return $this->content;
+            }
+
+            if( !is_string( $var ) )
+            {
+                throw new Exception('');
             }
 
             $this->content = strval( $var );
+            return $this->content;
         }
 
     }

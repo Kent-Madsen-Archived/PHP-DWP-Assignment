@@ -29,7 +29,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ProductEntityModel )
+            if( $model instanceof ProductEntityModelEntity )
             {
                 $retval = true;
             }

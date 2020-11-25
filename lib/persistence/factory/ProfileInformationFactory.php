@@ -76,11 +76,11 @@
 
 
         /**
-         * @return mixed|ProfileInformationModel
+         * @return mixed|ProfileInformationModelEntity
          */
         final public function createModel()
         {
-            $model = new ProfileInformationModel( $this );
+            $model = new ProfileInformationModelEntity( $this );
             return $model;
         }
 
@@ -93,7 +93,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProfileInformationModel )
+            if( $var instanceof ProfileInformationModelEntity )
             {
                 $retVal = true;
             }

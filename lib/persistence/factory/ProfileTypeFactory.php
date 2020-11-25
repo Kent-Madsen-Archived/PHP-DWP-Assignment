@@ -77,12 +77,12 @@
 
 
         /**
-         * @return mixed|ProfileTypeModel
+         * @return mixed|ProfileTypeModelEntity
          * @throws Exception
          */
         final public function createModel()
         {
-            $model = new ProfileTypeModel( $this );
+            $model = new ProfileTypeModelEntity( $this );
 
             return $model;
         }
@@ -96,7 +96,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProfileTypeModel )
+            if( $var instanceof ProfileTypeModelEntity )
             {
                 $retVal = true;
             }

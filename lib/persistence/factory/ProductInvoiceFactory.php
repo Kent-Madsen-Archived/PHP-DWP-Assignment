@@ -84,7 +84,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductInvoiceModel )
+            if( $var instanceof ProductInvoiceModelEntity )
             {
                 $retVal = true;
             }
@@ -94,12 +94,12 @@
 
 
         /**
-         * @return ProductInvoiceModel
+         * @return ProductInvoiceModelEntity
          * @throws Exception
          */
-        final public function createModel(): ProductInvoiceModel
+        final public function createModel(): ProductInvoiceModelEntity
         {
-            $model = new ProductInvoiceModel( $this );
+            $model = new ProductInvoiceModelEntity( $this );
             return $model;
         }
 

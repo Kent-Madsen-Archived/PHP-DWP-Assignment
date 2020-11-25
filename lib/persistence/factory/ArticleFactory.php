@@ -61,12 +61,12 @@
 
 
         /**
-         * @return ArticleModel
+         * @return ArticleModelEntity
          * @throws Exception
          */
-        final public function createModel(): ArticleModel
+        final public function createModel(): ArticleModelEntity
         {
-            $model = new ArticleModel( $this );
+            $model = new ArticleModelEntity( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ArticleModel )
+            if( $var instanceof ArticleModelEntity )
             {
                 $retVal = true;
             }

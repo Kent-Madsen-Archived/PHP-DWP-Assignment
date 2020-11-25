@@ -3,8 +3,8 @@
     /**
      * Class ProductModel
      */
-    class ProductModel 
-        extends DatabaseModel
+    class ProductModelEntity
+        extends DatabaseModelEntity
     {
         // constructors
         /**
@@ -30,8 +30,6 @@
 
 
         // Variables
-        private $identity = null;
-
         private $title          = null;
         private $description    = null;
         private $price          = null;
@@ -57,20 +55,6 @@
 
         // Accessors
             // Getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
         /**
          * @return string|null
          */
@@ -113,23 +97,6 @@
         }
 
             // Setters
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ProductModel - setIdentity: null or numeric number is allowed' );
-            }
-            
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          */

@@ -3,8 +3,8 @@
     /**
      * Class PersonEmailModel
      */
-    class PersonEmailModel 
-        extends DatabaseModel
+    class PersonEmailModelEntity
+        extends DatabaseModelEntity
     {
         // Constructor
         /**
@@ -30,7 +30,6 @@
 
 
         // Variables
-        private $identity = null;
         private $content  = null;
         
 
@@ -53,20 +52,6 @@
         // accessors
             // getters
         /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );
-        }
-
-
-        /**
          * @return mixed|string|null
          */
         final public function getContent()
@@ -81,24 +66,6 @@
 
 
             // Setters
-        /**
-         * @param $var
-         * @return mixed|void
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'PersonEmailModel - setIdentity: null or numeric number is allowed' );
-            }
-            
-            $this->identity = $value;
-        }
-
-
         /**
          * @param $var
          * @return mixed|void

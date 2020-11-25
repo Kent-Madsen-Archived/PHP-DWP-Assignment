@@ -76,11 +76,11 @@
 
 
         /**
-         * @return mixed|ProductUsedImageModel
+         * @return mixed|ProductUsedImageModelEntity
          */
         final public function createModel()
         {
-            $model = new ProductUsedImageModel( $this );
+            $model = new ProductUsedImageModelEntity( $this );
 
             return $model;
         }
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductUsedImageModel )
+            if( $var instanceof ProductUsedImageModelEntity )
             {
                 $retVal = true;
             }

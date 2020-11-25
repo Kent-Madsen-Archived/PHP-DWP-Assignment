@@ -61,12 +61,12 @@
 
 
         /**
-         * @return ProductAttributeModel
+         * @return ProductAttributeModelEntity
          * @throws Exception
          */
-        final public function createModel(): ProductAttributeModel
+        final public function createModel(): ProductAttributeModelEntity
         {
-            $model = new ProductAttributeModel( $this );
+            $model = new ProductAttributeModelEntity( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductAttributeModel )
+            if( $var instanceof ProductAttributeModelEntity )
             {
                 $retVal = true;
             }

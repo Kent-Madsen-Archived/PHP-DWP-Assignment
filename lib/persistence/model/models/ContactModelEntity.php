@@ -3,8 +3,8 @@
     /**
      * Class ContactModel
      */
-    class ContactModel 
-        extends DatabaseModel
+    class ContactModelEntity
+        extends DatabaseModelEntity
     {
         // Constructors
         /**
@@ -38,8 +38,6 @@
 
         private $has_been_send = null;
         private $created_on    = null;
-
-        private $identity = null;
 
 
         // implementation of factory classes
@@ -141,39 +139,8 @@
         }
 
 
-        /**
-         * @return int|mixed|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
 
-            return intval( $this->identity, self::base() );
-        }
-
-
-            // Setters
-        /**
-         * @param $var
-         * @return mixed|void
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ContactModel - setIdentity: null or numeric number is allowed' );
-            }
-
-            $this->identity = $value;
-        }
-
-
+        // Setters
         /**
          * @param $var
          * @return mixed|void

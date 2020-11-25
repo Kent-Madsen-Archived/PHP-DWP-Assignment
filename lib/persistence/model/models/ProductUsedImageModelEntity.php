@@ -3,8 +3,8 @@
     /**
      * Class ProductUsedImageModel
      */
-    class ProductUsedImageModel
-        extends DatabaseModel
+    class ProductUsedImageModelEntity
+        extends DatabaseModelEntity
     {
         /**
          * ProductUsedImageModel constructor.
@@ -29,8 +29,6 @@
         
 
         // Variables
-        private $identity = null;
-
         private $image_preview_id   = null;
         private $image_full_id      = null;
 
@@ -57,20 +55,6 @@
 
         // Accessor
             // Getters
-        /**
-         * @return int|null
-         */
-        final public function getIdentity()
-        {
-            if( is_null( $this->identity ) )
-            {
-                return null;
-            }
-
-            return intval( $this->identity, self::base() );;
-        }
-
-
         /**
          * @return int|null
          */
@@ -141,23 +125,6 @@
             }
 
             $this->image_full_id = $value;
-        }
-
-
-        /**
-         * @param $var
-         * @throws Exception
-         */
-        final public function setIdentity( $var )
-        {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
-            {
-                throw new Exception( 'ProductUsedImageModel - setIdentity: null or numeric number is allowed' );
-            }
-            
-            $this->identity = $value;
         }
 
 

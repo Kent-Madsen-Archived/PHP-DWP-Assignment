@@ -53,10 +53,10 @@
 
         // Registration
         /**
-         * @return ProfileModel|null
+         * @return ProfileModelEntity|null
          * @throws Exception
          */
-        final public function register(): ?ProfileModel
+        final public function register(): ?ProfileModelEntity
         {
             $retVal = null;
 
@@ -154,10 +154,10 @@
 
         // Login
         /**
-         * @return ProfileModel|null
+         * @return ProfileModelEntity|null
          * @throws Exception
          */
-        final public function login(): ?ProfileModel
+        final public function login(): ?ProfileModelEntity
         {
             if( LoginDomainView::validateIsSubmitted() )
             {

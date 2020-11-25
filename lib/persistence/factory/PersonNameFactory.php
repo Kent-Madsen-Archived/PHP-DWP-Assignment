@@ -78,11 +78,11 @@
 
 
         /**
-         * @return mixed|PersonNameModel
+         * @return mixed|PersonNameModelEntity
          */
-        final public function createModel(): PersonNameModel
+        final public function createModel(): PersonNameModelEntity
         {
-            $model = new PersonNameModel( $this );
+            $model = new PersonNameModelEntity( $this );
             return $model;
         }
 
@@ -95,7 +95,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof PersonNameModel )
+            if( $var instanceof PersonNameModelEntity )
             {
                 $retVal = true;
             }
