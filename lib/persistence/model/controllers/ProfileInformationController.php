@@ -11,6 +11,11 @@
     class ProfileInformationController
         extends BaseController
     {
+        public function validateModel( $model ): bool
+        {
+            // TODO: Implement validateModel() method.
+            return false;
+        }
 
         /**
          * @param $var

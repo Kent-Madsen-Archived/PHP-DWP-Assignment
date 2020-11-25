@@ -1,16 +1,28 @@
-<?php 
+<?php
 
+    /**
+     * Class BaseView
+     */
     abstract class BaseView
     {
+        // Variables
         private $model = null;
 
-        public function getModel()
+        // Accessors
+        /**
+         * @return null
+         */
+        final public function getModel()
         {
             return $this->model;
         }
 
-        
-        public function setModel( $model )
+
+        /**
+         * @param $model
+         * @throws Exception
+         */
+        final public function setModel( $model )
         {
             if( !$this->validateModel( $model ) )
             {
@@ -20,7 +32,8 @@
             $this->model = $model;
         }
 
-        abstract public function validateModel( $model );
+        // Template
+        abstract public function validateModel( $model ): bool;
 
     }
 

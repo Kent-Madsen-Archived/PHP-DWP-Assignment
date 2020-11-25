@@ -6,17 +6,27 @@
      */
 
     /**
-     * Interface ArticleView
+     * Class ArticleView
      */
     class ArticleView
         extends BaseView
     {
+        /**
+         * ArticleView constructor.
+         * @param $model
+         * @throws Exception
+         */
         public function __construct( $model )
         {
             $this->setModel( $model );
         }
 
-        public function validateModel( $model )
+
+        /**
+         * @param $model
+         * @return bool
+         */
+        final public function validateModel( $model ): bool
         {
             $retval = false;
 

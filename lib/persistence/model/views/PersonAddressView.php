@@ -6,19 +6,27 @@
      */
 
     /**
-     * Interface PersonAddressView
+     * Class PersonAddressView
      */
     class PersonAddressView
         extends BaseView
     {
+        /**
+         * @param $model
+         * @throws Exception
+         */
         public function __constructor( $model )
         {
             $this->setModel( $model );
         }
 
 
-        public function validateModel( $model )
-         {
+        /**
+         * @param $model
+         * @return bool
+         */
+        final public function validateModel( $model ): bool
+        {
              $retval = false;
  
              if( $model instanceof PersonAddressModel )
@@ -27,7 +35,7 @@
              }
  
              return boolval( $retval );
-         }
+        }
         
     }
 ?>
