@@ -1,5 +1,8 @@
 <?php
 
+    /**
+     * Class SecurityErrors
+     */
     class SecurityErrors
     {
         /**
