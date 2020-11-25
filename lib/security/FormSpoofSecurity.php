@@ -90,7 +90,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('Input token is not a string');
+                SecurityErrors::throwErrorInputIsNotAnString();
             }
 
             $this->token = strval( $var );
@@ -149,7 +149,7 @@
 
             if( !is_string( $value ) )
             {
-                throw new Exception('');
+                SecurityErrors::throwErrorInputIsNotAnString();
             }
 
             $_SESSION[ 'fss_token' ] = $value;
@@ -185,7 +185,7 @@
 
             if( is_null( $fss_token ) )
             {
-                throw new Exception('');
+                SecurityErrors::throwErrorTokenIsNull();
             }
 
             $token_filtered = htmlentities( $fss_token );

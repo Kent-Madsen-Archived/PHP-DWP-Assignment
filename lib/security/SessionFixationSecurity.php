@@ -7,6 +7,7 @@
     {
         /**
          * SessionFixationSecurity constructor.
+         * @throws Exception
          */
         public function __construct()
         {
@@ -20,7 +21,7 @@
 
 
         /**
-         *
+         * @throws Exception
          */
         function update(): void
         {
@@ -49,7 +50,7 @@
         {
             if( is_null( $this->getNow() ) || is_null( $this->getTimespan() ) )
             {
-                throw new Exception('can\'t calculate difference as either now or timespan is null ');
+                SecurityErrors::throwCantCalculateDifference();
             }
 
             return intval( ( $this->getNow() - $this->getTimespan() ) );
@@ -84,7 +85,6 @@
         }
 
 
-
         /**
          * @param $now
          * @return int|null
@@ -100,7 +100,7 @@
 
             if( !is_int( $now ) )
             {
-                throw new Exception('');
+                SecurityErrors::throwErrorParameterIsNotInt();
             }
 
             $this->now = intval( $now );
@@ -110,7 +110,7 @@
 
         /**
          * @param int $timespan
-         * @return int
+         * @return int|null
          * @throws Exception
          */
         public function setTimespan( int $timespan ): ?int
@@ -123,7 +123,7 @@
 
             if( !is_int( $timespan ) )
             {
-                throw new Exception();
+                SecurityErrors::throwErrorParameterIsNotInt();
             }
 
             $this->timespan = intval( $timespan );
@@ -145,7 +145,7 @@
 
             if( !is_int( $var ) )
             {
-                throw new Exception('');
+                SecurityErrors::throwErrorParameterIsNotInt();
             }
 
             $_SESSION[ 'session_generated' ] = intval( $var );

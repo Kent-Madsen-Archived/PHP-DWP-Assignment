@@ -4,8 +4,7 @@
      * Class PersonAddressModel
      */
     class PersonAddressModel 
-        extends DatabaseModel 
-            implements PersonAddressController
+        extends DatabaseModel
     {
         // constructors
         /**

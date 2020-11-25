@@ -4,7 +4,6 @@
      */
     class ArticleModel 
         extends DatabaseModel
-            implements ArticleController
     {
         // Constructors
         /**

@@ -5,7 +5,6 @@
      */
     class ContactModel 
         extends DatabaseModel
-            implements ContactController
     {
         // Constructors
         /**

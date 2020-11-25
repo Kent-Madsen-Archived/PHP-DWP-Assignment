@@ -5,7 +5,6 @@
      */
     class PersonEmailModel 
         extends DatabaseModel
-            implements PersonEmailController
     {
         // Constructor
         /**

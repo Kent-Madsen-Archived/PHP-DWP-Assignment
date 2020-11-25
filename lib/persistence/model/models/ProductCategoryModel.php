@@ -5,7 +5,6 @@
      */
     class ProductCategoryModel 
         extends DatabaseModel
-            implements ProductCategoryController
     {
         // Constructors
         /**

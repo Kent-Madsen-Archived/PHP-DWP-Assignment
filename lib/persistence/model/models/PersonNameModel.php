@@ -4,8 +4,7 @@
      * Class PersonNameModel
      */
     class PersonNameModel 
-        extends DatabaseModel 
-            implements PersonNameController
+        extends DatabaseModel
     {
         // Constructors
         /**

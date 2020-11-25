@@ -5,7 +5,6 @@
      */
     class ProductInvoiceModel 
         extends DatabaseModel
-            implements ProductInvoiceController
     {
         // Constructors
         /**

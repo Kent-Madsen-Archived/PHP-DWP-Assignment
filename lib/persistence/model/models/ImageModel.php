@@ -5,7 +5,6 @@
      */
     class ImageModel 
         extends DatabaseModel
-            implements ImageController
     {
         /**
          * ImageModel constructor.
