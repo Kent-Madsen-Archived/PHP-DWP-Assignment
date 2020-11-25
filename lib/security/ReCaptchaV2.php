@@ -80,7 +80,7 @@
 
             if( !$this->validUrl( $url ) )
             {
-                throw new Exception('error, url is not valid' );
+                SecurityErrors::throwErrorUrlIsValid();
             }
 
             $get_file = file_get_contents( $url );
@@ -99,12 +99,12 @@
         {
             if( is_null( $str ) )
             {
-                throw new Exception('parameter can not be null');
+                SecurityErrors::throwErrorParameterIsNull();
             }
 
             if( !is_string( $str ) )
             {
-                throw new Exception('parameter is not a string' );
+                SecurityErrors::throwErrorParameterIsNotAString();
             }
 
             return urlencode( $str );
@@ -136,7 +136,7 @@
 
             if( !$result[ 'success' ] )
             {
-                throw new Exception( 'Security Error: Capcha failed' );
+                SecurityErrors::throwErrorCapchaFailed();
             }
             else
             {
@@ -234,7 +234,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('only string is allowed as parameter');
+                SecurityErrors::throwErrorParameterIsNotAString();
             }
 
             $this->security_private_field = strval( $var );
@@ -257,7 +257,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('only string is allowed as parameter');
+                SecurityErrors::throwErrorParameterIsNotAString();
             }
 
             $this->security_public_field = strval( $var );
@@ -280,7 +280,7 @@
 
             if( !is_array( $var ) )
             {
-                throw new Exception('only an array is allowed as parameter');
+                SecurityErrors::throwErrorParameterIsNotAArray();
             }
 
             $this->response = $var;
@@ -303,7 +303,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('only string is allowed as parameter');
+                SecurityErrors::throwErrorParameterIsNotAString();
             }
 
             $this->response_key = strval( $var );

@@ -56,7 +56,7 @@
 
             if( !( $pageTitle instanceof PageTitle ) )
             {
-                throw new Exception('Only instance of PageTitle is allowed');
+                PageTitleError::throwIsNotAnInstanceOfPageTitle();
             }
 
             $this->pageTitle = $pageTitle;

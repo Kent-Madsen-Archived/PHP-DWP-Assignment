@@ -63,7 +63,7 @@
 
             if( !is_string( $var ) )
             {
-                throw new Exception('only string is allowed as parameter');
+                PageTitleError::throwIsNotAnString();
             }
 
             $this->title = strval( $var );
@@ -97,7 +97,7 @@
 
             if(! is_string( $var ) )
             {
-                throw new Exception('Input parameter is not a string');
+                PageTitleError::throwIsNotAnString();
             }
 
             if( is_null( $this->getTitle() ) )
@@ -107,7 +107,7 @@
 
             $this->title .= $var;
 
-            return strval( $this->title );
+            return $this->getTitle();
         }
 
 
@@ -125,13 +125,15 @@
 
             if( !is_array( $var ) )
             {
-                throw new Exception('The parameter value is not an array');
+                PageTitleError::throwIsNotAnArray();
             }
 
             foreach ( $var as $value )
             {
                 $this->appendToTitle( $value );
             }
+
+            return $this->getTitle();
         }
     }
 ?>
