@@ -18,37 +18,6 @@
         }
 
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
-        {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if( is_null( $this->identity ) == true )
-            {
-                $retVal = true;
-            }
-
-            return $retVal;
-        }
-
-
         /**
          * @return bool|mixed
          */
@@ -81,39 +50,6 @@
             }
 
             return false;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerFirstname( $var )
-        {
-            // TODO: Implement controllerFirstname() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerLastname( $var )
-        {
-            // TODO: Implement controllerLastname() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerMiddleName( $var )
-        {
-            // TODO: Implement controllerMiddleName() method.
-            return null;
         }
 
 

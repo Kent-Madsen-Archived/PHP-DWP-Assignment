@@ -18,56 +18,9 @@
         }
 
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
+        public function requiredFieldsValidated()
         {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if( is_null( $this->identity ) == true )
-            {
-                $retVal = true;
-            }
-
-            return $retVal;
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function requiredFieldsValidated()
-        {
-            $retVal = false;
-
-            return $retVal;
-        }
-        
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerContent( $var )
-        {
-            // TODO: Implement controllerContent() method.
-            return null;
+            // TODO: Implement requiredFieldsValidated() method.
         }
 
 

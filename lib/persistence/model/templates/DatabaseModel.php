@@ -3,9 +3,9 @@
     /**
      * Class DatabaseModel
      */
-    abstract class DatabaseModel 
-        implements TableEntity
+    abstract class DatabaseModel
     {
+
         // Variables
         private $factory = null;
 
@@ -119,6 +119,7 @@
             
             return boolval( $retVal );
         }
+
 
         /**
          * @return int

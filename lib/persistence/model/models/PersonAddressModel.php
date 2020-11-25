@@ -17,34 +17,6 @@
             $this->setFactory( $factory );
         }
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
-        {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if( is_null( $this->identity ) == true )
-            {
-                $retVal = true;
-            }
-
-            return $retVal;
-        }
 
         /**
          * @return bool|mixed
@@ -81,62 +53,7 @@
 
             return false;
         }
-
         
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerCountry( $var )
-        {
-            // TODO: Implement controllerCountry() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerStreetAddressFloor( $var )
-        {
-            // TODO: Implement controllerStreetAddressFloor() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerStreetAddressNumber( $var )
-        {
-            // TODO: Implement controllerStreetAddressNumber() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerStreetAddressZipCode( $var )
-        {
-            // TODO: Implement controllerStreetAddressZipCode() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerStreetName( $var )
-        {
-            // TODO: Implement controllerStreetName() method.
-            return null;
-        }
-
 
         // Accessors
             // getters

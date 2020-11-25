@@ -18,36 +18,6 @@
         }
 
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
-        {
-            if ( $this->viewIsIdentityNull() ) {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if ( is_null( $this->identity ) )
-            {
-                $retVal = true;
-            }
-
-            return boolval( $retVal );
-        }
-
-
         /**
          * @return bool|mixed
          */
@@ -85,59 +55,6 @@
             }
 
             return boolval( $retval );
-        }
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerRegistered($var)
-        {
-            // TODO: Implement controllerRegistered() method.
-            return null;
-        }
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerAddress($var)
-        {
-            // TODO: Implement controllerAddress() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerMail($var)
-        {
-            // TODO: Implement controllerMail() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerOwnerName($var)
-        {
-            // TODO: Implement controllerOwnerName() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerTotalPrice($var)
-        {
-            // TODO: Implement controllerTotalPrice() method.
-            return null;
         }
 
 

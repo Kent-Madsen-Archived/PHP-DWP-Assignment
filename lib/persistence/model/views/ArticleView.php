@@ -38,5 +38,36 @@
             return boolval( $retval );
         }
 
+        // implement interfaces
+        /**
+         * @return int|mixed|null
+         */
+        final public function viewIdentity()
+        {
+            if( $this->viewIsIdentityNull() )
+            {
+                return null;
+            }
+
+            return $this->getIdentity();
+        }
+
+
+        /**
+         * @return bool|mixed
+         */
+        final public function viewIsIdentityNull()
+        {
+            $retVal = false;
+
+            if( is_null( $this->identity ) )
+            {
+                $retVal = true;
+            }
+
+            return boolval( $retVal );
+        }
+
+
     }
 ?>

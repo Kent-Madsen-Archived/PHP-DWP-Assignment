@@ -27,69 +27,6 @@
         private $product_category_id  = null;
 
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
-        {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if( is_null( $this->identity ) )
-            {
-                $retVal = true;
-            }
-
-            return boolval( $retVal );
-        }
-
-        
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerAttribute( $var )
-        {
-            // TODO: Implement controllerAttribute() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerCategory( $var )
-        {
-            // TODO: Implement controllerCategory() method.
-            return null;
-        }
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerProduct( $var )
-        {
-            // TODO: Implement controllerProduct() method.
-            return null;
-        }
-
-
         /**
          * @return bool|mixed
          */

@@ -27,81 +27,6 @@
         private $last_updated   = null;
 
 
-        // implement interfaces
-        /**
-         * @return int|mixed|null
-         */
-        final public function viewIdentity()
-        {
-            if( $this->viewIsIdentityNull() )
-            {
-                return null;
-            }
-
-            return $this->getIdentity();
-        }
-
-
-        /**
-         * @return bool|mixed
-         */
-        final public function viewIsIdentityNull()
-        {
-            $retVal = false;
-
-            if( is_null( $this->identity ) )
-            {
-                $retVal = true;
-            }
-
-            return boolval( $retVal );
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerContent( $var )
-        {
-            // TODO: Implement controllerContent() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerCreatedOn( $var )
-        {
-            // TODO: Implement controllerCreatedOn() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerLastUpdated( $var )
-        {
-            // TODO: Implement controllerLastUpdated() method.
-            return null;
-        }
-
-
-        /**
-         * @param $var
-         * @return mixed|null
-         */
-        final public function controllerTitle( $var )
-        {
-            // TODO: Implement controllerTitle() method.
-            return null;
-        }
-
-
         /**
          * @return bool|mixed
          */
@@ -257,27 +182,7 @@
             $this->last_updated = $var;
         }
 
-        /**
-         * @param $class
-         */
-        final public static function implementsView( $class )
-        {
-            $retVal = false;
 
-            $is_class_object = false;
-
-            if( !is_object( $class ) )
-            {
-                $is_class_object = true;
-
-            }
-
-
-            $is_class_implementing_view = false;
-
-
-            return boolval( $is_class_object && $is_class_implementing_view );
-        }
 
     }
 
