@@ -36,7 +36,7 @@
         /**
          * @return null
          */
-        public function getTitle()
+        final public function getTitle()
         {
             return $this->title;
         }
@@ -45,7 +45,7 @@
         /**
          * @return null
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -54,7 +54,7 @@
         /**
          * @return null
          */
-        public function getAvailableUnit()
+        final public function getAvailableUnit()
         {
             return $this->availableUnit;
         }
@@ -63,7 +63,7 @@
         /**
          * @return null
          */
-        public function getDescription()
+        final public function getDescription()
         {
             return $this->description;
         }
@@ -72,7 +72,7 @@
         /**
          * @return null
          */
-        public function getPrice()
+        final public function getPrice()
         {
             return $this->price;
         }
@@ -81,7 +81,7 @@
         /**
          * @param null $availableUnit
          */
-        public function setAvailableUnit($availableUnit): void
+        final public function setAvailableUnit( $availableUnit ): void
         {
             $this->availableUnit = $availableUnit;
         }
@@ -90,7 +90,7 @@
         /**
          * @param null $description
          */
-        public function setDescription($description): void
+        final public function setDescription( $description ): void
         {
             $this->description = $description;
         }
@@ -99,7 +99,7 @@
         /**
          * @param null $price
          */
-        public function setPrice($price): void
+        final public function setPrice( $price ): void
         {
             $this->price = $price;
         }
@@ -108,7 +108,7 @@
         /**
          * @param null $title
          */
-        public function setTitle($title): void
+        final public function setTitle( $title ): void
         {
             $this->title = $title;
         }
@@ -117,7 +117,7 @@
         /**
          * @param null $identity
          */
-        public function setIdentity($identity): void
+        final public function setIdentity( $identity ): void
         {
             $this->identity = $identity;
         }
