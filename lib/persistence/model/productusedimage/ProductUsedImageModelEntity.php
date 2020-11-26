@@ -100,14 +100,12 @@
          */
         final public function setImagePreviewId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->image_preview_id = $value;
+            $this->image_preview_id = $var;
         }
 
 
@@ -117,14 +115,12 @@
          */
         final public function setImageFullId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->image_full_id = $value;
+            $this->image_full_id = $var;
         }
 
 

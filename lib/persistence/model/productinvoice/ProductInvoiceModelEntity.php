@@ -145,13 +145,12 @@
          */
         final public function setAddressId($var)
         {
-            $value = filter_var($var, FILTER_VALIDATE_INT);
-
-            if (!$this->identityValidation($value)) {
+            if ( !is_int( $var ) )
+            {
                 throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
             }
 
-            $this->address_id = $value;
+            $this->address_id = intval( $var, BASE_10 );
         }
 
 
@@ -161,13 +160,12 @@
          */
         final public function setMailId($var)
         {
-            $value = filter_var($var, FILTER_VALIDATE_INT);
-
-            if (!$this->identityValidation($value)) {
+            if ( !is_int( $var ) )
+            {
                 throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
             }
 
-            $this->mail_id = $value;
+            $this->mail_id = $var;
         }
 
 
@@ -177,13 +175,11 @@
          */
         final public function setOwnerNameId($var)
         {
-            $value = filter_var($var, FILTER_VALIDATE_INT);
-
-            if (!$this->identityValidation($value)) {
+            if ( !is_int( $var ) ) {
                 throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
             }
 
-            $this->owner_name_id = $value;
+            $this->owner_name_id = $var;
         }
 
     }

@@ -121,7 +121,7 @@
                 return null;
             }
 
-            return intval( $this->street_address_number, self::base() );
+            return intval( $this->street_address_number, BASE_10 );
         }
 
 
@@ -168,14 +168,12 @@
          */
         final public function setStreetAddressNumber( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->street_address_number = $value;
+            $this->street_address_number = intval( $var, BASE_10 );
         }
 
     }

@@ -156,7 +156,7 @@
          */
         final public function setTitle( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'ImageModel - setTitle: null or string is allowed' );
             }
@@ -171,7 +171,7 @@
          */
         final public function setAlt( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'ImageModel - setAlt: null or string is allowed' );
             }
@@ -186,14 +186,12 @@
          */
         final public function setImageTypeId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'ImageModel - setImageTypeId: null or numeric number is allowed' );
             }
 
-            $this->image_type_id = $value;
+            $this->image_type_id = $var;
         }
 
 
@@ -203,7 +201,7 @@
          */
         final public function setImageSrc( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'ImageModel - setImageSrc: null or string is allowed' );
             }
@@ -218,14 +216,12 @@
          */
         final public function setParentId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'ImageModel - setParentId: null or numeric number is allowed' );
             }
 
-            $this->parent_id = $value;
+            $this->parent_id = $var;
         }
 
 

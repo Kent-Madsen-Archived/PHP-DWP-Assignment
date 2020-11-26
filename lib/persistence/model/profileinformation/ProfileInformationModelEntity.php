@@ -156,14 +156,12 @@
          */
         final public function setProfileId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
             
-            $this->profile_id = $value;
+            $this->profile_id = $var;
         }
 
 
@@ -173,14 +171,12 @@
          */
         final public function setPersonNameId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_name_id = $value;
+            $this->person_name_id = $var;
         }
 
 
@@ -190,14 +186,12 @@
          */
         final public function setPersonAddressId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_address_id = $value;
+            $this->person_address_id = $var;
         }
 
 
@@ -207,14 +201,13 @@
          */
         final public function setPersonEmailId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT   );
 
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->person_email_id = $value;
+            $this->person_email_id = $var;
         }
 
 

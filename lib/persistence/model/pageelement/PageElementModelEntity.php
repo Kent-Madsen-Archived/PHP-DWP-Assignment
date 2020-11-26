@@ -154,7 +154,7 @@
          */
         final public function setAreaKey( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'PageElementModel - setAreaKey: null or string is allowed' );
             }
@@ -169,7 +169,7 @@
          */
         final public function setContent( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'PageElementModel - setContent: null or string is allowed' );
             }
@@ -184,7 +184,7 @@
          */
         final public function setTitle( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'PageElementModel - setTitle: null or string is allowed' );
             }

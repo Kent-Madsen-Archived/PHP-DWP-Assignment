@@ -145,7 +145,7 @@
          */
         final public function setProfileType( $var )
         {
-            if( !$this->identityValidation( $var ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }

@@ -112,7 +112,7 @@
                 return null;
             }
 
-            return intval( $this->fromMail, self::base() );
+            return intval( $this->fromMail, BASE_10 );
         }
 
 
@@ -135,7 +135,7 @@
                 return null;
             }
 
-            return intval( $this->has_been_send, self::base() );
+            return intval( $this->has_been_send,  BASE_10 );
         }
 
 
@@ -143,17 +143,16 @@
         // Setters
         /**
          * @param $var
-         * @return mixed|void
          * @throws Exception
          */
         final public function setHasBeenSend( $var )
         {
-            if( !$this->genericNumberValidation( $var ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'ContactModel - setHasBeenSend: null or numeric number is allowed' );
             }
 
-            $this->has_been_send = $var;
+            $this->has_been_send = intval($var, BASE_10);
         }
 
 
@@ -174,14 +173,12 @@
          */
         final public function setFromMail( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->fromMail = $value;
+            $this->fromMail = intval($var, BASE_10);
         }
 
 
@@ -192,14 +189,12 @@
          */
         final public function setToMail( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->toMail = $value;
+            $this->toMail = intval($var, BASE_10);
         }
 
 
@@ -210,7 +205,7 @@
          */
         final public function setSubject( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'ContactModel - setSubject: null or string is allowed' );
             }
@@ -226,7 +221,7 @@
          */
         final public function setMessage( $var )
         {
-            if( !$this->genericStringValidation( $var ) )
+            if( !is_string( $var ) )
             {
                 throw new Exception( 'ContactModel - setMessage: null or string is allowed' );
             }

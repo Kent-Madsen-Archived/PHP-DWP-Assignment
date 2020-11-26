@@ -118,14 +118,13 @@
          */
         final public function setProductId( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
 
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
 
-            $this->product_id = $value;
+            $this->product_id = $var;
         }
 
 
@@ -135,14 +134,12 @@
          */
         final public function setBrought( $var )
         {
-            $value = filter_var( $var, FILTER_VALIDATE_INT  );
-
-            if( !$this->identityValidation( $value ) )
+            if( !is_int( $var ) )
             {
                 throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
             }
             
-            $this->brought_id = $value;
+            $this->brought_id = $var;
         }
 
 
