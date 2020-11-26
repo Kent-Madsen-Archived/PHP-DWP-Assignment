@@ -5,8 +5,10 @@
      */
     abstract class DatabaseForm
     {
+
         // Variable
         private $isSet = null;
+
 
         // Accessors
             // Getters
@@ -17,6 +19,7 @@
         {
             return $this->isSet;
         }
+
 
             // Setters
         /**

@@ -54,7 +54,12 @@
             return $this->getModel();
         }
 
+
         // Template
+        /**
+         * @param $model
+         * @return bool
+         */
         public abstract function validateModel( $model ): bool;
     }
 

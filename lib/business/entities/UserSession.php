@@ -19,7 +19,7 @@
          */
         public function __construct( $profileModel )
         {
-            if( !( $profileModel instanceof ProfileModel ) )
+            if( !( $profileModel instanceof ProfileModelEntity ) )
             {
                 throw new Exception('');
             }
