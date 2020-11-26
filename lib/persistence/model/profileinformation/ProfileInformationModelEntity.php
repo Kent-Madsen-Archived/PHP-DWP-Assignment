@@ -103,7 +103,7 @@
                 return null;
             }
 
-            return intval( $this->profile_id, self::base() );
+            return intval( $this->profile_id, BASE_10 );
         }
 
 
@@ -117,7 +117,7 @@
                 return null;
             }
 
-            return intval( $this->person_name_id, self::base() );
+            return intval( $this->person_name_id, BASE_10);
         }
 
 
@@ -131,7 +131,7 @@
                 return null;
             }
 
-            return intval( $this->person_address_id, self::base() );
+            return intval( $this->person_address_id, BASE_10 );
         }
 
 
@@ -145,7 +145,7 @@
                 return null;
             }
 
-            return intval( $this->person_email_id, self::base() );
+            return intval( $this->person_email_id, BASE_10 );
         }
 
 

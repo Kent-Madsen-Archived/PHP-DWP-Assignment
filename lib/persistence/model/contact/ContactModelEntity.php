@@ -84,7 +84,7 @@
                 return null;
             }
 
-            return intval( $this->toMail, self::base() );
+            return intval( $this->toMail, BASE_10 );
         }
 
 
@@ -152,7 +152,7 @@
                 throw new Exception( 'ContactModel - setHasBeenSend: null or numeric number is allowed' );
             }
 
-            $this->has_been_send = intval($var, BASE_10);
+            $this->has_been_send = intval( $var, BASE_10 );
         }
 
 
@@ -178,7 +178,7 @@
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->fromMail = intval($var, BASE_10);
+            $this->fromMail = intval( $var, BASE_10 );
         }
 
 
@@ -194,7 +194,7 @@
                 throw new Exception( 'BroughtProductModel - setIdentity: null or numeric number is allowed' );
             }
 
-            $this->toMail = intval($var, BASE_10);
+            $this->toMail = intval( $var, BASE_10 );
         }
 
 

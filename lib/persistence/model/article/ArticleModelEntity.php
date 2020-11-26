@@ -24,6 +24,9 @@
         private $created_on     = null;
         private $last_updated   = null;
 
+        private $view       = null;
+        private $controller = null;
+
 
         /**
          * @return bool|mixed
@@ -81,6 +84,42 @@
             }
 
             return strval( $this->content );
+        }
+
+
+        /**
+         * @return null
+         */
+        public function getController(): ?ArticleController
+        {
+            return $this->controller;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public function isControllerNull(): bool
+        {
+            return is_null($this->controller);
+        }
+
+
+        /**
+         * @return null
+         */
+        public function getView(): ?ArticleView
+        {
+            return $this->view;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public function isViewNull(): bool
+        {
+            return is_null( $this->view );
         }
 
 
@@ -152,7 +191,7 @@
         /**
          * @param $var
          */
-        final public function setCreatedOn( $var )
+        final public function setCreatedOn( $var ): void
         {
             $this->created_on = $var;
         }
@@ -161,13 +200,32 @@
         /**
          * @param $var
          */
-        final public function setLastUpdated( $var )
+        final public function setLastUpdated( $var ): void
         {
             $this->last_updated = $var;
         }
 
 
+        /**
+         * @param $controller
+         * @return ArticleController|null
+         */
+        public function setController( $controller ): ?ArticleController
+        {
+            $this->controller = $controller;
+            return $this->getController();
+        }
 
+
+        /**
+         * @param $view
+         * @return ArticleView|null
+         */
+        public function setView( $view ): ?ArticleView
+        {
+            $this->view = $view;
+            return $this->getView();
+        }
     }
 
 ?>

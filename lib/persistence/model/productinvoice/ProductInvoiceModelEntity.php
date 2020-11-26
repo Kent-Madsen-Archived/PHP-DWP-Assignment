@@ -68,7 +68,7 @@
                 return null;
             }
 
-            return intval($this->address_id, self::base());
+            return intval( $this->address_id, BASE_10 );
         }
 
 
@@ -81,7 +81,7 @@
                 return null;
             }
 
-            return intval($this->mail_id, self::base());
+            return intval( $this->mail_id, BASE_10 );
         }
 
 
@@ -94,7 +94,7 @@
                 return null;
             }
 
-            return intval($this->owner_name_id, self::base());
+            return intval( $this->owner_name_id, BASE_10 );
         }
 
 

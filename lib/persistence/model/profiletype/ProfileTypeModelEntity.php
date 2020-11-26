@@ -19,11 +19,16 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            if( !$this->isContentNull() )
+            {
+                $retVal = true;
+            }
 
             return boolval( $retVal );
         }

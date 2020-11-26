@@ -16,9 +16,14 @@
          * @param $model
          * @throws Exception
          */
-        public function __construct( $model )
+        public function __construct( &$model )
         {
             $this->setModel( $model );
+
+            if( $model->isViewNull() )
+            {
+                $model->setView( $this );
+            }
         }
 
 
