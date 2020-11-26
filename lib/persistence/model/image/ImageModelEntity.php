@@ -99,7 +99,7 @@
                 return null;
             }
 
-            return intval( $this->parent_id, self::base() );
+            return intval( $this->parent_id, BASE_10 );
         }
 
 
@@ -127,7 +127,7 @@
                 return null;
             }
 
-            return intval( $this->image_type_id, self::base() );
+            return intval( $this->image_type_id, BASE_10 );
         }
 
 

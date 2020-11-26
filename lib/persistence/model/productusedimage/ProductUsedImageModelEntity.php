@@ -65,7 +65,7 @@
                 return null;
             }
 
-            return intval( $this->image_preview_id, self::base() );
+            return intval( $this->image_preview_id, BASE_10 );
         }
 
 
@@ -79,7 +79,7 @@
                 return null;
             }
 
-            return intval( $this->image_full_id, self::base() );
+            return intval( $this->image_full_id, BASE_10 );
         }
 
 

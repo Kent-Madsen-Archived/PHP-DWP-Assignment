@@ -97,7 +97,7 @@
                 return null;
             }
 
-            return intval( $this->profile_type, self::base() );
+            return intval( $this->profile_type, BASE_10 );
         }
 
 

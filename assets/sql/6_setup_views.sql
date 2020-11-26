@@ -1,5 +1,5 @@
 -- Views
-DROP VIEW profile_model_view;
+DROP VIEW IF EXISTS profile_model_view;
 
 CREATE VIEW profile_model_view AS
 SELECT profile.identity,
@@ -11,7 +11,7 @@ LEFT JOIN profile_type ON profile.profile_type = profile_type.identity;
 
 
 
-DROP VIEW contact_model_view;
+DROP VIEW IF EXISTS contact_model_view;
 
 CREATE VIEW contact_model_view AS
 SELECT contact.identity,
@@ -27,7 +27,7 @@ LEFT JOIN person_email pe_to   ON pe_to.identity = contact.to_id;
 
 
 
-DROP VIEW profile_information_model_view;
+DROP VIEW IF EXISTS profile_information_model_view;
 
 CREATE VIEW profile_information_model_view AS
 SELECT profile_information.identity     AS profile_information_identity,
@@ -50,7 +50,7 @@ LEFT JOIN person_email      ON person_email.identity = profile_information.perso
 
 
 
-DROP VIEW product_associated_category_view;
+DROP VIEW IF EXISTS product_associated_category_view;
 
 CREATE VIEW product_associated_category_view AS
 SELECT associated_category.identity     AS associated_category_identity,
@@ -63,7 +63,7 @@ LEFT JOIN product_attribute pa  ON associated_category.product_attribute_id = pa
 
 
 
-DROP VIEW product_invoice_view;
+DROP VIEW IF EXISTS product_invoice_view;
 
 CREATE VIEW product_invoice_view AS
 SELECT product_invoice.identity     AS invoice_identity,
@@ -87,7 +87,7 @@ LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
 
 
 
-DROP VIEW product_invoice_view_short;
+DROP VIEW IF EXISTS product_invoice_view_short;
 
 CREATE VIEW product_invoice_view_short  AS
 SELECT product_invoice.identity         AS invoice_id,
@@ -103,7 +103,7 @@ LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
 
 
 
-DROP VIEW product_available_units;
+DROP VIEW IF EXISTS product_available_units;
 
 CREATE VIEW product_available_units AS
 SELECT product.identity,

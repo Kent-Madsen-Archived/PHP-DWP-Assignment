@@ -84,7 +84,7 @@
                 return null;
             }
 
-            return intval( $this->product_id, self::base() );
+            return intval( $this->product_id, BASE_10 );
         }
 
 
@@ -98,7 +98,7 @@
                 return null;
             }
 
-            return intval( $this->brought_id, self::base() );
+            return intval( $this->brought_id, BASE_10 );
         }
 
 

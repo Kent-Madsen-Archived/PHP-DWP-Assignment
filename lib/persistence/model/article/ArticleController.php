@@ -15,9 +15,14 @@
          * @param $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( &$model )
         {
             $this->setModel( $model );
+
+            if( $model->isControllerNull() )
+            {
+                $model->setController( $this );
+            }
         }
 
 
