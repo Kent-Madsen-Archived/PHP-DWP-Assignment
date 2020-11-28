@@ -45,9 +45,10 @@
 
     <input type="hidden" name="admin_product_delete_model_id" value="<?php echo htmlentities( $id );?>">
 
-    <input type="submit" 
+    <input type="submit"
            name="admin_product_delete_is_deleted" 
-           value="delete">
+           value="delete product"
+           class="btn">
 </form>
 
 

@@ -79,5 +79,6 @@
 
     <input type="submit" 
            name="admin_product_update_is_updated" 
-           value="update">
+           value="update product"
+           class="btn">
 </form>

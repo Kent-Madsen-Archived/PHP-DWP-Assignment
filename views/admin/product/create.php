@@ -66,7 +66,8 @@
            value="0.0">
     <label> Price </label>
     
-    <input type="submit" 
+    <input type="submit"
+           class="btn"
            name="admin_product_create_is_created" 
-           value="create">
+           value="create product">
 </form>
