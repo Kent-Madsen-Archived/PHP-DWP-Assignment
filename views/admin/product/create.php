@@ -5,20 +5,35 @@
               $description  = $_POST[ 'admin_product_create_description' ];
               $price        = $_POST[ 'admin_product_create_price' ];
               
+
               // Filter and sanitized data to the db
-              $title_db = filter_var( $title, FILTER_SANITIZE_STRING );
-              $description_db = filter_var( $description, FILTER_SANITIZE_STRING );
-              $price_db = filter_var( $price, FILTER_SANITIZE_NUMBER_FLOAT );
+              $title_db = filter_var( trim( $title ), 
+                                      FILTER_SANITIZE_STRING );
+              
+
+              $description_db = filter_var( trim( $description ), 
+                                            FILTER_SANITIZE_STRING );
+
+
+              $price_db = filter_var( trim( $price ), 
+                                      FILTER_SANITIZE_NUMBER_FLOAT );
 
               //
-              $factory = new ProductFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton()));
+              $factory = new ProductFactory
+              (
+                     new MySQLConnectorWrapper
+                     (
+                            MySQLInformationSingleton::getSingleton()
+                     )
+              );
 
               $model = $factory->createModel();
+              
               $model->setTitle( $title_db );
               $model->setDescription( $description_db );
               $model->setPrice( $price_db );
 
-              $factory->create($model);
+              $factory->create( $model );
 
               if( !is_null( $model->getIdentity() ) )
               {

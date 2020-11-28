@@ -381,7 +381,7 @@
                                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();

@@ -1,4 +1,6 @@
-<h3>Products</h3>
+<h3>
+    Products
+</h3>
 <?php 
     if( isset( $operation ) )
     {
