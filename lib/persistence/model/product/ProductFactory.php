@@ -149,8 +149,8 @@
                         $productModel->setIdentity( intval( $row[ 'identity' ], 10 ) );
                         
                         $productModel->setTitle( strval(  $row[ 'title' ] ) );
-                        $productModel->setDescription( strval( $row[ 'product_description' ] ) );
-                        $productModel->setPrice( doubleval( $row[ 'product_price' ] ) );
+                        $productModel->setDescription( strval( $row[ 'description' ] ) );
+                        $productModel->setPrice( doubleval( $row[ 'price' ] ) );
 
                         array_push( $retVal, $productModel );
                     }
@@ -211,8 +211,8 @@
                         $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
 
                         $model->setTitle( strval(  $row[ 'title' ] ) );
-                        $model->setDescription( strval( $row[ 'product_description' ] ) );
-                        $model->setPrice( doubleval( $row[ 'product_price' ] ) );
+                        $model->setDescription( strval( $row[ 'description' ] ) );
+                        $model->setPrice( doubleval( $row[ 'price' ] ) );
 
                         $retVal = true;
                     }
@@ -248,7 +248,7 @@
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "INSERT INTO product( title, product_description, product_price ) VALUES( ?, ?, ? );";
+            $sql = "INSERT INTO product( title, description, price ) VALUES( ?, ?, ? );";
 
             // prepare statement variables
             $stmt_title         = null;
@@ -262,15 +262,12 @@
             {
                 $stmt = $connection->prepare( $sql );
 
-                $stmt->bind_param( "ssd",
-                                    $stmt_title,
-                                    $stmt_description,
-                                    $stmt_price );
+                $stmt->bind_param( "ssd", $stmt_title, $stmt_description, $stmt_price );
 
                 $stmt_title         = $model->getTitle();
                 $stmt_description   = $model->getDescription() ;
 
-                $stmt_price         = doubleval( $model->getPrice() );
+                $stmt_price         = $model->getPrice();
 
                 $stmt->execute();
 
@@ -306,7 +303,7 @@
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "UPDATE product SET title = ?, product_description = ?, product_price = ? WHERE identity = ?;";
+            $sql = "UPDATE product SET title = ?, description = ?, price = ? WHERE identity = ?;";
 
             // prepare statement variables
             $stmt_identity      = null;
@@ -384,7 +381,7 @@
                                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
