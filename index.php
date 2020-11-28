@@ -114,13 +114,22 @@
 
 
     $admin = new Route( 'admin', 'views/admin.php' );
+    
     $admin->appendValidationObject( $router_validate_root );
     $router_validate_admin_view = new RouterValidateStringArgument();
-    $router_validate_admin_view->setLevel(1 );
+    $router_validate_admin_view->setLevel( 1 );
+
+    $router_validate_admin_operation_view = new RouterValidateStringArgument();
+    $router_validate_admin_operation_view->setLevel( 2 );
+
+    $router_validate_admin_model_view = new RouterValidateIntArgument();
+    $router_validate_admin_model_view->setLevel( 3 );
+
     $admin->appendValidationObject( $router_validate_admin_view );
+    $admin->appendValidationObject( $router_validate_admin_operation_view );
+    $admin->appendValidationObject( $router_validate_admin_model_view );
+
     $router->appendToRoutes( $admin );
-
-
 
     // Special Routes, like page 404.
     $special_404 = new Route( '404', 'views/404.php' );

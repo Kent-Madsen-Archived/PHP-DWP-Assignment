@@ -23,7 +23,10 @@
             PageTitleView::getSingletonView()->printHTML();
 
             $router = RouterSingleton::getInstance();
-            $value = $router->getCurrentRoute()->getValidationTree()[1]->getValue();
+
+            $view = $router->getCurrentRoute()->getValidationTree()[1]->getValue();
+            $operation = $router->getCurrentRoute()->getValidationTree()[2]->getValue();
+            $id = $router->getCurrentRoute()->getValidationTree()[3]->getValue();
         ?>
     </head>
     <body>
@@ -35,21 +38,21 @@
             </h2>
 
             <?php
-            if( isset( $value ) )
+            if( isset( $view ) )
             {
-                if( $value == 'contact' )
+                if( $view == 'contact' )
                 {
-                    include 'views/admin/contacts.php';
+                    include 'views/admin/contact.php';
                 }
 
-                if( $value == 'news' )
+                if( $view == 'news' )
                 {
                     include 'views/admin/news.php';
                 }
 
-                if( $value == 'product' )
+                if( $view == 'product' )
                 {
-                    include 'views/admin/products.php';
+                    include 'views/admin/product.php';
                 }
             }
             ?>
