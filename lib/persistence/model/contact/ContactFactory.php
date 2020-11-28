@@ -72,11 +72,11 @@
 
 
         /**
-         * @return ContactModelForm
+         * @return ContactModelFormEntity
          */
-        final public function createFormModel(): ContactModelForm
+        final public function createFormModel(): ContactModelFormEntity
         {
-            $model = new ContactModelForm();
+            $model = new ContactModelFormEntity();
             return $model;
         }
 

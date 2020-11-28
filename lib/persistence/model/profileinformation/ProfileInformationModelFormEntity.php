@@ -10,8 +10,8 @@
     /**
      * Class ProfileInformationModelForm
      */
-    class ProfileInformationModelForm
-        extends DatabaseForm
+    class ProfileInformationModelFormEntity
+        extends DatabaseFormEntity
     {
         /**
          * ProfileInformationModelForm constructor.

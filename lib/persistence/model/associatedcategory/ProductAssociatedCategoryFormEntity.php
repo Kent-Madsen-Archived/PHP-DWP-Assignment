@@ -9,8 +9,8 @@
     /**
      * Class ProductAssociatedCategoryForm
      */
-    class ProductAssociatedCategoryForm
-        extends DatabaseForm
+    class ProductAssociatedCategoryFormEntity
+        extends DatabaseFormEntity
     {
         /**
          * ProductAssociatedCategoryForm constructor.

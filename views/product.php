@@ -27,7 +27,8 @@
     <body>
         <?php getHeader(); ?>
         
-        <main> 
+        <main>
+
         
         </main>
         

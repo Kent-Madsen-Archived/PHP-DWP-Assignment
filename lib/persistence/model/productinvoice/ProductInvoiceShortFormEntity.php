@@ -9,8 +9,8 @@
     /**
      * Class ProductInvoiceShortForm
      */
-    class ProductInvoiceShortForm
-        extends DatabaseForm
+    class ProductInvoiceShortFormEntity
+        extends DatabaseFormEntity
     {
         /**
          * ProductInvoiceShortForm constructor.

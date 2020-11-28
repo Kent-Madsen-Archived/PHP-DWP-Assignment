@@ -7,8 +7,8 @@
      */
 
 
-    class ProductInvoiceForm
-        extends DatabaseForm
+    class ProductInvoiceFormEntity
+        extends DatabaseFormEntity
     {
         public function __construct()
         {

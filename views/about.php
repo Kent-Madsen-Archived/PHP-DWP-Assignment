@@ -27,7 +27,10 @@
         <?php getHeader(); ?>
 
         <main> 
-        
+            <h2>
+                About
+            </h2>
+
         </main>
         
         <?php getFooter(); ?>

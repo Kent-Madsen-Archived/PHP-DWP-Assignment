@@ -25,7 +25,7 @@
         <?php getHeader(); ?>
         
         <main> 
-            <h2> 404 </h2>
+            <h2> Error - 404 </h2>
             <p> Sorry, Page not found </p>
         </main>
 

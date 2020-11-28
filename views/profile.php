@@ -30,7 +30,10 @@
             <h4> Welcome, <?php echo $_SESSION[ 'user_session_object_username' ]; ?> </h4>
             
             <div> 
-                
+                <h2>
+                    My Profile
+                </h2>
+
             </div>
         </main>
 

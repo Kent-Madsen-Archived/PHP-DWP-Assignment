@@ -47,7 +47,11 @@
     <body>
         <?php getHeader(); ?>
 
-        <main> 
+        <main>
+            <h2>
+                Register
+            </h2>
+
               <div id="register_form_boundary"> 
                      <form action="./register" 
                             method="post" 

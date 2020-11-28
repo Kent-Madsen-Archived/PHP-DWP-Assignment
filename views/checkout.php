@@ -26,7 +26,10 @@
     <body>
         <?php getHeader(); ?>
 
-        <main> 
+        <main>
+            <h2>
+                Checkout
+            </h2>
         
         </main>
         

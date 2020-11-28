@@ -49,7 +49,11 @@
     <body>
         <?php getHeader(); ?>
 
-        <main> 
+        <main>
+            <h2>
+                Forgot Password
+            </h2>
+
             <div id="forgot_form_boundary"> 
                 <form method="post" 
                       action="./forgot-my-password" 

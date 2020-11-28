@@ -9,8 +9,8 @@
     /**
      * Class ContactModelForm
      */
-    class ContactModelForm
-            extends DatabaseForm
+    class ContactModelFormEntity
+            extends DatabaseFormEntity
     {
         /**
          * ContactModelForm constructor.

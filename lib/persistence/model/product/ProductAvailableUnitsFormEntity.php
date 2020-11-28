@@ -9,8 +9,8 @@
     /**
      * Class ProductAvailableUnitsForm
      */
-    class ProductAvailableUnitsForm
-        extends DatabaseForm
+    class ProductAvailableUnitsFormEntity
+        extends DatabaseFormEntity
     {
         /**
          * ProductAvailableUnitsForm constructor.

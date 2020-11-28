@@ -58,3 +58,7 @@ alter table product_invoice
 		foreign key ( address_id ) references person_address ( identity ),
     add constraint pi__personname_id_fk
 		foreign key ( owner_name_id ) references person_name ( identity );
+
+alter table security
+	add constraint security_security_key_identity_fk
+		foreign key (key_id) references security_key (identity);

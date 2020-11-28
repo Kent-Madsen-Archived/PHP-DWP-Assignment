@@ -43,7 +43,11 @@
     <body>
         <?php getHeader(); ?>
 
-        <main> 
+        <main>
+            <h2>
+                Login
+            </h2>
+
             <div id="login_form_boundary"> 
                 
                 <form action="./login" 
@@ -55,8 +59,6 @@
                            name="security_token"
                            <?php FormSpoofSecurity::printSessionFSSToken(); ?> >
 
-                    <h3> Login </h3>
-                    
                     <div> 
                         <input type="text" 
                                id="form_login_username_id" 

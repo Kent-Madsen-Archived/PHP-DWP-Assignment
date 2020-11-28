@@ -6,8 +6,8 @@
      *  Project: DWP-Assignment
      */
 
-    class ProfileModelForm
-        extends DatabaseForm
+    class ProfileModelFormEntity
+        extends DatabaseFormEntity
     {
         public function __construct()
         {

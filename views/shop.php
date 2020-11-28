@@ -25,8 +25,10 @@
     <body>
         <?php getHeader(); ?>
 
-        <main> 
-        
+        <main>
+            <h2>
+                Shop
+            </h2>
         </main>
         
         <?php getFooter(); ?>
