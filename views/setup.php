@@ -45,6 +45,7 @@
     }
 
     $router = RouterSingleton::getInstance();
+    $value = $router->getCurrentRoute()->getValidationTree()[1]->getValue();
 ?>
 
 <!DOCTYPE html>
@@ -64,8 +65,23 @@
         <?php getHeader(); ?>
 
         <main>
-            <?php
+            <h2>
+                Setup
+            </h2>
 
+            <?php
+                if( isset( $value ) )
+                {
+                    if( $value == 'create' )
+                    {
+                        include 'views/setup/create.php';
+                    }
+
+                    if( $value == 'status' )
+                    {
+                        include 'views/setup/status.php';
+                    }
+                }
             ?>
         </main>
         

@@ -115,6 +115,9 @@
 
     $admin = new Route( 'admin', 'views/admin.php' );
     $admin->appendValidationObject( $router_validate_root );
+    $router_validate_admin_view = new RouterValidateStringArgument();
+    $router_validate_admin_view->setLevel(1 );
+    $admin->appendValidationObject( $router_validate_admin_view );
     $router->appendToRoutes( $admin );
 
 

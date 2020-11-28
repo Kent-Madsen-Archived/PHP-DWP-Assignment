@@ -3,7 +3,7 @@
     /**
      * Class DatabaseForm
      */
-    abstract class DatabaseForm
+    abstract class DatabaseFormEntity
     {
 
         // Variable

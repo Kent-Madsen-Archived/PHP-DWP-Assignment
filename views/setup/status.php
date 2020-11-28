@@ -1,4 +1,1 @@
-<?php
-    $view = SetupView::getView();
-    $view->installationStatus();
-?>
+<h2> Status </h2>

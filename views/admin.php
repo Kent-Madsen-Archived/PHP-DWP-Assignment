@@ -21,13 +21,38 @@
         
         <?php
             PageTitleView::getSingletonView()->printHTML();
+
+            $router = RouterSingleton::getInstance();
+            $value = $router->getCurrentRoute()->getValidationTree()[1]->getValue();
         ?>
     </head>
     <body>
         <?php getHeader(); ?>
 
-        <main> 
-        
+        <main>
+            <h2>
+                Admin
+            </h2>
+
+            <?php
+            if( isset( $value ) )
+            {
+                if( $value == 'contact' )
+                {
+                    include 'views/admin/contacts.php';
+                }
+
+                if( $value == 'news' )
+                {
+                    include 'views/admin/news.php';
+                }
+
+                if( $value == 'product' )
+                {
+                    include 'views/admin/products.php';
+                }
+            }
+            ?>
         </main>
         
         <?php getFooter(); ?>

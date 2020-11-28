@@ -6,8 +6,8 @@
      *  Project: DWP-Assignment
      */
 
-    class ProfileModelForm
-        extends DatabaseForm
+    class ProfileModelFormEntity
+        extends DatabaseFormEntity
     {
         public function __construct()
         {
@@ -29,7 +29,7 @@
         /**
          * @return null
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -38,7 +38,7 @@
         /**
          * @return null
          */
-        public function getPassword()
+        final public function getPassword()
         {
             return $this->password;
         }
@@ -47,7 +47,7 @@
         /**
          * @return null
          */
-        public function getUsername()
+        final public function getUsername()
         {
             return $this->username;
         }
@@ -56,7 +56,7 @@
         /**
          * @return null
          */
-        public function getProfileType()
+        final public function getProfileType()
         {
             return $this->profile_type;
         }
@@ -66,7 +66,7 @@
         /**
          * @param null $identity
          */
-        public function setIdentity($identity): void
+        final public function setIdentity( $identity ): void
         {
             $this->identity = $identity;
         }
@@ -75,7 +75,7 @@
         /**
          * @param null $password
          */
-        public function setPassword($password): void
+        final public function setPassword( $password ): void
         {
             $this->password = $password;
         }
@@ -84,7 +84,7 @@
         /**
          * @param null $profile_type
          */
-        public function setProfileType($profile_type): void
+        final public function setProfileType( $profile_type ): void
         {
             $this->profile_type = $profile_type;
         }
@@ -93,7 +93,7 @@
         /**
          * @param null $username
          */
-        public function setUsername($username): void
+        final public function setUsername( $username ): void
         {
             $this->username = $username;
         }

@@ -9,8 +9,8 @@
     /**
      * Class ProductInvoiceShortForm
      */
-    class ProductInvoiceShortForm
-        extends DatabaseForm
+    class ProductInvoiceShortFormEntity
+        extends DatabaseFormEntity
     {
         /**
          * ProductInvoiceShortForm constructor.
@@ -36,7 +36,7 @@
         /**
          * @return null
          */
-        public function getIdentity()
+        final public function getIdentity()
         {
             return $this->identity;
         }
@@ -45,7 +45,7 @@
         /**
          * @return null
          */
-        public function getAddress()
+        final public function getAddress()
         {
             return $this->address;
         }
@@ -54,7 +54,7 @@
         /**
          * @return null
          */
-        public function getMail()
+        final public function getMail()
         {
             return $this->mail;
         }
@@ -63,7 +63,7 @@
         /**
          * @return null
          */
-        public function getName()
+        final public function getName()
         {
             return $this->name;
         }
@@ -72,7 +72,7 @@
         /**
          * @return null
          */
-        public function getTotalPrice()
+        final public function getTotalPrice()
         {
             return $this->totalPrice;
         }
@@ -81,7 +81,7 @@
         /**
          * @return null
          */
-        public function getRegistered()
+        final public function getRegistered()
         {
             return $this->registered;
         }
@@ -91,7 +91,7 @@
         /**
          * @param null $identity
          */
-        public function setIdentity($identity): void
+        final public function setIdentity( $identity ): void
         {
             $this->identity = $identity;
         }
@@ -100,7 +100,7 @@
         /**
          * @param null $address
          */
-        public function setAddress($address): void
+        final public function setAddress( $address ): void
         {
             $this->address = $address;
         }
@@ -109,7 +109,7 @@
         /**
          * @param null $mail
          */
-        public function setMail($mail): void
+        final public function setMail( $mail ): void
         {
             $this->mail = $mail;
         }
@@ -118,7 +118,7 @@
         /**
          * @param null $name
          */
-        public function setName($name): void
+        final public function setName( $name ): void
         {
             $this->name = $name;
         }
@@ -127,7 +127,7 @@
         /**
          * @param null $registered
          */
-        public function setRegistered($registered): void
+        final public function setRegistered( $registered ): void
         {
             $this->registered = $registered;
         }
@@ -136,7 +136,7 @@
         /**
          * @param null $totalPrice
          */
-        public function setTotalPrice($totalPrice): void
+        final public function setTotalPrice( $totalPrice ): void
         {
             $this->totalPrice = $totalPrice;
         }
