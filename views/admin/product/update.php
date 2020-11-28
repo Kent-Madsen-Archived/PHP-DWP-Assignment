@@ -4,7 +4,9 @@
 
 <form action="/admin/product/update" 
       method="post"> 
-      
+
+    <p> You're currently editing product model with the id: <span> <?php echo htmlentities( $id ); ?> </span> </p>
+    
     <input type="text" 
            name="admin_product_update_title" 
            placeholder="title">
