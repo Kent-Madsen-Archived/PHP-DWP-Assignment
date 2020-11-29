@@ -342,6 +342,37 @@
             return intval( $this->limit );
         }
 
+
+        /**
+         * @return bool
+         */
+        final public function isAtMinimumBoundary(): bool
+        {
+            if( is_null( $this->getPaginationIndex() ) )
+            {
+                return boolval( false );
+            }
+
+            return boolval( ( $this->getPaginationIndex() == 0 ) );
+        }
+
+
+        /**
+         * @return bool
+         */
+        final public function isAtMaximumBoundary(): bool
+        {
+            if( is_null( $this->getLimit() ) || is_null( $this->getPaginationIndex() ) )
+            {
+                return false;
+            }
+
+           $size = floatval( floatval( $this->length() ) / floatval( $this->getLimit() ) );
+           $r_size = floor( floatval( $size ) );
+
+           return boolval( $this->getPaginationIndex() == $r_size );
+        }
+
     }
 
 ?>
