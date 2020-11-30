@@ -70,7 +70,7 @@
             {
                 if( $key == 'person_data_profile' )
                 {
-                    if( $value instanceof ProfileModelEntity )
+                    if( $value instanceof ProfileModel )
                     {
                         $this->setIdentity( $value->getIdentity() );
                         $this->setUsername( $value->getUsername() );

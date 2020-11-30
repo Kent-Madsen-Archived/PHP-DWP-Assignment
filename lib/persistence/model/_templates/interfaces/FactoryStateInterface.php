@@ -29,7 +29,7 @@
          * @param array $filter
          * @return mixed
          */
-        public function length_calculate_with_filter( array $filter );
+        public function lengthCalculatedWithFilter(array $filter );
     }
 
 ?>

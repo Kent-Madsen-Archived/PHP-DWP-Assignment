@@ -47,7 +47,7 @@
             $connection = new MySQLConnectorWrapper( $this->getInformation() );
 
             // Factories prepared
-            $peFactory = new ContactBaseFactoryTemplate( $connection );
+            $peFactory = new ContactFactory( $connection );
             $contact_model = $peFactory->createModel();
 
             $contact_model->setSubject( ContactForm::getFormSubject() );
@@ -74,10 +74,10 @@
         /**
          * @param $wrapper
          * @param $mail_content
-         * @return PersonEmailModelEntity|null
+         * @return PersonEmailModel|null
          * @throws Exception
          */
-        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModelEntity
+        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModel
         {
             if(!( $wrapper instanceof MySQLConnectorWrapper) )
             {
@@ -89,7 +89,7 @@
                 throw new Exception('getMailOrCreateModel - $mail_content is not a string');
             }
 
-            $factory = new PersonEmailBaseFactoryTemplate( $wrapper );
+            $factory = new PersonEmailFactory( $wrapper );
 
             $mailModel = $factory->createModel();
             $mailModel->setContent( $mail_content );

@@ -13,16 +13,16 @@
     {
         // login as user
         /**
-         * @return ProfileModelEntity|null
+         * @return ProfileModel|null
          */
-        public function login(): ?ProfileModelEntity;
+        public function login(): ?ProfileModel;
 
 
         // registration process
         /**
-         * @return ProfileModelEntity|null
+         * @return ProfileModel|null
          */
-        public function register(): ?ProfileModelEntity;
+        public function register(): ?ProfileModel;
 
 
         /**

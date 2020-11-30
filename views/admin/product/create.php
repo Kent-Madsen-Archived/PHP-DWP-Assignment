@@ -19,7 +19,7 @@
                                       FILTER_SANITIZE_NUMBER_FLOAT );
 
               //
-              $factory = new ProductBaseFactoryTemplate
+              $factory = new ProductFactory
               (
                      new MySQLConnectorWrapper
                      (

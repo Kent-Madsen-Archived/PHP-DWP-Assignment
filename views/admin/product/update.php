@@ -11,7 +11,7 @@
         $description_db = filter_var( $description, FILTER_SANITIZE_STRING );
         $price_db       = filter_var( $price, FILTER_VALIDATE_FLOAT );
 
-        $factory = new ProductBaseFactoryTemplate(
+        $factory = new ProductFactory(
                 new MySQLConnectorWrapper(
                         MySQLInformationSingleton::getSingleton()
                 )

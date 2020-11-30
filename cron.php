@@ -13,7 +13,7 @@
 
     $connector = new MySQLConnectorWrapper( $info );
 
-    $t = new ContactBaseFactoryTemplate( $connector );
+    $t = new ContactFactory( $connector );
 
     $contacts = $t->readFormsNotSended();
 

@@ -1,5 +1,5 @@
 <?php
-    $factory = new ArticleBaseFactoryTemplate(
+    $factory = new ArticleFactory(
                     new MySQLConnectorWrapper(
                             MySQLInformationSingleton::getSingleton()
                     )

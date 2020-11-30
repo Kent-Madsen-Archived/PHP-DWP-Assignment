@@ -47,7 +47,7 @@
         }
     }
 
-    $factory = new ProductBaseFactoryTemplate(
+    $factory = new ProductFactory(
             new MySQLConnectorWrapper(
                     MySQLInformationSingleton::getSingleton()
             )
