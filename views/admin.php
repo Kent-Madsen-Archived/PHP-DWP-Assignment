@@ -32,7 +32,22 @@
     </head>
     <body>
         <?php getHeader(); ?>
-
+        <nav>
+            <div class="nav-wrapper">
+                <ul>
+                    <li>
+                        <a href="/admin/news">
+                            News
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/product">
+                            Product
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <main>
             <h2>
                 Admin

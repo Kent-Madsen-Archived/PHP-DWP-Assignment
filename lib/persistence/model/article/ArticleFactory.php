@@ -313,7 +313,7 @@
             // Return Values
             $retVal = false;
 
-            $sql = "INSERT INTO article( title, article_content ) VALUES( ?, ? );";
+            $sql = "INSERT INTO article( title, content ) VALUES( ?, ? );";
 
             //
             $connection = $this->getWrapper()->connect();
