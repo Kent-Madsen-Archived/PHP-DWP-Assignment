@@ -48,7 +48,7 @@
         {
             $retVal = false;
 
-            if( $factory instanceof ProfileFactory )
+            if( $factory instanceof ProfileBaseFactoryTemplate )
             {
                 $retVal = true;
             }

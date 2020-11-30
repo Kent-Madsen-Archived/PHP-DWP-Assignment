@@ -45,7 +45,7 @@
          */
         final protected function validateFactory( $factory )
         {
-            if( $factory instanceof ProductEntityFactory )
+            if( $factory instanceof ProductEntityBaseFactoryTemplate )
             {
                 return true;
             }

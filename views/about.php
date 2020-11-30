@@ -5,8 +5,6 @@
      *  Type: PHP Script, view
      *  Project: DWP-Assignment
      */
-
-    $domain = new AboutDomain();
     
     PageTitleController::getSingletonController()->append( ' - About us' );
 ?>

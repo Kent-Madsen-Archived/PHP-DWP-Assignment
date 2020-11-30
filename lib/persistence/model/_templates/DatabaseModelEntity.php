@@ -1,7 +1,7 @@
 <?php
 
     /**
-     * Class DatabaseModel
+     * Class DatabaseModelEntity
      */
     abstract class DatabaseModelEntity
     {

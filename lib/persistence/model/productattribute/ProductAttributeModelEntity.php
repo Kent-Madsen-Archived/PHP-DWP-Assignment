@@ -31,7 +31,7 @@
         {
             $retVal = false;
 
-            if( $factory instanceof ProductAttributeFactory )
+            if( $factory instanceof ProductAttributeBaseFactoryTemplate )
             {
                 $retVal = true;
             }

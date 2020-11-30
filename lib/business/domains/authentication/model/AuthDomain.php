@@ -69,7 +69,7 @@
                 $value_password = RegisterForm::getPostPassword();
 
 
-                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $profile_factory = new ProfileBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
 
                 if( !is_null( $profile_factory->readByUsername( $value_username ) ) )
                 {
@@ -89,7 +89,7 @@
                 //
                 $email      = RegisterForm::getPostPersonMail();
 
-                $email_factory = new PersonEmailFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $email_factory = new PersonEmailBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $emailModel = $email_factory->createModel();
                 $emailModel->setContent( $email );
 
@@ -102,7 +102,7 @@
                     $email_factory->create( $emailModel );
                 }
 
-                $name_factory = new PersonNameFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $name_factory = new PersonNameBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $name_model = $name_factory->createModel();
 
                 // Name
@@ -124,7 +124,7 @@
                 $streetFloor    = RegisterForm::getPostStreetAddressFloor();
                 $country        = RegisterForm::getPostCountry();
 
-                $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $addr_factory = new PersonAddressBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $addr_model = $addr_factory->createModel();
                 $addr_model->setStreetName($streetname);
                 $addr_model->setStreetAddressNumber($street_number);
@@ -138,7 +138,7 @@
                 $phone      = RegisterForm::getPostPhone();
                 $birthday   = RegisterForm::getPostBirthday();
 
-                $pi_factory = new ProfileInformationFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $pi_factory = new ProfileInformationBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $pim = $pi_factory->createModel();
                 $pim->setBirthday($birthday);
                 $pim->setPersonPhone($phone);
@@ -167,7 +167,7 @@
                 $username = LoginForm::getPostUsername();
                 $password = LoginForm::getPostPassword();
 
-                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $profile_factory = new ProfileBaseFactoryTemplate( new MySQLConnectorWrapper( $this->getInformation() ) );
 
                 $profile = $profile_factory->readByUsername( $username );
 

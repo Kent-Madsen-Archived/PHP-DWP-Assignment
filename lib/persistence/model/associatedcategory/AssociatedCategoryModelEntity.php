@@ -45,7 +45,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof AssociatedCategoryFactory )
+            if( $factory instanceof AssociatedCategoryBaseFactoryTemplate )
             {
                 $retval = true;
             }

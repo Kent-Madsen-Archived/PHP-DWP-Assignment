@@ -50,7 +50,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof ProfileInformationFactory )
+            if( $factory instanceof ProfileInformationBaseFactoryTemplate )
             {
                 $retval = true;
             }

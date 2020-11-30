@@ -44,7 +44,7 @@
          */
         final protected function validateFactory( $factory )
         {
-            if( $factory instanceof PersonAddressFactory )
+            if( $factory instanceof PersonAddressBaseFactoryTemplate )
             {
                 return true;
             }

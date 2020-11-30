@@ -44,7 +44,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof ProductUsedImageFactory )
+            if( $factory instanceof ProductUsedImageBaseFactoryTemplate )
             {
                 $retval = true;
             }

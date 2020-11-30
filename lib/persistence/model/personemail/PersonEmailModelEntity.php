@@ -40,7 +40,7 @@
          */
         final protected function validateFactory( $factory )
         {
-            if( $factory instanceof PersonEmailFactory )
+            if( $factory instanceof PersonEmailBaseFactoryTemplate )
             {
                 return true;
             }

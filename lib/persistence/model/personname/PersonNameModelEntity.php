@@ -41,7 +41,7 @@
          */
         final protected function validateFactory( $factory )
         {
-            if( $factory instanceof PersonNameFactory )
+            if( $factory instanceof PersonNameBaseFactoryTemplate )
             {
                 return true;
             }

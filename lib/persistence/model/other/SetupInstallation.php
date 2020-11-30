@@ -115,33 +115,33 @@
 
             $arrToProcess = array();
 
-            $articleFactory = new ArticleFactory( $this->getWrapper() );
-            $associatedCategoryFactory = new AssociatedCategoryFactory( $this->getWrapper() );
+            $articleFactory = new ArticleBaseFactoryTemplate( $this->getWrapper() );
+            $associatedCategoryFactory = new AssociatedCategoryBaseFactoryTemplate( $this->getWrapper() );
 
-            $broughtFactory = new BroughtFactory( $this->getWrapper() );
+            $broughtFactory = new BroughtBaseFactoryTemplate( $this->getWrapper() );
 
-            $contactfactory = new ContactFactory( $this->getWrapper() );
+            $contactfactory = new ContactBaseFactoryTemplate( $this->getWrapper() );
 
-            $imageFactory       = new ImageFactory( $this->getWrapper() );
-            $imageTypeFactory   = new ImageTypeFactory( $this->getWrapper() );
+            $imageFactory       = new ImageBaseFactoryTemplate( $this->getWrapper() );
+            $imageTypeFactory   = new ImageTypeBaseFactoryTemplate( $this->getWrapper() );
 
-            $pageElementFactory = new PageElementFactory( $this->getWrapper() );
+            $pageElementFactory = new PageElementBaseFactoryTemplate( $this->getWrapper() );
 
-            $personAddressFactory   = new PersonAddressFactory( $this->getWrapper() );
-            $personNameFactory      = new PersonNameFactory( $this->getWrapper() );
+            $personAddressFactory   = new PersonAddressBaseFactoryTemplate( $this->getWrapper() );
+            $personNameFactory      = new PersonNameBaseFactoryTemplate( $this->getWrapper() );
 
-            $productAttributeFactory    = new ProductAttributeFactory( $this->getWrapper() );
-            $productCategoryFactory     = new ProductCategoryFactory( $this->getWrapper() );
-            $productEntityFactory       = new ProductEntityFactory( $this->getWrapper() );
+            $productAttributeFactory    = new ProductAttributeBaseFactoryTemplate( $this->getWrapper() );
+            $productCategoryFactory     = new ProductCategoryBaseFactoryTemplate( $this->getWrapper() );
+            $productEntityFactory       = new ProductEntityBaseFactoryTemplate( $this->getWrapper() );
 
-            $productFactory             = new ProductFactory( $this->getWrapper() );
+            $productFactory             = new ProductBaseFactoryTemplate( $this->getWrapper() );
 
-            $productInvoiceFactory      = new ProductInvoiceFactory( $this->getWrapper() );
-            $productUsedImageFactory    = new ProductUsedImageFactory( $this->getWrapper() );
+            $productInvoiceFactory      = new ProductInvoiceBaseFactoryTemplate( $this->getWrapper() );
+            $productUsedImageFactory    = new ProductUsedImageBaseFactoryTemplate( $this->getWrapper() );
 
-            $profileFactory             = new ProfileFactory( $this->getWrapper() );
-            $profileInformationFactory  = new ProfileInformationFactory( $this->getWrapper() );
-            $profileTypeFactory         = new ProfileTypeFactory( $this->getWrapper() );
+            $profileFactory             = new ProfileBaseFactoryTemplate( $this->getWrapper() );
+            $profileInformationFactory  = new ProfileInformationBaseFactoryTemplate( $this->getWrapper() );
+            $profileTypeFactory         = new ProfileTypeBaseFactoryTemplate( $this->getWrapper() );
 
 
             array_push( $arrToProcess,

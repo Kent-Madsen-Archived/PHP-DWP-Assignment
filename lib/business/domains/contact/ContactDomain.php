@@ -47,7 +47,7 @@
             $connection = new MySQLConnectorWrapper( $this->getInformation() );
 
             // Factories prepared
-            $peFactory = new ContactFactory( $connection );
+            $peFactory = new ContactBaseFactoryTemplate( $connection );
             $contact_model = $peFactory->createModel();
 
             $contact_model->setSubject( ContactForm::getFormSubject() );
@@ -89,7 +89,7 @@
                 throw new Exception('getMailOrCreateModel - $mail_content is not a string');
             }
 
-            $factory = new PersonEmailFactory( $wrapper );
+            $factory = new PersonEmailBaseFactoryTemplate( $wrapper );
 
             $mailModel = $factory->createModel();
             $mailModel->setContent( $mail_content );

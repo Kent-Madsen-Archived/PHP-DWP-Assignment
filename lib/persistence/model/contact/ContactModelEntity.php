@@ -49,7 +49,7 @@
         {
             $retVal = false;
 
-            if( $factory instanceof ContactFactory )
+            if( $factory instanceof ContactBaseFactoryTemplate )
             {
                 $retVal = true;
             }

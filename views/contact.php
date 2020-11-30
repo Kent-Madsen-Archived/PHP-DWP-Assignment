@@ -6,7 +6,7 @@
      *  Project: DWP-Assignment
      */
 
-    if( ContactDomainView::validateIsSubmitted() )
+    if( ContactForm::validateIsSubmitted() )
     {
         $domain = new ContactDomain();
         $domain->makeReadyForSending();

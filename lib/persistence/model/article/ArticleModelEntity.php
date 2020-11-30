@@ -48,7 +48,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof ArticleFactory )
+            if( $factory instanceof ArticleBaseFactoryTemplate )
             {
                 $retval = true;
             }
@@ -90,7 +90,7 @@
         /**
          * @return null
          */
-        public function getController(): ?ArticleController
+        public function getController(): ?ArticleMVCController
         {
             return $this->controller;
         }
@@ -108,7 +108,7 @@
         /**
          * @return null
          */
-        public function getView(): ?ArticleView
+        public function getView(): ?ArticleMVCView
         {
             return $this->view;
         }
@@ -208,9 +208,9 @@
 
         /**
          * @param $controller
-         * @return ArticleController|null
+         * @return ArticleMVCController|null
          */
-        public function setController( $controller ): ?ArticleController
+        public function setController( $controller ): ?ArticleMVCController
         {
             $this->controller = $controller;
             return $this->getController();
@@ -219,9 +219,9 @@
 
         /**
          * @param $view
-         * @return ArticleView|null
+         * @return ArticleMVCView|null
          */
-        public function setView( $view ): ?ArticleView
+        public function setView( $view ): ?ArticleMVCView
         {
             $this->view = $view;
             return $this->getView();

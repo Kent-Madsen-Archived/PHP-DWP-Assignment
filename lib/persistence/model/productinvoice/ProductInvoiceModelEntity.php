@@ -47,7 +47,7 @@
         {
             $retval = false;
 
-            if ( $factory instanceof ProductInvoiceFactory )
+            if ( $factory instanceof ProductInvoiceBaseFactoryTemplate )
             {
                 $retval = true;
             }

@@ -7,7 +7,7 @@
   if( isset( $_POST[ 'admin_product_delete_is_deleted' ] ) )
   {
     //
-    $factory = new ProductFactory
+    $factory = new ProductBaseFactoryTemplate
     (
            new MySQLConnectorWrapper
            (

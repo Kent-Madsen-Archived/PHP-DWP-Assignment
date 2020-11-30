@@ -48,7 +48,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof PageElementFactory )
+            if( $factory instanceof PageElementBaseFactoryTemplate )
             {
                 $retval = true;
             }

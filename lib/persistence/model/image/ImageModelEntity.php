@@ -50,7 +50,7 @@
         {
             $retval = false;
 
-            if( $factory instanceof ImageFactory )
+            if( $factory instanceof ImageBaseFactoryTemplate )
             {
                 $retval = true;
             }
