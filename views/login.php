@@ -7,14 +7,28 @@
      */
     $access = new AccessPrivilegesDomain();
 
-
     if( $access->is_logged_in() )
     {
         redirect_to_local_page( 'homepage' );
     }
 
     $domain = new AuthDomain();
-    $domain->login();
+
+    if( LoginDomainView::validateIsSubmitted() )
+    {
+        $profile = $domain->login();
+
+        if( !is_null( $profile ) )
+        {
+            $args_session = array( 'person_data_profile'=>$profile );
+            $session = new UserSession( $args_session );
+
+            UserSessionDataView::setInstance($session);
+            UserSessionDataView::getInstance();
+
+        }
+    }
+
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
