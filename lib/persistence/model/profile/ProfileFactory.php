@@ -10,8 +10,8 @@
 /**
      * Class ProfileFactory
      */
-    class ProfileFactory 
-        extends FactoryTemplate
+    class ProfileFactory
+        extends BaseFactoryTemplate
     {
         /**
          * ProfileFactory constructor.
@@ -67,7 +67,7 @@
          */
         final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getWrapper() );
+            $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
@@ -77,11 +77,11 @@
 
 
         /**
-         * @return mixed|ProfileModelEntity
+         * @return mixed|ProfileModel
          */
         final public function createModel()
         {
-            $model = new ProfileModelEntity( $this );
+            $model = new ProfileModel( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProfileModelEntity )
+            if( $var instanceof ProfileModel )
             {
                 $retVal = true;
             }
@@ -421,10 +421,10 @@
 
         /**
          * @param $username
-         * @return ProfileModelEntity|null
+         * @return ProfileModel|null
          * @throws Exception
          */
-        final public function readByUsername( $username ): ?ProfileModelEntity
+        final public function readByUsername( $username ): ?ProfileModel
         {
             $retVal = null;
 
@@ -452,7 +452,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model = new ProfileModelEntity( $this );
+                        $model = new ProfileModel( $this );
 
                         $model->setIdentity( $row[ 'identity' ] );
 
@@ -582,32 +582,14 @@
 
 
         /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
+         * @param array $filter
+         * @return mixed|void
          */
-        final public function classHasImplementedView( $classObject )
+        public function lengthCalculatedWithFilter(array $filter)
         {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
+            // TODO: Implement lengthCalculatedWithFilter() method.
         }
+
     }
 
 ?>

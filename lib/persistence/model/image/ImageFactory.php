@@ -10,8 +10,8 @@
     /**
      * Class ImageFactory
      */
-    class ImageFactory 
-        extends FactoryTemplate
+    class ImageFactory
+        extends BaseFactoryTemplate
     {
         /**
          * ImageFactory constructor.
@@ -67,7 +67,7 @@
          */
         final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getWrapper() );
+            $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
@@ -77,11 +77,11 @@
 
 
         /**
-         * @return ImageModelEntity|mixed
+         * @return ImageModel|mixed
          */
-        final public function createModel(): ImageModelEntity
+        final public function createModel(): ImageModel
         {
-            $model = new ImageModelEntity( $this );
+            $model = new ImageModel( $this );
             return $model;
         }
 
@@ -94,7 +94,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ImageModelEntity )
+            if( $var instanceof ImageModel )
             {
                 $retVal = true;
             }
@@ -485,33 +485,12 @@
         }
 
 
-        /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
-         */
-        final public function classHasImplementedView( $classObject )
+        public function lengthCalculatedWithFilter(array $filter)
         {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
+            // TODO: Implement lengthCalculatedWithFilter() method.
         }
+
+
     }
 
 ?>

@@ -5,8 +5,6 @@
      *  Type: PHP Script, view
      *  Project: DWP-Assignment
      */
-
-    $domain = new AboutDomain();
     
     PageTitleController::getSingletonController()->append( ' - About us' );
 ?>
@@ -18,6 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         
         <?php
             PageTitleView::getSingletonView()->printHTML();

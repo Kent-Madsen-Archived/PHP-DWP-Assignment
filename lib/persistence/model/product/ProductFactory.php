@@ -9,8 +9,8 @@
     /**
      * Class ProductFactory
      */
-    class ProductFactory 
-        extends FactoryTemplate
+    class ProductFactory
+        extends BaseFactoryTemplate
     {
         /**
          * ProductFactory constructor.
@@ -68,7 +68,7 @@
          */
         final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getWrapper() );
+            $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
@@ -78,12 +78,12 @@
 
 
         /**
-         * @return ProductModelEntity
+         * @return ProductModel
          * @throws Exception
          */
-        final public function createModel(): ProductModelEntity
+        final public function createModel(): ProductModel
         {
-            $model = new ProductModelEntity( $this );
+            $model = new ProductModel( $this );
 
             return $model;
         }
@@ -97,7 +97,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductModelEntity )
+            if( $var instanceof ProductModel )
             {
                 $retVal = true;
             }
@@ -446,34 +446,15 @@
             return intval( $retVal );
         }
 
-
         /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
+         * @param array $filter
+         * @return mixed|void
          */
-        final public function classHasImplementedView( $classObject )
+        public function lengthCalculatedWithFilter(array $filter)
         {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
-            }
-
-            if( FactoryTemplate::ModelImplements( $classObject, self::getViewName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
+            // TODO: Implement lengthCalculatedWithFilter() method.
         }
+
 
     }
 

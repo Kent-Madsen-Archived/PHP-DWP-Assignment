@@ -6,7 +6,7 @@
      *  Project: DWP-Assignment
      */
 
-    if( ContactDomainView::validateIsSubmitted() )
+    if( ContactForm::validateIsSubmitted() )
     {
         $domain = new ContactDomain();
         $domain->makeReadyForSending();
@@ -30,6 +30,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
             

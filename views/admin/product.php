@@ -59,34 +59,48 @@
 ?>
 <?php if ( !isset( $operation ) ): ?>
     <ul>
-        <?php foreach ( $products as $product ): ?>
-            <li>
-                <?php
-                    $pId = $product->getIdentity();
+        <?php if(!is_null( $products )): ?>
+            <?php foreach ( $products as $product ): ?>
+                <li>
+                    <?php
+                        $pId = $product->getIdentity();
 
-                    $pTitle = $product->getTitle();
-                    $pPrice = $product->getPrice();
-                    $pDescription = $product->getDescription();
+                        $pTitle = $product->getTitle();
+                        $pPrice = $product->getPrice();
+                        $pDescription = $product->getDescription();
 
-                    $updateLink = urlencode("/admin/product/update/{$pId}");
-                    $deleteLink = urlencode("/admin/product/delete/{$pId}");
-                ?>
+                        $updateLink = "/admin/product/update/{$pId}";
+                        $deleteLink = "/admin/product/delete/{$pId}";
+                    ?>
 
-                <?php echo "<p>Title: {$pTitle}</p>"?>
-                <?php echo "<p>price: {$pPrice}</p>"; ?>
-                <?php echo "<p>description: {$pDescription}</p>"; ?>
+                    <?php echo "<p>Title: {$pTitle}</p>"?>
+                    <?php echo "<p>price: {$pPrice}</p>"; ?>
+                    <?php echo "<p>description: {$pDescription}</p>"; ?>
 
-                <?php echo "<a class='btn' href={$updateLink} hreflang='en'> Update </a>"; ?>
-                <?php echo "<a class='btn' href=\"{$deleteLink}\" hreflang='en'> Delete </a>"; ?>
-            </li>
-        <?php endforeach; ?>
+                    <?php echo "<a class='btn' href=\"{$updateLink}\" hreflang='en'> Update </a>"; ?>
+                    <?php echo "<a class='btn' href=\"{$deleteLink}\" hreflang='en'> Delete </a>"; ?>
+                </li>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </ul>
 
     <form class="pagination" method="post" action="/admin/product">
         <input type="hidden" value="<?php echo $factory->getPaginationIndex(); ?>" name="admin_product_pagination_current">
 
         <li>
-            <input type="submit" value="previous" class="btn" name="admin_product_pagination_previous">
+            <?php if( !$factory->isAtMinimumBoundary() ): ?>
+                <button type="submit" value="previous" class="btn" name="admin_product_pagination_previous">
+                    <span class="material-icons">
+                        navigate_before
+                    </span>
+                </button>
+            <?php else: ?>
+                <button type="submit" value="previous" class="btn disabled">
+                    <span class="material-icons">
+                        navigate_before
+                    </span>
+                </button>
+            <?php endif; ?>
         </li>
 
         <li>
@@ -94,7 +108,19 @@
         </li>
 
         <li>
-            <input type="submit" value="next" class="btn" name="admin_product_pagination_next">
+            <?php if( !$factory->isAtMaximumBoundary() ): ?>
+                <button type="submit" class="btn" name="admin_product_pagination_next">
+                    <span class="material-icons">
+                        navigate_next
+                    </span>
+                </button>
+            <?php else: ?>
+                <button type="submit" class="btn disabled">
+                    <span class="material-icons">
+                        navigate_next
+                    </span>
+                </button>
+            <?php endif; ?>
         </li>
     </form>
 <?php endif; ?>

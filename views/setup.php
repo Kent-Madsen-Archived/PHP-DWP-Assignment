@@ -56,6 +56,7 @@
 
         <link rel="stylesheet"
               href="/assets/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         
         <?php
                 PageTitleView::getSingletonView()->printHTML();

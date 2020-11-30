@@ -7,14 +7,25 @@
      */
     $access = new AccessPrivilegesDomain();
 
-
     if( $access->is_logged_in() )
     {
         redirect_to_local_page( 'homepage' );
     }
 
     $domain = new AuthDomain();
-    $domain->login();
+
+    if( LoginForm::validateIsSubmitted() )
+    {
+        $profile = $domain->login();
+
+        if( !is_null( $profile ) )
+        {
+            // Login Process
+            $args_session = array( 'person_data_profile'=>$profile );
+            $session = new UserSession( $args_session );
+            UserSessionSingleton::setInstance( $session );
+        }
+    }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
@@ -35,6 +46,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <?php
             PageTitleView::getSingletonView()->printHTML()

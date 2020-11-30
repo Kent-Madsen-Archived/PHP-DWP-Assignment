@@ -18,6 +18,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         
         <?php
             PageTitleView::getSingletonView()->printHTML();
@@ -31,7 +32,22 @@
     </head>
     <body>
         <?php getHeader(); ?>
-
+        <nav>
+            <div class="nav-wrapper">
+                <ul>
+                    <li>
+                        <a href="/admin/news">
+                            News
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/product">
+                            Product
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <main>
             <h2>
                 Admin

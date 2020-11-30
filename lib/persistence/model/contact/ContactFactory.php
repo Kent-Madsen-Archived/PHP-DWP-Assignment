@@ -9,8 +9,8 @@
     /**
      * Class ContactFactory
      */
-    class ContactFactory 
-        extends FactoryTemplate
+    class ContactFactory
+        extends BaseFactoryTemplate
     {
         /**
          * ContactFactory constructor.
@@ -61,22 +61,22 @@
 
 
         /**
-         * @return ContactModelEntity
+         * @return ContactModel
          * @throws Exception
          */
-        final public function createModel(): ContactModelEntity
+        final public function createModel(): ContactModel
         {
-            $model = new ContactModelEntity( $this );
+            $model = new ContactModel( $this );
             return $model;
         }
 
 
         /**
-         * @return ContactModelFormEntity
+         * @return ContactModelForm
          */
-        final public function createFormModel(): ContactModelFormEntity
+        final public function createFormModel(): ContactModelForm
         {
-            $model = new ContactModelFormEntity();
+            $model = new ContactModelForm();
             return $model;
         }
 
@@ -87,7 +87,7 @@
          */
         final public function exist(): bool
         {
-            $status_factory = new StatusFactory( $this->getWrapper() );
+            $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
@@ -104,7 +104,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ContactModelEntity )
+            if( $var instanceof ContactModel )
             {
                 $retVal = true;
             }
@@ -616,34 +616,11 @@
             return intval( $retVal );
         }
 
-
-        /**
-         * @param $classObject
-         * @return bool
-         * @throws Exception
-         */
-        final public function classHasImplementedView( $classObject )
+        public function lengthCalculatedWithFilter(array $filter)
         {
-            $retVal = false;
-
-            if( is_null( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is null, function only accepts classes');
-            }
-
-            if( !is_object( $classObject ) )
-            {
-                throw new Exception('ArticleFactory - Static Function - classHasImplementedView, classObject is not a object., function only accepts classes');
-            }
-
-            if( FactoryTemplate::modelImplements( $classObject, self::getViewName() ) )
-            {
-                $retVal = true;
-                return boolval( $retVal );
-            }
-
-            return boolval( $retVal );
+            // TODO: Implement length_calculate_with_filter() method.
         }
+
 
     }
 

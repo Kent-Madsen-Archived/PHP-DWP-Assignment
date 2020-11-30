@@ -11,7 +11,11 @@
      */
     class ContactDomain
         extends Domain
+            implements ContactInteraction
     {
+        public const class_name = "ContactDomain";
+
+
         // Construct
         /**
          * ContactDomain constructor.
@@ -19,6 +23,7 @@
          */
         public function __construct()
         {
+            $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 
@@ -45,11 +50,11 @@
             $peFactory = new ContactFactory( $connection );
             $contact_model = $peFactory->createModel();
 
-            $contact_model->setSubject( ContactDomainView::getFormSubject() );
-            $contact_model->setMessage( ContactDomainView::getFormMessage() );
+            $contact_model->setSubject( ContactForm::getFormSubject() );
+            $contact_model->setMessage( ContactForm::getFormMessage() );
 
-            $peModelFrom = $this->getMailOrCreateModel( $connection, ContactDomainView::getFormFromMail() );
-            $peModelTo   = $this->getMailOrCreateModel( $connection, ContactDomainView::getFormToMail() );
+            $peModelFrom = $this->getMailOrCreateModel( $connection, ContactForm::getFormFromMail() );
+            $peModelTo   = $this->getMailOrCreateModel( $connection, ContactForm::getFormToMail() );
 
             $contact_model->setFromMail( $peModelFrom->getIdentity() );
             $contact_model->setToMail( $peModelTo->getIdentity() );
@@ -69,10 +74,10 @@
         /**
          * @param $wrapper
          * @param $mail_content
-         * @return PersonEmailModelEntity|null
+         * @return PersonEmailModel|null
          * @throws Exception
          */
-        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModelEntity
+        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModel
         {
             if(!( $wrapper instanceof MySQLConnectorWrapper) )
             {
@@ -111,11 +116,11 @@
 
             try
             {
-                ContactDomainView::validateSecuritySpoof();
-                ContactDomainView::validateSecurityFSS();
-                ContactDomainView::validateSecurityCaptcha();
+                $spoof      = ContactForm::validateSecuritySpoof();
+                $fss        = ContactForm::validateSecurityFSS();
+                $captcha    = ContactForm::validateSecurityCaptcha();
 
-                $retVal = true;
+                $retVal = ( $spoof && $fss && $captcha );
             }
             catch ( Exception $ex )
             {
