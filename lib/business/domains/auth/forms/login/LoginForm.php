@@ -1,15 +1,15 @@
 <?php
     /**
-     *  Title: LoginFormView
+     *  Title: LoginForm
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
 
     /**
-     * Class LoginFormView
+     * Class LoginForm
      */
-    class LoginFormView
+    class LoginForm
     {
         public static final function validateIsSubmitted(): bool
         {

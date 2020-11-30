@@ -1,15 +1,15 @@
 <?php
     /**
-     *  Title: ForgotFormView
+     *  Title: ForgotForm
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
 
     /**
-     * Class ForgotFormView
+     * Class ForgotForm
      */
-    class ForgotFormView
+    class ForgotForm
     {
         /**
          * @return bool

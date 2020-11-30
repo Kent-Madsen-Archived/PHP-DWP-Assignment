@@ -63,10 +63,10 @@
         {
             $retVal = null;
 
-            if( RegisterFormView::validateIsSubmitted() )
+            if( RegisterForm::validateIsSubmitted() )
             {
-                $value_username = RegisterFormView::getPostUsername();
-                $value_password = RegisterFormView::getPostPassword();
+                $value_username = RegisterForm::getPostUsername();
+                $value_password = RegisterForm::getPostPassword();
 
 
                 $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
@@ -87,7 +87,7 @@
 
 
                 //
-                $email      = RegisterFormView::getPostPersonMail();
+                $email      = RegisterForm::getPostPersonMail();
 
                 $email_factory = new PersonEmailFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $emailModel = $email_factory->createModel();
@@ -106,23 +106,23 @@
                 $name_model = $name_factory->createModel();
 
                 // Name
-                $firstname  = RegisterFormView::getPostFirstname();
+                $firstname  = RegisterForm::getPostFirstname();
                 $name_model->setFirstName( $firstname );
 
-                $lastname   = RegisterFormView::getPostLastname();
+                $lastname   = RegisterForm::getPostLastname();
                 $name_model->setLastName( $lastname );
 
-                $middle     = RegisterFormView::getPostMiddlename();
+                $middle     = RegisterForm::getPostMiddlename();
                 $name_model->setMiddleName( $middle );
 
                 $name_factory->create( $name_model );
 
                 // 
-                $streetname     = RegisterFormView::getPostStreetname();
-                $street_number  = RegisterFormView::getPostStreetAddressNumber();
-                $streetZipcode  = RegisterFormView::getPostZipCode();
-                $streetFloor    = RegisterFormView::getPostStreetAddressFloor();
-                $country        = RegisterFormView::getPostCountry();
+                $streetname     = RegisterForm::getPostStreetname();
+                $street_number  = RegisterForm::getPostStreetAddressNumber();
+                $streetZipcode  = RegisterForm::getPostZipCode();
+                $streetFloor    = RegisterForm::getPostStreetAddressFloor();
+                $country        = RegisterForm::getPostCountry();
 
                 $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $addr_model = $addr_factory->createModel();
@@ -135,8 +135,8 @@
                 $addr_factory->create( $addr_model );
 
                 //
-                $phone      = RegisterFormView::getPostPhone();
-                $birthday   = RegisterFormView::getPostBirthday();
+                $phone      = RegisterForm::getPostPhone();
+                $birthday   = RegisterForm::getPostBirthday();
 
                 $pi_factory = new ProfileInformationFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $pim = $pi_factory->createModel();
@@ -162,10 +162,10 @@
          */
         final public function login(): ?ProfileModelEntity
         {
-            if( LoginFormView::validateIsSubmitted() )
+            if( LoginForm::validateIsSubmitted() )
             {
-                $username = LoginFormView::getPostUsername();
-                $password = LoginFormView::getPostPassword();
+                $username = LoginForm::getPostUsername();
+                $password = LoginForm::getPostPassword();
 
                 $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
 

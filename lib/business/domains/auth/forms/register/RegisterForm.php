@@ -1,18 +1,18 @@
 <?php
     /**
-     *  Title: RegisterFormView
+     *  Title: RegisterForm
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
 
     /**
-     * Class RegisterFormView
+     * Class RegisterForm
      */
-    class RegisterFormView
+    class RegisterForm
     {
         /**
-         * RegisterFormView constructor.
+         * RegisterForm constructor.
          */
         public function __construct()
         {

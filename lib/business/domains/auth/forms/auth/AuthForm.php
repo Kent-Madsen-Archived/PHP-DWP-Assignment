@@ -1,6 +1,6 @@
 <?php
 
-    class AuthFormView
+    class AuthForm
     {
         public function __constructor()
         {
