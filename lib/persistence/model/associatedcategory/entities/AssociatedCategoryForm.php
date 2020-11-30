@@ -1,19 +1,19 @@
 <?php
     /**
-     *  Title: ProductAssociatedCategoryForm
+     *  Title: AssociatedCategoryForm
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
 
     /**
-     * Class ProductAssociatedCategoryForm
+     * Class AssociatedCategoryForm
      */
-    class ProductAssociatedCategoryForm
+    class AssociatedCategoryForm
         extends DatabaseFormEntity
     {
         /**
-         * ProductAssociatedCategoryForm constructor.
+         * AssociatedCategoryForm constructor.
          */
         public function __construct()
         {

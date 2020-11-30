@@ -62,11 +62,11 @@
 
 
         /**
-         * @return mixed|ProductCategoryModelEntity
+         * @return mixed|ProductCategoryModel
          */
         final public function createModel()
         {
-            $model = new ProductCategoryModelEntity( $this );
+            $model = new ProductCategoryModel( $this );
 
             return $model;
         }
@@ -95,7 +95,7 @@
         {
             $retVal = false;
 
-            if( $var instanceof ProductCategoryModelEntity )
+            if( $var instanceof ProductCategoryModel )
             {
                 $retVal = true;
             }

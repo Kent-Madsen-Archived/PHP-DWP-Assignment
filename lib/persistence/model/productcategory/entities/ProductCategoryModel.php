@@ -3,7 +3,7 @@
     /**
      * Class ProductCategoryModel
      */
-    class ProductCategoryModelEntity
+    class ProductCategoryModel
         extends DatabaseModelEntity
     {
         // Constructors
