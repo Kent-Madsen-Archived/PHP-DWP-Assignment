@@ -1,17 +1,59 @@
 <?php
-
     /**
      *  Title: UserSession
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
+    UserSession::requirements();
 
     /**
      * Class UserSession
      */
     class UserSession
     {
+        private const class_name_variables = "SessionUserSessionVariables";
+        private const class_name_controller = "SessionUserSessionController";
+        private const class_name_view = "SessionUserSessionView";
+        private const class_name_error = "UserSessionErrors";
+
+        /**
+         * @throws Exception
+         */
+        public final static function requirements()
+        {
+            $cn_var = self::class_name_variables;
+            if( !class_exists( $cn_var ) )
+            {
+                self::throwCantFindClassError( $cn_var );
+            }
+
+            $cn_c = self::class_name_controller;
+            if( !class_exists( $cn_c ) )
+            {
+                self::throwCantFindClassError( $cn_c );
+            }
+
+            $cn_v = self::class_name_view;
+            if( !class_exists($cn_v ) )
+            {
+                self::throwCantFindClassError( $cn_v );
+            }
+
+            $cn_er = self::class_name_error;
+            if( !class_exists( $cn_er ) )
+            {
+                self::throwCantFindClassError( $cn_er );
+            }
+        }
+
+        private final static function throwCantFindClassError( $value )
+        {
+            $message = "Can't find the class {$value}";
+            throw new Exception($message);
+        }
+
+
         /**
          * UserSession constructor.
          * @param array $arr
@@ -19,7 +61,7 @@
          */
         public function __construct( array $arr )
         {
-            if( sizeof( $arr ) == 0 )
+            if( sizeof( $arr ) == CONSTANT_ZERO )
             {
                 UserSessionErrors::throwErrorInputParameterHasNoEntitiesInArray();
             }

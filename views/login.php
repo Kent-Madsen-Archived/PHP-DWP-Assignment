@@ -20,15 +20,12 @@
 
         if( !is_null( $profile ) )
         {
+            // Login Process
             $args_session = array( 'person_data_profile'=>$profile );
             $session = new UserSession( $args_session );
-
-            UserSessionDataView::setInstance($session);
-            UserSessionDataView::getInstance();
-
+            UserSessionSingleton::setInstance( $session );
         }
     }
-
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
     // relogin, if it's a refresh
