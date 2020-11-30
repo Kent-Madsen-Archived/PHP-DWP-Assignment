@@ -11,7 +11,10 @@
      */
     class ContactDomain
         extends Domain
+            implements ContactInteraction
     {
+        public const class_name = "ContactDomain";
+
         // Construct
         /**
          * ContactDomain constructor.
@@ -19,6 +22,7 @@
          */
         public function __construct()
         {
+            $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 

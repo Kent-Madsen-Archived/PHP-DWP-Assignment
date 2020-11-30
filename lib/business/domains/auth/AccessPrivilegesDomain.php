@@ -11,13 +11,21 @@
      */
     class AccessPrivilegesDomain
         extends Domain
+            implements AccessPrivilegesInteraction
     {
+        /**
+         *
+         */
+        public const class_name = "AccessPrivilegesDomain";
+
+
         /**
          * AccessPrivilegesDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
+            $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 

@@ -11,13 +11,21 @@
      */
     class NewsDomain 
         extends Domain
+            implements NewsInteraction
     {
+        /**
+         *
+         */
+        public const class_name = 'NewsDomain';
+
+
         /**
          * NewsDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
+            $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 

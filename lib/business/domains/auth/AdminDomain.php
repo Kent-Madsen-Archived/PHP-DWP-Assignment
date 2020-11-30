@@ -1,23 +1,31 @@
 <?php
     /**
-     *  Title: CheckoutDomain
+     *  Title: AdminDomain
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
      */
 
     /**
-     * Class CheckoutDomain
+     * Class AdminDomain
      */
-    class CheckoutDomain 
+    class AdminDomain
         extends Domain
+            implements AdminInteraction
     {
         /**
-         * CheckoutDomain constructor.
+         *
+         */
+        public const class_name = "AdminDomain";
+
+
+        /**
+         * AdminDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
+            $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 

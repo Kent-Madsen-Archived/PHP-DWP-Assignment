@@ -10,10 +10,13 @@
      * Class Domain
      */
     abstract class Domain
+        implements DomainViewInterface,
+                   DomainControllerInterface
     {
-
         // Variables
         private $information = null;
+
+        private $name = null;
 
 
         /**
@@ -46,19 +49,34 @@
 
             // Setter
         /**
-         * @param $var
-         * @throws Exception
+         * @param MySQLInformation|null $var
+         * @return MySQLInformation|null
          */
-        final public function setInformation( $var )
+        final public function setInformation( ?MySQLInformation $var ): ?MySQLInformation
         {
-            if( !$this->validateInformation( $var ) )
-            {
-                throw new Exception( 'Error: Only null or MySQLInformation class is allowed' );
-            }
-
             $this->information = $var;
+            return $this->getInformation();
         }
-        
+
+
+        /**
+         * @param string $name
+         * @return string|null
+         */
+        protected function setName( string $name ): ?string
+        {
+            $this->name = $name;
+            return $this->getName();
+        }
+
+
+        /**
+         * @return string|null
+         */
+        public final function getName(): ?string
+        {
+            return $this->name;
+        }
     }
 
 ?>

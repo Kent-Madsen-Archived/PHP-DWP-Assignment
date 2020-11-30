@@ -13,12 +13,15 @@
         extends Domain
         implements AuthInteraction
     {
+        public const class_name = "AuthDomain";
+
         /**
          * AuthDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
+            $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 
@@ -60,10 +63,10 @@
         {
             $retVal = null;
 
-            if( RegisterDomainFormView::validateIsSubmitted() )
+            if( RegisterFormView::validateIsSubmitted() )
             {
-                $value_username = RegisterDomainFormView::getPostUsername();
-                $value_password = RegisterDomainFormView::getPostPassword();
+                $value_username = RegisterFormView::getPostUsername();
+                $value_password = RegisterFormView::getPostPassword();
 
 
                 $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
@@ -84,7 +87,7 @@
 
 
                 //
-                $email      = RegisterDomainFormView::getPostPersonMail();
+                $email      = RegisterFormView::getPostPersonMail();
 
                 $email_factory = new PersonEmailFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $emailModel = $email_factory->createModel();
@@ -103,23 +106,23 @@
                 $name_model = $name_factory->createModel();
 
                 // Name
-                $firstname  = RegisterDomainFormView::getPostFirstname();
+                $firstname  = RegisterFormView::getPostFirstname();
                 $name_model->setFirstName( $firstname );
 
-                $lastname   = RegisterDomainFormView::getPostLastname();
+                $lastname   = RegisterFormView::getPostLastname();
                 $name_model->setLastName( $lastname );
 
-                $middle     = RegisterDomainFormView::getPostMiddlename();
+                $middle     = RegisterFormView::getPostMiddlename();
                 $name_model->setMiddleName( $middle );
 
                 $name_factory->create( $name_model );
 
                 // 
-                $streetname     = RegisterDomainFormView::getPostStreetname();
-                $street_number  = RegisterDomainFormView::getPostStreetAddressNumber();
-                $streetZipcode  = RegisterDomainFormView::getPostZipCode();
-                $streetFloor    = RegisterDomainFormView::getPostStreetAddressFloor();
-                $country        = RegisterDomainFormView::getPostCountry();
+                $streetname     = RegisterFormView::getPostStreetname();
+                $street_number  = RegisterFormView::getPostStreetAddressNumber();
+                $streetZipcode  = RegisterFormView::getPostZipCode();
+                $streetFloor    = RegisterFormView::getPostStreetAddressFloor();
+                $country        = RegisterFormView::getPostCountry();
 
                 $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $addr_model = $addr_factory->createModel();
@@ -132,8 +135,8 @@
                 $addr_factory->create( $addr_model );
 
                 //
-                $phone      = RegisterDomainFormView::getPostPhone();
-                $birthday   = RegisterDomainFormView::getPostBirthday();
+                $phone      = RegisterFormView::getPostPhone();
+                $birthday   = RegisterFormView::getPostBirthday();
 
                 $pi_factory = new ProfileInformationFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $pim = $pi_factory->createModel();
@@ -159,10 +162,10 @@
          */
         final public function login(): ?ProfileModelEntity
         {
-            if( LoginDomainView::validateIsSubmitted() )
+            if( LoginFormView::validateIsSubmitted() )
             {
-                $username = LoginDomainView::getPostUsername();
-                $password = LoginDomainView::getPostPassword();
+                $username = LoginFormView::getPostUsername();
+                $password = LoginFormView::getPostPassword();
 
                 $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
 

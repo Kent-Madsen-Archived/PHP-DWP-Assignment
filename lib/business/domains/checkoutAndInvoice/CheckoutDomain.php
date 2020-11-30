@@ -1,26 +1,33 @@
 <?php
     /**
-     *  Title: InvoiceDomain
+     *  Title: CheckoutDomain
      *  Author: Kent vejrup Madsen
      *  Type: PHP Script, Class
      *  Project: DWP-Assignment
-    */
+     */
 
     /**
-     * Class InvoiceDomain
+     * Class CheckoutDomain
      */
-    class InvoiceDomain 
+    class CheckoutDomain 
         extends Domain
+            implements CheckoutInteraction
     {
         /**
-         * InvoiceDomain constructor.
+         *
+         */
+        public const class_name = "CheckoutDomain";
+
+        /**
+         * CheckoutDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
+            $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
-        
+
     }
 
 ?>

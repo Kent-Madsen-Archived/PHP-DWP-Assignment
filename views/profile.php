@@ -6,8 +6,6 @@
      *  Project: DWP-Assignment
      */
 
-    $domain = new ProfileDomain();
-
     PageTitleController::getSingletonController()->append( ' - Profile' );
 ?>
 

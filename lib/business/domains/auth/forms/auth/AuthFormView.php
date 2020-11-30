@@ -1,65 +1,10 @@
 <?php
-    /**
-     *  Title: AuthDomainView
-     *  Author: Kent vejrup Madsen
-     *  Type: PHP Script, Class
-     *  Project: DWP-Assignment
-     */
 
-    /**
-     * Class AuthDomainView
-     */
-    class AuthDomainView
+    class AuthFormView
     {
-        /**
-         * AuthDomainView constructor.
-         * @param $domain
-         * @throws Exception
-         */
-        public function __construct( $domain )
+        public function __constructor()
         {
-            $this->setDomain( $domain );
 
-        }
-
-        // Variables
-        private $domain = null;
-
-
-        /**
-         * @param $domain
-         * @return AuthDomain|null
-         * @throws Exception
-         */
-        public function setDomain( $domain ): ?AuthDomain
-        {
-            if( is_null( $domain ) )
-            {
-                $this->domain = null;
-                return $this->getDomain();
-            }
-
-            if( !( $domain instanceof AuthDomain ) )
-            {
-                throw new Exception('');
-            }
-
-            $this->domain = $domain;
-            return $this->getDomain();
-        }
-
-
-        /**
-         * @return AuthDomain|null
-         */
-        public function getDomain():?AuthDomain
-        {
-            if( is_null( $this->domain ) )
-            {
-                return null;
-            }
-
-            return $this->domain;
         }
 
 
@@ -84,6 +29,8 @@
 
             return boolval( $retVal );
         }
+
+
 
 
         /**
@@ -128,7 +75,7 @@
         }
 
 
-        /**7
+        /**
          * @return bool
          * @throws Exception
          */
@@ -154,4 +101,5 @@
         }
 
     }
+
 ?>

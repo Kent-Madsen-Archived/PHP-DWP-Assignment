@@ -11,7 +11,14 @@
      */
     class FrontpageDomain 
         extends Domain
+            implements FrontpageInteraction
     {
+        /**
+         *
+         */
+        public const class_name = 'FrontpageDomain';
+
+
         // Construct
         /**
          * FrontpageDomain constructor.
@@ -19,6 +26,7 @@
          */
         public function __construct()
         {
+            $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 

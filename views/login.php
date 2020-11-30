@@ -14,7 +14,7 @@
 
     $domain = new AuthDomain();
 
-    if( LoginDomainView::validateIsSubmitted() )
+    if( LoginFormView::validateIsSubmitted() )
     {
         $profile = $domain->login();
 
