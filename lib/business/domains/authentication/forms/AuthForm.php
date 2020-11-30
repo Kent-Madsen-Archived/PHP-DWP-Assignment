@@ -1,13 +1,7 @@
 <?php
 
-    class AuthForm
+    abstract class AuthForm
     {
-        public function __constructor()
-        {
-
-        }
-
-
         /**
          * @return bool
          */

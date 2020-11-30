@@ -9,17 +9,8 @@
     /**
      * Class RegisterForm
      */
-    class RegisterForm
+    abstract class RegisterForm
     {
-        /**
-         * RegisterForm constructor.
-         */
-        public function __construct()
-        {
-
-        }
-
-
         /**
          * @return bool
          */

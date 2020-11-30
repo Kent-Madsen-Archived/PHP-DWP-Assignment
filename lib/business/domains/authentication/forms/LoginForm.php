@@ -9,7 +9,7 @@
     /**
      * Class LoginForm
      */
-    class LoginForm
+    abstract class LoginForm
     {
         public static final function validateIsSubmitted(): bool
         {

@@ -9,7 +9,7 @@
     /**
      * Class ForgotForm
      */
-    class ForgotForm
+    abstract class ForgotForm
     {
         /**
          * @return bool
