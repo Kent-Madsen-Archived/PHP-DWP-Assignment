@@ -44,7 +44,7 @@
         {
             $retVal = false;
 
-            $this->setResponseKey( $this::getPostKey() );
+            $this->setResponseKey( PostReCaptchaV2::getPostKey() );
             $this->retrieveResponse();
 
             if( $this->validate() )
@@ -203,22 +203,7 @@
             return strval( $this->response_key );
         }
 
-
-        /**
-         * @return string|null
-         */
-        public final static function getPostKey(): ?string
-        {
-            if( is_null( $_POST[ 'g-recaptcha-response' ] ) )
-            {
-                return null;
-            }
-
-            return strval( $_POST[ 'g-recaptcha-response' ] );
-        }
-
-
-
+        
         /**
          * @param $var
          * @return string|null

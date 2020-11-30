@@ -1,27 +1,7 @@
 <?php
 
-    /**
-     * Class SpoofSecurity
-     */
-    class SpoofSecurity
-        extends Security
+    abstract class PostSpoofSecurityForm
     {
-
-        /**
-         * @return bool
-         */
-        public function validateSecurity(): bool
-        {
-            $retVal = false;
-
-            if( strlen( $this::getPostSecurityEmpty() ) == CONSTANT_ZERO )
-            {
-                $retVal = true;
-            }
-
-            return boolval( $retVal );
-        }
-
 
         /**
          * @return string|null
@@ -56,6 +36,7 @@
 
             return boolval( $retVal );
         }
+
     }
 
 ?>
