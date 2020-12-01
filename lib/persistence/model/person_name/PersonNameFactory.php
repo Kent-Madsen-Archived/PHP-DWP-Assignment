@@ -194,7 +194,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_limit  = $model->getIdentity();
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();

@@ -13,14 +13,13 @@
         extends BaseMVCView
     {
         /**
-         * @param $model
+         * @param PersonEmailModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __construct( ?PersonEmailModel $model )
         {
             $this->setModel( $model );
         }
-
 
         /**
          * @param $model
@@ -40,27 +39,53 @@
 
 
         /**
-         * @return int|mixed|null
+         * @return mixed
+         * @throws Exception
          */
         final public function viewIdentity()
         {
-            return $this->getIdentity();
+            return $this->getModel()->getIdentity();
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
+         * @throws Exception
          */
         final public function viewIsIdentityNull()
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->getModel()->getIdentity() ) == true )
             {
                 $retVal = true;
             }
 
             return boolval( $retVal );
+        }
+
+        final public function printEmailArea()
+        {
+            $f = htmlentities($this->getModel()->getContent());
+            return "{$f}";
+        }
+
+        /**
+         * @return string
+         */
+        final public function printInteractiveEmail()
+        {
+            return $this->printInteractiveEmailArea( $this->printEmailArea() );
+        }
+
+        /**
+         * @return string
+         */
+        final public function printInteractiveEmailArea( $message )
+        {
+            $fm = htmlentities($message);
+            $html = "<a href='mailto:{$this->printEmailArea()}'>{$fm}</a>";
+            return $html;
         }
         
     }

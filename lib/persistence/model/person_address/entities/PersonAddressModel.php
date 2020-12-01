@@ -21,27 +21,46 @@
         /**
          * @return bool
          */
-        final public function requiredFieldsValidated(): bool
+        public final function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $retVal = $this->requiredFieldsAreNotNull();
 
-            $street_name_has_input = !is_null($this->street_name);
-            $street_address_number_has_input = !is_null($this->street_address_number);
-            $street_address_zip_code_has_input = !is_null($this->zip_code);
-            $country_has_input = !is_null($this->country);
+            return $retVal;
+        }
 
-            $retVal = ($street_name_has_input && $street_address_number_has_input && $street_address_zip_code_has_input && $country_has_input);
+
+        /**
+         * @return bool
+         */
+        protected final function requiredFieldsAreNotNull(): bool
+        {
+            $street_address_name_is_not_null        = !$this->isStreetAddressNameNull();
+            $street_address_number_is_not_null     = !$this->isStreetAddressNumberNull();
+
+            $street_address_zip_code_is_not_null   = !$this->isZipCodeNull();
+            $country_is_not_null                   = !$this->isCountryNull();
+
+            $city_is_not_null = !$this->isCityNull();
+
+            $A = $street_address_name_is_not_null && $street_address_number_is_not_null;
+            $B = $street_address_zip_code_is_not_null && $country_is_not_null;
+            $C = $city_is_not_null;
+
+            $retVal = $A && $B;
 
             return $retVal;
         }
 
 
         // Variables
-        private $street_name            = null;
-        private $street_address_number  = null;
-        private $zip_code               = null;
-        private $country                = null;
-        private $street_floor           = null;
+        private $street_address_name            = null;
+        private $street_address_number          = null;
+        private $street_address_floor           = null;
+
+        private $zip_code                       = null;
+
+        private $city                           = null;
+        private $country                        = null;
 
 
         // implementation of factory classes
@@ -65,122 +84,205 @@
         /**
          * @return string|null
          */
-        final public function getStreetFloor()
+        public function getCity(): ?string
         {
-            if( is_null( $this->street_floor ) )
-            {
-                return null;
-            }
-
-            return strval( $this->street_floor );
+            return $this->city;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getStreetName()
+        final public function getStreetAddressFloor(): ?string
         {
-            if( is_null( $this->street_name ) )
-            {
-                return null;
-            }
-
-            return strval( $this->street_name );
+            return $this->street_address_floor;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getZipCode()
+        final public function getStreetAddressName(): ?string
         {
-            if( is_null( $this->zip_code ) )
-            {
-                return null;
-            }
-
-            return strval( $this->zip_code );
+            return $this->street_address_name;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getCountry()
+        final public function getZipCode(): ?string
         {
-            if( is_null( $this->country ) )
-            {
-                return null;
-            }
+            return $this->zip_code;
+        }
 
-            return strval( $this->country );
+
+        /**
+         * @return string|null
+         */
+        final public function getCountry(): ?string
+        {
+            return $this->country;
         }
 
 
         /**
          * @return int|null
          */
-        final public function getStreetAddressNumber()
+        public final function getStreetAddressNumber(): ?int
         {
-            if( is_null( $this->street_address_number ) )
-            {
-                return null;
-            }
-
-            return intval( $this->street_address_number, BASE_10 );
+            return $this->street_address_number;
         }
 
 
-            // Setters
+        // Setters
         /**
-         * @param $var
+         * @param string|null $city
          */
-        final public function setStreetFloor( $var )
+        public final function setCity( ?string $city ): void
         {
-            $this->street_floor = $var;
+            $this->city = $city;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setZipCode( $var )
+        public final function setStreetAddressFloor( ?string $var ): void
+        {
+            $this->street_address_floor = $var;
+        }
+
+
+        /**
+         * @param string|null $var
+         */
+        public final function setZipCode( ?string $var ): void
         {
             $this->zip_code = $var;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setCountry( $var )
+        public final function setCountry( ?string $var ):void
         {
             $this->country = $var;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setStreetName( $var )
+        public final function setStreetAddressName( ?string $var ): void
         {
-            $this->street_name = $var;
+            $this->street_address_name = $var;
         }
 
 
         /**
-         * @param $var
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setStreetAddressNumber( $var )
+        public final function setStreetAddressNumber( ?int $var ): void
         {
-            if( !is_int( $var ) )
+            $this->street_address_number = $var;
+        }
+
+            // State accessors
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressNameNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_name ) )
             {
-                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+                $retVal = true;
             }
 
-            $this->street_address_number = intval( $var, BASE_10 );
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressNumberNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_number ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressFloorNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_floor ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isZipCodeNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->zip_code ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isCityNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->city ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isCountryNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->country ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
         }
 
     }

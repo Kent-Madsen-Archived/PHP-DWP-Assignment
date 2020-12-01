@@ -66,7 +66,7 @@
                 </div>
 
                 <a href="/product/pagination/1" class="btn">
-                    View More Products 
+                    View More Products
                 </a>
             </section>
 
@@ -102,9 +102,22 @@
             </section>
 
             <section>
-                <h3>
-                    About us
-                </h3>
+                <?php $page_domain = new PageDomainDomain(); ?>
+                <?php $element = $page_domain->retrievePageElementById(1); ?>
+
+                <div>
+                    <h3>
+                        <?php echo $element->getTitle();?>
+                    </h3>
+
+                    <p>
+                        <?php echo $element->getContent();?>
+                    </p>
+                </div>
+
+                <a class="btn" href="/about">
+                    read more
+                </a>
             </section>
 
         </main>

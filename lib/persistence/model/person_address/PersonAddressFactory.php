@@ -149,13 +149,13 @@
 
                         $personAddressModel->setIdentity( $row[ 'identity' ] );
     
-                        $personAddressModel->setStreetName(  $row[ 'street_name' ]  );
+                        $personAddressModel->setStreetAddressName(  $row[ 'street_name' ]  );
                         $personAddressModel->setStreetAddressNumber( $row[ 'street_address_number' ] );
 
                         $personAddressModel->setZipCode(  $row[ 'zip_code' ]  );
                         $personAddressModel->setCountry(  $row[ 'country' ]  );
 
-                        $personAddressModel->setStreetFloor( $row['street_address_floor']  );
+                        $personAddressModel->setStreetAddressFloor( $row['street_address_floor']  );
 
                         array_push( $retVal, $personAddressModel );
                     }

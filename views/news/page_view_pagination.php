@@ -27,7 +27,7 @@ $articles = $domain->retrieveArticlesAt($pagination, 5);
     <div>
         <h5> <?php echo $article->getTitle(); ?></h5>
         <p> <?php echo $article->getContent();?></p>
-        <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
+        <a class="btn" href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
     </div>
 <?php
     endforeach;

@@ -34,7 +34,9 @@
          */
         public function is_logged_in()
         {
-            if( isset( $_SESSION[ 'user_session_object_identity' ] ) )
+            if( SessionUserProfile::existSessionUserProfileIdentity() &&
+                SessionUserProfile::existSessionUserProfileUsername() &&
+                SessionUserProfile::existSessionUserProfileType() )
             {
                 return TRUE;
             }
@@ -60,7 +62,7 @@
                 return FALSE;
             }
 
-            if( $_SESSION[ 'user_session_object_profile_type' ] == 3 )
+            if( SessionUserProfile::getSessionUserProfileType() == 3 )
             {
                 return TRUE;
             }

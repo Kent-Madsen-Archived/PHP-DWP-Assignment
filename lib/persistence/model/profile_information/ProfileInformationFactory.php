@@ -177,7 +177,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): ?bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -236,7 +236,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 

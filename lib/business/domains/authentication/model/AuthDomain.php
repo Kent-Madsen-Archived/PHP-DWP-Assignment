@@ -126,10 +126,10 @@
 
                 $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
                 $addr_model = $addr_factory->createModel();
-                $addr_model->setStreetName($streetname);
+                $addr_model->setStreetAddressName($streetname);
                 $addr_model->setStreetAddressNumber($street_number);
                 $addr_model->setCountry($country);
-                $addr_model->setStreetFloor($streetFloor);
+                $addr_model->setStreetAddressFloor($streetFloor);
                 $addr_model->setZipCode($streetZipcode);
 
                 $addr_factory->create( $addr_model );
