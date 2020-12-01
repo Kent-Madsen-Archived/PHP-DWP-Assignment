@@ -33,27 +33,80 @@
                 Homepage
             </h2>
 
-<?php  
-/**
-            <?php $arrNews = $domain->frontpage_news(); ?>
+            <section>
+                <h3>
+                    Products
+                </h3>
 
+                <div>
+                    <?php
+                        $pd = new ProductDomain();
+                        $products = $pd->retrieveProductsAt(0, 4);
 
-            <section class="news"> 
-                <?php 
-                    foreach( $arrNews as $value ):
-                ?>
-                    <div> 
-                        <p> <?php echo $value->getTitle(); ?> </p>
-                        <p> <?php echo $value->getContent(); ?> </p>
-                        <p> <?php echo $value->getCreatedOn(); ?></p>
+                        foreach ( $products as $product ):
+                            $view = new ProductView( $product );
+                    ?>
+                        <div>
+                            <h4>
+                                <?php echo $view->printAreaTitle(); ?>
+                            </h4>
 
-                        <a href="<?php echo "./news/" . $value->getIdentity(); ?>">Read more</a>
-                    </div>
-                <?php 
-                    endforeach;
-                ?>
+                            <p>
+                                <?php echo $view->printSummaryOfDescription();?>
+                            </p>
+
+                            <p>
+                                <?php echo $view->printFieldTypePrice() . " dkr.";?>
+                            </p>
+
+                            <a <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang();?> class="btn"> View Product </a>
+                        </div>
+
+                    <?php endforeach; ?>
+                </div>
+
+                <a href="/product/pagination/1" class="btn">
+                    View More Products 
+                </a>
             </section>
-             */?>
+
+            <section>
+                <h3>
+                    Articles
+                </h3>
+
+                <div>
+                    <?php
+                    $news_domain = new NewsDomain();
+
+                    $articles = $news_domain->retrieveArticlesAt(0, 3);
+
+                    foreach ($articles as $article):?>
+                        <div>
+                            <h4><?php echo $article->getTitle();?></h4>
+                            <p>
+                                <?php echo $article->getContent();?>
+                            </p>
+
+                            <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>" class="btn">
+                                View Article
+                            </a>
+
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <a href="/news/pagination/1" class="btn">
+                    View More Articles
+                </a>
+            </section>
+
+            <section>
+                <h3>
+                    About us
+                </h3>
+            </section>
+
         </main>
         
         <?php getFooter(); ?>
