@@ -1,4 +1,0 @@
-<?php
-
-    bounce_link();
-?>

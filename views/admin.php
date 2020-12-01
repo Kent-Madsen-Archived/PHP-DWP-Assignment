@@ -26,8 +26,9 @@
             $router = RouterSingleton::getInstance();
 
             $view = $router->getCurrentRoute()->getValidationTree()[1]->getValue();
-            $operation = $router->getCurrentRoute()->getValidationTree()[2]->getValue();
-            $id = $router->getCurrentRoute()->getValidationTree()[3]->getValue();
+
+            $operation_value = $router->getCurrentRoute()->getValidationTree()[2]->getValue();
+            $id_value = $router->getCurrentRoute()->getValidationTree()[3]->getValue();
         ?>
     </head>
     <body>

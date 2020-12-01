@@ -208,9 +208,14 @@
                         $model = $this->createModel();
 
                         $model->setIdentity( $row[ 'identity' ] );
+                        $model->setProfileId( $row[ 'profile_id' ] );
 
                         $model->setTotalPrice( $row[ 'total_price' ] );
-                        $model->setRegistered( $row[ 'invoice_registered' ] );
+                        $model->setAddressId( $row[ 'address_id' ] );
+                        $model->setMailId( $row[ 'mail_id' ] );
+                        $model->setOwnerNameId( $row[ 'owner_name_id' ] );
+
+                        $model->setRegistered( $row[ 'registered' ] );
 
                         $retVal = true;
                     }
@@ -244,13 +249,14 @@
             $retVal = false;
 
             //
-            $sql = "INSERT INTO product_invoice( total_price, address_id, mail_id, owner_name_id ) VALUES( ?, ?, ?, ? );";
+            $sql = "INSERT INTO product_invoice( total_price, address_id, mail_id, owner_name_id, profile_id ) VALUES( ?, ?, ?, ?, ? );";
 
             $stmt_total_price = null;
 
             $stmt_addr_id = null;
             $stmt_mail_id = null;
             $stmt_owner_id = null;
+            $stmt_profile_id = null;
 
             //
             $connection = $this->getWrapper()->connect();
@@ -260,13 +266,15 @@
                 $stmt = $connection->prepare( $sql );
 
                 //
-                $stmt->bind_param( "diii",
+                $stmt->bind_param( "diiii",
                     $stmt_total_price,
                     $stmt_addr_id,
                     $stmt_mail_id,
-                    $stmt_owner_id );
+                    $stmt_owner_id,
+                    $stmt_profile_id );
 
                 $stmt_total_price   = $model->getTotalPrice();
+                $stmt_profile_id    = $model->getProfileId();
 
                 $stmt_addr_id       = $model->getAddressId();
                 $stmt_mail_id       = $model->getMailId();
@@ -312,7 +320,7 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
         final public function delete( &$model ): bool
@@ -364,7 +372,7 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int
@@ -402,6 +410,7 @@
 
             return intval( $retVal );
         }
+
 
         /**
          * @param array $filter

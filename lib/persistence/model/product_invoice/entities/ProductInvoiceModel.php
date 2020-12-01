@@ -42,6 +42,7 @@
         private $address_id = null;
         private $mail_id = null;
         private $owner_name_id = null;
+        private $profile_id = null;
 
 
         // implementation of factory classes
@@ -64,6 +65,14 @@
 
         // Accessors
             // getters
+
+        /**
+         * @return int|null
+         */
+        public final function getProfileId(): ?int
+        {
+            return $this->profile_id;
+        }
 
         /**
          * @return int|null
@@ -133,6 +142,15 @@
         final public function setRegistered($var)
         {
             $this->invoice_registered = $var;
+        }
+
+
+        /**
+         * @param int|null $profile_id
+         */
+        public final function setProfileId(?int $profile_id): void
+        {
+            $this->profile_id = $profile_id;
         }
 
 

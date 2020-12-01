@@ -32,6 +32,7 @@
                 new ProductFactory(
                     new MySQLConnectorWrapper( $this->getInformation() ) ) );
 
+
             $this->setProductEntityFactory(
                 new ProductEntityFactory(
                     new MySQLConnectorWrapper( $this->getInformation() ) ) );
@@ -43,6 +44,7 @@
             $this->setProductInvoiceFactory(
                 new ProductInvoiceFactory(
                     new MySQLConnectorWrapper( $this->getInformation() ) ) );
+
 
             $this->setProfileFactory(
                 new ProfileFactory(
@@ -60,6 +62,11 @@
                 new PersonAddressFactory(
                     new MySQLConnectorWrapper( $this->getInformation() ) ) );
 
+            $this->setProfileInformationFactory(
+                new ProfileInformationFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation() ) ) );
+
         }
 
         // Variables
@@ -70,6 +77,7 @@
         private $product_invoice_factory = null;
 
         private $profile_factory = null;
+        private $profileInformationFactory = null;
 
         private $person_name_factory = null;
         private $person_email_factory = null;
@@ -79,18 +87,18 @@
         /**
          * Retrieves an overview of the users basket. and include the product
          */
-        public final function overviewOfBasket(): array
+        public final function overviewOfBasket(): ?array
         {
             $retVal = array();
 
             $factory = $this->getProductFactory();
 
-            if(!($factory instanceof ProductFactory))
-            {
-
-            }
-
             $basket = BasketSessionSingleton::getBasket();
+
+            if( is_null( $basket ) )
+            {
+                return null;
+            }
 
             foreach ( $basket->getEntries() as $entry )
             {
@@ -112,6 +120,76 @@
         }
 
 
+        /**
+         * @return array|null
+         * @throws Exception
+         */
+        public final function purchase(): ?array
+        {
+            $retVal = array();
+
+            $basket = BasketSessionSingleton::getBasket();
+
+            $invoiceFactory = $this->getProductInvoiceFactory();
+            $modelInvoice = $invoiceFactory->createModel();
+
+            $infoFactory = $this->getProfileInformationFactory();
+
+            $infoModel = $infoFactory->createModel();
+            $infoModel->setProfileId(SessionUserProfile::getSessionUserProfileIdentity());
+
+            $infoFactory->readModel($infoModel);
+
+            $modelInvoice->setMailId( $infoModel->getPersonEmailId() );
+            $modelInvoice->setOwnerNameId( $infoModel->getPersonNameId() );
+            $modelInvoice->setAddressId( $infoModel->getPersonAddressId() );
+
+            $collect_total = 0;
+
+            foreach ( $basket->getEntries() as $entry )
+            {
+                if( $entry instanceof BasketEntry )
+                {
+                    $total      = $entry->calculateTotalPrice();
+                    $collect_total = $collect_total + $total;
+                }
+            }
+
+            $modelInvoice->setTotalPrice( floatval( $collect_total ) );
+            $modelInvoice->setProfileId( $infoModel->getProfileId() );
+
+            $invoiceFactory->create($modelInvoice);
+
+            $broughtFactory = $this->getBroughtProductFactory();
+
+            foreach ( $basket->getEntries() as $entry )
+            {
+                if( $entry instanceof BasketEntry )
+                {
+                    $product_id = $entry->getProductIdentity();
+                    $price      = $entry->getProductPrice();
+                    $quantity   = $entry->getProductQuantity();
+
+                    $broughtModel = $broughtFactory->createModel();
+
+                    $broughtModel->setPrice( $price );
+                    $broughtModel->setNumberOfProducts( $quantity );
+
+                    $broughtModel->setInvoiceId( $modelInvoice->getIdentity() );
+                    $broughtModel->setProductId( $product_id );
+
+                    $broughtFactory->create( $broughtModel );
+
+                }
+            }
+
+
+
+
+            return $retVal;
+        }
+
+
         // Accessor
         /**
          * @return ProductEntityFactory|null
@@ -128,6 +206,24 @@
         public final function getProductInvoiceFactory(): ?ProductInvoiceFactory
         {
             return $this->product_invoice_factory;
+        }
+
+
+        /**
+         * @return ProfileInformationFactory|null
+         */
+        public function getProfileInformationFactory(): ?ProfileInformationFactory
+        {
+            return $this->profileInformationFactory;
+        }
+
+
+        /**
+         * @param ProfileInformationFactory|null $profileInformationFactory
+         */
+        public function setProfileInformationFactory( ?ProfileInformationFactory $profileInformationFactory): void
+        {
+            $this->profileInformationFactory = $profileInformationFactory;
         }
 
 

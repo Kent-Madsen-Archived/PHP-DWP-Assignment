@@ -62,7 +62,7 @@
                 return FALSE;
             }
 
-            if( SessionUserProfile::getSessionUserProfileType() == 3 )
+            if( SessionUserProfile::getSessionUserProfileType() == 4 )
             {
                 return TRUE;
             }

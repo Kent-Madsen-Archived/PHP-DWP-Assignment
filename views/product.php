@@ -56,7 +56,7 @@
             <?php elseif( $operation_value == 'identity' ): ?>
                 <?php require 'views/product/page_view_product.php'; ?>
             <?php elseif( $operation_value == 'puchase' ): ?>
-                <?php require 'views/product/page_view_puchase.php'; ?>
+                <?php require 'views/product/page_view_purchase.php'; ?>
             <?php elseif ( $operation_value == 'pagination' ):?>
                 <?php require 'views/product/page_view_pagination.php'; ?>
             <?php endif; ?>
