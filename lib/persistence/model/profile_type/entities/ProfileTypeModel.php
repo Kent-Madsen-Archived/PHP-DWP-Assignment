@@ -9,10 +9,10 @@
         // constructors
         /**
          * ProfileTypeModel constructor.
-         * @param $factory
+         * @param ProfileTypeFactory $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProfileTypeFactory $factory )
         {
             $this->setFactory( $factory );
         }

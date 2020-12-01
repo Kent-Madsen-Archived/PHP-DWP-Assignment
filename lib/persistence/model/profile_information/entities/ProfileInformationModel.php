@@ -12,7 +12,7 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProfileInformationFactory $factory )
         {
             $this->setFactory( $factory );
         }
@@ -23,8 +23,6 @@
          */
         final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
-
             $has_profile_id_input = !is_null($this->profile_id);
             $has_personname_id_input = !is_null($this->person_name_id);
             $has_personaddr_id_input = !is_null($this->person_address_id);

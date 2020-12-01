@@ -9,10 +9,10 @@
         // Constructors
         /**
          * PageElementModel constructor.
-         * @param $factory
+         * @param PageElementFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?PageElementFactory $factory )
         {
             $this->setFactory( $factory );   
         }

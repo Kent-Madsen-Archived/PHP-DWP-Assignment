@@ -8,10 +8,10 @@
     {
         /**
          * BroughtProductModel constructor.
-         * @param $factory
+         * @param BroughtFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?BroughtFactory $factory )
         {
             $this->setFactory( $factory );   
         }

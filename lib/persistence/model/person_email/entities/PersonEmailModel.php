@@ -9,10 +9,10 @@
         // Constructor
         /**
          * PersonEmailModel constructor.
-         * @param $factory
+         * @param PersonEmailFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?PersonEmailFactory $factory )
         {
             $this->setFactory( $factory );
         }

@@ -9,10 +9,10 @@
         // Constructors
         /**
          * AssociatedCategoryModel constructor.
-         * @param $factory
+         * @param AssociatedCategoryFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?AssociatedCategoryFactory $factory )
         {
             $this->setFactory( $factory );
         }   

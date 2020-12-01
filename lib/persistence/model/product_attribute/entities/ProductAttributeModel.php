@@ -12,7 +12,7 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProductAttributeFactory $factory )
         {
             $this->setFactory( $factory );   
         }

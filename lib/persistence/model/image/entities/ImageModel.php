@@ -8,10 +8,10 @@
     {
         /**
          * ImageModel constructor.
-         * @param $factory
+         * @param ImageFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ImageFactory $factory )
         {
             $this->setFactory( $factory );   
         }

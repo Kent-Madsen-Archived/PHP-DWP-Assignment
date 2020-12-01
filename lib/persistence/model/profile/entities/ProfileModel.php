@@ -12,7 +12,7 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProfileFactory $factory )
         {
             $this->setFactory( $factory );
             $this->setIsPasswordHashed( false );

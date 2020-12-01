@@ -11,7 +11,7 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProductUsedImageFactory $factory )
         {
             $this->setFactory( $factory );   
         }

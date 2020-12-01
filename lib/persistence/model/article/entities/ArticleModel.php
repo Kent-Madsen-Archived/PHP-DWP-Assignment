@@ -8,10 +8,10 @@
         // Constructors
         /**
          * ArticleModel constructor.
-         * @param $factory
+         * @param ArticleFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ArticleFactory $factory )
         {
             $this->setFactory( $factory );
         }
