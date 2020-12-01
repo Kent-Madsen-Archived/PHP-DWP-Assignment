@@ -6,6 +6,7 @@
      *  Project: DWP-Assignment
      */
 
+    $domain = new InvoiceDomain();
     
     PageTitleController::getSingletonController()->append( ' - Invoices' );
 ?>

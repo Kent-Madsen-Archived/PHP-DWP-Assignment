@@ -62,7 +62,7 @@
 
         }
 
-
+        // Variables
         private $product_factory = null;
         private $product_entity_factory = null;
 
@@ -112,141 +112,145 @@
         }
 
 
+        // Accessor
         /**
-         * @return null
+         * @return ProductEntityFactory|null
          */
-        public final function getProductEntityFactory()
+        public final function getProductEntityFactory(): ?ProductEntityFactory
         {
             return $this->product_entity_factory;
         }
 
 
         /**
-         * @param null $product_entity_factory
+         * @return ProductInvoiceFactory|null
          */
-        public final function setProductEntityFactory($product_entity_factory): void
-        {
-            $this->product_entity_factory = $product_entity_factory;
-        }
-
-
-        /**
-         * @return null
-         */
-        public final function getProductInvoiceFactory()
+        public final function getProductInvoiceFactory(): ?ProductInvoiceFactory
         {
             return $this->product_invoice_factory;
         }
 
 
         /**
-         * @param null $product_invoice_factory
+         * @return BroughtFactory|null
          */
-        public final function setProductInvoiceFactory($product_invoice_factory): void
-        {
-            $this->product_invoice_factory = $product_invoice_factory;
-        }
-
-
-        /**
-         * @return null
-         */
-        public final function getBroughtProductFactory()
+        public final function getBroughtProductFactory(): ?BroughtFactory
         {
             return $this->brought_product_factory;
         }
 
 
         /**
-         * @return null
+         * @return PersonAddressFactory|null
          */
-        public final function getPersonAddressFactory()
+        public final function getPersonAddressFactory(): ?PersonAddressFactory
         {
             return $this->person_address_factory;
         }
 
 
         /**
-         * @return null
+         * @return PersonEmailFactory|null
          */
-        public final function getPersonEmailFactory()
+        public final function getPersonEmailFactory(): ?PersonEmailFactory
         {
             return $this->person_email_factory;
         }
 
 
         /**
-         * @return null
+         * @return PersonNameFactory|null
          */
-        public final function getPersonNameFactory()
+        public final function getPersonNameFactory(): ?PersonNameFactory
         {
             return $this->person_name_factory;
         }
 
         /**
-         * @return null
+         * @return ProductFactory|null
          */
-        public final function getProductFactory()
+        public final function getProductFactory(): ?ProductFactory
         {
             return $this->product_factory;
         }
 
 
         /**
-         * @return ProductFactory
+         * @return ProfileFactory|null
          */
-        public final function getProfileFactory(): ?ProductFactory
+        public final function getProfileFactory(): ?ProfileFactory
         {
             return $this->profile_factory;
         }
 
 
         /**
-         * @param null $brought_product_factory
+         * @param ProductInvoiceFactory|null $product_invoice_factory
          */
-        public final function setBroughtProductFactory($brought_product_factory): void
+        public final function setProductInvoiceFactory( ?ProductInvoiceFactory $product_invoice_factory ): void
+        {
+            $this->product_invoice_factory = $product_invoice_factory;
+        }
+
+
+        /**
+         * @param ProductEntityFactory|null $product_entity_factory
+         */
+        public final function setProductEntityFactory( ?ProductEntityFactory $product_entity_factory ): void
+        {
+            $this->product_entity_factory = $product_entity_factory;
+        }
+
+
+        /**
+         * @param BroughtFactory|null $brought_product_factory
+         */
+        public final function setBroughtProductFactory( ?BroughtFactory $brought_product_factory ): void
         {
             $this->brought_product_factory = $brought_product_factory;
         }
 
 
         /**
-         * @param null $person_address_factory
+         * @param PersonAddressFactory|null $person_address_factory
          */
-        public final function setPersonAddressFactory($person_address_factory): void
+        public final function setPersonAddressFactory( ?PersonAddressFactory $person_address_factory ): void
         {
             $this->person_address_factory = $person_address_factory;
         }
-        
+
 
         /**
-         * @param null $person_email_factory
+         * @param PersonEmailFactory|null $person_email_factory
          */
-        public final function setPersonEmailFactory($person_email_factory): void
+        public final function setPersonEmailFactory( ?PersonEmailFactory $person_email_factory ): void
         {
             $this->person_email_factory = $person_email_factory;
         }
 
+
         /**
-         * @param null $person_name_factory
+         * @param PersonNameFactory|null $person_name_factory
          */
-        public final function setPersonNameFactory($person_name_factory): void
+        public final function setPersonNameFactory( ?PersonNameFactory $person_name_factory ): void
         {
             $this->person_name_factory = $person_name_factory;
         }
 
+
         /**
-         * @param null $product_factory
+         * @param ProductFactory|null $product_factory
          */
-        public final function setProductFactory($product_factory): void
+        public final function setProductFactory( ?ProductFactory $product_factory ): void
         {
             $this->product_factory = $product_factory;
         }
 
+
         /**
-         * @param null $profile_factory
+         * @param ProfileFactory|null $profile_factory
          */
-        public final function setProfileFactory($profile_factory): void
+        public final function setProfileFactory( ?ProfileFactory $profile_factory ): void
         {
             $this->profile_factory = $profile_factory;
         }
