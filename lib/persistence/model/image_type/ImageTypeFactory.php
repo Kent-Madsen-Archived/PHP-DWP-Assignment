@@ -364,7 +364,7 @@
 
                 //
                 $stmt_image_type_content = $model->getContent();
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -430,11 +430,36 @@
             return intval( $retVal );
         }
 
-        public function lengthCalculatedWithFilter(array $filter)
+
+        /**
+         * @param array $filter
+         * @return mixed|void
+         */
+        public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
         }
 
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
+        }
 
 
     }

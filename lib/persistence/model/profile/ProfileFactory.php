@@ -591,6 +591,27 @@
             // TODO: Implement lengthCalculatedWithFilter() method.
         }
 
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
+        }
+
     }
 
 ?>

@@ -44,6 +44,19 @@
         }
 
 
+        /**
+         * @return string
+         */
+        public abstract function appendices(): string;
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public abstract function insertOptions( array $filters ): bool;
+
+
+
         // Validation of objects
         /**
          * @param $var
