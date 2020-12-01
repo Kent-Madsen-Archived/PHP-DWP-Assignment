@@ -17,12 +17,20 @@
          * @param $mysql_connector
          * @throws Exception
          */
-        public function __construct( $mysql_connector )
+        public function __construct( ?MySQLConnectorWrapper $mysql_connector )
         {
+            $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
-
         }
+
+        private const table_name = 'product';
+
+        private const field_identity    = 'identity';
+
+        private const field_title       = 'title';
+        private const field_description = 'description';
+        private const field_price       = 'price';
 
 
         /**
@@ -30,7 +38,7 @@
          */
         final public static function getTableName()
         {
-            return 'product';
+            return self::table_name;
         }
 
 
@@ -84,7 +92,6 @@
         final public function createModel(): ProductModel
         {
             $model = new ProductModel( $this );
-
             return $model;
         }
 
@@ -110,13 +117,15 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read( ): ?array
+        final public function read(): ?array
         {
             // return array
             $retVal = null;
 
+            $tn = self::table_name;
+
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM product LIMIT ? OFFSET ?;";
+            $sql = "SELECT * FROM {$tn} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -132,8 +141,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = intval( $this->getLimit(), 10 );
-                $stmt_offset = intval( $this->CalculateOffset(), 10 );
+                $stmt_limit  =  $this->getLimitValue();
+                $stmt_offset =  $this->CalculateOffset();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -146,11 +155,11 @@
                     {
                         $productModel = $this->createModel();
 
-                        $productModel->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $productModel->setIdentity( self::Int10( $row[ self::field_identity ] ) );
                         
-                        $productModel->setTitle( strval(  $row[ 'title' ] ) );
-                        $productModel->setDescription( strval( $row[ 'description' ] ) );
-                        $productModel->setPrice( doubleval( $row[ 'price' ] ) );
+                        $productModel->setTitle( strval(  $row[ self::field_title ] ) );
+                        $productModel->setDescription( strval( $row[ self::field_description ] ) );
+                        $productModel->setPrice( doubleval( $row[ self::field_price ] ) );
 
                         array_push( $retVal, $productModel );
                     }
@@ -185,7 +194,10 @@
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM product WHERE identity = ?;";
+            $tn = self::table_name;
+            $tfi = self::field_identity;
+
+            $sql = "SELECT * FROM {$tn} WHERE {$tfi} = ?;";
 
             // prepare statement variables
             $stmt_identity  = null;
@@ -199,7 +211,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_identity  = intval( $model->getIdentity(), 10 );
+                $stmt_identity  = self::Int10( $model->getIdentity() );
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -208,11 +220,11 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( self::Int10( $row[ self::field_identity ] ) );
 
-                        $model->setTitle( strval(  $row[ 'title' ] ) );
-                        $model->setDescription( strval( $row[ 'description' ] ) );
-                        $model->setPrice( doubleval( $row[ 'price' ] ) );
+                        $model->setTitle( strval(  $row[ self::field_title ] ) );
+                        $model->setDescription( strval( $row[ self::field_description ] ) );
+                        $model->setPrice( doubleval( $row[ self::field_price ] ) );
 
                         $retVal = true;
                     }
@@ -247,8 +259,14 @@
             // return array
             $retVal = null;
 
+            $tn = self::table_name;
+
+            $tft = self::field_title;
+            $tfd = self::field_description;
+            $tfp = self::field_price;
+
             // sql, that the prepared statement uses
-            $sql = "INSERT INTO product( title, description, price ) VALUES( ?, ?, ? );";
+            $sql = "INSERT INTO {$tn} ( {$tft}, {$tfd}, {$tfp} ) VALUES( ?, ?, ? );";
 
             // prepare statement variables
             $stmt_title         = null;
@@ -268,6 +286,7 @@
                 $stmt_description   = $model->getDescription() ;
 
                 $stmt_price         = $model->getPrice();
+
 
                 $stmt->execute();
 
@@ -303,7 +322,14 @@
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "UPDATE product SET title = ?, description = ?, price = ? WHERE identity = ?;";
+            $tn = self::table_name;
+            $tfi = self::field_identity;
+
+            $tft = self::field_title;
+            $tfd = self::field_description;
+            $tfp = self::field_price;
+
+            $sql = "UPDATE {$tn} SET {$tft} = ?, {$tfd} = ?, {$tfp} = ? WHERE {$tfi} = ?;";
 
             // prepare statement variables
             $stmt_identity      = null;
@@ -312,7 +338,7 @@
             $stmt_description   = null;
             $stmt_price         = null;
 
-            //
+            // Opens an connection
             $connection = $this->getWrapper()->connect();
 
             try
@@ -330,7 +356,7 @@
                 
                 $stmt_price         = doubleval( $model->getPrice() );
 
-                $stmt_identity      = intval( $model->getIdentity(), 10 );
+                $stmt_identity      = self::Int10( $model->getIdentity() );
 
                 $stmt->execute();
 
@@ -366,7 +392,10 @@
             
             $retVal = false;
 
-            $sql = "DELETE FROM product WHERE identity = ?;";
+            $tn = self::table_name;
+            $tfi = self::field_identity;
+
+            $sql = "DELETE FROM {$tn} WHERE {$tfi} = ?;";
 
             $stmt_identity = null;
 
@@ -407,15 +436,15 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
-            $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
+            $tn = self::table_name;
+            $sql = "SELECT count( * ) AS number_of_rows FROM {$tn};";
 
             $connection = $this->getWrapper()->connect();
 
@@ -430,7 +459,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
+                        $retVal = self::Int10( $row[ 'number_of_rows' ]);
                     }
                 }  
             }
@@ -446,11 +475,12 @@
             return intval( $retVal );
         }
 
+
         /**
          * @param array $filter
          * @return mixed|void
          */
-        public function lengthCalculatedWithFilter(array $filter)
+        public function lengthCalculatedWithFilter( array $filter )
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
         }

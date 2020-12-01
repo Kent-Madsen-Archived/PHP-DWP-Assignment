@@ -12,13 +12,25 @@
     class ArticleFactory
         extends BaseFactoryTemplate
     {
+        private const field_identity        = 'identity';
+
+        private const field_title           = 'title';
+        private const field_content         = 'content';
+
+        private const field_created_on      = 'created_on';
+        private const field_last_updated    = 'last_updated';
+
+        private const table_name = 'article';
+
+
         /**
          * ArticleFactory constructor.
-         * @param $mysql_connector
+         * @param MySQLConnectorWrapper|null $mysql_connector
          * @throws Exception
          */
-        public function __construct( $mysql_connector )
+        public function __construct( ?MySQLConnectorWrapper $mysql_connector )
         {
+            $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
@@ -27,27 +39,9 @@
         /**
          * @return string
          */
-        final public static function getViewName(): string
-        {
-            return 'ArticleView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName(): string
-        {
-            return 'ArticleController';
-        }
-
-
-        /**
-         * @return string
-         */
         final public static function getTableName(): string
         {
-            return strval('article');
+            return self::table_name;
         }
 
 
@@ -113,7 +107,8 @@
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM article LIMIT ? OFFSET ?;";
+            $tn = $this->getFactoryTableName();
+            $sql = "SELECT * FROM {$tn} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -129,7 +124,7 @@
                                    $stmt_limit, 
                                    $stmt_offset );
 
-                $stmt_limit  = $this->getLimit();
+                $stmt_limit  = $this->getLimitValue();
                 $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
@@ -143,13 +138,13 @@
                     {
                         $articleModel = $this->createModel();
                         
-                        $articleModel->setIdentity( $row[ 'identity' ] );
+                        $articleModel->setIdentity( $row[ self::field_identity ] );
                         
-                        $articleModel->setTitle( $row[ 'title' ] );
-                        $articleModel->setContent( $row[ 'content' ] );
+                        $articleModel->setTitle( $row[ self::field_title ] );
+                        $articleModel->setContent( $row[ self::field_content ] );
 
-                        $articleModel->setCreatedOn( $row[ 'created_on' ] );
-                        $articleModel->setLastUpdated( $row[ 'last_updated' ] );
+                        $articleModel->setCreatedOn( $row[ self::field_created_on ] );
+                        $articleModel->setLastUpdated( $row[ self::field_last_updated ] );
     
                         array_push( $retVal, $articleModel );
                     }
@@ -183,7 +178,8 @@
             $connection = $this->getWrapper()->connect();
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM article where identity = ?;";
+            $tn = $this->getFactoryTableName();
+            $sql = "SELECT * FROM {$tn} where identity = ?;";
 
             // return array
             $retVal = false;
@@ -204,13 +200,13 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setTitle( $row[ 'title' ]  );
-                        $model->setContent( $row[ 'content' ]  );
+                        $model->setTitle( $row[ self::field_title ]  );
+                        $model->setContent( $row[ self::field_content ] );
 
-                        $model->setCreatedOn( $row[ 'created_on' ] );
-                        $model->setLastUpdated( $row[ 'last_updated' ] );
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setLastUpdated( $row[ self::field_last_updated ] );
 
                         $retVal = true;
                     }
@@ -238,7 +234,8 @@
             $connection = $this->getWrapper()->connect();
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM article ORDER BY created_on DESC LIMIT ? OFFSET ?;";
+            $tn = $this->getFactoryTableName();
+            $sql = "SELECT * FROM {$tn} ORDER BY created_on DESC LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -255,7 +252,7 @@
                                    $stmt_limit, 
                                    $stmt_offset );
 
-                $stmt_limit = $this->getLimit();
+                $stmt_limit = $this->getLimitValue();
                 $stmt_offset = $this->CalculateOffset();
 
                 $stmt->execute();
@@ -269,13 +266,13 @@
                     {
                         $articleModel = $this->createModel();
                         
-                        $articleModel->setIdentity( $row[ 'identity' ] );
+                        $articleModel->setIdentity( $row[ self::field_identity ] );
                         
-                        $articleModel->setTitle( $row[ 'title' ]  );
-                        $articleModel->setContent( $row[ 'content' ]  );
+                        $articleModel->setTitle( $row[ self::field_title ]  );
+                        $articleModel->setContent( $row[ self::field_content ]  );
 
-                        $articleModel->setCreatedOn( $row[ 'created_on' ] );
-                        $articleModel->setLastUpdated( $row[ 'last_updated' ] );
+                        $articleModel->setCreatedOn( $row[ self::field_created_on ] );
+                        $articleModel->setLastUpdated( $row[ self::field_last_updated ] );
     
                         array_push( $retVal, $articleModel );
                     }
@@ -313,7 +310,12 @@
             // Return Values
             $retVal = false;
 
-            $sql = "INSERT INTO article( title, content ) VALUES( ?, ? );";
+            $tn = $this->getFactoryTableName();
+
+            $tft = self::field_title;
+            $tfc = self::field_content;
+
+            $sql = "INSERT INTO {$tn}( {$tft}, {$tfc} ) VALUES( ?, ? );";
 
             //
             $connection = $this->getWrapper()->connect();
@@ -363,7 +365,14 @@
                 throw new Exception('Not accepted model');
             }
 
-            $sql = "UPDATE article SET title = ?, article_content = ? WHERE identity = ?";
+            $tn = $this->getFactoryTableName();
+
+            $tft = self::field_title;
+            $tfc = self::field_content;
+
+            $tfi = self::field_identity;
+
+            $sql = "UPDATE {$tn} SET {$tft} = ?, {$tfc} = ? WHERE {$tfi} = ?";
 
             $stmt_title     = null;
             $stmt_content   = null;
@@ -426,7 +435,10 @@
             $retVal = false;
 
             // sql query
-            $sql = "DELETE FROM article WHERE identity = ?;";
+            $tn = $this->getFactoryTableName();
+            $tfi = self::field_identity;
+
+            $sql = "DELETE FROM {$tn} WHERE {$tfi} = ?;";
 
             // Statement Variables
             $stmt_identity = null;
@@ -515,6 +527,8 @@
         {
             // TODO: Implement length_calculate_with_filter() method.
         }
+
+
 
     }
 

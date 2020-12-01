@@ -53,8 +53,9 @@
          * @param $mysql_connector
          * @throws Exception
          */
-        function __construct( $mysql_connector )
-        {   
+        function __construct( ?MySQLConnectorWrapper $mysql_connector )
+        {
+            $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
@@ -106,9 +107,9 @@
         /**
          * TODO: This
          */
-        final public function read()
+        public function read(): ?array
         {
-
+            // TODO: Implement read() method.
         }
 
 
@@ -117,7 +118,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {

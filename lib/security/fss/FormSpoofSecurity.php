@@ -56,7 +56,7 @@
          */
         final public function applyToSession(): void
         {
-            self::setSessionFSSToken( $this->getToken() );
+            SessionFormSpoofSecurityForm::setSessionFSSToken( $this->getToken() );
         }
 
 
@@ -99,89 +99,11 @@
 
 
         /**
-         * @return bool
-         */
-        public final static function existSessionFSSToken(): bool
-        {
-            return boolval( isset( $_SESSION[ 'fss_token' ] ) );
-        }
-
-
-        /**
-         * @return bool
-         */
-        public final static function existPostFSSToken(): bool
-        {
-            return boolval( isset( $_POST[ 'security_token' ] ) );
-        }
-
-
-        /**
-         * @return string|null
-         */
-        public final static function getSessionFSSToken(): ?string
-        {
-            if( !self::existSessionFSSToken() )
-            {
-                return null;
-            }
-
-            if( is_null( $_SESSION[ 'fss_token' ] ) )
-            {
-                return null;
-            }
-
-            return strval( $_SESSION[ 'fss_token' ] );
-        }
-
-
-        /**
-         * @param $value
-         * @return string|null
-         * @throws Exception
-         */
-        public final static function setSessionFSSToken( $value ): ?string
-        {
-            if( is_null( $value ) )
-            {
-                $_SESSION[ 'fss_token' ] = null;
-            }
-
-            if( !is_string( $value ) )
-            {
-                SecurityErrors::throwErrorInputIsNotAnString();
-            }
-
-            $_SESSION[ 'fss_token' ] = $value;
-            return self::getSessionFSSToken();
-        }
-
-
-        /**
-         * @return string|null
-         */
-        public final static function getPostFSSToken(): ?string
-        {
-            if( !self::existPostFSSToken() )
-            {
-                return null;
-            }
-
-            if( is_null( $_POST[ 'security_token' ] ) )
-            {
-                return null;
-            }
-
-            return strval( $_POST[ 'security_token' ] );
-        }
-
-
-        /**
          * @throws Exception
          */
         public final static function printSessionFSSToken(): void
         {
-            $fss_token = self::getSessionFSSToken();
+            $fss_token = SessionFormSpoofSecurityForm::getSessionFSSToken();
 
             if( is_null( $fss_token ) )
             {
@@ -202,12 +124,14 @@
         {
             $retVal = false;
 
-            if( ( self::getSessionFSSToken() == self::getPostFSSToken() ) )
+            if( ( SessionFormSpoofSecurityForm::getSessionFSSToken() == PostFormSpoofSecurityForm::getPostFSSToken() ) )
             {
                 $retVal = true;
             }
 
             return boolval( $retVal );
         }
+
+
     }
 ?>
