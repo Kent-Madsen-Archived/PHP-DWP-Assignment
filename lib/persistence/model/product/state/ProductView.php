@@ -161,10 +161,15 @@
             return htmlentities(strtoupper("{$str} dkk."));
         }
 
-        final public function printPrice(): string
+
+        /**
+         * @return string
+         * @throws Exception
+         */
+        final public function printFieldTypePrice(): string
         {
             $str = strval($this->viewPrice());
-            return htmlentities("{$str} dkk.");
+            return htmlentities("{$str}");
         }
 
 

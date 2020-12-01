@@ -211,12 +211,16 @@
          * @param int $pagination
          * @param int $limit
          * @return array|null
+         * @throws Exception
          */
         public function retrieveProductsAt( int $pagination, int $limit ): ?array
         {
             $factory = $this->getProductFactory();
-            $factory->setPaginationIndexCounter($pagination);
-            $factory->setLimitValue($limit);
+
+            $factory->setPaginationIndexValue( $pagination );
+            $factory->setLimitValue( $limit );
+
+            return $factory->read();;
         }
 
 

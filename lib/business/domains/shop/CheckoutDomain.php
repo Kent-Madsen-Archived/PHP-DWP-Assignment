@@ -77,7 +77,7 @@
 
 
         /**
-         *
+         * Retrieves an overview of the users basket. and include the product
          */
         public final function overviewOfBasket(): array
         {
@@ -99,8 +99,10 @@
                     $model = $factory->createModel();
                     $model->setIdentity($entry->getProductIdentity());
 
-                    $factory->readModel($model);;
-                    $index = array('model'=>$model, 'entry'=>$entry);
+                    $factory->readModel( $model );
+
+                    $index = array( 'model'=>$model, 
+                                    'entry'=>$entry );
 
                     array_push($retVal, $index);
                 }
@@ -118,6 +120,7 @@
             return $this->product_entity_factory;
         }
 
+
         /**
          * @param null $product_entity_factory
          */
@@ -125,6 +128,7 @@
         {
             $this->product_entity_factory = $product_entity_factory;
         }
+
 
         /**
          * @return null
@@ -134,6 +138,7 @@
             return $this->product_invoice_factory;
         }
 
+
         /**
          * @param null $product_invoice_factory
          */
@@ -141,6 +146,7 @@
         {
             $this->product_invoice_factory = $product_invoice_factory;
         }
+
 
         /**
          * @return null
@@ -150,6 +156,7 @@
             return $this->brought_product_factory;
         }
 
+
         /**
          * @return null
          */
@@ -158,6 +165,7 @@
             return $this->person_address_factory;
         }
 
+
         /**
          * @return null
          */
@@ -165,6 +173,7 @@
         {
             return $this->person_email_factory;
         }
+
 
         /**
          * @return null
@@ -182,6 +191,7 @@
             return $this->product_factory;
         }
 
+
         /**
          * @return ProductFactory
          */
@@ -189,6 +199,7 @@
         {
             return $this->profile_factory;
         }
+
 
         /**
          * @param null $brought_product_factory
@@ -198,6 +209,7 @@
             $this->brought_product_factory = $brought_product_factory;
         }
 
+
         /**
          * @param null $person_address_factory
          */
@@ -205,6 +217,7 @@
         {
             $this->person_address_factory = $person_address_factory;
         }
+        
 
         /**
          * @param null $person_email_factory
