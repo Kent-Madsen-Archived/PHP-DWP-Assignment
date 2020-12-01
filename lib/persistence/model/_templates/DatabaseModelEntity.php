@@ -39,7 +39,7 @@
         /**
          * @return bool
          */
-        final protected function isIdentityNull()
+        final public function isIdentityNull(): bool
         {
             return is_null( $this->identity );
         }

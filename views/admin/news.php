@@ -30,19 +30,19 @@
 <a href="/admin/news/create" hreflang="en" class="btn"> Create </a>
 
 <?php
-    if( isset( $operation ) )
+    if( isset( $operation_value ) )
     {
-        if( $operation == 'create' )
+        if( $operation_value == 'create' )
         {
             include 'views/admin/news/create.php';
         }
 
-        if( $operation == 'delete' )
+        if( $operation_value == 'delete' )
         {
             include 'views/admin/news/delete.php';
         }
 
-        if( $operation == 'update' )
+        if( $operation_value == 'update' )
         {
             include 'views/admin/news/update.php';
         }
@@ -54,10 +54,10 @@
         )
     );
 
-    $factory->setPaginationIndex($pagination);
+    $factory->setPaginationIndexValue($pagination);
     $articles = $factory->read();
 ?>
-<?php if ( !isset( $operation ) ): ?>
+<?php if ( !isset( $operation_value ) ): ?>
     <ul>
         <?php if(!is_null( $articles )): ?>
             <?php foreach ( $articles as $article ): ?>
@@ -83,10 +83,10 @@
     </ul>
 
     <form class="pagination" method="post" action="/admin/news">
-        <input type="hidden" value="<?php echo $factory->getPaginationIndex(); ?>" name="admin_product_pagination_current">
+        <input type="hidden" value="<?php echo $factory->getPaginationIndexValue(); ?>" name="admin_product_pagination_current">
 
         <li>
-            <?php if( !$factory->isAtMinimumBoundary() ): ?>
+            <?php if( !$factory->isPaginationIndexAtMinimumBoundary() ): ?>
                 <button type="submit" value="previous" class="btn" name="admin_product_pagination_previous">
                     <span class="material-icons">
                         navigate_before
@@ -102,11 +102,11 @@
         </li>
 
         <li>
-            <?php echo ( $factory->getPaginationIndex() + 1 );?>
+            <?php echo ( $factory->getPaginationIndexValue() + 1 );?>
         </li>
 
         <li>
-            <?php if( !$factory->isAtMaximumBoundary() ): ?>
+            <?php if( !$factory->isPaginationIndexAtMaximumBoundary() ): ?>
                 <button type="submit" class="btn" name="admin_product_pagination_next">
                     <span class="material-icons">
                         navigate_next

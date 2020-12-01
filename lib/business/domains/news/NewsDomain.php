@@ -39,7 +39,7 @@
             $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
             var_dump($factory->length());
 
-            $factory->setLimit(6);
+            $factory->setLimitValue(6);
 
             return $factory->readOrderedByCreationDate();
         }
@@ -53,7 +53,7 @@
         {
             $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
 
-            $factory->setLimit(3);
+            $factory->setLimitValue(3);
 
             return $factory->readOrderedByCreationDate();
         }

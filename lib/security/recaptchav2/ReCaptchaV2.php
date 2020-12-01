@@ -32,7 +32,6 @@
                 $this->setSecurityPublicField( $public );
             }
 
-
         }
 
 
@@ -203,7 +202,7 @@
             return strval( $this->response_key );
         }
 
-        
+
         /**
          * @param $var
          * @return string|null

@@ -17,8 +17,9 @@
          * @param $mysql_connector
          * @throws Exception
          */
-        public function __construct( $mysql_connector )
+        public function __construct( ?MySQLConnectorWrapper $mysql_connector )
         {
+            $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
 
@@ -127,7 +128,7 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = intval( $this->getLimit(), 10 );
+                $stmt_limit  = intval( $this->getLimitValue(), 10 );
                 $stmt_offset = intval( $this->CalculateOffset(), 10 );
 
                 // Executes the query

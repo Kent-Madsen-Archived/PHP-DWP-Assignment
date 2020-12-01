@@ -1,5 +1,5 @@
 <?php
-  if( !( isset( $id ) || isset( $_POST[ 'admin_product_delete_is_deleted' ] ) ) )
+  if( !( isset( $id_value ) || isset( $_POST[ 'admin_product_delete_is_deleted' ] ) ) )
   {
         throw new Exception('Sorry, but this view requires to have a view specified. to function.');
   }
@@ -40,10 +40,10 @@
 <form action="/admin/product/delete"
       method="post"> 
     <p> 
-      Are you sure you want to delete <?php echo htmlentities( $id ); ?>
+      Are you sure you want to delete <?php echo htmlentities( $id_value ); ?>
     </p>
 
-    <input type="hidden" name="admin_product_delete_model_id" value="<?php echo htmlentities( $id );?>">
+    <input type="hidden" name="admin_product_delete_model_id" value="<?php echo htmlentities( $id_value );?>">
 
     <input type="submit"
            name="admin_product_delete_is_deleted" 

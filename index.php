@@ -53,6 +53,15 @@
 
     $product = new Route( 'product', 'views/product.php');
     $product->appendValidationObject( $router_validate_root );
+    $router_product_validate_operation = new RouterValidateStringArgument();
+    $router_product_validate_operation->setLevel(1);
+
+    $router_product_validate_id = new RouterValidateIntArgument();
+    $router_product_validate_id->setLevel(2);
+
+    $product->appendValidationObject( $router_product_validate_operation );
+    $product->appendValidationObject( $router_product_validate_id );
+
     $router->appendToRoutes( $product );
 
 

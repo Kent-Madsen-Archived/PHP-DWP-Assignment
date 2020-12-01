@@ -14,26 +14,35 @@
         implements FactoryCRUDInterface,
                    FactoryStateInterface
     {
+        /**
+         *
+         */
+        protected final function setupBase()
+        {
+            $this->pagination_index_counter = new CounterObject();
+            $this->limit_counter            = new CounterObject();
+        }
+
         //
         private $connector = null;
         
 
         // Useful when implementing pagination
-        private $pagination_index = 0;
-        private $limit = 0;
+        private $pagination_index_counter = null;
+        private $limit_counter = null;
 
 
         //
         /**
-         * @param $limit
-         * @param $pagination_index
-         * @throws Exception
+         * @param int $limit
+         * @param int $pagination_index
          */
-        protected function setPaginationAndLimit( $limit, $pagination_index ): void
+        protected final function setPaginationAndLimit( int $limit = 5, int $pagination_index = 0 ): void
         {
-            $this->setLimit( $limit );
-            $this->setPaginationIndex( $pagination_index );
+            $this->setLimitValue( $limit );
+            $this->setPaginationIndexValue( $pagination_index );
         }
+
 
         // Validation of objects
         /**
@@ -65,49 +74,24 @@
 
 
         /**
-         * @param $value
+         * @param mysqli $value
          * @return string
-         * @throws Exception
          */
-        final protected function escape( $value ): string
+        final protected function escape( mysqli $value ): string
         {
             $connector = $this->getWrapper()->getConnector();
-
-            if( is_null( $connector ) )
-            {
-                throw new Exception('connector is null');
-            }
-
-            if( !( $connector instanceof mysqli ) )
-            {
-                throw new Exception('connector is not class mysqli');
-            }
 
             return $connector->escape_string( $value );
         }
 
 
         /**
-         * @param $Class
-         * @param $interface_name
-         * @return bool
+         * @param int $value
+         * @return int
          */
-        final static public function ModelImplements( $class, $interface_name ): bool
+        final public static function Int10( int $value ): int
         {
-            $retVal = false;
-
-            $class_interfaces_implemented = class_implements( $class );
-
-            foreach ( $class_interfaces_implemented as $interface_implemented_value )
-            {
-                if( strtolower( $interface_name ) == strtolower( $interface_implemented_value ) )
-                {
-                    $retVal = true;
-                    break;
-                }
-            }
-
-            return boolval( $retVal );
+            return intval($value, 10);
         }
 
 
@@ -117,12 +101,12 @@
          */
         final public function CalculateOffset(): int
         {
-            if( is_null( $this->limit ) && is_null( $this->pagination_index ) )
+            if( $this->getLimitCounter()->isCurrentNull() && $this->getPaginationIndexCounter()->isCurrentNull() )
             {
                 throw new Exception( 'can\'t calculate offset, as either limit or pagination index is null' );
             }
 
-            return intval( $this->getLimit() * $this->getPaginationIndex() );
+            return self::Int10( ( $this->getLimitValue() * $this->getPaginationIndexValue() ));
         }
 
 
@@ -132,8 +116,7 @@
          */
         final public function next(): ?int
         {
-            $this->next_jump( CONSTANT_ONE );
-            return $this->getPaginationIndex();
+            return $this->getPaginationIndexCounter()->increment();
         }
 
 
@@ -143,8 +126,7 @@
          */
         final public function previous(): ?int
         {
-            $this->previous_jump( CONSTANT_ONE );
-            return $this->getPaginationIndex();
+            return $this->getPaginationIndexCounter()->decrement();
         }
 
 
@@ -153,26 +135,21 @@
          * @return int|null
          * @throws Exception
          */
-        final public function next_jump( $value ): ?int
+        final public function nextJump( ?int $value=0 ): ?int
         {
             if( is_null( $value ) )
             {
                 return null;
             }
 
-            if( !is_numeric( $value ) )
+            if( $value == 0 )
             {
-                throw new Exception('Parameter value is not a numeric.');
+                return $this->getPaginationIndexValue();
             }
 
-            if( !is_int( $value ) )
-            {
-                throw new Exception('Variable is not null, or an Integer value.');
-            }
+            $this->getPaginationIndexCounter()->increase( $value );
 
-            $this->setPaginationIndex( intval( $this->getPaginationIndex() + $value ) );
-
-            return $this->getPaginationIndex();
+            return $this->getPaginationIndexValue();
         }
 
 
@@ -181,26 +158,21 @@
          * @return int|null
          * @throws Exception
          */
-        final public function previous_jump( $value ): ?int
+        final public function previousJump( ?int $value=0 ): ?int
         {
             if( is_null( $value ) )
             {
                 return null;
             }
 
-            if( !is_numeric( $value ) )
+            if( $value == 0 )
             {
-                throw new Exception('Parameter value is not a numeric.');
+                return $this->getPaginationIndexValue();
             }
 
-            if( !is_int( $value ) )
-            {
-                throw new Exception('Variable is not null, or an Integer value.' );
-            }
+            $this->getPaginationIndexCounter()->decrease( $value );
 
-            $this->setPaginationIndex( intval( $this->getPaginationIndex() - $value ) );
-
-            return $this->getPaginationIndex();
+            return $this->getPaginationIndexValue();
         }
 
 
@@ -208,7 +180,7 @@
         /**
          * @return mixed
          */
-        public abstract function getFactoryTableName() : string;
+        public abstract function getFactoryTableName(): string;
 
 
         /**
@@ -236,28 +208,28 @@
         /**
          * @return int|null
          */
-        final public function getPaginationIndex(): ?int
+        final public function getPaginationIndexValue(): ?int
         {
-            if( is_null( $this->pagination_index ) )
+            if( is_null( $this->getPaginationIndexCounter()->isCurrentNull() ) )
             {
                 return null;
             }
 
-            return intval( $this->pagination_index );
+            return $this->getPaginationIndexCounter()->getCurrent();
         }
 
 
         /**
          * @return int|null
          */
-        final public function getLimit(): ?int
+        final public function getLimitValue(): ?int
         {
-            if( is_null( $this->limit ) )
+            if( is_null( $this->getLimitCounter()->isCurrentNull() ) )
             {
                 return null;
             }
 
-            return intval( $this->limit );
+            return $this->getLimitCounter()->getCurrent();
         }
 
 
@@ -287,95 +259,142 @@
 
 
         /**
-         * @param $idx
+         * @param int|null $idx
          * @return int|null
-         * @throws Exception
          */
-        final public function setPaginationIndex( $idx ): ?int
+        final public function setPaginationIndexValue( ?int $idx ): ?int
         {
-            if( is_null( $idx ) )
-            {
-                $this->pagination_index = null;
-                return $this->pagination_index;
-            }
-
-            if( !is_numeric( $idx ) )
-            {
-                throw new Exception('Parameter value is not a numeric.');
-            }
-
-            if( ( is_numeric( $idx ) && is_integer( $idx ) )  )
-            {
-                $this->pagination_index = intval( $idx );
-            }
-            else
-            {
-                throw new Exception( 'Factory - setPaginationIndex: only numeric characters or null is allowed' );
-            }
-
-            return intval( $this->pagination_index );
+            $this->getPaginationIndexCounter()->setCurrent( $idx );
+            return $this->getPaginationIndexValue();
         }
 
 
         /**
-         * @param $var
+         * @param int|null $var
          * @return int|null
-         * @throws Exception
          */
-        final public function setLimit( $var ): ?int
+        final public function setLimitValue( ?int $var ): ?int
         {
-            if( is_null( $var ) )
-            {
-                $this->limit = null;
-                return $this->limit;
-            }
+            $counter = $this->getLimitCounter();
+            $counter->setCurrent( $var );
 
-            if( !is_numeric( $var ) )
-            {
-                throw new Exception('Parameter value is not a numeric.');
-            }
-
-            if( ( is_numeric( $var ) && is_integer( $var ) ) )
-            {
-                $this->limit = intval( $var );
-            }
-            else 
-            {
-                throw new Exception( 'Factory - setLimit: only numeric characters or null is allowed' );   
-            }
-
-            return intval( $this->limit );
+            return intval( $this->getLimitValue() );
         }
 
 
         /**
          * @return bool
          */
-        final public function isAtMinimumBoundary(): bool
+        final public function isPaginationIndexAtMinimumBoundary(): bool
         {
-            if( is_null( $this->getPaginationIndex() ) )
+            $counter = $this->getPaginationIndexCounter();
+
+            if( is_null( $counter->getCurrent() ) )
             {
                 return boolval( false );
             }
 
-            return boolval( ( $this->getPaginationIndex() == 0 ) );
+            return self::isEqualsToOrBelow( $counter->getCurrent(), CONSTANT_ZERO );
         }
 
 
         /**
          * @return bool
+         * @throws Exception
          */
-        final public function isAtMaximumBoundary(): bool
+        final public function isPaginationIndexAtMaximumBoundary(): bool
         {
-            if( is_null( $this->getLimit() ) || is_null( $this->getPaginationIndex() ) )
+            $pagination_counter = $this->getPaginationIndexCounter();
+            $limit_counter = $this->getLimitCounter();
+
+            if( $limit_counter->isCurrentNull() || ( $pagination_counter->isCurrentNull() ) )
             {
-                return false;
+                throw new Exception('No boundary');
             }
 
-           $size = floatval( floatval( $this->length() ) / floatval( $this->getLimit() ) );
-           $r_size = floor( floatval( $size ) );
+            $size = floatval( floatval( $this->length() ) / floatval( $limit_counter->getCurrent() ) );
 
-           return boolval( $this->getPaginationIndex() == $r_size );
+            // round down.
+            $r_size = self::Int10( floor( floatval( $size ) ) );
+
+            // Return true, if index is above or equals to rSize
+            return self::isEqualToOrAbove( $pagination_counter->getCurrent(), $r_size );
+        }
+
+
+        /**
+         * @param int $position
+         * @param int $boundary
+         * @return bool
+         */
+        public final static function isEqualsToOrBelow( int $position=0, int $boundary=0 ): bool
+        {
+            $equals = ($position == $boundary);
+            $below = ($boundary > $position);
+
+            return ($equals || $below);
+        }
+
+        /**
+         * @param int $position
+         * @param int $boundary
+         * @return bool
+         */
+        public final static function isEqualToOrAbove( int $position=0, int $boundary=0 ): bool
+        {
+            $equals = ($position == $boundary);
+            $isAbove = ($position > $boundary);
+
+            return ( $equals || $isAbove );
+        }
+
+
+        /**
+         * @return CounterObject|null
+         */
+        public final function getPaginationIndexCounter(): ?CounterObject
+        {
+            return $this->pagination_index_counter;
+        }
+
+
+        /**
+         * @param CounterObject|null $pagination_index_counter
+         */
+        public final function setPaginationIndexCounter( ?CounterObject $pagination_index_counter): void
+        {
+            $this->pagination_index_counter = $pagination_index_counter;
+        }
+
+
+        /**
+         * @param CounterObject|null $limit_counter
+         */
+        public final function setLimitCounter( ?CounterObject $limit_counter ): void
+        {
+            $this->limit_counter = $limit_counter;
+        }
+
+
+        /**
+         * @return CounterObject|null
+         */
+        public final function getLimitCounter(): ?CounterObject
+        {
+            return $this->limit_counter;
+        }
+
+
+        /**
+         *
+         */
+        public final function dumpCounterStatus()
+        {
+            $pag = print_r( $this->getPaginationIndexCounter(), true );
+            $limit = print_r($this->getLimitCounter(), true);
+
+            echo htmlentities("Pagination Counter : {$pag}"). '</br>' .
+                 htmlentities("Limit Counter : {$limit}");
         }
 
     }
