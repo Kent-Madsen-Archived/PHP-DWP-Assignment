@@ -7,6 +7,7 @@
      */
 
     $domain = new CheckoutDomain();
+    $overview = $domain->overviewOfBasket();
 
     PageTitleController::getSingletonController()->append( ' - Checkout' );
 ?>
@@ -31,6 +32,23 @@
             <h2>
                 Checkout
             </h2>
+            <?php foreach ( $overview as $index ): ?>
+
+                <?php foreach ( $index as $key => $value ): ?>
+                    <?php if( $key == 'entry' ): ?>
+                    <?php $entry_view = new BasketEntryView( $value ); ?>
+                        <p> Quantity: <?php echo $entry_view->printAreaProductQuantity();?></p>
+                        <p> Total Price: <?php echo $entry_view->printAreaProductTotalPrice();?></p>
+
+                    <?php elseif( $key == 'model' ):?>
+                        <?php $current_view = new ProductView( $value ); ?>
+                            <h4> <?php echo $current_view->printAreaTitle();?></h4>
+                            <p> <?php echo $current_view->printSummaryOfDescription();?></p>
+                            <p> Product Price <?php echo $current_view->printPrice();?></p>
+                    <?php endif; ?>
+                <?php endforeach;?>
+
+            <?php endforeach; ?>
         
         </main>
         

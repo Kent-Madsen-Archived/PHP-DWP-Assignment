@@ -19,11 +19,11 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $retVal = !is_null($this->content);
 
             return $retVal;
         }

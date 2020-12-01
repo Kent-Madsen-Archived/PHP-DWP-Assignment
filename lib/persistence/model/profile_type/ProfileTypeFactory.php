@@ -110,7 +110,7 @@
          * @return array|mixed
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             //
             $sql = "SELECT * FROM profile_type LIMIT ? OFFSET ?;";

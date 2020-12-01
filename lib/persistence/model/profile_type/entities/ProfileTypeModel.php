@@ -61,7 +61,7 @@
          */
         final protected function isContentNull(): bool
         {
-            return boolval( is_null( $this->content ) );
+            return is_null( $this->content );
         }
 
         

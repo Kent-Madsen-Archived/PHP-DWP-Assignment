@@ -57,7 +57,7 @@
 
                     <input type="hidden"
                            name="security_token"
-                           <?php FormSpoofSecurity::printSessionFSSToken(); ?> >
+                           <?php $fss::printSessionFSSToken(); ?> >
 
                     <input type="hidden" 
                            name="security_empty" 

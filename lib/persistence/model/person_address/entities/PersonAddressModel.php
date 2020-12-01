@@ -19,11 +19,18 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $street_name_has_input = !is_null($this->street_name);
+            $street_address_number_has_input = !is_null($this->street_address_number);
+            $street_address_zip_code_has_input = !is_null($this->zip_code);
+            $country_has_input = !is_null($this->country);
+
+            $retVal = ($street_name_has_input && $street_address_number_has_input && $street_address_zip_code_has_input && $country_has_input);
 
             return $retVal;
         }

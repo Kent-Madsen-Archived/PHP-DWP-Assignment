@@ -17,9 +17,7 @@
     $id_value = $router->getValidationTree()[2]->getValue();
 ?>
 
-<?php if( $operation_value == 'checkout' ):?>
-    <?php require 'views/product/page_view_checkout.php' ?>
-<?php elseif( $operation_value == 'buy' ):?>
+<?php if( $operation_value == 'buy' ):?>
     <?php require 'views/product/page_view_buy.php' ?>
 <?php elseif($operation_value=='clear_basket'):?>
     <?php require 'views/product/page_view_clear.php';?>

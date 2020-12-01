@@ -19,7 +19,7 @@
          */
         final public static function throwErrorTokenIsNull()
         {
-            throw new Exception('');
+            throw new Exception('Variable is null');
         }
 
 

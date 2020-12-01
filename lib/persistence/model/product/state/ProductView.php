@@ -130,16 +130,25 @@
 
 
         /**
-         * @param $size
-         * @return string|null
+         * @return string
          * @throws Exception
          */
-        final public function printAreaDescriptionWithWrap( $size ): string
+        final public function printSummaryOfDescription():string
         {
-            $str = wordwrap( strval( $this->viewDescription() ), $size );
-            return htmlentities( "description: {$str}");
-        }
+            $str = strval( $this->viewDescription() );
+            $value = null;
 
+            if(strlen($str) > 250)
+            {
+                $value = substr($str, 0, 250);
+            }
+            else
+            {
+                $value = $str;
+            }
+
+            return htmlentities("description: {$value}");
+        }
 
         /**
          * @return string|null
@@ -155,7 +164,7 @@
         final public function printPrice(): string
         {
             $str = strval($this->viewPrice());
-            return htmlentities($str);
+            return htmlentities("{$str} dkk.");
         }
 
 

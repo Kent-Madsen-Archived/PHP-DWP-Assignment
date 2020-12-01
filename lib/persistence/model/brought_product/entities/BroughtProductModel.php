@@ -18,11 +18,19 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated():bool
         {
             $retVal = false;
+
+            $invoice_id_has_input = !is_null($this->invoice_id);
+            $number_of_product_has_input = !is_null($this->number_of_products);
+            $product_price_has_input = !is_null($this->price);
+            $product_identity_has_input = !is_null($this->product_id);
+
+            $retVal = ( $invoice_id_has_input && $number_of_product_has_input &&
+                        $product_price_has_input && $product_identity_has_input );
 
             return $retVal;
         }

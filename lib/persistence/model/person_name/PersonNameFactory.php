@@ -109,7 +109,7 @@
          * @return array|mixed|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             $retVal = null;
 

@@ -18,11 +18,19 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $image_src_has_input = !is_null($this->image_src);
+            $image_type_has_input = !is_null($this->image_type_id);
+
+            $title_has_input = !is_null($this->title);
+            $alt_has_input = !is_null($this->alt);
+
+            $retVal = ($image_src_has_input && $image_type_has_input && $title_has_input && $alt_has_input);
 
             return boolval( $retVal );
         }

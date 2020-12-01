@@ -19,11 +19,18 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $entity_code_has_input = !is_null($this->entity_code);
+
+            $product_id_has_input = !is_null($this->brought_id);
+            $brought_id_has_input = !is_null($this->product_id);
+
+            $retVal = $entity_code_has_input && $product_id_has_input && $brought_id_has_input;
 
             return $retVal;
         }

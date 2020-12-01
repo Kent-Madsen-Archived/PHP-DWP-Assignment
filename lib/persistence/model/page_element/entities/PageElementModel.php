@@ -19,11 +19,15 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $areaKey_has_input = !is_null($this->area_key);
+            $title_has_input = !is_null($this->title);
+            $content_has_input = !is_null($this->content);
+
+            $retVal = $areaKey_has_input && $title_has_input && $content_has_input;
 
             return boolval( $retVal );
         }
