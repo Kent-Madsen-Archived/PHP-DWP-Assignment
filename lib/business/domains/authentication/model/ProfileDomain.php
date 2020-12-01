@@ -162,98 +162,111 @@
         private $profileInformationFactory = null;
         private $profileTypeFactory = null;
 
+
+        // Accessor
         /**
-         * @return null
+         * @return ProfileFactory|null
          */
-        public function getProfileFactory(): ?ProfileFactory
+        public final function getProfileFactory(): ?ProfileFactory
         {
             return $this->profileFactory;
         }
 
+
         /**
-         * @return null
+         * @return PersonAddressFactory|null
          */
-        public function getAddressFactory(): ?PersonAddressFactory
+        public final function getAddressFactory(): ?PersonAddressFactory
         {
             return $this->addressFactory;
         }
 
+
         /**
-         * @return null
+         * @return PersonEmailFactory|null
          */
-        public function getEmailFactory(): ?PersonEmailFactory
+        public final function getEmailFactory(): ?PersonEmailFactory
         {
             return $this->emailFactory;
         }
 
+
         /**
-         * @return null
+         * @return PersonNameFactory|null
          */
-        public function getNameFactory(): ?PersonNameFactory
+        public final function getNameFactory(): ?PersonNameFactory
         {
             return $this->nameFactory;
         }
 
+
         /**
-         * @return null
+         * @return ProfileInformationFactory|null
          */
-        public function getProfileInformationFactory(): ?ProfileInformationFactory
+        public final function getProfileInformationFactory(): ?ProfileInformationFactory
         {
             return $this->profileInformationFactory;
         }
 
+
         /**
-         * @return null
+         * @return ProfileTypeFactory|null
          */
-        public function getProfileTypeFactory(): ?ProfileTypeFactory
+        public final function getProfileTypeFactory(): ?ProfileTypeFactory
         {
             return $this->profileTypeFactory;
         }
 
+
         /**
          * @param PersonAddressFactory|null $addressFactory
          */
-        public function setAddressFactory( ?PersonAddressFactory $addressFactory ): void
+        public final function setAddressFactory( ?PersonAddressFactory $addressFactory ): void
         {
             $this->addressFactory = $addressFactory;
         }
 
+
         /**
          * @param PersonEmailFactory|null $emailFactory
          */
-        public function setEmailFactory( ?PersonEmailFactory $emailFactory ): void
+        public final function setEmailFactory( ?PersonEmailFactory $emailFactory ): void
         {
             $this->emailFactory = $emailFactory;
         }
 
+
         /**
          * @param PersonNameFactory|null $nameFactory
          */
-        public function setNameFactory(?PersonNameFactory $nameFactory): void
+        public final function setNameFactory(?PersonNameFactory $nameFactory): void
         {
             $this->nameFactory = $nameFactory;
         }
 
+
         /**
          * @param ProfileFactory|null $profileFactory
          */
-        public function setProfileFactory( ?ProfileFactory $profileFactory ): void
+        public final function setProfileFactory( ?ProfileFactory $profileFactory ): void
         {
             $this->profileFactory = $profileFactory;
         }
 
+
         /**
          * @param ProfileInformationFactory|null $profileInformationFactory
          */
-        public function setProfileInformationFactory(?ProfileInformationFactory $profileInformationFactory): void
+        public final function setProfileInformationFactory( ?ProfileInformationFactory $profileInformationFactory ): void
         {
             $this->profileInformationFactory = $profileInformationFactory;
         }
 
+
         /**
          * @param ProfileTypeFactory|null $profileTypeFactory
          */
-        public function setProfileTypeFactory(?ProfileTypeFactory $profileTypeFactory): void
+        public final function setProfileTypeFactory( ?ProfileTypeFactory $profileTypeFactory ): void
         {
             $this->profileTypeFactory = $profileTypeFactory;
         }

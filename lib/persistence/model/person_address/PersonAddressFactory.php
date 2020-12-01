@@ -217,15 +217,17 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
+                        $model = $this->createModel();
+
                         $model->setIdentity( $row[ 'identity' ] );
 
-                        $model->setStreetName(  $row[ 'street_name' ]  );
+                        $model->setStreetAddressName(  $row[ 'street_name' ]  );
                         $model->setStreetAddressNumber( $row[ 'street_address_number' ] );
 
                         $model->setZipCode(  $row[ 'zip_code' ]  );
                         $model->setCountry(  $row[ 'country' ]  );
 
-                        $model->setStreetFloor( $row['street_address_floor']  );
+                        $model->setStreetAddressFloor( $row['street_address_floor']  );
 
                         $retVal = true;
                     }
@@ -285,17 +287,21 @@
                                     $stmt_country,
                                     $stmt_street_floor );
 
+                $model = $this->createModel();
+
                 //
-                $stmt_name                  =  $model->getStreetName();
+                $stmt_name                  =  $model->getStreetAddressName();
                 $stmt_street_address_number =  $model->getStreetAddressNumber();
                 $stmt_zip_code              =  $model->getZipCode();
                 $stmt_country               =  $model->getCountry();
-                $stmt_street_floor          =  $model->getStreetFloor();
+
+                $stmt_street_floor          =  $model->getStreetAddressFloor();
 
                 // Executes the query
                 $stmt->execute();
 
                 $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -332,11 +338,12 @@
             $sql = "UPDATE person_address SET street_name = ?, street_address_number = ?, zip_code = ?, country = ?, street_address_floor=? WHERE identity = ?;";
 
             // prepared statement variables
-            $stmt_name                  = null;
+            $stmt_street_address_name   = null;
             $stmt_street_address_number = null;
+            $stmt_address_floor         = null;
+
             $stmt_zip_code              = null;
             $stmt_country               = null;
-            $stmt_address_floor         = null;
 
             $stmt_identity              = null;
 
@@ -349,7 +356,7 @@
                 
                 //
                 $stmt->bind_param( "sisssi",
-                                    $stmt_name, 
+                                    $stmt_street_address_name,
                                     $stmt_street_address_number, 
                                     $stmt_zip_code, 
                                     $stmt_country,
@@ -357,11 +364,12 @@
                                     $stmt_identity );
 
                 //
-                $stmt_name                  = $model->getStreetName();
+                $stmt_street_address_name   = $model->getStreetAddressName();
                 $stmt_street_address_number = $model->getStreetAddressNumber();
+                $stmt_address_floor         = $model->getStreetAddressFloor();
+
                 $stmt_zip_code              = $model->getZipCode();
                 $stmt_country               = $model->getCountry();
-                $stmt_address_floor         = $model->getStreetFloor();
 
                 $stmt_identity              = $model->getIdentity();
 

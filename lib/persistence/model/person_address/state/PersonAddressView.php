@@ -13,19 +13,40 @@
     {
         /**
          * PersonAddressView constructor.
-         * @param PersonAddressModel|null $model
+         * @param PersonAddressModel $model
          * @throws Exception
          */
-        public function __construct( ?PersonAddressModel $model )
+        public function __construct( PersonAddressModel $model )
         {
             $this->setModel( $model );
+
+            $m = $this->getModel();
+
+            if( $m->isViewNull() )
+            {
+                $m->setView( $this );
+            }
+        }
+
+        /**
+         * @return PersonAddressModel|null
+         * @throws Exception
+         */
+        protected final function transformModel(): ?PersonAddressModel
+        {
+            if( $this->getModel() instanceof PersonAddressModel )
+            {
+                return $this->getModel();
+            }
+
+            return null;
         }
 
 
         // Variables
-        private $toHideEmptyFields  = false;
+        private $toHideEmptyFields  = true;
         private $toCapitaliseWords  = true;
-        private $toUppercaseWords   = true;
+        private $toUppercaseWords   = false;
 
 
         // Functions
@@ -33,7 +54,7 @@
          * @param $model
          * @return bool
          */
-        final public function validateModel( $model ): bool
+        public final function validateModel( $model ): bool
         {
             $retval = false;
 
@@ -44,6 +65,7 @@
 
             return boolval( $retval );
         }
+
 
         /**
          * @return int|null
@@ -59,7 +81,7 @@
          * @return string
          * @throws Exception
          */
-        public final function viewFieldIdentity():string
+        public final function viewFieldIdentity(): string
         {
             if( $this->isViewIdentityNull() )
             {
@@ -85,8 +107,10 @@
          * @return string
          * @throws Exception
          */
-        public final function viewFieldStreetName(): string
+        public final function viewFieldStreetAddressName(): string
         {
+            $m = $this->getModel();
+
             if( $this->isFieldStreetNameNull() )
             {
                 if( $this->isToHideEmptyFields() )
@@ -100,7 +124,7 @@
             }
             else
             {
-                $name = $this->getModel()->getStreetName();
+                $name = $m->getStreetAddressName();
             }
 
             if($this->isToCapitaliseWords())
@@ -118,6 +142,8 @@
          */
         public final function viewFieldStreetAddressNumber(): string
         {
+            $m = $this->getModel();
+
             if( $this->isFieldStreetAddressNumberNull() )
             {
                 if( $this->isToHideEmptyFields() )
@@ -131,7 +157,7 @@
             }
             else
             {
-                $number_to_printed = strval( $this->getModel()->getStreetAddressNumber() );
+                $number_to_printed = strval( $m->getStreetAddressNumber() );
             }
 
             return htmlentities("{$number_to_printed}");
@@ -144,6 +170,8 @@
          */
         public final function viewFieldStreetAddressFloor(): string
         {
+            $m = $this->getModel();
+
             if( $this->isFieldStreetAddressFloorNull() )
             {
                 if( $this->isToHideEmptyFields() )
@@ -157,7 +185,7 @@
             }
             else
             {
-                $floor = strval( $this->getModel()->getStreetFloor() );
+                $floor = strval( $m->getStreetAddressFloor() );
 
                 if( $this->isToUppercaseWords() )
                 {
@@ -173,9 +201,9 @@
          * @return string
          * @throws Exception
          */
-        final public function viewFieldZipCode(): string
+        public final function viewFieldZipCode(): string
         {
-            $z =  $this->getModel();
+            $m = $this->getModel();
 
             if( $this->isFieldZipCodeNull() )
             {
@@ -191,7 +219,7 @@
             }
             else
             {
-                $zip_code_value = $z->getZipCode();
+                $zip_code_value = $m->getZipCode();
             }
 
             return htmlentities("{$zip_code_value}");
@@ -202,11 +230,8 @@
          * @return string
          * @throws Exception
          */
-        final public function viewFieldCountry(): string
+        public final function viewFieldCountry(): string
         {
-            $c = $this->getModel();
-
-
             if( $this->isFieldCountryNull() )
             {
                 if( $this->isToHideEmptyFields() )
@@ -220,7 +245,7 @@
             }
             else
             {
-                $country = strval( $c->getCountry() );
+                $country = strval( $this->getModel()->getCountry() );
             }
 
 
@@ -237,7 +262,7 @@
          * @return string
          * @throws Exception
          */
-        final public function viewFieldCity(): string
+        public final function viewFieldCity(): string
         {
             if( $this->isFieldCityNull() )
             {
@@ -328,7 +353,9 @@
         {
             $retVal = false;
 
-            if( is_null( $this->getModel()->getIdentity() ) == true )
+            $m = $this->getModel();
+
+            if( is_null( $m->isIdentityNull() ) )
             {
                 $retVal = true;
             }
@@ -341,9 +368,10 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldCityNull(): bool
+        public final function isFieldCityNull(): bool
         {
-            return is_null( null );
+            $m = $this->getModel();
+            return is_null( $m->getCity() );
         }
 
 
@@ -351,9 +379,10 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldZipCodeNull(): bool
+        public final function isFieldZipCodeNull(): bool
         {
-            return is_null( $this->getModel()->getZipCode() );
+            $m = $this->getModel();
+            return is_null( $m->getZipCode() );
         }
 
 
@@ -361,7 +390,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldCountryNull(): bool
+        public final function isFieldCountryNull(): bool
         {
             $m = $this->getModel();
             return is_null( $m->getCountry() );
@@ -372,9 +401,10 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldStreetAddressFloorNull():bool
+        public final function isFieldStreetAddressFloorNull(): bool
         {
-            return is_null( $this->getModel()->getStreetFloor() );
+            $m = $this->getModel();
+            return is_null( $m->getStreetAddressFloor() );
         }
 
 
@@ -382,7 +412,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldStreetAddressNumberNull(): bool
+        public final function isFieldStreetAddressNumberNull(): bool
         {
             return is_null( $this->getModel()->getStreetAddressNumber() );
         }
@@ -392,9 +422,10 @@
          * @return bool
          * @throws Exception
          */
-        final public function isFieldStreetNameNull(): bool
+        public final function isFieldStreetNameNull(): bool
         {
-            return is_null( $this->getModel()->getStreetName() );
+            $m = $this->getModel();
+            return is_null( $m->getStreetAddressName() );
         }
 
 
@@ -402,9 +433,9 @@
          * @return string
          * @throws Exception
          */
-        final public function printHomeAddressStandard():string
+        public final function printHomeAddressStandard(): string
         {
-            $message= "{$this->viewFieldStreetName()} {$this->viewFieldStreetAddressNumber()}.{$this->viewFieldStreetAddressFloor()}";
+            $message= "{$this->viewFieldStreetAddressName()} {$this->viewFieldStreetAddressNumber()}.{$this->viewFieldStreetAddressFloor()}";
             return htmlentities($message);
         }
 
@@ -413,12 +444,12 @@
          * @return string
          * @throws Exception
          */
-        final public function printHomeAddressFullRange():string
+        public final function printHomeAddressFullRange(): string
         {
             $country = $this->viewFieldCountry();
             $zip = $this->viewFieldZipCode();
 
-            $street_address_name = $this->viewFieldStreetName();
+            $street_address_name = $this->viewFieldStreetAddressName();
             $street_address_number = $this->viewFieldStreetAddressNumber();
             $street_address_city = '';
 
@@ -428,48 +459,57 @@
             return htmlentities($message);
         }
 
+
         /**
          * @return string
          * @throws Exception
          */
-        final public function printDenmarkFormatForHomeAddress(): string
+        public final function printDenmarkFormatForHomeAddress(): string
         {
             $zip = $this->viewFieldZipCode();
 
-            $street_address_name = $this->viewFieldStreetName();
-            $street_address_number = $this->viewFieldStreetAddressNumber();
-            $street_address_city = $this->viewFieldCity();
+            $street_address_name    = $this->viewFieldStreetAddressName();
+            $street_address_number  = $this->viewFieldStreetAddressNumber();
+            $street_address_city    = $this->viewFieldCity();
 
-            $floor = htmlentities($this->viewFieldStreetAddressFloor());
+            $floor = $this->viewFieldStreetAddressFloor();
 
             $message = "{$street_address_name} {$street_address_number}, {$floor} </br> {$zip} {$street_address_city}";
             return $message;
         }
 
 
-
-
         /**
          * @return string
          * @throws Exception
          */
-        final public function printAddressZipCode():string
+        public final function printAddressZipCode(): string
         {
             $message="{$this->viewFieldZipCode()}";
             return htmlentities($message);
         }
 
+
         /**
          * @return string
          * @throws Exception
          */
-        final public function printAddressCountry():string
+        public final function printAddressCountry(): string
         {
             $message="{$this->viewFieldCountry()}";
             return htmlentities($message);
         }
 
 
+        /**
+         * @return PersonAddressController
+         * @throws Exception
+         */
+        public final function getController(): PersonAddressController
+        {
+            $m = $this->transformModel();
+            return new PersonAddressController( $m );
+        }
         
     }
 ?>

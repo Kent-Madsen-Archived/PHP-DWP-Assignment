@@ -5,74 +5,142 @@
      *  Type: PHP Script
      */
 
-    /**
-     * Class PersonAddressController
-     */
+/**
+ * Class PersonAddressController
+ */
     class PersonAddressController
     {
         /**
-         * @param $model
-         * @throws Exception
+         * PersonAddressController constructor.
+         * @param PersonAddressModel $model
          */
-        public function __constructor( $model )
+        public function __construct( PersonAddressModel $model )
         {
             $this->setModel( $model );
+
+            $m = $this->getModel();
+
+            if( $m->isControllerNull() )
+            {
+                $m->setController( $this );
+            }
         }
 
 
         /**
-         * @param $model
-         * @return bool
+         * @return PersonAddressModel|null
+         * @throws Exception
          */
-        public function validateModel( $model ): bool
+        protected final function transformModel(): ?PersonAddressModel
         {
-            // TODO: Implement validateModel() method.
-            return false;
+            if( $this->getModel() instanceof PersonAddressModel )
+            {
+                return $this->getModel();
+            }
+
+            return null;
         }
 
 
         /**
-         * @param $var
+         * @param string $street_address_name
+         * @throws Exception
          */
-        public function controllerStreetName($var): void
+        public final function controllerStreetAddressName( string $street_address_name ): void
         {
+            $m = $this->transformModel();
 
+            // Filter
+            $value = $street_address_name;
+
+            // Append Changes
+            $m->setStreetAddressName( $value );
         }
 
 
         /**
-         * @param $var
+         * @param int $address_number
+         * @throws Exception
          */
-        public function controllerStreetAddressNumber($var): void
+        public final function controllerStreetAddressNumber( int $address_number ): void
         {
+            //
+            $m = $this->transformModel();
 
+            //
+            $value = $address_number;
+
+            // Append Changes
+            $m->setStreetAddressNumber( $value );
         }
 
 
         /**
-         * @param $var
+         * @param string|null $street_address_floor_input
+         * @throws Exception
          */
-        public function controllerStreetAddressFloor($var): void
+        public final function controllerStreetAddressFloor( ?string $street_address_floor_input ): void
         {
+            $m = $this->transformModel();
 
+            $value = $street_address_floor_input;
+
+            // Append Changes
+            $m->setStreetAddressFloor( $value );
         }
 
 
         /**
-         * @param $var
+         * @param string $zip_post_input
+         * @throws Exception
          */
-        public function controllerStreetAddressZipCode($var): void
+        public final function controllerZipCode( string $zip_post_input ): void
         {
+            //
+            $m = $this->transformModel();
 
+            $value = $zip_post_input;
+
+            $m->setZipCode( $value );
         }
 
 
         /**
-         * @param $var
+         * @param string $city_input
+         * @throws Exception
          */
-        public function controllerCountry($var): void
+        public final function controllerCity( string $city_input ): void
         {
+            $m = $this->transformModel();
 
+            $value = $city_input;
+
+            $m->setCity( $value );
+        }
+
+
+        /**
+         * @param string $country_input
+         * @throws Exception
+         */
+        public final function controllerCountry( string $country_input ): void
+        {
+            $m = $this->transformModel();
+
+            $value = $country_input;
+
+            $m->setCountry( $value );
+        }
+
+
+        /**
+         * @return PersonAddressView
+         * @throws Exception
+         */
+        public final function getView(): PersonAddressView
+        {
+            $m = $this->transformModel();
+            return new PersonAddressView( $m );
         }
     }
 ?>

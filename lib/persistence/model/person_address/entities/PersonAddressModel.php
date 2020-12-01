@@ -46,7 +46,7 @@
             $B = $street_address_zip_code_is_not_null && $country_is_not_null;
             $C = $city_is_not_null;
 
-            $retVal = $A && $B;
+            $retVal = ($A && $B);
 
             return $retVal;
         }
@@ -62,13 +62,16 @@
         private $city                           = null;
         private $country                        = null;
 
+        private $controller = null;
+        private $view       = null;
+
 
         // implementation of factory classes
         /**
          * @param $factory
          * @return bool|mixed
          */
-        final protected function validateFactory( $factory )
+        protected final function validateFactory( $factory )
         {
             if( $factory instanceof PersonAddressFactory )
             {
@@ -82,9 +85,27 @@
         // Accessors
             // getters
         /**
+         * @return PersonAddressView|null
+         */
+        public final function getView(): ?PersonAddressView
+        {
+            return $this->view;
+        }
+
+
+        /**
+         * @return PersonAddressController|null
+         */
+        public final function getController(): ?PersonAddressController
+        {
+            return $this->controller;
+        }
+
+
+        /**
          * @return string|null
          */
-        public function getCity(): ?string
+        public final function getCity(): ?string
         {
             return $this->city;
         }
@@ -93,7 +114,7 @@
         /**
          * @return string|null
          */
-        final public function getStreetAddressFloor(): ?string
+        public final function getStreetAddressFloor(): ?string
         {
             return $this->street_address_floor;
         }
@@ -102,7 +123,7 @@
         /**
          * @return string|null
          */
-        final public function getStreetAddressName(): ?string
+        public final function getStreetAddressName(): ?string
         {
             return $this->street_address_name;
         }
@@ -111,7 +132,7 @@
         /**
          * @return string|null
          */
-        final public function getZipCode(): ?string
+        public final function getZipCode(): ?string
         {
             return $this->zip_code;
         }
@@ -120,7 +141,7 @@
         /**
          * @return string|null
          */
-        final public function getCountry(): ?string
+        public final function getCountry(): ?string
         {
             return $this->country;
         }
@@ -136,6 +157,24 @@
 
 
         // Setters
+        /**
+         * @param PersonAddressView $view
+         */
+        public final function setView( PersonAddressView $view ): void
+        {
+            $this->view = $view;
+        }
+
+
+        /**
+         * @param PersonAddressController $controller
+         */
+        public final function setController( PersonAddressController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+
         /**
          * @param string|null $city
          */
@@ -283,6 +322,67 @@
             }
 
             return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isControllerNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->controller ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isViewNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->view ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return PersonAddressView
+         * @throws Exception
+         */
+        public final function generateView(): PersonAddressView
+        {
+            if( $this->isViewNull() )
+            {
+                return new PersonAddressView( $this );
+            }
+
+            return $this->getView();
+        }
+
+
+        /**
+         * @return PersonAddressController
+         */
+        public final function generateController(): PersonAddressController
+        {
+            if( $this->isControllerNull() )
+            {
+                return new PersonAddressController($this);
+            }
+
+            return $this->getController();
         }
 
     }
