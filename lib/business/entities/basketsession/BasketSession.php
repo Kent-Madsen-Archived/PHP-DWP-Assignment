@@ -1,6 +1,9 @@
 <?php
     class BasketSession
     {
+        /**
+         * BasketSession constructor.
+         */
         public function __construct()
         {
 
@@ -9,7 +12,7 @@
         /**
          *
          */
-        public function save()
+        public final function save()
         {
             BasketSessionSingleton::setBasket($this);
         }
@@ -18,7 +21,36 @@
         /**
          * @param BasketEntry $obj
          */
-        public function append( BasketEntry $obj )
+        public final function insert( BasketEntry $obj )
+        {
+            if(is_null($this->entries))
+            {
+                $this->entries = array();
+            }
+
+            $found = false;
+
+            for ( $idx = 0; $idx < count($this->entries); $idx++ )
+            {
+                $current = $this->entries[$idx];
+
+                if( $current->isIdEqualTo( $obj->getProductIdentity() ) )
+                {
+                    $found = true;
+                    $current->setProductQuantity( $current->getProductQuantity() + $obj->getProductQuantity() );
+                }
+            }
+
+            if( $found == false )
+            {
+                $this->append( $obj );
+            }
+        }
+
+        /**
+         * @param BasketEntry|null $obj
+         */
+        public final function append( ?BasketEntry $obj )
         {
             if( $this->isEntriesNull() )
             {
@@ -28,11 +60,12 @@
             array_push($this->entries, $obj);
         }
 
+
         /**
          * @param $arr
          * @throws Exception
          */
-        public function appendArray( $arr )
+        public final function appendArray( $arr )
         {
             for($idx = 0; $idx < sizeof($arr); $idx++)
             {
@@ -47,7 +80,10 @@
             }
         }
 
-        public function isEntriesNull()
+        /**
+         * @return bool
+         */
+        public final function isEntriesNull()
         {
             return is_null($this->entries);
         }
@@ -58,7 +94,7 @@
         /**
          * @return array|null
          */
-        public function getEntries(): ?array
+        public final function getEntries(): ?array
         {
             return $this->entries;
         }
@@ -66,7 +102,7 @@
         /**
          * @param array|null $entries
          */
-        public function setEntries( ?array $entries): void
+        public final function setEntries( ?array $entries ): void
         {
             $this->entries = $entries;
         }
@@ -74,7 +110,7 @@
         /**
          * @return array
          */
-        public function makeArray()
+        public final function makeArray()
         {
             $retVal = array();
 

@@ -28,8 +28,9 @@
 
                     <input type="hidden" <?php echo $view->printAreaIdentity(); ?> name="product_basket_product_identity">
                     <input type="number" value="1" placeholder="quantity" name="product_basket_number_of_products">
+                    <input type="hidden" value="<?php echo $view->printPrice(); ?>" name="product_basket_price">
 
-                    <button name="product_basket_submit" value="1">
+                    <button class="waves-effect waves-light btn-small" name="product_basket_submit" value="1">
                         insert into Basket
                     </button>
                 </form>

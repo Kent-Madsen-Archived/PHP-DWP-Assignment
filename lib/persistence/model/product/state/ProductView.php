@@ -152,6 +152,12 @@
             return htmlentities(strtoupper("{$str} dkk."));
         }
 
+        final public function printPrice(): string
+        {
+            $str = strval($this->viewPrice());
+            return htmlentities($str);
+        }
+
 
         /**
          * @return string
