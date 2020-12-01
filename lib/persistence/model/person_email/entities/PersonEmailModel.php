@@ -9,21 +9,21 @@
         // Constructor
         /**
          * PersonEmailModel constructor.
-         * @param $factory
+         * @param PersonEmailFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?PersonEmailFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $retVal = !is_null($this->content);
 
             return $retVal;
         }

@@ -93,7 +93,7 @@
         {
             $retVal = false;
 
-            if( FormSpoofSecurity::existSessionFSSToken() )
+            if( SessionFormSpoofSecurityForm::existSessionFSSToken() )
             {
                 $fss = new FormSpoofSecurity();
 

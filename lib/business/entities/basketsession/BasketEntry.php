@@ -19,6 +19,7 @@
         private $product_quantity = null;
         private $product_price = null;
 
+
         /**
          * @param int $proid
          * @return bool
@@ -27,6 +28,7 @@
         {
             return $this->getProductIdentity() == $proid;
         }
+
 
         //
         /**

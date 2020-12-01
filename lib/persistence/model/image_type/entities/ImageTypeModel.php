@@ -8,21 +8,25 @@
     {
         /**
          * ImageTypeModel constructor.
-         * @param $factory
+         * @param ImageTypeFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ImageTypeFactory $factory )
         {
             $this->setFactory( $factory );   
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $content_has_input = !is_null($this->content);
+
+            $retVal = $content_has_input;
 
             return boolval( $retVal );
         }

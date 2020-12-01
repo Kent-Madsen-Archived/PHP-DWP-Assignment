@@ -7,6 +7,11 @@
      */
      
     PageTitleController::getSingletonController()->append( ' - News' );
+
+    $router = RouterSingleton::getInstance()->getCurrentRoute();
+
+    $operation_value = $router->getValidationTree()[1]->getValue();
+    $id_value = $router->getValidationTree()[2]->getValue();
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +34,16 @@
             <h2>
                 News
             </h2>
+
+            <?php if(!isset($operation_value)): ?>
+                <?php require 'views/news/page_frontpage.php'; ?>
+            <?php endif; ?>
+
+            <?php if($operation_value=='identity'): ?>
+                <?php require 'views/news/page_view_article.php'; ?>
+            <?php elseif ($operation_value=='pagination'):?>
+                <?php  require 'views/news/page_view_pagination.php'; ?>
+            <?php endif; ?>
 
         </main>
         

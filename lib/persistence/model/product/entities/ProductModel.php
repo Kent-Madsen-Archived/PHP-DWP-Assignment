@@ -12,18 +12,23 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProductFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $t_has_content = !is_null($this->title);
+            $description_has_content = !is_null($this->description);
+
+            $retVal = ($t_has_content && $description_has_content);
 
             return boolval( $retVal );
         }

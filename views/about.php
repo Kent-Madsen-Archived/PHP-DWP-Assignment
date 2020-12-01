@@ -24,11 +24,26 @@
     </head>
     <body>
         <?php getHeader(); ?>
+        <?php $page_domain = new PageDomainDomain(); ?>
 
-        <main> 
-            <h2>
-                About
-            </h2>
+        <?php $element = $page_domain->retrievePageElementById(1); ?>
+
+        <main>
+            <div>
+                <h2>
+                    <?php echo $element->getTitle();?>
+                </h2>
+
+
+                <div>
+                    <p> <?php echo $element->getCreatedOn(); ?></p>
+                    <p> <?php echo $element->getLastUpdated(); ?></p>
+                </div>
+
+                <p>
+                    <?php echo $element->getContent();?>
+                </p>
+            </div>
 
         </main>
         

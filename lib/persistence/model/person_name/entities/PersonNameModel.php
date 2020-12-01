@@ -12,19 +12,22 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?PersonNameFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $fn_has_input = !is_null($this->first_name);
+            $ln_has_input = !is_null($this->last_name);
+            $mn_has_input = !is_null($this->middle_name);
 
+            $retVal = ($fn_has_input && $ln_has_input && $mn_has_input);
             return $retVal;
         }
 

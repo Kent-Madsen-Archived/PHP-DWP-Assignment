@@ -18,6 +18,23 @@
          */
         public const class_name = 'NewsDomain';
 
+        private $article_factory = null;
+
+        /**
+         * @return null
+         */
+        public function getArticleFactory(): ?ArticleFactory
+        {
+            return $this->article_factory;
+        }
+
+        /**
+         * @param ArticleFactory|null $article_factory
+         */
+        public function setArticleFactory(?ArticleFactory $article_factory): void
+        {
+            $this->article_factory = $article_factory;
+        }
 
         /**
          * NewsDomain constructor.
@@ -27,50 +44,52 @@
         {
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
-        }
-
-
-        /**
-         * @return array
-         * @throws Exception
-         */
-        final public function lastest_news()
-        {
-            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-            var_dump($factory->length());
-
-            $factory->setLimitValue(6);
-
-            return $factory->readOrderedByCreationDate();
-        }
-
-
-        /**
-         * @return array
-         * @throws Exception
-         */
-        final public function frontpage_news()
-        {
-            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-
-            $factory->setLimitValue(3);
-
-            return $factory->readOrderedByCreationDate();
+            $this->setArticleFactory(new ArticleFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton())));
         }
 
 
         /**
          * @param $idx
+         * @return ArticleModel
          * @throws Exception
          */
-        final public function getArticle( $idx )
+        final public function retrieveArticleById( $idx )
         {
-            $factory = new ArticleFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+            $factory = $this->getArticleFactory();
+
             $model = new ArticleModel( $factory );
             $model->setIdentity( $idx );
 
-            
+            $factory->readModel($model);
 
+            return $model;
+        }
+
+
+        /**
+         * @param $pagination
+         * @param $limit
+         * @return array|null
+         * @throws Exception
+         */
+        final public function retrieveArticlesAt( int $pagination = 0, int $limit = 5 ): ?array
+        {
+            $factory = $this->getArticleFactory();
+
+            $factory->setPaginationIndexValue($pagination);
+            $factory->setLimitValue($limit);
+
+            return $factory->read();
+        }
+
+        /**
+         * @return array|null
+         * @throws Exception
+         */
+        final public function retrieveArticles(): ?array
+        {
+            $factory = $this->getArticleFactory();
+            return $factory->read();
         }
     }
 

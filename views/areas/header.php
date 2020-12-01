@@ -20,6 +20,12 @@
                 </a>
             </li>
 
+            <li>
+                <a href="/product">
+                    Products
+                </a>
+            </li>
+
             <li> 
                 <a href="/news"> 
                     News 

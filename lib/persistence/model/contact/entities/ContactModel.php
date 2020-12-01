@@ -12,18 +12,24 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ContactFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $subject_title_has_input = !is_null($this->subject);
+            $message_has_input = !is_null($this->message);
+
+            $to_id_has_input = !is_null($this->toMail);
+            $from_id_has_input = !is_null($this->fromMail);
+
+            $retVal = ($subject_title_has_input && $message_has_input && $to_id_has_input && $from_id_has_input);
 
             return boolval( $retVal );
         }

@@ -365,7 +365,7 @@
                     while( $row = $result->fetch_assoc() )
                     {
                         $model->setIdentity( intval( $row[ 'identity' ] ) );
-                        $model->setContent( intval( $row[ 'content' ] ) );
+                        $model->setContent( $row[ 'content' ] );
 
                         $retVal = true;
                     }

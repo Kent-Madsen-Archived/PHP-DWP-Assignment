@@ -11,24 +11,31 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProductUsedImageFactory $factory )
         {
             $this->setFactory( $factory );   
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $product_id_has_input = !is_null($this->product_id);
+            $image_full_has_input = !is_null( $this->image_full_id );
+            $image_preview_has_input = !is_null( $this->image_preview_id );
+
+            $retVal = ($product_id_has_input && $image_full_has_input && $image_preview_has_input);
 
             return boolval( $retVal );
         }
         
 
         // Variables
+        private $product_id = null;
         private $image_preview_id   = null;
         private $image_full_id      = null;
 
@@ -130,6 +137,22 @@
         final public function setIsProfileImage( $var )
         {
             $this->is_profile_image = $var;
+        }
+
+        /**
+         * @return null
+         */
+        public function getProductId()
+        {
+            return $this->product_id;
+        }
+
+        /**
+         * @param null $product_id
+         */
+        public function setProductId($product_id): void
+        {
+            $this->product_id = $product_id;
         }
         
 

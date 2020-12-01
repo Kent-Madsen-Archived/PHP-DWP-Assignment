@@ -2,6 +2,7 @@
 
     interface CheckoutInteraction
     {
+        public function overviewOfBasket();
 
     }
 ?>

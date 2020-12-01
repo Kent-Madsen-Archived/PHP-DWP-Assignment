@@ -109,7 +109,7 @@
          * @return array|mixed|null
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             $retVal = null;
 
@@ -194,7 +194,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_limit  = $model->getIdentity();
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();

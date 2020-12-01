@@ -7,6 +7,23 @@
      */
 
     PageTitleController::getSingletonController()->append( ' - Profile' );
+    $domain = new ProfileDomain();
+
+    $profile = $domain->retrieveProfileAt( SessionUserProfile::getSessionUserProfileIdentity() );
+    $profinfo = $domain->retrieveProfileInformationAt( $profile->getIdentity() );
+
+    $expPro = $domain->expandModelProfile($profile);
+    $expansion = $domain->expandProfileInformation($profinfo);
+
+    $profileType = $domain->retrieveProfileTypeAt(SessionUserProfile::getSessionUserProfileType());
+
+    $person_addr = $expansion['person_address_model'];
+    $person_name = $expansion['person_name_model'];
+    $person_mail = $expansion['person_mail_model'];
+
+    $mail_view = new PersonEmailView( $person_mail );
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,15 +40,56 @@
         ?>
     </head>
     <body>
+    <?php
+
+    ?>
         <?php getHeader(); ?>
         
         <main> 
-            <h4> Welcome, <?php echo $_SESSION[ 'user_session_object_username' ]; ?> </h4>
+            <h4> Welcome, <?php echo $profile->getUsername(); ?> </h4>
             
             <div> 
                 <h2>
                     My Profile
                 </h2>
+                <ul>
+                    <li>
+                        <p>Profile Type: <?php echo $profileType->getContent(); ?></p>
+                    </li>
+
+                    <li>
+                        <p>
+                            Address:
+                            <?php $viewAddress = new PersonAddressView($person_addr); ?>
+                            <?php echo  $viewAddress->printDenmarkFormatForHomeAddress(); ?>
+
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>
+                            Name: <?php echo "{$person_name->getFirstName()}, {$person_name->getLastName()} {$person_name->getMiddleName()}"; ?>
+                        </p>
+                    </li>
+
+                    <li>
+                        <p>Mail: <?php echo $mail_view->printInteractiveEmail(); ?></p>
+                    </li>
+
+                    <li>
+                        <p>Phone: <?php echo "{$profinfo->getPersonPhone()}"; ?></p>
+                    </li>
+
+
+                    <li>
+                        <p>Birthday: <?php echo "{$profinfo->getBirthday()}"; ?></p>
+                    </li>
+                    <li>
+                        <p>Mail: <?php echo "{$person_mail->getContent()}"; ?></p>
+                    </li>
+
+
+                </ul>
 
             </div>
         </main>

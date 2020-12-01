@@ -12,18 +12,24 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct($factory)
+        public function __construct( ProductInvoiceFactory $factory )
         {
             $this->setFactory($factory);
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+
+            $total_price_has_input = !is_null($this->total_price);
+            $address_id_has_input = !is_null($this->address_id);
+            $person_name_id_has_input = !is_null($this->owner_name_id);
+            $mail_id_has_input = !is_null($this->mail_id);
+
+            $retVal = ($total_price_has_input&&$person_name_id_has_input&&$address_id_has_input&&$mail_id_has_input);
 
             return boolval( $retVal );
         }

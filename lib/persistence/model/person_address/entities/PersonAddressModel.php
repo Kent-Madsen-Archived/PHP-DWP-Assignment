@@ -9,32 +9,61 @@
         // constructors
         /**
          * PersonAddressModel constructor.
-         * @param $factory
+         * @param PersonAddressFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?PersonAddressFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        public final function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $retVal = $this->requiredFieldsAreNotNull();
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        protected final function requiredFieldsAreNotNull(): bool
+        {
+            $street_address_name_is_not_null        = !$this->isStreetAddressNameNull();
+            $street_address_number_is_not_null     = !$this->isStreetAddressNumberNull();
+
+            $street_address_zip_code_is_not_null   = !$this->isZipCodeNull();
+            $country_is_not_null                   = !$this->isCountryNull();
+
+            $city_is_not_null = !$this->isCityNull();
+
+            $A = $street_address_name_is_not_null && $street_address_number_is_not_null;
+            $B = $street_address_zip_code_is_not_null && $country_is_not_null;
+            $C = $city_is_not_null;
+
+            $retVal = ($A && $B);
 
             return $retVal;
         }
 
 
         // Variables
-        private $street_name            = null;
-        private $street_address_number  = null;
-        private $zip_code               = null;
-        private $country                = null;
-        private $street_floor           = null;
+        private $street_address_name            = null;
+        private $street_address_number          = null;
+        private $street_address_floor           = null;
+
+        private $zip_code                       = null;
+
+        private $city                           = null;
+        private $country                        = null;
+
+        private $controller = null;
+        private $view       = null;
 
 
         // implementation of factory classes
@@ -42,7 +71,7 @@
          * @param $factory
          * @return bool|mixed
          */
-        final protected function validateFactory( $factory )
+        protected final function validateFactory( $factory )
         {
             if( $factory instanceof PersonAddressFactory )
             {
@@ -56,124 +85,304 @@
         // Accessors
             // getters
         /**
-         * @return string|null
+         * @return PersonAddressView|null
          */
-        final public function getStreetFloor()
+        public final function getView(): ?PersonAddressView
         {
-            if( is_null( $this->street_floor ) )
-            {
-                return null;
-            }
+            return $this->view;
+        }
 
-            return strval( $this->street_floor );
+
+        /**
+         * @return PersonAddressController|null
+         */
+        public final function getController(): ?PersonAddressController
+        {
+            return $this->controller;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getStreetName()
+        public final function getCity(): ?string
         {
-            if( is_null( $this->street_name ) )
-            {
-                return null;
-            }
-
-            return strval( $this->street_name );
+            return $this->city;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getZipCode()
+        public final function getStreetAddressFloor(): ?string
         {
-            if( is_null( $this->zip_code ) )
-            {
-                return null;
-            }
-
-            return strval( $this->zip_code );
+            return $this->street_address_floor;
         }
 
 
         /**
          * @return string|null
          */
-        final public function getCountry()
+        public final function getStreetAddressName(): ?string
         {
-            if( is_null( $this->country ) )
-            {
-                return null;
-            }
+            return $this->street_address_name;
+        }
 
-            return strval( $this->country );
+
+        /**
+         * @return string|null
+         */
+        public final function getZipCode(): ?string
+        {
+            return $this->zip_code;
+        }
+
+
+        /**
+         * @return string|null
+         */
+        public final function getCountry(): ?string
+        {
+            return $this->country;
         }
 
 
         /**
          * @return int|null
          */
-        final public function getStreetAddressNumber()
+        public final function getStreetAddressNumber(): ?int
         {
-            if( is_null( $this->street_address_number ) )
-            {
-                return null;
-            }
-
-            return intval( $this->street_address_number, BASE_10 );
+            return $this->street_address_number;
         }
 
 
-            // Setters
+        // Setters
         /**
-         * @param $var
+         * @param PersonAddressView $view
          */
-        final public function setStreetFloor( $var )
+        public final function setView( PersonAddressView $view ): void
         {
-            $this->street_floor = $var;
+            $this->view = $view;
         }
 
 
         /**
-         * @param $var
+         * @param PersonAddressController $controller
          */
-        final public function setZipCode( $var )
+        public final function setController( PersonAddressController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+
+        /**
+         * @param string|null $city
+         */
+        public final function setCity( ?string $city ): void
+        {
+            $this->city = $city;
+        }
+
+
+        /**
+         * @param string|null $var
+         */
+        public final function setStreetAddressFloor( ?string $var ): void
+        {
+            $this->street_address_floor = $var;
+        }
+
+
+        /**
+         * @param string|null $var
+         */
+        public final function setZipCode( ?string $var ): void
         {
             $this->zip_code = $var;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setCountry( $var )
+        public final function setCountry( ?string $var ):void
         {
             $this->country = $var;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setStreetName( $var )
+        public final function setStreetAddressName( ?string $var ): void
         {
-            $this->street_name = $var;
+            $this->street_address_name = $var;
         }
 
 
         /**
-         * @param $var
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setStreetAddressNumber( $var )
+        public final function setStreetAddressNumber( ?int $var ): void
         {
-            if( !is_int( $var ) )
+            $this->street_address_number = $var;
+        }
+
+            // State accessors
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressNameNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_name ) )
             {
-                throw new Exception( 'PersonAddressModel - setStreetAddressNumber: null or numeric number is allowed' );
+                $retVal = true;
             }
 
-            $this->street_address_number = intval( $var, BASE_10 );
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressNumberNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_number ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isStreetAddressFloorNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->street_address_floor ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isZipCodeNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->zip_code ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isCityNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->city ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isCountryNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->country ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isControllerNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->controller ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return bool
+         */
+        public final function isViewNull(): bool
+        {
+            $retVal = false;
+
+            if( is_null( $this->view ) )
+            {
+                $retVal = true;
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return PersonAddressView
+         * @throws Exception
+         */
+        public final function generateView(): PersonAddressView
+        {
+            if( $this->isViewNull() )
+            {
+                return new PersonAddressView( $this );
+            }
+
+            return $this->getView();
+        }
+
+
+        /**
+         * @return PersonAddressController
+         */
+        public final function generateController(): PersonAddressController
+        {
+            if( $this->isControllerNull() )
+            {
+                return new PersonAddressController($this);
+            }
+
+            return $this->getController();
         }
 
     }

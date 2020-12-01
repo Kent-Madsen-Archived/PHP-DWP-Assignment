@@ -12,15 +12,18 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProductCategoryFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
-        public function requiredFieldsValidated()
+        /**
+         * @return bool
+         */
+        public function requiredFieldsValidated(): bool
         {
-            // TODO: Implement requiredFieldsValidated() method.
+            return $retVal = !is_null($this->content);
         }
 
 

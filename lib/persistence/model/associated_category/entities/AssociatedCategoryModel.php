@@ -9,10 +9,10 @@
         // Constructors
         /**
          * AssociatedCategoryModel constructor.
-         * @param $factory
+         * @param AssociatedCategoryFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?AssociatedCategoryFactory $factory )
         {
             $this->setFactory( $factory );
         }   
@@ -26,11 +26,17 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
             $retVal = false;
+
+            $product_attribute_id_has_input = !is_null($this->product_attribute_id);
+            $product_category_id_has_input = !is_null($this->product_category_id);
+            $product_id_has_input = !is_null($this->product_id);
+
+            $retVal = $product_attribute_id_has_input && $product_category_id_has_input && $product_id_has_input;
 
             return boolval( $retVal );
         }

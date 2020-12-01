@@ -12,7 +12,7 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProfileFactory $factory )
         {
             $this->setFactory( $factory );
             $this->setIsPasswordHashed( false );
@@ -22,9 +22,14 @@
         /**
          * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $username_has_input = !is_null( $this->username );
+            $password_has_input = !is_null( $this->password );
+
+            $profile_type_has_input = !is_null( $this->profile_type );
+
+            $retVal = ($username_has_input&&$password_has_input&&$profile_type_has_input);
 
             return boolval( $retVal );
         }

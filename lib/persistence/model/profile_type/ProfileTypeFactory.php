@@ -110,7 +110,7 @@
          * @return array|mixed
          * @throws Exception
          */
-        final public function read()
+        final public function read(): ?array
         {
             //
             $sql = "SELECT * FROM profile_type LIMIT ? OFFSET ?;";
@@ -169,19 +169,110 @@
 
         /**
          * @param $model
-         * @return mixed|null
+         * @return bool|null
          * @throws Exception
          */
-        final public function readModel(&$model )
+        final public function readModel( &$model ): ?bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
-            
+
+            $by_content = false;
+            $by_identity = false;
+
+
+            if( !is_null( $model->getContent() ) )
+            {
+                $by_content = true;
+            }
+
+            if( !is_null( $model->getIdentity() ) )
+            {
+                $by_identity = true;
+            }
+
             $retVal = null;
 
-            return $retVal;
+            $connection = $this->getWrapper()->connect();
+
+            if( $by_content )
+            {
+                $preparedsql_content = "select * from profile_type where lower( content ) = ?;";
+
+                try
+                {
+                    $stmt = $connection->prepare( $preparedsql_content );
+
+                    $stmt->bind_param( "s",
+                        $stmt_content );
+
+                    $stmt_content  = strtolower( $model->getContent() );
+
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if( $result->num_rows > CONSTANT_ZERO )
+                    {
+                        while( $row = $result->fetch_assoc() )
+                        {
+                            $model->setIdentity( $row[ 'identity' ] );
+                            $model->setContent( $row[ 'content' ] );
+
+                            $retVal = true;
+                        }
+                    }
+                }
+                catch( Exception $ex )
+                {
+                    throw new Exception( 'Error: ' . $ex );
+                }
+                finally
+                {
+                    $this->getWrapper()->disconnect();
+                }
+
+            }
+
+            if( $by_identity )
+            {
+                $preparedsql_identity = "select * from profile_type where identity = ?;";
+
+                try
+                {
+                    $stmt = $connection->prepare( $preparedsql_identity );
+
+                    $stmt->bind_param( "i",
+                        $stmt_identity );
+
+                    $stmt_identity  = $model->getIdentity();
+
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if( $result->num_rows > CONSTANT_ZERO )
+                    {
+                        while( $row = $result->fetch_assoc() )
+                        {
+                            $model->setIdentity( $row[ 'identity' ] );
+                            $model->setContent( $row[ 'content' ] );
+
+                            $retVal = true;
+                        }
+                    }
+                }
+                catch( Exception $ex )
+                {
+                    throw new Exception( 'Error: ' . $ex );
+                }
+                finally
+                {
+                    $this->getWrapper()->disconnect();
+                }
+            }
+
+            return boolval( $retVal );
         }
 
 

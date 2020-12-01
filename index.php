@@ -112,6 +112,15 @@
 
     $news = new Route( 'news', 'views/news.php' ) ;
     $news->appendValidationObject( $router_validate_root );
+    $router_news_entity = new RouterValidateStringArgument();
+    $router_news_entity->setLevel(1);
+
+    $router_news_id = new RouterValidateIntArgument();
+    $router_news_id->setLevel(2);
+
+    $news->appendValidationObject($router_news_entity);
+    $news->appendValidationObject($router_news_id);
+
     $router->appendToRoutes( $news );
 
 

@@ -8,10 +8,10 @@
         // Constructors
         /**
          * ArticleModel constructor.
-         * @param $factory
+         * @param ArticleFactory|null $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ArticleFactory $factory )
         {
             $this->setFactory( $factory );
         }
@@ -31,11 +31,14 @@
         /**
          * @return bool|mixed
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $titleFieldHasInputText = !is_null( $this->title );
+            $contentFieldHasInputText = !is_null( $this->content );
 
-            return boolval( $retVal );
+            $retVal = $titleFieldHasInputText && $contentFieldHasInputText;
+
+            return $retVal;
         }
 
 

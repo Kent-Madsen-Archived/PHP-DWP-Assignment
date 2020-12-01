@@ -12,18 +12,26 @@
          * @param $factory
          * @throws Exception
          */
-        public function __construct( $factory )
+        public function __construct( ?ProfileInformationFactory $factory )
         {
             $this->setFactory( $factory );
         }
 
 
         /**
-         * @return false|mixed
+         * @return bool
          */
-        final public function requiredFieldsValidated()
+        final public function requiredFieldsValidated(): bool
         {
-            $retVal = false;
+            $has_profile_id_input = !is_null($this->profile_id);
+            $has_personname_id_input = !is_null($this->person_name_id);
+            $has_personaddr_id_input = !is_null($this->person_address_id);
+            $has_person_email_input = !is_null($this->person_email_id);
+
+            $has_birthday = !is_null($this->birthday);
+            $has_person_phone = !is_null($this->person_phone);
+
+            $retVal = ($has_profile_id_input && $has_personname_id_input && $has_personaddr_id_input && $has_person_email_input && $has_birthday && $has_person_phone);
 
             return $retVal;
         }
