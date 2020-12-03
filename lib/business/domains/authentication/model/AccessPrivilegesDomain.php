@@ -21,15 +21,7 @@
         {
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
-
-            $this->setProfileFactory(
-                new ProfileFactory(
-                    new MySQLConnectorWrapper( $this->getInformation() ) ) );
         }
-
-
-        //
-        private $profile_factory = null;
 
 
         /**
@@ -41,7 +33,7 @@
         /**
          * @return bool
          */
-        public function is_logged_in(): bool
+        public final function is_logged_in(): bool
         {
             if( SessionUserProfile::existSessionUserProfileIdentity() &&
                 SessionUserProfile::existSessionUserProfileUsername() &&
@@ -94,19 +86,11 @@
         //
         /**
          * @return ProfileFactory|null
+         * @throws Exception
          */
-        public function getProfileFactory(): ?ProfileFactory
+        protected final function getProfileFactory(): ?ProfileFactory
         {
-            return $this->profile_factory;
-        }
-
-
-        /**
-         * @param ProfileFactory|null $profile_factory
-         */
-        public function setProfileFactory( ?ProfileFactory $profile_factory ): void
-        {
-            $this->profile_factory = $profile_factory;
+            return GroupAuthentication::getProfileFactory();
         }
 
     }
