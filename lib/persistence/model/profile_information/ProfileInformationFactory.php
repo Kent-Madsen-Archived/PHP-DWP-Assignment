@@ -24,10 +24,9 @@
         public const field_registered           = 'registered';
 
 
-
         /**
          * ProfileInformationFactory constructor.
-         * @param $mysql_connector
+         * @param MySQLConnectorWrapper|null $mysql_connector
          * @throws Exception
          */
         public function __construct( ?MySQLConnectorWrapper $mysql_connector )
@@ -41,7 +40,7 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName()
         {
             return self::table;
         }
@@ -50,9 +49,9 @@
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
+            return self::table;
         }
 
 
@@ -103,7 +102,7 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
@@ -245,7 +244,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -316,7 +315,7 @@
                 $this->getWrapper()->disconnect();
             }
             
-            return intval( $retVal );
+            return $retVal;
         }
 
 
@@ -325,7 +324,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -475,7 +474,7 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             

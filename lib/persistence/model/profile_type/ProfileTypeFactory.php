@@ -54,7 +54,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
@@ -69,7 +69,7 @@
          * @return ProfileTypeModel
          * @throws Exception
          */
-        final public function createModel(): ProfileTypeModel
+        public final function createModel(): ProfileTypeModel
         {
             $model = new ProfileTypeModel( $this );
             return $model;
@@ -80,7 +80,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -161,7 +161,7 @@
          * @return bool|null
          * @throws Exception
          */
-        final public function readModel( &$model ): ?bool
+        public final function readModel( &$model ): ?bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -275,7 +275,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -325,7 +325,7 @@
                 $this->getWrapper()->disconnect();
             }
             
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -334,7 +334,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -449,7 +449,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -501,6 +501,7 @@
         public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement length_calculate_with_filter() method.
+            return 0;
         }
 
 

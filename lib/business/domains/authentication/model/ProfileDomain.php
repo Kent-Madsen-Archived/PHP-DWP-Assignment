@@ -169,6 +169,7 @@
         /**
          * @param ProfileModel $prof
          * @return array
+         * @throws Exception
          */
         public final function expandModelProfile( ProfileModel $prof ): array
         {
@@ -187,6 +188,7 @@
         private $addressFactory = null;
         private $emailFactory = null;
         private $nameFactory = null;
+        
         private $profileFactory = null;
         private $profileInformationFactory = null;
         private $profileTypeFactory = null;
