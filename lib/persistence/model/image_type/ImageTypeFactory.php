@@ -12,6 +12,11 @@
     class ImageTypeFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'image_type';
+
+        public const field_identity = 'identity';
+        public const field_content = 'content';
+
         /**
          * ImageTypeFactory constructor.
          * @param $mysql_connector
@@ -28,35 +33,18 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName():string
         {
-            return 'image_type';
-        }
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName():string
-        {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName():string
         {
-            return 'ImageTypeView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ImageTypeController';
+            return self::table;
         }
 
 
@@ -64,21 +52,22 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value ;
         }
 
 
         /**
-         * @return ImageTypeModel|mixed
+         * @return ImageTypeModel
+         * @throws Exception
          */
-        final public function createModel(): ImageTypeModel
+        public final function createModel(): ImageTypeModel
         {
             $model = new ImageTypeModel( $this );
             return $model;
@@ -89,7 +78,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -98,7 +87,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -106,7 +95,7 @@
          * @return array
          * @throws Exception
          */
-        final public function read(): array
+        public final function read(): array
         {
             $connection = $this->getWrapper()->connect();
 
@@ -114,7 +103,8 @@
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM image_type LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -140,12 +130,12 @@
                     
                     while( $row = $result->fetch_assoc() )
                     {
-                        $brought = $this->createModel();
+                        $image_type_model = $this->createModel();
 
-                        $brought->setIdentity( $row[ 'identity' ] );
-                        $brought->setContent( $row[ 'content' ] );
+                        $image_type_model->setIdentity( $row[ self::field_identity ] );
+                        $image_type_model->setContent( $row[ self::field_content ] );
 
-                        array_push( $retVal, $brought );
+                        array_push( $retVal, $image_type_model );
                     }
                 }
             }
@@ -167,7 +157,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -178,7 +168,10 @@
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM image_type WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -200,8 +193,8 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity] );
+                        $model->setContent( $row[ self::field_content] );
 
                         $retVal = true;
                     }
@@ -216,7 +209,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -225,14 +218,17 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "INSERT INTO image_type( content ) VALUES( ? );";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fc} ) VALUES( ? );";
 
             // Statement Variables
             $stmt_image_type_content = null;
@@ -272,7 +268,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -281,7 +277,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -290,7 +286,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM image_type WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -334,7 +333,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -345,7 +344,12 @@
             $retVal = false;
 
             //
-            $sql = "UPDATE image_type SET content = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fc = self::field_content;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fc} = ? WHERE {$fid} = ?;";
 
             $stmt_image_type_content  = null;
             $stmt_identity            = null;
@@ -392,12 +396,12 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             // Return value
             $retVal = CONSTANT_ZERO;
 
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to a mysql database

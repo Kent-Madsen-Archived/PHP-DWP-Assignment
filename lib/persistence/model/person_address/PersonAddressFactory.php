@@ -12,6 +12,15 @@
     class PersonAddressFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'person_address';
+
+        public const field_identity = 'identity';
+        public const field_street_name = 'street_name';
+        public const field_street_address_number = 'street_address_number';
+        public const field_street_address_floor = 'street_address_floor';
+        public const field_zip_code = 'zip_code';
+        public const field_country = 'country';
+
         /**
          * PersonAddressFactory constructor.
          * @param $mysql_connector
@@ -28,51 +37,32 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'person_address';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName():string
         {
-            return self::getTableName();
+            return self::table;
         }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'PersonAddressView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'PersonAddressController';
-        }
-
 
         /**
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value ;
         }
 
 
@@ -80,7 +70,7 @@
          * @return PersonAddressModel
          * @throws Exception
          */
-        final public function createModel(): PersonAddressModel
+        public final function createModel(): PersonAddressModel
         {
             $model = new PersonAddressModel( $this );
             return $model;
@@ -91,7 +81,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,7 +90,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -108,13 +98,14 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             //
             $retVal = null;
 
             // SQL Query
-            $sql = "SELECT * FROM person_address LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             //
             $stmt_limit  = null;
@@ -147,15 +138,15 @@
                     {
                         $personAddressModel = $this->createModel();
 
-                        $personAddressModel->setIdentity( $row[ 'identity' ] );
+                        $personAddressModel->setIdentity( $row[ self::field_identity ] );
     
-                        $personAddressModel->setStreetAddressName(  $row[ 'street_name' ]  );
-                        $personAddressModel->setStreetAddressNumber( $row[ 'street_address_number' ] );
+                        $personAddressModel->setStreetAddressName(  $row[ self::field_street_name ]  );
+                        $personAddressModel->setStreetAddressNumber( $row[ self::field_street_address_number ] );
 
-                        $personAddressModel->setZipCode(  $row[ 'zip_code' ]  );
-                        $personAddressModel->setCountry(  $row[ 'country' ]  );
+                        $personAddressModel->setZipCode(  $row[ self::field_zip_code ]  );
+                        $personAddressModel->setCountry(  $row[ self::field_country ]  );
 
-                        $personAddressModel->setStreetAddressFloor( $row['street_address_floor']  );
+                        $personAddressModel->setStreetAddressFloor( $row[ self::field_street_address_floor ]  );
 
                         array_push( $retVal, $personAddressModel );
                     }
@@ -180,7 +171,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -191,7 +182,10 @@
             $retVal = false;
 
             // SQL Query
-            $sql = "SELECT * FROM person_address WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             //
             $stmt_identity  = null;
@@ -219,15 +213,15 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setStreetAddressName(  $row[ 'street_name' ]  );
-                        $model->setStreetAddressNumber( $row[ 'street_address_number' ] );
+                        $model->setStreetAddressName(  $row[ self::field_street_name ]  );
+                        $model->setStreetAddressNumber( $row[ self::field_street_address_number ] );
 
-                        $model->setZipCode(  $row[ 'zip_code' ]  );
-                        $model->setCountry(  $row[ 'country' ]  );
+                        $model->setZipCode(  $row[ self::field_zip_code ]  );
+                        $model->setCountry(  $row[ self::field_country ]  );
 
-                        $model->setStreetAddressFloor( $row['street_address_floor']  );
+                        $model->setStreetAddressFloor( $row[ self::field_street_address_floor ]  );
 
                         $retVal = true;
                     }
@@ -243,7 +237,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -252,7 +246,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -263,7 +257,14 @@
             $retVal = false;
 
             // SQL Query
-            $sql = "INSERT INTO person_address( street_name, street_address_number, zip_code, country, street_address_floor ) VALUES( ?, ?, ?, ?, ? );";
+            $table = self::table;
+            $fsn = self::field_street_name;
+            $fsan = self::field_street_address_number;
+            $fzc = self::field_zip_code;
+            $fc = self::field_country;
+            $fsaf = self::field_street_address_floor;
+
+            $sql = "INSERT INTO {$table}( {$fsn}, {$fsan}, {$fzc}, {$fc}, {$fsaf} ) VALUES( ?, ?, ?, ?, ? );";
 
             // Prepared Statement Variables
             $stmt_name = null;
@@ -321,10 +322,10 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -335,7 +336,16 @@
             $retVal = false;
 
             // SQL Query
-            $sql = "UPDATE person_address SET street_name = ?, street_address_number = ?, zip_code = ?, country = ?, street_address_floor=? WHERE identity = ?;";
+            $table  = self::table;
+            $fsn = self::field_street_name;
+            $fsan = self::field_street_address_number;
+            $fzc = self::field_zip_code;
+            $fc = self::field_country;
+            $fsaf = self::field_street_address_floor;
+
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fsn} = ?, {$fsan} = ?, {$fzc} = ?, {$fc} = ?, {$fsaf} = ? WHERE {$fid} = ?;";
 
             // prepared statement variables
             $stmt_street_address_name   = null;
@@ -392,7 +402,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -401,7 +411,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -412,7 +422,9 @@
             $retVal = false;
 
             // SQL Query
-            $sql = "DELETE FROM person_address WHERE identity = ?;";
+            $table = self::table;
+            $fid= self::field_identity;
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             // prepared statements variables
             $stmt_identity = null;
@@ -450,20 +462,20 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             // return value
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to the server

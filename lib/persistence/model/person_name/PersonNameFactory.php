@@ -38,7 +38,7 @@
         /**
          * @return string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName():string
         {
             return self::table;
         }
@@ -48,7 +48,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
@@ -63,7 +63,7 @@
          * @return PersonNameModel
          * @throws Exception
          */
-        final public function createModel(): PersonNameModel
+        public final function createModel(): PersonNameModel
         {
             $model = new PersonNameModel( $this );
             return $model;
@@ -74,7 +74,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -83,7 +83,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -91,7 +91,7 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
@@ -155,7 +155,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -282,7 +282,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -355,7 +355,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -414,7 +414,7 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             

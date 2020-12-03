@@ -34,27 +34,18 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName()
         {
-            return 'person_email';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName():string
         {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'PersonEmailController';
+            return self::table;
         }
 
 
@@ -285,7 +276,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModelByName( &$model ): bool
+        public final function readModelByName( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -344,7 +335,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -404,7 +395,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -462,7 +453,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -509,7 +500,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -517,7 +508,7 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             

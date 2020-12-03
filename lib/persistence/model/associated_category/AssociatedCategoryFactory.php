@@ -12,6 +12,14 @@
     class AssociatedCategoryFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'associated_category';
+
+        public const field_identity = 'identity';
+        public const field_product_attribute_id = 'product_attribute_id';
+        public const field_product_category_id = 'product_category_id';
+
+        public const field_product_id = 'product_id';
+
         /**
          * AssociatedCategoryFactory constructor.
          * @param $mysql_connector
@@ -28,36 +36,18 @@
         /**
          * @return string
          */
-        final public static function getTableName(): string
+        public final static function getTableName(): string
         {
-            return 'associated_category';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName(): string
-        {
-            return 'AssociatedCategoryView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName(): string
-        {
-            return 'AssociatedCategoryController';
+            return self::table;
         }
 
 
@@ -65,14 +55,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -80,7 +70,7 @@
          * @return AssociatedCategoryModel
          * @throws Exception
          */
-        final public function createModel(): AssociatedCategoryModel
+        public final function createModel(): AssociatedCategoryModel
         {
             $model = new AssociatedCategoryModel( $this );
             return $model;
@@ -91,7 +81,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,7 +90,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -108,10 +98,11 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             //
-            $sql = "SELECT * FROM associated_category LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             // Statement Variables
             $stmt_limit  = null;
@@ -131,8 +122,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit  = intval( $this->getLimitValue(), BASE_10 );
-                $stmt_offset = intval( $this->CalculateOffset(), BASE_10 );
+                $stmt_limit  = $this->getLimitValue();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
@@ -147,12 +138,12 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], BASE_10 ) );
-                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], BASE_10 ) );
+                        $model->setProductAttributeId( $row[ self::field_product_attribute_id ] );
+                        $model->setProductCategoryId( $row[ self::field_product_category_id ] );
                         
-                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+                        $model->setProductId( $row[ self::field_product_id ] );
 
                         array_push( $retVal, $model );
                     }
@@ -176,14 +167,16 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "SELECT * FROM associated_category WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
             
             $retVal = false;
 
@@ -208,12 +201,12 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setProductAttributeId( intval( $row[ 'product_attribute_id' ], BASE_10 ) );
-                        $model->setProductCategoryId( intval( $row[ 'product_category_id' ], BASE_10 ) );
+                        $model->setProductAttributeId( $row[ self::field_product_attribute_id ] );
+                        $model->setProductCategoryId( $row[ self::field_product_category_id ] );
 
-                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+                        $model->setProductId( $row[ self::field_product_id ] );
 
                         $retVal = true;
                     }
@@ -228,7 +221,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -237,7 +230,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -252,7 +245,13 @@
             // Return Values
             $retVal = false;
 
-            $sql = "INSERT INTO associated_category( product_attribute_id, product_category_id, product_id ) VALUES( ?, ?, ? );";
+            $table = self::table;
+
+            $fpaid = self::field_product_attribute_id;
+            $fpc_id = self::field_product_category_id;
+            $fp_id = self::field_product_id;
+
+            $sql = "INSERT INTO {$table}( {$fpaid}, {$fpc_id}, {$fp_id} ) VALUES( ?, ?, ? );";
 
             //
             $connection = $this->getWrapper()->connect();
@@ -266,14 +265,14 @@
                     $stmt_category_id,
                            $stmt_product_id );
 
-                $stmt_attribute_id  = intval( $model->getProductAttributeId(), BASE_10 );
-                $stmt_category_id   = intval( $model->getProductCategoryId(), BASE_10 );
+                $stmt_attribute_id  = $model->getProductAttributeId();
+                $stmt_category_id   = $model->getProductCategoryId();
 
-                $stmt_product_id    = intval( $model->getProductId(), BASE_10 );
+                $stmt_product_id    = $model->getProductId();
 
                 // Executes the query
                 $stmt->execute();
-                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
 
                 $retVal = true;
             }
@@ -288,7 +287,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -297,7 +296,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -314,7 +313,14 @@
             // Return Values
             $retVal = false;
 
-            $sql = "UPDATE associated_category, set product_attribute_id = ?, product_category_id = ?, product_id = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fid = self::field_identity;
+            $f_pid = self::field_product_id;
+            $f_pc_id = self::field_product_category_id;
+            $f_att_id = self::field_product_attribute_id;
+
+            $sql = "UPDATE {$table} SET {$f_att_id} = ?, {$f_pc_id} = ?, {$f_pid} = ? WHERE {$fid} = ?;";
 
             //
             $connection = $this->getWrapper()->connect();
@@ -329,12 +335,12 @@
                     $stmt_product_id,
                     $stmt_identity );
 
-                $stmt_attribute_id  = intval( $model->getProductAttributeId(), BASE_10 );
-                $stmt_category_id   = intval( $model->getProductCategoryId(), BASE_10 );
+                $stmt_attribute_id  = $model->getProductAttributeId();
+                $stmt_category_id   = $model->getProductCategoryId();
 
-                $stmt_product_id    = intval( $model->getProductId(), BASE_10 );
+                $stmt_product_id    = $model->getProductId();
 
-                $stmt_identity      = intval( $model->getIdentity(), BASE_10 );
+                $stmt_identity      = $model->getIdentity();
 
 
                 // Executes the query
@@ -354,8 +360,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
-
+            return $retVal;
         }
 
 
@@ -364,7 +369,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -372,7 +377,10 @@
             }
 
             // SQL query
-            $sql = "DELETE FROM associated_category WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             // Statement Variables
             $stmt_identity = null;
@@ -392,7 +400,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), BASE_10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -412,7 +420,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -420,13 +428,13 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             // return value
             $retVal = CONSTANT_ZERO;
 
             // sql query
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // connection to the mysql database
@@ -459,8 +467,9 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
+
 
         /**
          * @param array $filter
@@ -469,6 +478,7 @@
         public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
         }
 
 
