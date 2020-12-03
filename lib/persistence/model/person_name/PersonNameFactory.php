@@ -13,6 +13,14 @@
     class PersonNameFactory
         extends BaseFactoryTemplate
     {
+        public const field_identity = 'identity';
+        public const field_first_name = 'first_name';
+        public const field_last_name = 'last_name';
+        public const field_middle_name = 'middle_name';
+
+        public const table = 'person_name';
+
+
         /**
          * PersonNameFactory constructor.
          * @param $mysql_connector
@@ -22,7 +30,7 @@
         {
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO );
 
         }
 
@@ -30,58 +38,32 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final function getFactoryTableName():string
         {
-            return 'person_name';
+            return self::table;
         }
 
 
         /**
-         * @return string
-         */
-        final public function getFactoryTableName():string
-        {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'PersonNameView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'PersonNameController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
             return boolval( $value );
         }
 
 
         /**
-         * @return mixed|PersonNameModel
+         * @return PersonNameModel
+         * @throws Exception
          */
-        final public function createModel(): PersonNameModel
+        public final function createModel(): PersonNameModel
         {
             $model = new PersonNameModel( $this );
             return $model;
@@ -92,7 +74,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -101,19 +83,20 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return array|mixed|null
+         * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM person_name LIMIT ? OFFSET ?;";
+            $table_name = self::table;
+            $sql = "SELECT * FROM {$table_name} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -144,11 +127,11 @@
                     {
                         $model = $this->createModel();
                         
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
                         
-                        $model->setFirstName( $row[ 'first_name' ] );
-                        $model->setLastName( $row[ 'last_name' ] );
-                        $model->setMiddleName( $row[ 'middle_name' ] );
+                        $model->setFirstName( $row[ self::field_first_name ] );
+                        $model->setLastName( $row[ self::field_last_name ] );
+                        $model->setMiddleName( $row[ self::field_middle_name ] );
 
                         array_push( $retVal, $model );
                     }
@@ -172,7 +155,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -181,7 +164,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM person_name WHERE identity = ?;";
+            $table_name = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table_name} WHERE {$fid} = ?;";
 
             $stmt_identity  = null;
 
@@ -205,11 +191,11 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setFirstName( $row[ 'first_name' ] );
-                        $model->setLastName( $row[ 'last_name' ] );
-                        $model->setMiddleName( $row[ 'middle_name' ] );
+                        $model->setFirstName( $row[ self::field_first_name ] );
+                        $model->setLastName( $row[ self::field_last_name ] );
+                        $model->setMiddleName( $row[ self::field_middle_name ] );
 
                         $retVal = true;
                     }
@@ -230,10 +216,10 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -242,7 +228,12 @@
 
             $retVal = null;
 
-            $sql = "INSERT INTO person_name( first_name, last_name, middle_name ) VALUES( ?, ?, ? );";
+            $tn = self::table;
+            $ffn = self::field_first_name;
+            $fln = self::field_last_name;
+            $fmn = self::field_middle_name;
+
+            $sql = "INSERT INTO {$tn}( {$ffn}, {$fln}, {$fmn} ) VALUES( ?, ?, ? );";
 
             $stmt_first_name    = null;
             $stmt_last_name     = null;
@@ -288,10 +279,10 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -300,7 +291,15 @@
             
             $retVal = false;
 
-            $sql = "UPDATE person_name SET first_name = ?, last_name = ?, middle_name = ? WHERE identity = ?;";
+            $tn = self::table;
+
+            $ffn = self::field_first_name;
+            $fln = self::field_last_name;
+            $fmn = self::field_middle_name;
+
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$tn} SET {$ffn} = ?, {$fln} = ?, {$fmn} = ? WHERE {$fid} = ?;";
 
             $stmt_first_name = null;
             $stmt_last_name = null;
@@ -356,7 +355,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -365,7 +364,10 @@
             
             $retVal = null;
 
-            $sql = "DELETE FROM person_name WHERE identity = ?;";
+            $t = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$t} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -380,7 +382,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -412,11 +414,11 @@
          * @return int|mixed
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getWrapper()->connect();
@@ -454,9 +456,30 @@
          * @param array $filter
          * @return mixed|void
          */
-        public function lengthCalculatedWithFilter(array $filter)
+        public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
 

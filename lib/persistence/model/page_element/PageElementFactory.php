@@ -12,6 +12,18 @@
     class PageElementFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'page_element';
+
+        public const field_identity = 'identity';
+        public const field_area_key = 'area_key';
+
+        public const field_title = 'title';
+        public const field_content = 'content';
+
+        public const field_created_on = 'created_on';
+        public const field_last_updated = 'last_updated';
+
+
         /**
          * PageElementFactory constructor.
          * @param $mysql_connector
@@ -28,36 +40,18 @@
         /**
          * @return string
          */
-        final public static function getTableName(): string
+        public final static function getTableName(): string
         {
-            return 'page_element';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName(): string
-        {
-            return 'PageElementView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName(): string
-        {
-            return 'PageElementController';
+            return self::table;
         }
 
 
@@ -65,14 +59,14 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -80,10 +74,9 @@
          * @return PageElementModel
          * @throws Exception
          */
-        final public function createModel(): PageElementModel
+        public final function createModel(): PageElementModel
         {
             $model = new PageElementModel( $this );
-
             return $model;
         }
 
@@ -92,7 +85,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -101,21 +94,22 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return array
+         * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             // return array
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM page_element LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit = null;
@@ -146,15 +140,15 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity( $row[ 'identity' ] );
+                        $brought->setIdentity( $row[ self::field_identity] );
 
-                        $brought->setAreaKey( $row[ 'area_key' ] );
+                        $brought->setAreaKey( $row[ self::field_area_key ] );
                         
-                        $brought->setTitle( $row[ 'title' ] );
-                        $brought->setContent( $row[ 'content' ]  );
+                        $brought->setTitle( $row[ self::field_title ] );
+                        $brought->setContent( $row[ self::field_content ]  );
                         
-                        $brought->setCreatedOn( $row[ 'created_on' ] );
-                        $brought->setLastUpdated( $row[ 'last_updated' ] );
+                        $brought->setCreatedOn( $row[ self::field_created_on ] );
+                        $brought->setLastUpdated( $row[ self::field_last_updated ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -178,19 +172,20 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-
             // return array
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM page_element WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             // prepare statement variables
             $stmt_identity = null;
@@ -216,15 +211,15 @@
 
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setAreaKey( $row[ 'area_key' ] );
+                        $model->setAreaKey( $row[ self::field_area_key ] );
 
-                        $model->setTitle( $row[ 'title' ] );
-                        $model->setContent( $row[ 'content' ]  );
+                        $model->setTitle( $row[ self::field_title ] );
+                        $model->setContent( $row[ self::field_content ]  );
 
-                        $model->setCreatedOn( $row[ 'created_on' ] );
-                        $model->setLastUpdated( $row[ 'last_updated' ] );
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setLastUpdated( $row[ self::field_last_updated ] );
 
                         $retVal = true;
                     }
@@ -239,7 +234,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -248,14 +243,19 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "INSERT INTO page_element( area_key, title, content ) VALUES( ?, ?, ? );";
+            $table = self::table;
+            $fak = self::field_area_key;
+            $ft = self::field_title;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fak}, {$ft}, {$fc} ) VALUES( ?, ?, ? );";
 
             // Statement Variables
             $stmt_pe_areakey    = null;
@@ -301,16 +301,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -319,7 +319,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM page_element WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -363,14 +366,22 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "UPDATE page_element SET area_key = ?, title = ?, content = ? WHERE identity = ?";
+            $table = self::table;
+            $fak = self::field_area_key;
+
+            $ft = self::field_title;
+            $fc = self::field_content;
+
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fak} = ?, {$ft} = ?, {$fc} = ? WHERE {$fid} = ?";
 
             // Statement Variables
             $stmt_pe_areakey    = null;
@@ -420,7 +431,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -428,7 +439,7 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
@@ -467,9 +478,35 @@
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return mixed|void
+         */
+        public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
 

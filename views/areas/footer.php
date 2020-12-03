@@ -8,9 +8,11 @@
 <footer> 
     <div class="information-container">
         <div class="row">
+            <?php $domain = new PageDomainDomain();
+                $footer = $domain->retrievePageElementById(2);?>
               <div class="col l6 s12">
-                <h5 class="white-text">Webshop Title</h5>
-                <p class="grey-text text-lighten-4">Webshop description</p>
+                <h4 class="white-text"><?php echo $footer->getTitle();?></h4>
+                <p class="grey-text text-lighten-4"><?php echo $footer->getContent();?></p>
               </div>
 
               <div class="col l4 offset-l2 s12">

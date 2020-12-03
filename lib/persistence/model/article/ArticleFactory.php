@@ -12,15 +12,15 @@
     class ArticleFactory
         extends BaseFactoryTemplate
     {
-        private const field_identity        = 'identity';
+        public const field_identity        = 'identity';
 
-        private const field_title           = 'title';
-        private const field_content         = 'content';
+        public const field_title           = 'title';
+        public const field_content         = 'content';
 
-        private const field_created_on      = 'created_on';
-        private const field_last_updated    = 'last_updated';
+        public const field_created_on      = 'created_on';
+        public const field_last_updated    = 'last_updated';
 
-        private const table_name = 'article';
+        public const table = 'article';
 
 
         /**
@@ -39,18 +39,18 @@
         /**
          * @return string
          */
-        final public static function getTableName(): string
+        public final static function getTableName(): string
         {
-            return self::table_name;
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return strval( self::getTableName() );
+            return self::table;
         }
 
 
@@ -58,7 +58,7 @@
          * @return ArticleModel
          * @throws Exception
          */
-        final public function createModel(): ArticleModel
+        public final function createModel(): ArticleModel
         {
             $model = new ArticleModel( $this );
             return $model;
@@ -69,14 +69,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -84,7 +84,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -93,7 +93,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -101,7 +101,7 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             // return array
             $retVal = null;
@@ -168,7 +168,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -178,8 +178,10 @@
             $connection = $this->getWrapper()->connect();
 
             // sql, that the prepared statement uses
-            $tn = $this->getFactoryTableName();
-            $sql = "SELECT * FROM {$tn} where identity = ?;";
+            $tn = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$tn} WHERE {$fid} = ?;";
 
             // return array
             $retVal = false;
@@ -221,7 +223,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -229,13 +231,15 @@
          * @return array
          * @throws Exception
          */
-        final public function readOrderedByCreationDate(): array
+        public final function readOrderedByCreationDate(): array
         {
             $connection = $this->getWrapper()->connect();
 
             // sql, that the prepared statement uses
             $tn = $this->getFactoryTableName();
-            $sql = "SELECT * FROM {$tn} ORDER BY created_on DESC LIMIT ? OFFSET ?;";
+            $f_co = self::field_created_on;
+
+            $sql = "SELECT * FROM {$tn} ORDER BY {$f_co} DESC LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -296,7 +300,7 @@
          * @return mixed
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -310,7 +314,7 @@
             // Return Values
             $retVal = false;
 
-            $tn = $this->getFactoryTableName();
+            $tn = self::table;
 
             $tft = self::field_title;
             $tfc = self::field_content;
@@ -349,7 +353,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -358,14 +362,14 @@
          * @return mixed
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception('Not accepted model');
             }
 
-            $tn = $this->getFactoryTableName();
+            $tn = self::table;
 
             $tft = self::field_title;
             $tfc = self::field_content;
@@ -415,16 +419,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -435,7 +439,7 @@
             $retVal = false;
 
             // sql query
-            $tn = $this->getFactoryTableName();
+            $tn = self::table;
             $tfi = self::field_identity;
 
             $sql = "DELETE FROM {$tn} WHERE {$tfi} = ?;";
@@ -474,18 +478,18 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             // SQL Query
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
             
             // Connection to the mysql Database
@@ -519,15 +523,40 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return mixed|void
+         */
+        public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement length_calculate_with_filter() method.
+            return 0;
         }
 
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
+        }
 
 
     }

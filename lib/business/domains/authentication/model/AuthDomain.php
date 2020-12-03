@@ -21,21 +21,83 @@
          */
         public function __construct()
         {
-            $this->setName(self::class_name);
+            $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
+
+            $this->setProfileFactory(
+                new ProfileFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
+
+            $this->setProfileInformationFactory(
+                new ProfileInformationFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
+
+
+            $this->setPersonNameFactory(
+                new PersonNameFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
+
+
+            $this->setPersonEmailFactory(
+                new PersonEmailFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
+
+
+            $this->setPersonAddressFactory(
+                new PersonAddressFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
+
+
+            $this->setProfileTypeFactory(
+                new ProfileTypeFactory(
+                    new MySQLConnectorWrapper(
+                        $this->getInformation()
+                    )
+                )
+            );
         }
 
 
         // Variables
-        private $options = [    'cost'=>15,
-                                'salt'=>WEBPAGE_DEFAULT_SALT    ];
+        private $options = [ 'cost'=>15,
+                             'salt'=>WEBPAGE_DEFAULT_SALT ];
 
-        // Body of domain
+
+        private $profile_factory                = null;
+        private $profile_type_factory           = null;
+
+        private $profile_information_factory    = null;
+
+        private $person_email_factory   = null;
+        private $person_name_factory    = null;
+        private $person_address_factory = null;
+
+
         // Forgot my password
         /**
          * @return bool
          */
-        final public function forgotMyPasswordUseEmail(): bool
+        public final function forgotMyPasswordUseEmail(): bool
         {
             $retVal = false;
 
@@ -46,7 +108,7 @@
         /**
          * @return bool
          */
-        final public function forgotMyPasswordUseUsername(): bool
+        public final function forgotMyPasswordUseUsername(): bool
         {
             $retVal = false;
 
@@ -56,10 +118,193 @@
 
         // Registration
         /**
+         * @param string $email_value
+         * @return PersonEmailModel|null
+         * @throws Exception
+         */
+        private final function retrieveOrCreateEmail( string $email_value ): ?PersonEmailModel
+        {
+            $email_factory = $this->getPersonEmailFactory();
+
+            $emailModel = $email_factory->createModel();
+            $emailModel->setContent( $email_value );
+
+            if( $email_factory->validateIfMailExist( $emailModel ) )
+            {
+                $email_factory->readModelByName( $emailModel );
+            }
+            else
+            {
+                $email_factory->create( $emailModel );
+                $email_factory->readModel($emailModel );
+            }
+
+            return $emailModel;
+        }
+
+
+        /**
+         * @param string $username_var
+         * @return bool
+         * @throws Exception
+         */
+        private final function validateExistenceOfProfile( string $username_var ): bool
+        {
+            $profile_factory = $this->getProfileFactory();
+            $retval = false;
+
+            if( !is_null( $profile_factory->readByUsername( $username_var ) ) )
+            {
+                $retval = true;
+            }
+
+            return $retval;
+        }
+
+
+        /**
+         * @param string $username_var
+         * @param string $password_var
+         * @param int $profile_type_id_var
          * @return ProfileModel|null
          * @throws Exception
          */
-        final public function register(): ?ProfileModel
+        private final function createProfile( string $username_var,
+                                              string $password_var,
+                                              int $profile_type_id_var ): ?ProfileModel
+        {
+            $profile_factory = $this->getProfileFactory();
+
+            if( $this->validateExistenceOfProfile( $username_var ) )
+            {
+                throw new Exception('Profile already exist');
+            }
+
+            $pmd = $profile_factory->createModel();
+
+            $pmd->setUsername( $username_var );
+            $pmd->setPassword( $this->generatePassword( $password_var ) );
+
+            $pmd->setProfileType( $profile_type_id_var );
+
+            $profile_factory->create( $pmd );
+
+            return $pmd;
+        }
+
+
+        /**
+         * @param string|null $firstname_var
+         * @param string|null $lastname_var
+         * @param string|null $middle_name_var
+         * @return PersonNameModel|null
+         * @throws Exception
+         */
+        private final function createPersonNameModel( string $firstname_var,
+                                                      ?string $lastname_var,
+                                                      string $middle_name_var ): ?PersonNameModel
+        {
+            $factory = $this->getPersonNameFactory();
+            $nm = $factory->createModel();
+
+            $nm->setFirstName( $firstname_var );
+            $nm->setLastName( $lastname_var );
+            $nm->setMiddleName( $middle_name_var );
+
+            $factory->create( $nm );
+
+            return $nm;
+        }
+
+
+        /**
+         * @param string|null $streetAddressName_var
+         * @param int $streetNumber_var
+         * @param string|null $country_var
+         * @param string|null $street_floor_var
+         * @param string|null $zip_code_var
+         * @return PersonAddressModel|null
+         * @throws Exception
+         */
+        private final function createPersonAddressModel( string $streetAddressName_var,
+                                                         int $streetNumber_var = 0,
+                                                         string $country_var,
+                                                         string $street_floor_var,
+                                                         string $zip_code_var ): ?PersonAddressModel
+        {
+            $factory = $this->getPersonAddressFactory();
+            $am = $factory->createModel();
+
+            $am->setStreetAddressName( $streetAddressName_var );
+            $am->setStreetAddressNumber( $streetNumber_var );
+            $am->setStreetAddressFloor( $street_floor_var );
+
+            $am->setCountry( $country_var );
+            $am->setZipCode( $zip_code_var );
+
+            $factory->create( $am );
+
+            return $am;
+        }
+
+
+        /**
+         * @param string|null $birthday_var
+         * @param string|null $personPhoneNumber_var
+         * @param int $person_addr_id_var
+         * @param int $person_name_id_var
+         * @param int $person_email_id_var
+         * @param int $profile_id_var
+         * @return ProfileInformationModel|null
+         * @throws Exception
+         */
+        private final function createProfileInformationModel( ?string $birthday_var,
+                                                              ?string $personPhoneNumber_var,
+                                                              int $person_addr_id_var,
+                                                              int $person_name_id_var,
+                                                              int $person_email_id_var,
+                                                              int $profile_id_var ): ?ProfileInformationModel
+        {
+            $pi_factory = $this->getProfileInformationFactory();
+            $pim = $pi_factory->createModel();
+
+            $pim->setBirthday( $birthday_var );
+            $pim->setPersonPhone( $personPhoneNumber_var );
+
+            $pim->setPersonAddressId( $person_addr_id_var );
+
+            $pim->setPersonNameId( $person_name_id_var );
+            $pim->setPersonEmailId( $person_email_id_var );
+            $pim->setProfileId( $profile_id_var );
+
+            $pi_factory->create($pim );
+
+            return $pim;
+        }
+
+
+        /**
+         * @param string|null $content
+         * @return ProfileTypeModel|null
+         * @throws Exception
+         */
+        private final function retrieveProfileTypeByName( string $content ): ?ProfileTypeModel
+        {
+            $factory = $this->getProfileTypeFactory();
+
+            $model = $factory->createModel();
+            $model->setContent( $content );
+            $factory->readModel($model );
+
+            return $model;
+        }
+
+
+        /**
+         * @return ProfileModel|null
+         * @throws Exception
+         */
+        public final function register(): ?ProfileModel
         {
             $retVal = null;
 
@@ -68,86 +313,47 @@
                 $value_username = RegisterForm::getPostUsername();
                 $value_password = RegisterForm::getPostPassword();
 
-
-                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-
-                if( !is_null( $profile_factory->readByUsername( $value_username ) ) )
-                {
-                    throw new Exception('User already exist');
-                }
-
-                $pmd = $profile_factory->createModel();
-
-                $pmd->setUsername( $value_username );
-                $pmd->setPassword( $this->generate_password( $value_password ) );
-
-                $pmd->setProfileType( 2 );
-
-                $profile_factory->create( $pmd );
-
+                $ptm = $this->retrieveProfileTypeByName('kunde');
+                $pmd = $this->createProfile( $value_username,
+                                             $value_password,
+                                             $ptm->getIdentity() );
 
                 //
                 $email      = RegisterForm::getPostPersonMail();
+                $pem        = $this->retrieveOrCreateEmail( $email );
 
-                $email_factory = new PersonEmailFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-                $emailModel = $email_factory->createModel();
-                $emailModel->setContent( $email );
+                $middlename     = RegisterForm::getPostMiddlename();
+                $lastname       = RegisterForm::getPostLastname();
+                $firstname      = RegisterForm::getPostFirstname();
 
-                if( $email_factory->validateIfMailExist( $emailModel ) )
-                {
-                    $email_factory->readModelByName( $emailModel );
-                }
-                else 
-                {
-                    $email_factory->create( $emailModel );
-                }
-
-                $name_factory = new PersonNameFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-                $name_model = $name_factory->createModel();
-
-                // Name
-                $firstname  = RegisterForm::getPostFirstname();
-                $name_model->setFirstName( $firstname );
-
-                $lastname   = RegisterForm::getPostLastname();
-                $name_model->setLastName( $lastname );
-
-                $middle     = RegisterForm::getPostMiddlename();
-                $name_model->setMiddleName( $middle );
-
-                $name_factory->create( $name_model );
+                $pnm = $this->createPersonNameModel( $firstname,
+                                                     $lastname,
+                                                     $middlename );
 
                 // 
-                $streetname     = RegisterForm::getPostStreetname();
-                $street_number  = RegisterForm::getPostStreetAddressNumber();
-                $streetZipcode  = RegisterForm::getPostZipCode();
-                $streetFloor    = RegisterForm::getPostStreetAddressFloor();
-                $country        = RegisterForm::getPostCountry();
+                $street_address_name    = RegisterForm::getPostStreetname();
+                $street_address_number  = RegisterForm::getPostStreetAddressNumber();
+                $street_address_floor   = RegisterForm::getPostStreetAddressFloor();
 
-                $addr_factory = new PersonAddressFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-                $addr_model = $addr_factory->createModel();
-                $addr_model->setStreetAddressName($streetname);
-                $addr_model->setStreetAddressNumber($street_number);
-                $addr_model->setCountry($country);
-                $addr_model->setStreetAddressFloor($streetFloor);
-                $addr_model->setZipCode($streetZipcode);
+                $zip_code               = RegisterForm::getPostZipCode();
+                $country                = RegisterForm::getPostCountry();
 
-                $addr_factory->create( $addr_model );
+                $pam = $this->createPersonAddressModel( $street_address_name,
+                                                        $street_address_number,
+                                                        $country,
+                                                        $street_address_floor,
+                                                        $zip_code );
 
                 //
                 $phone      = RegisterForm::getPostPhone();
                 $birthday   = RegisterForm::getPostBirthday();
 
-                $pi_factory = new ProfileInformationFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
-                $pim = $pi_factory->createModel();
-                $pim->setBirthday($birthday);
-                $pim->setPersonPhone($phone);
-                $pim->setPersonAddressId($addr_model->getIdentity());
-                $pim->setPersonNameId($name_model->getIdentity());
-                $pim->setPersonEmailId($emailModel->getIdentity());
-                $pim->setProfileId($pmd->getIdentity());
-
-                $pi_factory->create($pim);
+                $pim = $this->createProfileInformationModel( $birthday,
+                                                             $phone,
+                                                             $pam->getIdentity(),
+                                                             $pnm->getIdentity(),
+                                                             $pem->getIdentity(),
+                                                             $pmd->getIdentity() );
 
                 $retVal = $pmd;
             }
@@ -155,31 +361,33 @@
             return $retVal;
         }
 
+
         // Login
         /**
          * @return ProfileModel|null
          * @throws Exception
          */
-        final public function login(): ?ProfileModel
+        public final function login(): ?ProfileModel
         {
             if( LoginForm::validateIsSubmitted() )
             {
-                $username = LoginForm::getPostUsername();
-                $password = LoginForm::getPostPassword();
+                $input_username = LoginForm::getPostUsername();
+                $input_password = LoginForm::getPostPassword();
 
-                $profile_factory = new ProfileFactory( new MySQLConnectorWrapper( $this->getInformation() ) );
+                $profile_factory = $this->getProfileFactory();
+                $pm = $profile_factory->readByUsername( $input_username );
 
-                $profile = $profile_factory->readByUsername( $username );
-
-                if( password_verify( $password, $profile->getPassword() ) )
+                if( password_verify( $input_password,
+                                     $pm->getPassword() ) )
                 {
-                    return $profile;
+                    return $pm;
                 }
 
             }
 
             return null;
         }
+
 
         /**
          * @return bool
@@ -190,36 +398,144 @@
             return false;
         }
 
-
         // Internal
         /**
          * @param $input
          * @return string|null
          */
-        final protected function generate_password( $input ): ?string
+        protected final function generatePassword( $input ): ?string
         {
             return password_hash( $input, PASSWORD_BCRYPT, $this->options );
         }
 
 
+        // Accessors
+            // Getters
         /**
-         * @return AuthDomainView
-         * @throws Exception
+         * @return array|null
          */
-        final public function getView(): AuthDomainView
+        public final function getOptions(): ?array
         {
-            return new AuthDomainView( $this );
+            return $this->options;
         }
 
 
         /**
-         * @return AuthDomainController
-         * @throws Exception
+         * @return ProfileTypeFactory|null
          */
-        final public function getController(): AuthDomainController
+        public final function getProfileTypeFactory(): ?ProfileTypeFactory
         {
-            return new AuthDomainController( $this );
+            return $this->profile_type_factory;
         }
+
+
+        /**
+         * @return PersonEmailFactory|null
+         */
+        public final function getPersonEmailFactory(): ?PersonEmailFactory
+        {
+            return $this->person_email_factory;
+        }
+
+
+        /**
+         * @return PersonAddressFactory|null
+         */
+        public final function getPersonAddressFactory(): ?PersonAddressFactory
+        {
+            return $this->person_address_factory;
+        }
+
+        /**
+         * @return PersonNameFactory|null
+         */
+        public final function getPersonNameFactory(): ?PersonNameFactory
+        {
+            return $this->person_name_factory;
+        }
+
+
+        /**
+         * @return ProfileFactory|null
+         */
+        public final function getProfileFactory(): ?ProfileFactory
+        {
+            return $this->profile_factory;
+        }
+
+
+        /**
+         * @return ProfileInformationFactory|null
+         */
+        public final function getProfileInformationFactory(): ?ProfileInformationFactory
+        {
+            return $this->profile_information_factory;
+        }
+
+
+            // Setters
+        /**
+         * @param ProfileInformationFactory|null $profile_information_factory
+         */
+        public final function setProfileInformationFactory( ?ProfileInformationFactory $profile_information_factory ): void
+        {
+            $this->profile_information_factory = $profile_information_factory;
+        }
+
+
+        /**
+         * @param PersonNameFactory|null $person_name_factory
+         */
+        public final function setPersonNameFactory(?PersonNameFactory $person_name_factory): void
+        {
+            $this->person_name_factory = $person_name_factory;
+        }
+
+
+        /**
+         * @param ProfileFactory|null $profile_factory
+         */
+        public final function setProfileFactory( ?ProfileFactory $profile_factory ): void
+        {
+            $this->profile_factory = $profile_factory;
+        }
+
+
+        /**
+         * @param PersonEmailFactory|null $person_email_factory
+         */
+        public final function setPersonEmailFactory( ?PersonEmailFactory $person_email_factory ): void
+        {
+            $this->person_email_factory = $person_email_factory;
+        }
+
+
+        /**
+         * @param ProfileTypeFactory|null $profile_type_factory
+         */
+        public final function setProfileTypeFactory( ?ProfileTypeFactory $profile_type_factory ): void
+        {
+            $this->profile_type_factory = $profile_type_factory;
+        }
+
+
+        /**
+         * @param PersonAddressFactory|null $person_address_factory
+         */
+        public final function setPersonAddressFactory(?PersonAddressFactory $person_address_factory ): void
+        {
+            $this->person_address_factory = $person_address_factory;
+        }
+
+
+        /**
+         * @param array|null $options
+         */
+        public final function setOptions( ?array $options ): void
+        {
+            $this->options = $options;
+        }
+
 
     }
 

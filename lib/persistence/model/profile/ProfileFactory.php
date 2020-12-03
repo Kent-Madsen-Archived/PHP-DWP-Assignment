@@ -13,6 +13,18 @@
     class ProfileFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'profile';
+
+        public const field_identity = 'identity';
+
+        public const field_username = 'username';
+        public const field_password = 'password';
+
+        public const field_profile_type = 'profile_type';
+
+        public const function_is_admin = 'is_admin';
+
+
         /**
          * ProfileFactory constructor.
          * @param $mysql_connector
@@ -29,58 +41,41 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName()
         {
-            return 'profile';
-        }
-
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName(): string
-        {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName(): string
         {
-            return 'ProfileView';
+            return self::table;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProfileController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
         /**
-         * @return mixed|ProfileModel
+         * @return ProfileModel
+         * @throws Exception
          */
-        final public function createModel()
+        public final function createModel(): ProfileModel
         {
             $model = new ProfileModel( $this );
             return $model;
@@ -91,7 +86,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,19 +95,20 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read( ): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM profile LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -141,14 +137,14 @@
                     {
                         $Model = $this->createModel();
 
-                        $Model->setIdentity( $row[ 'identity' ]);
+                        $Model->setIdentity( $row[ self::field_identity ]);
 
-                        $Model->setUsername( strval( $row[ 'username' ] ) );
+                        $Model->setUsername( $row[ self::field_username] );
+                        $Model->setPassword( $row[ self::field_password ] );
 
-                        $Model->setPassword( strval( $row[ 'password' ] ) );
                         $Model->setIsPasswordHashed( TRUE );
 
-                        $Model->setProfileType( $row[ 'profile_type' ] );
+                        $Model->setProfileType( $row[ self::field_profile_type ] );
 
                         array_push( $retVal, $Model );
                     }
@@ -172,7 +168,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -181,7 +177,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM profile WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
             $stmt_identity = null;
 
             $connection = $this->getWrapper()->connect();
@@ -202,14 +201,13 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setUsername( $row[ 'username' ] );
-
-                        $model->setPassword( $row[ 'password' ] );
+                        $model->setUsername( $row[ self::field_username ] );
+                        $model->setPassword( $row[ self::field_password ] );
                         $model->setIsPasswordHashed( TRUE );
 
-                        $model->setProfileType( $row[ 'profile_type' ] );
+                        $model->setProfileType( $row[ self::field_profile_type] );
 
                         $retVal = true;
                     }
@@ -230,10 +228,10 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -243,7 +241,13 @@
             $retVal = false;
 
             //
-            $sql = "INSERT INTO profile( username, password, profile_type ) VALUES( ?, ?, ? );";
+            $table = self::table;
+
+            $fu = self::field_username;
+            $fp = self::field_password;
+            $fpt = self::field_profile_type;
+
+            $sql = "INSERT INTO {$table}( {$fu}, {$fp}, {$fpt} ) VALUES( ?, ?, ? );";
 
             $stmt_username = null;
             $stmt_password = null;
@@ -286,16 +290,16 @@
                 $this->getWrapper()->disconnect();
             }
             
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -306,7 +310,14 @@
             $retVal = false;
 
             //
-            $sql = "UPDATE profile SET username = ?, password = ?, profile_type = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fu = self::field_username;
+            $fp = self::field_password;
+            $fpt = self::field_profile_type;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fu} = ?, {$fp} = ?, {$fpt} = ? WHERE {$fid} = ?;";
 
             //
             $stmt_identity = null;
@@ -358,7 +369,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -367,7 +378,7 @@
          * @return bool|mixed
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -378,7 +389,10 @@
             $retVal = false;
 
             // sql query
-            $sql = "DELETE FROM profile WHERE identity = ?;";
+            $table = self::table;
+
+            $fid = self::field_identity;
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -416,7 +430,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -425,11 +439,14 @@
          * @return ProfileModel|null
          * @throws Exception
          */
-        final public function readByUsername( $username ): ?ProfileModel
+        public final function readByUsername( $username ): ?ProfileModel
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM profile WHERE username = ?;";
+            $table = self::table;
+            $fu = self::field_username;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fu} = ?;";
             $stmt_username = null;
 
             $connection = $this->getWrapper()->connect();
@@ -455,14 +472,14 @@
                     {
                         $model = new ProfileModel( $this );
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setUsername( $row[ 'username' ] );
-                        $model->setPassword( $row[ 'password' ] );
+                        $model->setUsername( $row[ self::field_username ] );
+                        $model->setPassword( $row[ self::field_password ] );
 
                         $model->setIsPasswordHashed( true );
 
-                        $model->setProfileType( $row[ 'profile_type' ] );
+                        $model->setProfileType( $row[ self::field_profile_type ] );
 
                         $retVal = $model;
                     }
@@ -487,7 +504,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function validate_if_profile_type_is_admin( $model )
+        public final function validateIfProfileTypeIsAdmin( $model )
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -496,7 +513,8 @@
 
             $retVal = false;
 
-            $sql = "SELECT is_admin( ? ) AS validation;";
+            $f = self::function_is_admin;
+            $sql = "SELECT {$f}( ? ) AS validation;";
 
             $stmt_profile_type_idx = null;
 
@@ -509,7 +527,7 @@
                 $stmt->bind_param( "i",
                                     $stmt_profile_type_idx );
                 
-                $stmt_profile_type_idx = intval( $model->getProfileType(), 10 );
+                $stmt_profile_type_idx = $model->getProfileType();
 
                 // Executes the query
                 $stmt->execute();
@@ -520,7 +538,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        if( $row[ 'validation' ] )
+                        if( $row[ 'validation' ] == 1 )
                         {
                             $retVal = true;
                         }
@@ -537,19 +555,19 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getWrapper()->connect();
@@ -578,17 +596,39 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param array $filter
-         * @return mixed|void
+         * @return int
          */
-        public function lengthCalculatedWithFilter(array $filter)
+        public final function lengthCalculatedWithFilter( array $filter ): int
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
     }

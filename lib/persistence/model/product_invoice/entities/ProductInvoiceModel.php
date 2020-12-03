@@ -42,6 +42,7 @@
         private $address_id = null;
         private $mail_id = null;
         private $owner_name_id = null;
+        private $profile_id = null;
 
 
         // implementation of factory classes
@@ -64,56 +65,49 @@
 
         // Accessors
             // getters
-
         /**
          * @return int|null
          */
-        final public function getAddressId()
+        public final function getProfileId(): ?int
         {
-            if (is_null($this->address_id)) {
-                return null;
-            }
+            return $this->profile_id;
+        }
 
-            return intval( $this->address_id, BASE_10 );
+
+
+        /**
+         * @return int
+         */
+        final public function getAddressId(): int
+        {
+            return $this->address_id;
         }
 
 
         /**
-         * @return int|null
+         * @return int
          */
-        final public function getMailId()
+        final public function getMailId(): int
         {
-            if (is_null($this->mail_id)) {
-                return null;
-            }
-
-            return intval( $this->mail_id, BASE_10 );
+            return $this->mail_id;
         }
 
 
         /**
-         * @return int|null
+         * @return int
          */
-        final public function getOwnerNameId()
+        final public function getOwnerNameId(): int
         {
-            if (is_null($this->owner_name_id)) {
-                return null;
-            }
-
-            return intval( $this->owner_name_id, BASE_10 );
+            return $this->owner_name_id;
         }
 
 
         /**
-         * @return float|null
+         * @return float
          */
-        final public function getTotalPrice()
+        final public function getTotalPrice(): float
         {
-            if (is_null($this->total_price)) {
-                return null;
-            }
-
-            return doubleval($this->total_price);
+            return $this->total_price;
         }
 
 
@@ -130,61 +124,53 @@
         /**
          * @param $var
          */
-        final public function setRegistered($var)
+        final public function setRegistered( $var )
         {
             $this->invoice_registered = $var;
         }
 
 
         /**
-         * @param $var
+         * @param int|null $profile_id
          */
-        final public function setTotalPrice($var)
+        public final function setProfileId( ?int $profile_id ): void
+        {
+            $this->profile_id = $profile_id;
+        }
+
+
+        /**
+         * @param float|null $var
+         */
+        final public function setTotalPrice( ?float $var ): void
         {
             $this->total_price = $var;
         }
 
 
         /**
-         * @param $var
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setAddressId($var)
+        final public function setAddressId( ?int $var ): void
         {
-            if ( !is_int( $var ) )
-            {
-                throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
-            }
-
-            $this->address_id = intval( $var, BASE_10 );
+            $this->address_id = $var;
         }
 
 
         /**
-         * @param $var
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setMailId($var)
+        final public function setMailId( ?int $var ): void
         {
-            if ( !is_int( $var ) )
-            {
-                throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
-            }
-
             $this->mail_id = $var;
         }
 
 
         /**
          * @param $var
-         * @throws Exception
          */
-        final public function setOwnerNameId($var)
+        final public function setOwnerNameId( ?int $var ): void
         {
-            if ( !is_int( $var ) ) {
-                throw new Exception('ProductInvoiceModel - setIdentity: null or numeric number is allowed');
-            }
-
             $this->owner_name_id = $var;
         }
 

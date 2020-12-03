@@ -8,6 +8,11 @@
 
             $arr = SessionBasketForm::getBasketValues();
 
+            if( is_null( $arr ) )
+            {
+                return null;
+            }
+
             for( $idx = 0; $idx < sizeof($arr); $idx++ )
             {
                 $current = $arr[$idx];

@@ -82,7 +82,10 @@
         <?php endif; ?>
     </ul>
 
-    <form class="pagination" method="post" action="/admin/news">
+    <form class="pagination"
+          method="post"
+          action="/admin/news">
+
         <input type="hidden" value="<?php echo $factory->getPaginationIndexValue(); ?>" name="admin_product_pagination_current">
 
         <li>

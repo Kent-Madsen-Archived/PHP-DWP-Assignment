@@ -25,44 +25,40 @@
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
 
+        public const table = 'person_email';
+
+        public const field_identity = 'identity';
+        public const field_content = 'content';
+
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName()
         {
-            return 'person_email';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName():string
         {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'PersonEmailController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
             return boolval( $value );
         }
@@ -72,7 +68,7 @@
          * @return PersonEmailModel
          * @throws Exception
          */
-        final public function createModel(): PersonEmailModel
+        public final function createModel(): PersonEmailModel
         {
             $model = new PersonEmailModel( $this );
             return $model;
@@ -83,7 +79,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -101,7 +97,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function validateIfMailExist( $model ): bool
+        public final function validateIfMailExist( $model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -160,7 +156,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -169,7 +165,10 @@
 
             $retVal = null;
 
-            $sql = "INSERT INTO person_email( content ) VALUES( ? );";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fc} ) VALUES( ? );";
 
             $stmt_email = null;
 
@@ -213,12 +212,13 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
             //
-            $sql = "SELECT * FROM person_email LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             //
             $stmt_limit = null;
@@ -251,8 +251,8 @@
                     {
                         $model = $this->createModel();
                         
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         array_push( $retVal, $model );
                     }
@@ -276,7 +276,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModelByName( &$model ): bool
+        public final function readModelByName( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -285,7 +285,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM person_email WHERE content = ?;";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fc} = ?;";
 
             $stmt_mail = null;
 
@@ -308,7 +311,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {   
-                        $model->setIdentity( intval( $row[ 'identity' ] ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
                     }
                 }
 
@@ -332,7 +335,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -341,7 +344,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM person_email WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_id = null;
 
@@ -364,8 +370,8 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ] ) );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         $retVal = true;
                     }
@@ -389,7 +395,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -401,7 +407,11 @@
             $stmt_email     = null;
             $stmt_identity  = null;
 
-            $sql = "UPDATE person_email SET content = ? WHERE identity = ?;";
+            $table  = self::table;
+            $fc     = self::field_content;
+            $fid    = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fc} = ? WHERE {$fid} = ?;";
 
             $connection = $this->getWrapper()->connect();
 
@@ -443,7 +453,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -452,7 +462,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM person_email WHERE identity = ?;";
+            $table= self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -487,7 +500,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -495,12 +508,11 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
-
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             
@@ -539,9 +551,30 @@
          * @param array $filter
          * @return mixed|void
          */
-        public function lengthCalculatedWithFilter( array $filter )
+        public final function lengthCalculatedWithFilter( array $filter )
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
     }

@@ -398,6 +398,7 @@ CREATE TABLE product_invoice
     identity    INT NOT NULL UNIQUE AUTO_INCREMENT,
 
     total_price DOUBLE DEFAULT 0.0 NOT NULL,
+    profile_id int not null,
 
     registered  DATETIME DEFAULT now() NOT NULL,
 

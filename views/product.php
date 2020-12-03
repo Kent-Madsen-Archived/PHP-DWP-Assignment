@@ -50,10 +50,13 @@
         <?php getHeader(); ?>
 
         <main>
+            <h2> Products </h2>
             <?php if( !isset( $operation_value ) ): ?>
                 <?php require 'views/product/page_view_frontpage.php';?>
             <?php elseif( $operation_value == 'identity' ): ?>
                 <?php require 'views/product/page_view_product.php'; ?>
+            <?php elseif( $operation_value == 'puchase' ): ?>
+                <?php require 'views/product/page_view_purchase.php'; ?>
             <?php elseif ( $operation_value == 'pagination' ):?>
                 <?php require 'views/product/page_view_pagination.php'; ?>
             <?php endif; ?>

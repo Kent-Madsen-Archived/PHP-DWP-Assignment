@@ -100,6 +100,16 @@
 
 
     /**
+     *
+     */
+    function bounce_link()
+    {
+        $url = $_SERVER['HTTP_REFERER'];
+        redirect_to_local_page( $url );
+    }
+
+
+    /**
      * 
      */
     function getEncodingStandard(): string

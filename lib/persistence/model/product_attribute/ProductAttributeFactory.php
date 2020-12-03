@@ -12,9 +12,15 @@
     class ProductAttributeFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'product_attribute';
+
+        public const field_identity = 'identity';
+        public const field_content = 'content';
+
+
         /**
          * ProductAttributeFactory constructor.
-         * @param $mysql_connector
+         * @param MySQLConnectorWrapper|null $mysql_connector
          * @throws Exception
          */
         public function __construct( ?MySQLConnectorWrapper $mysql_connector )
@@ -28,36 +34,18 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'product_attribute';
-        }
-
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName(): string
-        {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName(): string
         {
-            return 'ProductAttributeView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProductAttributeController';
+            return self::table;
         }
 
 
@@ -65,7 +53,7 @@
          * @return ProductAttributeModel
          * @throws Exception
          */
-        final public function createModel(): ProductAttributeModel
+        public final function createModel(): ProductAttributeModel
         {
             $model = new ProductAttributeModel( $this );
             return $model;
@@ -73,17 +61,17 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -91,7 +79,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,7 +88,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -108,11 +96,12 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM product_attribute LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -143,8 +132,8 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         array_push( $retVal, $model );
                     }
@@ -168,7 +157,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -177,7 +166,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM product_attribute WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity  = null;
 
@@ -201,8 +193,8 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         $retVal = true;
                     }
@@ -217,7 +209,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -226,14 +218,17 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ):bool
+        public final function create( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "INSERT INTO product_attribute( content ) VALUES( ? );";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fc} ) VALUES( ? );";
 
             // Statement Variables
             $stmt_product_attribute_content = null;
@@ -279,10 +274,10 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -293,7 +288,11 @@
             $retVal = false;
 
             //
-            $sql = "UPDATE product_attribute SET content = ? WHERE identity = ?;";
+            $table = self::table;
+            $fc = self::field_content;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fc} = ? WHERE {$fid} = ?;";
 
             $stmt_product_attribute_content  = null;
             $stmt_identity              = null;
@@ -312,7 +311,7 @@
 
                 //
                 $stmt_product_attribute_content = $model->getContent();
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -332,16 +331,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -350,7 +349,10 @@
             
             $retVal = null;
 
-            $sql = "DELETE FROM product_attribute WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -365,7 +367,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -391,15 +393,15 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length():int
+        public final function length():int
         {
             $retVal = CONSTANT_ZERO;
 
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             
@@ -432,9 +434,36 @@
             return intval( $retVal );
         }
 
-        public function lengthCalculatedWithFilter(array $filter)
+
+        /**
+         * @param array $filter
+         * @return int
+         */
+        public final function lengthCalculatedWithFilter(array $filter): int
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
     }

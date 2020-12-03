@@ -52,7 +52,7 @@ $af = $domain->getArticleFactory();
     </li>
 
     <li>
-        <?php echo strval( $af->getPaginationIndexCounter()->projectIncrease(1 ) ); ?>
+        <a class="btn disabled"><?php echo strval( $af->getPaginationIndexCounter()->projectIncrease(1 ) ); ?> </a>
     </li>
 
     <li>

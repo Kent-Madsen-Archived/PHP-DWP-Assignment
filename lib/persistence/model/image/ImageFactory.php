@@ -13,6 +13,21 @@
     class ImageFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'image';
+
+        public const field_identity = 'identity';
+        public const field_image_src = 'image_src';
+
+        public const field_image_type_id = 'image_type_id';
+
+        public const field_title = 'title';
+        public const field_alt = 'alt';
+
+        public const field_parent_id = 'parent_id';
+
+        public const field_registered = 'registered';
+        public const field_last_updated = 'last_updated';
+
         /**
          * ImageFactory constructor.
          * @param $mysql_connector
@@ -29,58 +44,41 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'image';
+            return self::table;
         }
 
 
         /**
          * @return mixed|string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName():string
         {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'ImageView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ImageController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
             $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
             
-            return boolval( $value );
+            return $value;
         }
 
 
         /**
-         * @return ImageModel|mixed
+         * @return ImageModel
+         * @throws Exception
          */
-        final public function createModel(): ImageModel
+        public final function createModel(): ImageModel
         {
             $model = new ImageModel( $this );
             return $model;
@@ -91,7 +89,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,7 +98,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -108,13 +106,14 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             // return array
             $retVal = null;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM image LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -145,18 +144,18 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity( $row[ 'identity' ] );
+                        $brought->setIdentity( $row[ self::field_identity ] );
                         
-                        $brought->setImageSrc( $row[ 'image_src' ] );
-                        $brought->setImageTypeId( $row[ 'image_type_id' ] );
+                        $brought->setImageSrc( $row[ self::field_image_src ] );
+                        $brought->setImageTypeId( $row[ self::field_image_type_id ] );
                         
-                        $brought->setTitle( $row[ 'title' ] );
-                        $brought->setAlt( $row[ 'alt' ] );
+                        $brought->setTitle( $row[ self::field_title ] );
+                        $brought->setAlt( $row[ self::field_alt ] );
                         
-                        $brought->setParentId( $row[ 'parent_id' ] );
+                        $brought->setParentId( $row[ self::field_parent_id ] );
 
-                        $brought->setRegistered( $row[ 'registered' ] );
-                        $brought->setLastUpdated( $row[ 'last_updated' ] );
+                        $brought->setRegistered( $row[ self::field_registered ] );
+                        $brought->setLastUpdated( $row[ self::field_last_updated ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -181,7 +180,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -192,7 +191,10 @@
             $retVal = false;
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM image WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             // prepare statement variables
             $stmt_identity  = null;
@@ -216,18 +218,18 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity] );
 
-                        $model->setImageSrc( $row[ 'image_src' ] );
-                        $model->setImageTypeId( $row[ 'image_type_id' ] );
+                        $model->setImageSrc( $row[ self::field_image_src ] );
+                        $model->setImageTypeId( $row[ self::field_image_type_id ] );
 
-                        $model->setTitle( $row[ 'title' ] );
-                        $model->setAlt( $row[ 'alt' ] );
+                        $model->setTitle( $row[ self::field_title ] );
+                        $model->setAlt( $row[ self::field_alt ] );
 
-                        $model->setParentId( $row[ 'parent_id' ] );
+                        $model->setParentId( $row[ self::field_parent_id ] );
 
-                        $model->setRegistered( $row[ 'registered' ] );
-                        $model->setLastUpdated( $row[ 'last_updated' ] );
+                        $model->setRegistered( $row[ self::field_registered] );
+                        $model->setLastUpdated( $row[ self::field_last_updated ] );
 
                         $retVal = true;
                     }
@@ -252,7 +254,7 @@
          * @return mixed|void
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -261,7 +263,14 @@
 
             $retVal = false;
 
-            $sql = "INSERT INTO image( image_src, image_type_id, title, alt, parent_id ) VALUES( ?, ?, ?, ?, ? );";
+            $table = self::table;
+            $fis = self::field_image_src;
+            $fitid = self::field_image_type_id;
+            $ft = self::field_title;
+            $fa = self::field_alt;
+            $fp_id = self::field_parent_id;
+
+            $sql = "INSERT INTO {$table}( {$fis}, {$fitid}, {$ft}, {$fa}, {$fp_id} ) VALUES( ?, ?, ?, ?, ? );";
 
             $stmt_image_src = null;
             $stmt_image_type_id = null;
@@ -312,7 +321,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -321,7 +330,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -330,7 +339,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM image WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -365,7 +377,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -374,7 +386,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -383,7 +395,15 @@
 
             $retVal = false;
 
-            $sql = "UPDATE image SET image_src = ?, image_type_id = ?, title = ?, alt = ?, parent_id = ? WHERE identity = ?;";
+            $table = self::table;
+            $fis = self::field_image_src;
+            $fit_id = self::field_image_type_id;
+            $ft = self::field_title;
+            $fa = self::field_alt;
+            $fp_id = self::field_parent_id;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fis} = ?, {$fit_id} = ?, {$ft} = ?, {$fa} = ?, {$fp_id} = ? WHERE {$fid} = ?;";
 
             $stmt_image_src     = null;
             $stmt_image_type_id = null;
@@ -438,7 +458,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -446,12 +466,12 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
             // SQL query
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // opens a connection to the database
@@ -482,13 +502,39 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return mixed|void
+         */
+        public final function lengthCalculatedWithFilter(array $filter): int
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
 

@@ -45,13 +45,14 @@
     ?>
         <?php getHeader(); ?>
         
-        <main> 
-            <h4> Welcome, <?php echo $profile->getUsername(); ?> </h4>
-            
+        <main>
             <div> 
                 <h2>
                     My Profile
                 </h2>
+
+                <h4> Welcome, <?php echo $profile->getUsername(); ?> </h4>
+
                 <ul>
                     <li>
                         <p>Profile Type: <?php echo $profileType->getContent(); ?></p>
@@ -83,9 +84,6 @@
 
                     <li>
                         <p>Birthday: <?php echo "{$profinfo->getBirthday()}"; ?></p>
-                    </li>
-                    <li>
-                        <p>Mail: <?php echo "{$person_mail->getContent()}"; ?></p>
                     </li>
 
 

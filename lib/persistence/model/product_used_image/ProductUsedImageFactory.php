@@ -12,39 +12,29 @@
     class ProductUsedImageFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'product_used_images';
+
+        public const field_identity = 'identity';
+        public const field_product_id = 'product_id';
+        public const field_image_full_id = 'image_full_id';
+        public const field_image_preview_id = 'image_preview_id';
+        public const field_is_profile_image = 'is_profile_image';
+
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'product_used_images';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'ProductUsedImageView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProductUsedImageController';
+            return self::table;
         }
 
 
@@ -62,27 +52,27 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
         /**
-         * @return mixed|ProductUsedImageModel
+         * @return ProductUsedImageModel
+         * @throws Exception
          */
-        final public function createModel()
+        public final function createModel(): ProductUsedImageModel
         {
             $model = new ProductUsedImageModel( $this );
-
             return $model;
         }
 
@@ -91,7 +81,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -100,16 +90,17 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * TODO: This
+         * @return array|null
          */
-        public function read(): ?array
+        public final function read(): ?array
         {
             // TODO: Implement read() method.
+            return null;
         }
 
 
@@ -118,7 +109,7 @@
          * @return mixed|null
          * @throws Exception
          */
-        final public function readModel( &$model )
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -133,10 +124,10 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -153,7 +144,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -162,7 +153,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM product_used_images WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -177,7 +171,7 @@
                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -197,16 +191,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -219,14 +213,14 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getWrapper()->connect();
@@ -255,13 +249,39 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return int|null
+         */
+        public final function lengthCalculatedWithFilter( array $filter ): ?int
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return null;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
     }

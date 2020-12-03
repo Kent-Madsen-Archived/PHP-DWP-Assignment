@@ -12,6 +12,20 @@
     class BroughtFactory
         extends BaseFactoryTemplate
     {
+        public const filter_by_invoice_id = 'fb_id';
+
+        public const table = 'brought_product';
+
+        public const field_identity = 'identity';
+        public const field_invoice_id = 'invoice_id';
+
+        public const field_number_of_products = 'number_of_products';
+
+        public const field_price=  'price';
+
+        public const field_product_id = 'product_id';
+        public const field_registered = 'registered';
+
         /**
          * BroughtFactory constructor.
          * @param $mysql_connector
@@ -22,42 +36,42 @@
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+        }
 
+        private $filter = null;
+
+        /**
+         * @return array|null
+         */
+        public function getFilter(): ?array
+        {
+            return $this->filter;
+        }
+
+        /**
+         * @param array|null $filter
+         */
+        public function setFilter( ?array $filter ): void
+        {
+            $this->filter = $filter;
         }
 
 
         /**
          * @return string
          */
-        final public static function getTableName(): string
+        public final static function getTableName(): string
         {
-            return 'brought_product';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName(): string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
-        }
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'BroughtProductView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'BroughtProductController';
+            return self::table;
         }
 
 
@@ -65,7 +79,7 @@
          * @return BroughtProductModel
          * @throws Exception
          */
-        final public function createModel(): BroughtProductModel
+        public final function createModel(): BroughtProductModel
         {
             $model = new BroughtProductModel( $this );
             return $model;
@@ -76,14 +90,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -91,7 +105,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -108,10 +122,29 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
+            if( is_null( $this->filter ) )
+            {
+                return $this->readGlobal();
+            }
+            else
+            {
+                return $this->readFilter();
+            }
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readGlobal(): array
+        {
+
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -128,8 +161,8 @@
                 $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                                    $stmt_limit,
-                                    $stmt_offset );
+                    $stmt_limit,
+                    $stmt_offset );
 
                 $stmt_limit  = $this->getLimitValue();
                 $stmt_offset = $this->CalculateOffset();
@@ -145,15 +178,83 @@
                     {
                         $brought = $this->createModel();
 
-                        $brought->setIdentity( $row[ 'identity' ] );
-                        $brought->setInvoiceId( $row[ 'invoice_id' ] );
-                        
-                        $brought->setNumberOfProducts( $row[ 'number_of_products' ] );
-                        
-                        $brought->setPrice( $row[ 'price' ] );
+                        $brought->setIdentity( $row[ self::field_identity ] );
+                        $brought->setInvoiceId( $row[ self::field_invoice_id] );
 
-                        $brought->setProductId( $row[ 'product_id' ] );
-                        $brought->setRegistered( $row[ 'registered' ] );
+                        $brought->setNumberOfProducts( $row[ self::field_number_of_products ] );
+
+                        $brought->setPrice( $row[ self::field_price ] );
+
+                        $brought->setProductId( $row[ self::field_product_id ] );
+                        $brought->setRegistered( $row[ self::field_registered ] );
+
+                        array_push( $retVal, $brought );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readFilter(): array
+        {
+            $table = self::table;
+            $fiid = self::field_invoice_id;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM {$table} where {$fiid} = ?;";
+
+            // prepare statement variables
+            $stmt_invoice_id  = null;
+
+            // return array
+            $retVal = null;
+
+            // get a local connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_invoice_id );
+
+                $stmt_invoice_id  = $this->getFilter()[self::filter_by_invoice_id];
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $brought = $this->createModel();
+
+                        $brought->setIdentity( $row[ self::field_identity ] );
+                        $brought->setInvoiceId( $row[ self::field_invoice_id ] );
+
+                        $brought->setNumberOfProducts( $row[ self::field_number_of_products ] );
+
+                        $brought->setPrice( $row[ self::field_price ] );
+
+                        $brought->setProductId( $row[ self::field_product_id ] );
+                        $brought->setRegistered( $row[ self::field_registered ] );
 
                         array_push( $retVal, $brought );
                     }
@@ -177,7 +278,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -185,7 +286,10 @@
             }
 
             // sql, that the prepared statement uses
-            $sql = "SELECT * FROM brought_product WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             // prepare statement variables
             $stmt_identity  = null;
@@ -212,16 +316,16 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
-                        $model->setInvoiceId( intval( $row[ 'invoice_id' ], BASE_10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setInvoiceId( $row[ self::field_invoice_id ] );
 
-                        $model->setNumberOfProducts( intval( $row[ 'number_of_products' ], BASE_10 ) );
+                        $model->setNumberOfProducts( $row[ self::field_number_of_products ] );
 
-                        $model->setPrice( doubleval( $row[ 'price' ] ) );
+                        $model->setPrice( $row[ self::field_price ] );
 
-                        $model->setProductId( intval( $row[ 'product_id' ], BASE_10 ) );
+                        $model->setProductId( $row[ self::field_product_id ] );
 
-                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setRegistered( $row[ self::field_registered ] );
 
                         $retVal = true;
                     }
@@ -236,7 +340,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -245,7 +349,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -261,7 +365,14 @@
             $stmt_price                 = null;
             $stmt_product_id            = null;
 
-            $sql = "INSERT INTO brought_product( invoice_id, number_of_products, price, product_id ) VALUES( ?, ?, ?, ? );";
+            $table = self::table;
+            $fiid = self::field_invoice_id;
+            $fnop = self::field_number_of_products;
+            $fp = self::field_price;
+            $fpid = self::field_product_id;
+
+
+            $sql = "INSERT INTO {$table}( {$fiid}, {$fnop}, {$fp}, {$fpid} ) VALUES( ?, ?, ?, ? );";
 
             //
             $connection = $this->getWrapper()->connect();
@@ -276,14 +387,15 @@
                                     $stmt_price,
                                     $stmt_product_id );
 
-                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
-                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
-                $stmt_price                 = doubleval( $model->getPrice() );
-                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+                $stmt_invoice_id            = $model->getInvoiceId();
+                $stmt_number_of_products    = $model->getNumberOfProducts();
+
+                $stmt_price                 = $model->getPrice();
+                $stmt_product_id            = $model->getProductId();
 
                 // Executes the query
                 $stmt->execute();
-                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
 
                 $retVal = true;
             }
@@ -298,7 +410,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -307,7 +419,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -325,7 +437,14 @@
 
             $stmt_identity              = null;
 
-            $sql = "UPDATE brought_product SET invoice_id = ?, number_of_products = ?, price = ?, product_id = ? WHERE identity = ?;";
+            $table = self::table;
+            $fiid = self::field_invoice_id;
+            $f_nop = self::field_number_of_products;
+            $fp = self::field_price;
+            $fpid = self::field_product_id;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fiid} = ?, {$f_nop} = ?, {$fp} = ?, {$fpid} = ? WHERE {$fid} = ?;";
 
             //
             $connection = $this->getWrapper()->connect();
@@ -341,14 +460,14 @@
                     $stmt_product_id,
                     $stmt_identity );
 
-                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
-                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
+                $stmt_invoice_id            = $model->getInvoiceId();
+                $stmt_number_of_products    = $model->getNumberOfProducts();
 
-                $stmt_price                 = doubleval( $model->getPrice() );
+                $stmt_price                 = $model->getPrice();
 
-                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+                $stmt_product_id            = $model->getProductId();
 
-                $stmt_identity              = intval( $model->getIdentity(), BASE_10 );
+                $stmt_identity              = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -367,7 +486,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -376,14 +495,17 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "DELETE FROM brought_product WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             // Return value
             $retVal = false;
@@ -433,9 +555,9 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $retVal = CONSTANT_ZERO;
@@ -471,9 +593,35 @@
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return mixed|void
+         */
+        public final function lengthCalculatedWithFilter(array $filter)
         {
             // TODO: Implement length_calculate_with_filter() method.
+            return 0;
+        }
+
+
+        /**
+         * @return string
+         */
+        public final function appendices(): string
+        {
+            // TODO: Implement appendices() method.
+            return "";
+        }
+
+
+        /**
+         * @param array $filters
+         * @return bool
+         */
+        public final function insertOptions(array $filters): bool
+        {
+            // TODO: Implement insertOptions() method.
+            return false;
         }
 
 
