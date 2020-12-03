@@ -12,9 +12,20 @@
     class ProductEntityFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'product_entity';
+
+        public const field_identity = 'identity';
+        public const field_arrived = 'arrived';
+
+        public const field_entity_code = 'entity_code';
+
+        public const field_product_id = 'product_id';
+        public const field_brougth_id = 'brougth_id';
+
+
         /**
          * ProductEntityFactory constructor.
-         * @param $mysql_connector
+         * @param MySQLConnectorWrapper|null $mysql_connector
          * @throws Exception
          */
         public function __construct( ?MySQLConnectorWrapper $mysql_connector )
@@ -22,43 +33,24 @@
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
-
         }
 
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'product_entity';
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public function getFactoryTableName():string
+        public final function getFactoryTableName(): string
         {
-            return self::getTableName();
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'ProductEntityView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProductEntityController';
+            return self::table;
         }
 
 
@@ -66,7 +58,7 @@
          * @return ProductEntityModel
          * @throws Exception
          */
-        final public function createModel(): ProductEntityModel
+        public final function createModel(): ProductEntityModel
         {
             $model = new ProductEntityModel( $this );
             return $model;
@@ -77,14 +69,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -92,7 +84,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -101,7 +93,7 @@
                 return $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -109,10 +101,11 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             //
-            $sql = "SELECT * FROM product_entity LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -131,8 +124,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = intval( $this->getLimitValue(), 10 );
-                $stmt_offset = intval( $this->CalculateOffset(), 10 );
+                $stmt_limit = $this->getLimitValue();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
@@ -147,13 +140,13 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setArrived( $row[ 'arrived' ] );
-                        $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
+                        $model->setArrived( $row[ self::field_arrived ] );
+                        $model->setEntityCode( $row[ self::field_entity_code ] );
 
-                        $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
-                        $model->setBrought( intval( $row[ 'brought_id' ], 10 ) );
+                        $model->setProductId( $row[ self::field_product_id ] );
+                        $model->setBrought( $row[ self::field_brougth_id ] );
 
                         array_push( $retVal, $model );
                     }
@@ -177,7 +170,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -185,7 +178,10 @@
             }
 
             //
-            $sql = "SELECT * FROM product_entity WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
             $stmt_identity  = null;
 
             //
@@ -201,7 +197,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_identity = intval( $this->getLimitValue(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -212,14 +208,14 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setArrived( $row[ 'arrived' ] );
+                        $model->setArrived( $row[ self::field_arrived ] );
 
-                        $model->setEntityCode( strval( $row[ 'entity_code' ] ) );
+                        $model->setEntityCode( $row[ self::field_entity_code ] );
 
-                        $model->setProductId( intval( $row[ 'product_id' ], 10 ) );
-                        $model->setBrought( intval( $row[ 'brought_id' ], 10 ) );
+                        $model->setProductId( $row[ self::field_product_id ] );
+                        $model->setBrought( $row[ self::field_brougth_id ] );
 
                         $retVal = true;
                     }
@@ -240,17 +236,23 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "INSERT INTO product_entity( entity_code, product_id, brought_id ) VALUES( ?, ?, ? );";
+            $table = self::table;
+            $fec = self::field_entity_code;
+
+            $fpid = self::field_product_id;
+            $fbid = self::field_brougth_id;
+
+            $sql = "INSERT INTO {$table}( {$fec}, {$fpid}, {$fbid} ) VALUES( ?, ?, ? );";
 
             // Statement Variables
             $stmt_entity_code = null;
@@ -300,10 +302,10 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -312,7 +314,9 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM product_entity WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -327,7 +331,7 @@
                     $stmt_identity );
 
                 // Sets Statement Variables
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -347,16 +351,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -368,14 +372,14 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
             
             $connection = $this->getWrapper()->connect();
@@ -391,7 +395,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = intval( $row[ 'number_of_rows' ], 10 );
+                        $retVal = $row[ 'number_of_rows' ];
                     }
                 }  
             }
@@ -405,13 +409,18 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
-        public function lengthCalculatedWithFilter(array $filter)
+        /**
+         * @param array $filter
+         * @return int|null
+         */
+        public final function lengthCalculatedWithFilter(array $filter): ?int
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return null;
         }
 
 
@@ -429,7 +438,7 @@
          * @param array $filters
          * @return bool
          */
-        public final function insertOptions(array $filters): bool
+        public final function insertOptions( array $filters ): bool
         {
             // TODO: Implement insertOptions() method.
             return false;

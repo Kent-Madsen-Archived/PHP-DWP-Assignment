@@ -12,6 +12,19 @@
     class ProfileInformationFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'profile_information';
+
+        public const field_identity             = 'identity';
+        public const field_profile_id           = 'profile_id';
+        public const field_person_name_id       = 'person_name_id';
+        public const field_person_address_id    = 'person_address_id';
+        public const field_person_email_id      = 'person_email_id';
+        public const field_person_phone         = 'person_phone';
+        public const field_birthday             = 'birthday';
+        public const field_registered           = 'registered';
+
+
+
         /**
          * ProfileInformationFactory constructor.
          * @param $mysql_connector
@@ -30,7 +43,7 @@
          */
         final public static function getTableName()
         {
-            return 'profile_information';
+            return self::table;
         }
 
 
@@ -44,28 +57,10 @@
 
 
         /**
-         * @return string
-         */
-        final public static function getViewName()
-        {
-            return 'ProfileInformationView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProfileInformationController';
-        }
-
-
-        /**
          * @return bool|mixed
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
@@ -78,8 +73,9 @@
 
         /**
          * @return mixed|ProfileInformationModel
+         * @throws Exception
          */
-        final public function createModel()
+        public final function createModel(): ?ProfileInformationModel
         {
             $model = new ProfileInformationModel( $this );
             return $model;
@@ -90,7 +86,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -111,7 +107,8 @@
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM profile_information LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit = null;
             $stmt_offset = null;
@@ -126,8 +123,8 @@
                                     $stmt_limit,
                                     $stmt_offset );
 
-                $stmt_limit = intval( $this->getLimitValue(), 10 );
-                $stmt_offset = intval( $this->CalculateOffset(), 10 );
+                $stmt_limit = $this->getLimitValue();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
@@ -142,18 +139,18 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setProfileId( intval( $row[ 'profile_id' ], 10 ) );
+                        $model->setProfileId( $row[ self::field_profile_id ] );
 
-                        $model->setPersonNameId( intval( $row[ 'person_name_id' ], 10 ) );
-                        $model->setPersonAddressId( intval( $row[ 'person_address_id' ], 10 ) );
-                        $model->setPersonEmailId( intval( $row[ 'person_email_id' ], 10 ) );
+                        $model->setPersonNameId( $row[ self::field_person_name_id] );
+                        $model->setPersonAddressId(  $row[ self::field_person_address_id ]);
+                        $model->setPersonEmailId( $row[ self::field_person_email_id ] );
 
-                        $model->setPersonPhone( strval( $row[ 'person_phone' ] ) );
-                        $model->setBirthday( strval( $row[ 'birthday' ] ) );
+                        $model->setPersonPhone( $row[ self::field_person_phone ] );
+                        $model->setBirthday( $row[ self::field_birthday ]  );
 
-                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setRegistered( $row[ self::field_registered ] );
 
                         array_push( $retVal, $model );
                     }
@@ -174,10 +171,10 @@
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool|null
          * @throws Exception
          */
-        final public function readModel( &$model ): ?bool
+        public final function readModel( &$model ): ?bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -185,7 +182,10 @@
             }
 
             //
-            $sql = "SELECT * FROM profile_information WHERE profile_id = ?;";
+            $table = self::table;
+            $fpid = self::field_profile_id;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fpid} = ?;";
 
             $stmt_profile_id = null;
 
@@ -199,7 +199,7 @@
                 $stmt->bind_param( "i",
                                     $stmt_profile_id );
 
-                $stmt_profile_id = intval( $model->getProfileId(), 10 );
+                $stmt_profile_id = $model->getProfileId();
 
                 // Executes the query
                 $stmt->execute();
@@ -210,18 +210,18 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setProfileId( intval( $row[ 'profile_id' ], 10 ) );
+                        $model->setProfileId( $row[ self::field_profile_id ] );
 
-                        $model->setPersonNameId( intval( $row[ 'person_name_id' ], 10 ) );
-                        $model->setPersonAddressId( intval( $row[ 'person_address_id' ], 10 ) );
-                        $model->setPersonEmailId( intval( $row[ 'person_email_id' ], 10 ) );
+                        $model->setPersonNameId( $row[ self::field_person_name_id ] );
+                        $model->setPersonAddressId( $row[ self::field_person_address_id ] );
+                        $model->setPersonEmailId( $row[ self::field_person_email_id ] );
 
-                        $model->setPersonPhone( strval( $row[ 'person_phone' ] ) );
-                        $model->setBirthday( strval( $row[ 'birthday' ] ) );
+                        $model->setPersonPhone(  $row[ self::field_person_phone ] );
+                        $model->setBirthday( $row[ self::field_birthday] );
 
-                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setRegistered( $row[ self::field_registered ] );
 
                         $retVal = true;
                     }
@@ -242,7 +242,7 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ): bool
@@ -254,7 +254,16 @@
 
             $retVal = null;
 
-            $sql = "INSERT INTO profile_information( profile_id, person_name_id, person_address_id, person_email_id, person_phone, birthday ) VALUES( ?, ?, ?, ?, ?, ? );";
+            $table = self::table;
+
+            $fpid = self::field_profile_id;
+            $fpnid = self::field_person_name_id;
+            $fpaddr = self::field_person_address_id;
+            $fpeid = self::field_person_email_id;
+            $fpp = self::field_person_phone;
+            $fb = self::field_birthday;
+
+            $sql = "INSERT INTO {$table}( {$fpid}, {$fpnid}, {$fpaddr}, {$fpeid}, {$fpp}, {$fb} ) VALUES( ?, ?, ?, ?, ?, ? );";
 
             $stmt_profile_id        = null;
             $stmt_person_name_id    = null;
@@ -280,11 +289,11 @@
                                     $stmt_birthday );
 
                 //
-                $stmt_profile_id        = intval( $model->getProfileId(), 10);
+                $stmt_profile_id        = $model->getProfileId();
 
-                $stmt_person_name_id    = intval( $model->getPersonNameId(), 10 );
-                $stmt_person_address_id = intval( $model->getPersonAddressId(), 10 );
-                $stmt_person_email_id   = intval( $model->getPersonEmailId(), 10 );
+                $stmt_person_name_id    = $model->getPersonNameId();
+                $stmt_person_address_id = $model->getPersonAddressId();
+                $stmt_person_email_id   = $model->getPersonEmailId();
 
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
@@ -313,7 +322,7 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
         final public function update( &$model ): bool
@@ -327,7 +336,19 @@
             $retVal = null;
 
             //
-            $sql = "UPDATE profile_information SET profile_id = ?, person_name_id = ?, person_address_id = ?, person_email_id = ?, person_phone = ?, birthday = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fpid = self::field_profile_id;
+            $fpnid = self::field_person_name_id;
+            $fpeid = self::field_person_email_id;
+            $fpaid = self::field_person_address_id;
+
+            $fpp = self::field_person_phone;
+            $fb = self::field_birthday;
+
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fpid} = ?, {$fpnid} = ?, {$fpaid} = ?, {$fpeid} = ?, {$fpp} = ?, {$fb} = ? WHERE {$fid} = ?;";
 
             //
             $stmt_profile_id = null;
@@ -358,11 +379,11 @@
                                     $stmt_identity );
 
                 //
-                $stmt_profile_id        = intval( $model->getProfileId(), BASE_10 );
+                $stmt_profile_id        = $model->getProfileId();
                 
-                $stmt_person_name_id    = intval( $model->getPersonNameId(), BASE_10 );
-                $stmt_person_address_id = intval( $model->getPersonAddressId(), BASE_10 );
-                $stmt_person_email_id   = intval( $model->getPersonEmailId(), BASE_10 );
+                $stmt_person_name_id    = $model->getPersonNameId();
+                $stmt_person_address_id = $model->getPersonAddressId();
+                $stmt_person_email_id   = $model->getPersonEmailId();
 
                 $stmt_person_phone      = $model->getPersonPhone();
                 $stmt_birthday          = $model->getBirthday();
@@ -388,7 +409,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -397,7 +418,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -406,7 +427,11 @@
             
             $retVal = false;
 
-            $sql = "DELETE FROM profile_information WHERE identity = ?;";
+            $table = self::table;
+
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -421,7 +446,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -442,19 +467,19 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
         final public function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getWrapper()->connect();

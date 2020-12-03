@@ -14,12 +14,6 @@
             implements AccessPrivilegesInteraction
     {
         /**
-         *
-         */
-        public const class_name = "AccessPrivilegesDomain";
-
-
-        /**
          * AccessPrivilegesDomain constructor.
          * @throws Exception
          */
@@ -27,12 +21,27 @@
         {
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
+
+            $this->setProfileFactory(
+                new ProfileFactory(
+                    new MySQLConnectorWrapper( $this->getInformation() ) ) );
         }
+
+
+        //
+        private $profile_factory = null;
+
+
+        /**
+         *
+         */
+        public const class_name = "AccessPrivilegesDomain";
+
 
         /**
          * @return bool
          */
-        public function is_logged_in()
+        public function is_logged_in(): bool
         {
             if( SessionUserProfile::existSessionUserProfileIdentity() &&
                 SessionUserProfile::existSessionUserProfileUsername() &&
@@ -44,31 +53,62 @@
             return FALSE;
         }
 
+
         /**
          * @return bool
          */
-        public function is_not_logged_in()
+        public final function is_not_logged_in(): bool
         {
             return !$this->is_logged_in();
         }
 
+
         /**
          * @return bool
+         * @throws Exception
          */
-        public function is_admin()
+        public final function isAdmin(): bool
         {
-            if( $this->is_logged_in() == FALSE )
+            $retVal = false;
+
+            if( $this->is_not_logged_in() )
             {
-                return FALSE;
+                return $retVal;
             }
 
-            if( SessionUserProfile::getSessionUserProfileType() == 4 )
+            $factory = $this->getProfileFactory();
+            $model = $factory->createModel();
+
+            $model->setIdentity( SessionUserProfile::getSessionUserProfileIdentity() );
+            $factory->readModel($model );
+
+            if( $factory->validateIfProfileTypeIsAdmin( $model ) )
             {
-                return TRUE;
+                $retVal = true;
             }
 
-            return FALSE;
+            return $retVal;
         }
+
+
+        //
+        /**
+         * @return ProfileFactory|null
+         */
+        public function getProfileFactory(): ?ProfileFactory
+        {
+            return $this->profile_factory;
+        }
+
+
+        /**
+         * @param ProfileFactory|null $profile_factory
+         */
+        public function setProfileFactory( ?ProfileFactory $profile_factory ): void
+        {
+            $this->profile_factory = $profile_factory;
+        }
+
     }
 
 ?>

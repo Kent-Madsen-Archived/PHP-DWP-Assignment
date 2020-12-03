@@ -12,6 +12,15 @@
     class ProductFactory
         extends BaseFactoryTemplate
     {
+        public const table_name = 'product';
+
+        public const field_identity    = 'identity';
+
+        public const field_title       = 'title';
+        public const field_description = 'description';
+        public const field_price       = 'price';
+
+
         /**
          * ProductFactory constructor.
          * @param $mysql_connector
@@ -24,57 +33,30 @@
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
 
-        private const table_name = 'product';
-
-        private const field_identity    = 'identity';
-
-        private const field_title       = 'title';
-        private const field_description = 'description';
-        private const field_price       = 'price';
-
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
             return self::table_name;
         }
 
 
         /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName(): string
-        {
-            return self::getTableName();
-        }
-
-
-        /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName(): string
         {
-            return 'ProductView';
+            return self::table_name;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProductController';
-        }
-
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
@@ -89,7 +71,7 @@
          * @return ProductModel
          * @throws Exception
          */
-        final public function createModel(): ProductModel
+        public final function createModel(): ProductModel
         {
             $model = new ProductModel( $this );
             return $model;
@@ -100,7 +82,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -109,7 +91,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -117,7 +99,7 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             // return array
             $retVal = null;
@@ -155,11 +137,11 @@
                     {
                         $productModel = $this->createModel();
 
-                        $productModel->setIdentity( self::Int10( $row[ self::field_identity ] ) );
+                        $productModel->setIdentity( $row[ self::field_identity ] );
                         
-                        $productModel->setTitle( strval(  $row[ self::field_title ] ) );
-                        $productModel->setDescription( strval( $row[ self::field_description ] ) );
-                        $productModel->setPrice( doubleval( $row[ self::field_price ] ) );
+                        $productModel->setTitle(  $row[ self::field_title ] );
+                        $productModel->setDescription( $row[ self::field_description ] );
+                        $productModel->setPrice( $row[ self::field_price ] );
 
                         array_push( $retVal, $productModel );
                     }
@@ -184,7 +166,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -211,7 +193,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_identity  = self::Int10( $model->getIdentity() );
+                $stmt_identity  = $model->getIdentity();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -220,11 +202,11 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( self::Int10( $row[ self::field_identity ] ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setTitle( strval(  $row[ self::field_title ] ) );
-                        $model->setDescription( strval( $row[ self::field_description ] ) );
-                        $model->setPrice( doubleval( $row[ self::field_price ] ) );
+                        $model->setTitle( $row[ self::field_title ] );
+                        $model->setDescription( $row[ self::field_description ] );
+                        $model->setPrice( $row[ self::field_price ] );
 
                         $retVal = true;
                     }
@@ -240,16 +222,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -287,7 +269,6 @@
 
                 $stmt_price         = $model->getPrice();
 
-
                 $stmt->execute();
 
                 $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
@@ -302,16 +283,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -354,9 +335,9 @@
                 $stmt_title         = $model->getTitle();
                 $stmt_description   = $model->getDescription();
                 
-                $stmt_price         = doubleval( $model->getPrice() );
+                $stmt_price         = $model->getPrice();
 
-                $stmt_identity      = self::Int10( $model->getIdentity() );
+                $stmt_identity      = $model->getIdentity();
 
                 $stmt->execute();
 
@@ -374,16 +355,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -431,7 +412,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -439,7 +420,7 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
@@ -459,7 +440,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $retVal = self::Int10( $row[ 'number_of_rows' ]);
+                        $retVal = $row[ 'number_of_rows' ];
                     }
                 }  
             }
@@ -472,7 +453,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 

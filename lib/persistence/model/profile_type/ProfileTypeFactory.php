@@ -13,6 +13,12 @@
     class ProfileTypeFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'profile_type';
+
+        public const field_identity = 'identity';
+        public const field_content = 'content';
+
+
         /**
          * ProfileTypeFactory constructor.
          * @param $mysql_connector
@@ -22,48 +28,30 @@
         {
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
-            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+            $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO );
         }
 
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName()
         {
-            return 'profile_type';
-        }
-
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName(): string
-        {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName(): string
         {
-            return 'ProfileTypeView';
+            return self::table;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProfileTypeController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
         final public function exist(): bool
@@ -71,20 +59,19 @@
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
         /**
-         * @return mixed|ProfileTypeModel
+         * @return ProfileTypeModel
          * @throws Exception
          */
-        final public function createModel()
+        final public function createModel(): ProfileTypeModel
         {
             $model = new ProfileTypeModel( $this );
-
             return $model;
         }
 
@@ -93,7 +80,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var )
+        final public function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -102,18 +89,20 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
-         * @return array|mixed
+         * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             //
-            $sql = "SELECT * FROM profile_type LIMIT ? OFFSET ?;";
+            $table = self::table;
+
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -147,8 +136,8 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         array_push( $retVal, $model );
                     }
@@ -179,6 +168,11 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $table = self::table;
+
+            $fc = self::field_content;
+            $fid = self::field_identity;
+
             $by_content = false;
             $by_identity = false;
 
@@ -199,7 +193,7 @@
 
             if( $by_content )
             {
-                $preparedsql_content = "select * from profile_type where lower( content ) = ?;";
+                $preparedsql_content = "SELECT * FROM {$table} WHERE lower( {$fc} ) = ?;";
 
                 try
                 {
@@ -217,8 +211,8 @@
                     {
                         while( $row = $result->fetch_assoc() )
                         {
-                            $model->setIdentity( $row[ 'identity' ] );
-                            $model->setContent( $row[ 'content' ] );
+                            $model->setIdentity( $row[ self::field_identity ] );
+                            $model->setContent( $row[ self::field_content ] );
 
                             $retVal = true;
                         }
@@ -237,7 +231,7 @@
 
             if( $by_identity )
             {
-                $preparedsql_identity = "select * from profile_type where identity = ?;";
+                $preparedsql_identity = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
                 try
                 {
@@ -255,8 +249,8 @@
                     {
                         while( $row = $result->fetch_assoc() )
                         {
-                            $model->setIdentity( $row[ 'identity' ] );
-                            $model->setContent( $row[ 'content' ] );
+                            $model->setIdentity( $row[ self::field_identity ] );
+                            $model->setContent( $row[ self::field_content ] );
 
                             $retVal = true;
                         }
@@ -272,13 +266,13 @@
                 }
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
         final public function create( &$model ): bool
@@ -288,7 +282,10 @@
                 throw new Exception( 'Not accepted model' );
             }
 
-            $sql = "INSERT INTO profile_type( content ) VALUES( ? );";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fc} ) VALUES( ? );";
 
             // Statement Variables
             $stmt_profile_type_content = null;
@@ -334,7 +331,7 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
         final public function update( &$model ): bool
@@ -348,7 +345,12 @@
             $retVal = false;
 
             //
-            $sql = "UPDATE profile_type SET content = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fid = self::field_identity;
+            $fc = self::field_content;
+
+            $sql = "UPDATE {$table} SET {$fc} = ? WHERE {$fid} = ?;";
 
             $stmt_profile_type_content  = null;
             $stmt_identity              = null;
@@ -367,7 +369,7 @@
 
                 //
                 $stmt_profile_type_content = $model->getContent();
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -387,16 +389,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -407,7 +409,10 @@
             $retVal = false;
 
             //
-            $sql = "DELETE FROM profile_type WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -423,7 +428,7 @@
                                     $stmt_identity );
 
                 //
-                $stmt_identity = intval( $model->getIdentity(), 10 );
+                $stmt_identity = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -449,14 +454,14 @@
 
 
         /**
-         * @return int|mixed
+         * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             $connection = $this->getWrapper()->connect();
@@ -485,7 +490,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 

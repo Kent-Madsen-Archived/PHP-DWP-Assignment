@@ -12,6 +12,8 @@
     class BroughtFactory
         extends BaseFactoryTemplate
     {
+        public const filter_by_invoice_id = 'fb_id';
+
         /**
          * BroughtFactory constructor.
          * @param $mysql_connector
@@ -22,7 +24,24 @@
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+        }
 
+        private $filter = null;
+
+        /**
+         * @return array|null
+         */
+        public function getFilter(): ?array
+        {
+            return $this->filter;
+        }
+
+        /**
+         * @param array|null $filter
+         */
+        public function setFilter( ?array $filter ): void
+        {
+            $this->filter = $filter;
         }
 
 
@@ -108,8 +127,26 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
+            if(is_null($this->filter))
+            {
+                return $this->readGlobal();
+            }
+            else
+            {
+                return $this->readFilter();
+            }
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readGlobal(): array
+        {
+
             // sql, that the prepared statement uses
             $sql = "SELECT * FROM brought_product LIMIT ? OFFSET ?;";
 
@@ -128,8 +165,8 @@
                 $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                                    $stmt_limit,
-                                    $stmt_offset );
+                    $stmt_limit,
+                    $stmt_offset );
 
                 $stmt_limit  = $this->getLimitValue();
                 $stmt_offset = $this->CalculateOffset();
@@ -147,9 +184,75 @@
 
                         $brought->setIdentity( $row[ 'identity' ] );
                         $brought->setInvoiceId( $row[ 'invoice_id' ] );
-                        
+
                         $brought->setNumberOfProducts( $row[ 'number_of_products' ] );
-                        
+
+                        $brought->setPrice( $row[ 'price' ] );
+
+                        $brought->setProductId( $row[ 'product_id' ] );
+                        $brought->setRegistered( $row[ 'registered' ] );
+
+                        array_push( $retVal, $brought );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readFilter(): array
+        {
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM brought_product where invoice_id = ?;";
+
+            // prepare statement variables
+            $stmt_invoice_id  = null;
+
+            // return array
+            $retVal = null;
+
+            // get a local connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_invoice_id );
+
+                $stmt_invoice_id  = $this->getFilter()[self::filter_by_invoice_id];
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $brought = $this->createModel();
+
+                        $brought->setIdentity( $row[ 'identity' ] );
+                        $brought->setInvoiceId( $row[ 'invoice_id' ] );
+
+                        $brought->setNumberOfProducts( $row[ 'number_of_products' ] );
+
                         $brought->setPrice( $row[ 'price' ] );
 
                         $brought->setProductId( $row[ 'product_id' ] );
@@ -276,14 +379,15 @@
                                     $stmt_price,
                                     $stmt_product_id );
 
-                $stmt_invoice_id            = intval( $model->getInvoiceId(), BASE_10 );
-                $stmt_number_of_products    = intval( $model->getNumberOfProducts(), BASE_10 );
-                $stmt_price                 = doubleval( $model->getPrice() );
-                $stmt_product_id            = intval( $model->getProductId(), BASE_10 );
+                $stmt_invoice_id            = $model->getInvoiceId();
+                $stmt_number_of_products    = $model->getNumberOfProducts();
+
+                $stmt_price                 = $model->getPrice();
+                $stmt_product_id            = $model->getProductId();
 
                 // Executes the query
                 $stmt->execute();
-                $model->setIdentity( intval( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ), BASE_10 ) );
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
 
                 $retVal = true;
             }

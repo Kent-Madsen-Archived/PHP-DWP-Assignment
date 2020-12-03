@@ -25,6 +25,11 @@
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
         }
 
+        public const table = 'person_email';
+
+        public const field_identity = 'identity';
+        public const field_content = 'content';
+
 
         /**
          * @return string
@@ -54,15 +59,15 @@
 
 
         /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
             return boolval( $value );
         }
@@ -72,7 +77,7 @@
          * @return PersonEmailModel
          * @throws Exception
          */
-        final public function createModel(): PersonEmailModel
+        public final function createModel(): PersonEmailModel
         {
             $model = new PersonEmailModel( $this );
             return $model;
@@ -83,7 +88,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -101,7 +106,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function validateIfMailExist( $model ): bool
+        public final function validateIfMailExist( $model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -160,7 +165,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -169,7 +174,10 @@
 
             $retVal = null;
 
-            $sql = "INSERT INTO person_email( content ) VALUES( ? );";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "INSERT INTO {$table}( {$fc} ) VALUES( ? );";
 
             $stmt_email = null;
 
@@ -213,12 +221,13 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             $retVal = null;
 
             //
-            $sql = "SELECT * FROM person_email LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             //
             $stmt_limit = null;
@@ -251,8 +260,8 @@
                     {
                         $model = $this->createModel();
                         
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         array_push( $retVal, $model );
                     }
@@ -285,7 +294,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM person_email WHERE content = ?;";
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fc} = ?;";
 
             $stmt_mail = null;
 
@@ -308,7 +320,7 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {   
-                        $model->setIdentity( intval( $row[ 'identity' ] ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
                     }
                 }
 
@@ -341,7 +353,10 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM person_email WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_id = null;
 
@@ -364,8 +379,8 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ] ) );
-                        $model->setContent( $row[ 'content' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
 
                         $retVal = true;
                     }
@@ -401,7 +416,11 @@
             $stmt_email     = null;
             $stmt_identity  = null;
 
-            $sql = "UPDATE person_email SET content = ? WHERE identity = ?;";
+            $table  = self::table;
+            $fc     = self::field_content;
+            $fid    = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fc} = ? WHERE {$fid} = ?;";
 
             $connection = $this->getWrapper()->connect();
 
@@ -452,7 +471,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM person_email WHERE identity = ?;";
+            $table= self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -498,9 +520,8 @@
         final public function length(): int
         {
             $retVal = CONSTANT_ZERO;
-
             
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             

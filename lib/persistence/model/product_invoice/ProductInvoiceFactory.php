@@ -12,6 +12,22 @@
     class ProductInvoiceFactory
         extends BaseFactoryTemplate
     {
+        public const filter_by_profile_id = 'fpid';
+
+        public const table = 'product_invoice';
+
+        public const field_identity = 'identity';
+        public const field_total_price = 'total_price';
+
+        public const field_registered = 'registered';
+
+        public const field_address_id = 'address_id';
+        public const field_mail_id = 'mail_id';
+        public const field_owner_name_id = 'owner_name_id';
+
+        public const field_profile_id = 'profile_id';
+
+
         /**
          * ProductInvoiceFactory constructor.
          * @param $mysql_connector
@@ -22,58 +38,58 @@
             $this->setupBase();
             $this->setWrapper( $mysql_connector );
             $this->setPaginationAndLimit(CONSTANT_FIVE, CONSTANT_ZERO);
+        }
 
+        private $filter = null;
+
+
+        /**
+         * @return string
+         */
+        public final static function getTableName(): string
+        {
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final function getFactoryTableName(): string
         {
-            return 'product_invoice';
+            return self::table;
         }
 
-
         /**
-         * @return mixed|string
+         * @return array|null
          */
-        final public function getFactoryTableName(): string
+        public final function getFilter(): ?array
         {
-            return self::getTableName();
+            return $this->filter;
         }
 
 
         /**
-         * @return string
+         * @param array $filter
          */
-        final public static function getViewName()
+        public final function setFilter( array $filter ): void
         {
-            return 'ProductInvoiceView';
+            $this->filter = $filter;
         }
 
 
         /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ProductInvoiceController';
-        }
-
-
-        /**
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value ;
         }
 
 
@@ -81,7 +97,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsValidModel( $var ): bool
+        protected final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -90,7 +106,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -98,7 +114,7 @@
          * @return ProductInvoiceModel
          * @throws Exception
          */
-        final public function createModel(): ProductInvoiceModel
+        public final function createModel(): ProductInvoiceModel
         {
             $model = new ProductInvoiceModel( $this );
             return $model;
@@ -106,14 +122,36 @@
 
 
         /**
-         * @return array|mixed
+         * @return array
          * @throws Exception
          */
-        final public function read(): array
+        public final function read(): array
+        {
+            $arr = null;
+
+            if( is_null( $this->filter ) || count( $this->filter ) == 0 )
+            {
+                $arr = $this->readGlobal();
+            }
+            else
+            {
+                $arr = $this->readWithFilter();
+            }
+
+            return $arr;
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readGlobal(): array
         {
             $retVal = null;
 
-            $sql = "SELECT * FROM product_invoice LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;
@@ -125,11 +163,11 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "ii",
-                                    $stmt_limit,
-                                    $stmt_offset );
+                    $stmt_limit,
+                    $stmt_offset );
 
-                $stmt_limit  = intval( $this->getLimitValue(), 10 );
-                $stmt_offset = intval( $this->CalculateOffset(), 10 );
+                $stmt_limit  = $this->getLimitValue();
+                $stmt_offset = $this->CalculateOffset();
 
                 // Executes the query
                 $stmt->execute();
@@ -144,10 +182,82 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( intval( $row[ 'identity' ], 10 ) );
-                        
-                        $model->setTotalPrice( doubleval( $row[ 'total_price' ] ) );
-                        $model->setRegistered( $row[ 'invoice_registered' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setTotalPrice( $row[ self::field_total_price ] );
+
+                        $model->setRegistered( $row[ self::field_registered ] );
+
+                        $model->setAddressId( $row[ self::field_address_id ] );
+                        $model->setMailId( $row[ self::field_mail_id ] );
+                        $model->setOwnerNameId( $row[ self::field_owner_name_id ] );
+
+                        $model->setProfileId( $row[ self::field_profile_id ] );
+
+                        array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return array
+         * @throws Exception
+         */
+        private final function readWithFilter(): array
+        {
+            $retVal = null;
+
+            $table = self::table;
+            $fpid = self::field_profile_id;
+
+            $sql = "SELECT * FROM {$table} where {$fpid} = ?;";
+
+            $stmt_prof_id = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i", $stmt_prof_id );
+
+                $stmt_prof_id  = $this->filter[self::filter_by_profile_id];
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModel();
+
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setTotalPrice( $row[ self::field_total_price ] );
+
+                        $model->setRegistered( $row[ self::field_registered ] );
+
+                        $model->setAddressId( $row[ self::field_address_id ] );
+                        $model->setMailId( $row[ self::field_mail_id ] );
+                        $model->setOwnerNameId( $row[ self::field_owner_name_id ] );
+
+                        $model->setProfileId( $row[ self::field_profile_id ] );
 
                         array_push( $retVal, $model );
                     }
@@ -171,7 +281,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -180,9 +290,12 @@
 
             $retVal = false;
 
-            $sql = "SELECT * FROM product_invoice WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
 
-            $stmt_identity  = null;
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
+
+            $stmt_comparator  = null;
 
             $connection = $this->getWrapper()->connect();
 
@@ -191,9 +304,9 @@
                 $stmt = $connection->prepare( $sql );
 
                 $stmt->bind_param( "i",
-                    $stmt_identity );
+                    $stmt_comparator );
 
-                $stmt_identity  = $model->getIdentity();
+                $stmt_comparator  = $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -207,15 +320,15 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
-                        $model->setProfileId( $row[ 'profile_id' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setProfileId( $row[ self::field_profile_id ] );
 
-                        $model->setTotalPrice( $row[ 'total_price' ] );
-                        $model->setAddressId( $row[ 'address_id' ] );
-                        $model->setMailId( $row[ 'mail_id' ] );
-                        $model->setOwnerNameId( $row[ 'owner_name_id' ] );
+                        $model->setTotalPrice( $row[ self::field_total_price ] );
+                        $model->setAddressId( $row[ self::field_address_id ] );
+                        $model->setMailId( $row[ self::field_mail_id ] );
+                        $model->setOwnerNameId( $row[ self::field_owner_name_id ] );
 
-                        $model->setRegistered( $row[ 'registered' ] );
+                        $model->setRegistered( $row[ self::field_registered ] );
 
                         $retVal = true;
                     }
@@ -230,7 +343,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -239,7 +352,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -249,7 +362,14 @@
             $retVal = false;
 
             //
-            $sql = "INSERT INTO product_invoice( total_price, address_id, mail_id, owner_name_id, profile_id ) VALUES( ?, ?, ?, ?, ? );";
+            $table = self::table;
+            $ftp = self::field_total_price;
+            $faid = self::field_address_id;
+            $fmid = self::field_mail_id;
+            $fonid = self::field_owner_name_id;
+            $fpid = self::field_profile_id;
+
+            $sql = "INSERT INTO {$table}( {$ftp}, {$faid}, {$fmid}, {$fonid}, {$fpid} ) VALUES( ?, ?, ?, ?, ? );";
 
             $stmt_total_price = null;
 
@@ -303,10 +423,10 @@
 
         /**
          * @param $model
-         * @return mixed|void
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ): bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -323,7 +443,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ): bool
+        public final function delete( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -332,7 +452,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM product_invoice WHERE identity = ?;";
+            $t = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$t} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -375,11 +498,11 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
             
             $connection = $this->getWrapper()->connect();
@@ -408,7 +531,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
@@ -416,9 +539,10 @@
          * @param array $filter
          * @return mixed|void
          */
-        public final function lengthCalculatedWithFilter(array $filter)
+        public final function lengthCalculatedWithFilter( array $filter )
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
+            return 0;
         }
 
 
@@ -436,7 +560,7 @@
          * @param array $filters
          * @return bool
          */
-        public final function insertOptions(array $filters): bool
+        public final function insertOptions( array $filters ): bool
         {
             // TODO: Implement insertOptions() method.
             return false;

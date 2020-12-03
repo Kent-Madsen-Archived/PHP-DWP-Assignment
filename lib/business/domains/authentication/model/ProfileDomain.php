@@ -30,7 +30,6 @@
             $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
 
-
             $this->setAddressFactory( new PersonAddressFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
             $this->setEmailFactory( new PersonEmailFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
             $this->setNameFactory( new PersonNameFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
@@ -41,7 +40,12 @@
         }
 
 
-        public function retrieveProfileInformationAt( $profile_idx ): ?ProfileInformationModel
+        /**
+         * @param $profile_idx
+         * @return ProfileInformationModel|null
+         * @throws Exception
+         */
+        public final function retrieveProfileInformationAt( $profile_idx ): ?ProfileInformationModel
         {
             $factory = $this->getProfileInformationFactory();
 
@@ -52,7 +56,13 @@
             return $model;
         }
 
-        public function retrieveProfileTypeAt($idx): ?ProfileTypeModel
+
+        /**
+         * @param $idx
+         * @return ProfileTypeModel|null
+         * @throws Exception
+         */
+        public final function retrieveProfileTypeAt($idx): ?ProfileTypeModel
         {
             $factory = $this->getProfileTypeFactory();
             $model = $factory->createModel();
@@ -62,7 +72,13 @@
             return $model;
         }
 
-        public function retrieveProfileMailAt($idx): ?PersonEmailModel
+
+        /**
+         * @param $idx
+         * @return PersonEmailModel|null
+         * @throws Exception
+         */
+        public final  function retrieveProfileMailAt($idx): ?PersonEmailModel
         {
             $factory = $this->getEmailFactory();
 
@@ -73,7 +89,13 @@
             return $retVal;
         }
 
-        public function retrieveAddressAt($idx): ?PersonAddressModel
+
+        /**
+         * @param $idx
+         * @return PersonAddressModel|null
+         * @throws Exception
+         */
+        public final function retrieveAddressAt($idx): ?PersonAddressModel
         {
             $retVal = null;
             $factory = $this->getAddressFactory();
@@ -85,7 +107,13 @@
             return $retVal;
         }
 
-        public function retrieveProfileAt($idx): ?ProfileModel
+
+        /**
+         * @param $idx
+         * @return ProfileModel|null
+         * @throws Exception
+         */
+        public final  function retrieveProfileAt($idx): ?ProfileModel
         {
             $factory = $this->getProfileFactory();
 
@@ -98,12 +126,13 @@
             return $retVal;
         }
 
+
         /**
          * @param $idx
          * @return PersonNameFactory|null
          * @throws Exception
          */
-        public function retrieveNameAt($idx ): ?PersonNameModel
+        public final function retrieveNameAt($idx ): ?PersonNameModel
         {
             $factory = $this->getNameFactory();
             $model = $factory->createModel();

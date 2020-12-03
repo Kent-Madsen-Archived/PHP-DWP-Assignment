@@ -68,7 +68,7 @@
                 </li>
             <?php endif; ?>
 
-            <?php if( $access->is_admin() ): ?>
+            <?php if( $access->isAdmin() ): ?>
                 <li> 
                     <a href="/admin"> 
                         Admin

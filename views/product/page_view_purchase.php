@@ -3,6 +3,10 @@
 
     $arr = $domain->purchase();
 
+    if( SessionBasketForm::existBasketValues() )
+    {
+        SessionBasketForm::clearBasketValues();
+    }
 
-    //bounce_link();
+    bounce_link();
 ?>

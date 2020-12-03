@@ -12,9 +12,29 @@
     class ContactFactory
         extends BaseFactoryTemplate
     {
+        public const table = 'contact';
+        public const view_model = 'contact_model_view';
+
+        public const field_identity = 'identity';
+
+        public const field_title    = 'title';
+        public const field_message  = 'message';
+
+        public const field_has_been_send = 'has_been_send';
+
+        public const field_to_id    = 'to_id';
+        public const field_from_id  = 'from_id';
+
+        public const view_field_to = 'to_mail';
+        public const view_field_from = 'from_mail';
+
+
+        public const field_created_on = 'created_on';
+
+
         /**
          * ContactFactory constructor.
-         * @param $mysql_connector
+         * @param MySQLConnectorWrapper|null $mysql_connector
          * @throws Exception
          */
         public function __construct( ?MySQLConnectorWrapper $mysql_connector )
@@ -28,36 +48,18 @@
         /**
          * @return string
          */
-        final public static function getTableName()
+        public final static function getTableName(): string
         {
-            return 'contact';
-        }
-
-
-        /**
-         * @return mixed|string
-         */
-        final public function getFactoryTableName():string
-        {
-            return self::getTableName();
+            return self::table;
         }
 
 
         /**
          * @return string
          */
-        final public static function getViewName()
+        public final function getFactoryTableName():string
         {
-            return 'ContactView';
-        }
-
-
-        /**
-         * @return string
-         */
-        final public static function getControllerName()
-        {
-            return 'ContactController';
+            return self::table;
         }
 
 
@@ -65,7 +67,7 @@
          * @return ContactModel
          * @throws Exception
          */
-        final public function createModel(): ContactModel
+        public final function createModel(): ContactModel
         {
             $model = new ContactModel( $this );
             return $model;
@@ -75,7 +77,7 @@
         /**
          * @return ContactModelForm
          */
-        final public function createFormModel(): ContactModelForm
+        public final function createFormModel(): ContactModelForm
         {
             $model = new ContactModelForm();
             return $model;
@@ -86,14 +88,14 @@
          * @return bool
          * @throws Exception
          */
-        final public function exist(): bool
+        public final function exist(): bool
         {
             $status_factory = new StatusOnFactory( $this->getWrapper() );
             
             $database = $this->getWrapper()->getInformation()->getDatabase();
-            $value = $status_factory->getStatusOnTable( $database, self::getTableName() );
+            $value = $status_factory->getStatusOnTable( $database, self::table );
             
-            return boolval( $value );
+            return $value;
         }
 
 
@@ -101,7 +103,7 @@
          * @param $var
          * @return bool
          */
-        final public function validateAsValidModel( $var ): bool
+        public final function validateAsValidModel( $var ): bool
         {
             $retVal = false;
 
@@ -110,7 +112,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -118,13 +120,14 @@
          * @return array|null
          * @throws Exception
          */
-        final public function read(): ?array
+        public final function read(): ?array
         {
             // Return value
             $retVal = null;
 
             // SQL Query
-            $sql = "SELECT * FROM contact LIMIT ? OFFSET ?;";
+            $table = self::table;
+            $sql = "SELECT * FROM {$table} LIMIT ? OFFSET ?;";
 
             //
             $stmt_limit = null;
@@ -157,16 +160,16 @@
                     {
                         $model = $this->createModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setSubject( $row[ 'title' ] );
-                        $model->setMessage( $row[ 'message' ] );
+                        $model->setSubject( $row[ self::field_title ] );
+                        $model->setMessage( $row[ self::field_message ] );
 
-                        $model->setToMail( $row[ 'to_id' ] );
-                        $model->setFromMail( $row[ 'from_id' ] );
+                        $model->setToMail( $row[ self::field_to_id ] );
+                        $model->setFromMail( $row[ self::field_from_id ] );
 
-                        $model->setCreatedOn( $row[ 'created_on' ] );
-                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setHasBeenSend( $row[ self::field_has_been_send ] );
 
                         array_push( $retVal, $model );
                     }
@@ -189,16 +192,19 @@
          * @return array|null
          * @throws Exception
          */
-        final public function readFormsNotSended(): ?array
+        public final function readFormsNotSended(): ?array
         {
             // Return value
             $retVal = null;
 
             // SQL Query
-            $sql = "SELECT * FROM contact_model_view WHERE has_been_send = 0 LIMIT ? OFFSET ?;";
+            $view = self::view_model;
+            $fhbs = self::field_has_been_send;
+
+            $sql = "SELECT * FROM {$view} WHERE {$fhbs} = 0 LIMIT ? OFFSET ?;";
 
             //
-            $stmt_limit = null;
+            $stmt_limit  = null;
             $stmt_offset = null;
 
             // opens a connection to the database
@@ -228,16 +234,16 @@
                     {
                         $model = $this->createFormModel();
 
-                        $model->setIdentity( $row[ 'identity' ] );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setTitle( $row[ 'title' ] );
-                        $model->setMessage( $row[ 'message' ] );
+                        $model->setTitle( $row[ self::field_title ] );
+                        $model->setMessage( $row[ self::field_message ] );
 
-                        $model->setToEmail( $row[ 'to_mail' ] );
-                        $model->setFromEmail( $row[ 'from_mail' ] );
+                        $model->setToEmail( $row[ self::view_field_to ] );
+                        $model->setFromEmail( $row[ self::view_field_from ] );
 
-                        $model->setCreatedOn( $row[ 'created_on' ] );
-                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setHasBeenSend( $row[ self::field_has_been_send ] );
 
                         $model->done();
 
@@ -263,7 +269,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function readModel( &$model ): bool
+        public final function readModel( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -274,7 +280,10 @@
             $retVal = null;
 
             // SQL Query
-            $sql = "SELECT * FROM contact WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             //
             $stmt_identity = null;
@@ -289,7 +298,7 @@
                 $stmt->bind_param( "i",
                     $stmt_identity );
 
-                $stmt_identity = intval( $model->getIdentity(), BASE_10 );
+                $stmt_identity =  $model->getIdentity();
 
                 // Executes the query
                 $stmt->execute();
@@ -300,16 +309,16 @@
                 {
                     while( $row = $result->fetch_assoc() )
                     {
-                        $model->setIdentity( intval( $row[ 'identity' ], BASE_10 ) );
+                        $model->setIdentity( $row[ self::field_identity ] );
 
-                        $model->setSubject( strval( $row[ 'title' ] ) );
-                        $model->setMessage( strval( $row[ 'message' ] ) );
+                        $model->setSubject( $row[ self::field_title ] );
+                        $model->setMessage( $row[ self::field_message ] );
 
-                        $model->setToMail( intval( $row[ 'to_id' ], BASE_10 ) );
-                        $model->setFromMail( intval( $row[ 'from_id' ], BASE_10 ) );
+                        $model->setToMail( $row[ self::field_to_id ] );
+                        $model->setFromMail( $row[ self::field_from_id ] );
 
-                        $model->setCreatedOn( $row[ 'created_on' ] );
-                        $model->setHasBeenSend( $row[ 'has_been_send' ] );
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setHasBeenSend( $row[ self::field_has_been_send ] );
 
                         $retVal = true;
                     }
@@ -324,16 +333,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
-        final public function create( &$model ): bool
+        public final function create( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -342,7 +351,16 @@
             
             $retVal = false;
 
-            $sql = "INSERT INTO contact( title, message, has_been_send, to_id, from_id ) VALUES( ?, ?, ?, ?, ? );";
+            $table = self::table;
+            $ft = self::field_title;
+            $fm = self::field_message;
+
+            $fhbs = self::field_has_been_send;
+
+            $ftid = self::field_to_id;
+            $ffid = self::field_from_id;
+
+            $sql = "INSERT INTO {$table}( {$ft}, {$fm}, {$fhbs}, {$ftid}, {$ffid} ) VALUES( ?, ?, ?, ?, ? );";
 
             $stmt_subject = null;
             $stmt_message = null;
@@ -393,16 +411,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function delete( &$model ):bool
+        public final function delete( &$model ):bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -411,7 +429,10 @@
 
             $retVal = false;
 
-            $sql = "DELETE FROM contact WHERE identity = ?;";
+            $table = self::table;
+            $fid = self::field_identity;
+
+            $sql = "DELETE FROM {$table} WHERE {$fid} = ?;";
 
             $stmt_identity = null;
 
@@ -446,16 +467,16 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
         /**
          * @param $model
-         * @return bool|mixed
+         * @return bool
          * @throws Exception
          */
-        final public function update( &$model ):bool
+        public final function update( &$model ): bool
         {
             if( !$this->validateAsValidModel( $model ) )
             {
@@ -464,14 +485,26 @@
 
             $retVal = null;
 
-            $sql = "UPDATE contact SET subject_title = ?, message = ?, has_been_send = ?, to_id = ?, from_id = ? WHERE identity = ?;";
+            $table = self::table;
+            $ft = self::field_title;
+            $fm = self::field_message;
+
+            $fhbs = self::field_has_been_send;
+
+            $ftid = self::field_to_id;
+            $ffid = self::field_from_id;
+
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$ft} = ?, {$fm} = ?, {$fhbs} = ?, {$ftid} = ?, {$ffid} = ? WHERE {$fid} = ?;";
 
             $stmt_subject = null;
             $stmt_message = null;
+
             $stmt_has_been_send = null;
 
-            $stmt_to_id = null;
-            $stmt_from_id = null;
+            $stmt_to_id     = null;
+            $stmt_from_id   = null;
 
             $stmt_identity = null;
 
@@ -495,8 +528,8 @@
 
                 $stmt_has_been_send = $model->getHasBeenSend();
 
-                $stmt_to_id = $model->getToMail();
-                $stmt_from_id = $model->getFromMail();
+                $stmt_to_id     = $model->getToMail();
+                $stmt_from_id   = $model->getFromMail();
 
                 $stmt_identity = $model->getIdentity();
 
@@ -505,7 +538,6 @@
 
                 // commits the statement
                 $this->getWrapper()->finish();
-
                 $retVal = true;
             }
             catch( Exception $ex )
@@ -520,7 +552,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -529,11 +561,16 @@
          * @return bool
          * @throws Exception
          */
-        final public function updateIsFinished( $id ):bool
+        public final function updateIsFinished( $id ): bool
         {
             $retVal = null;
 
-            $sql = "UPDATE contact SET has_been_send = ? WHERE identity = ?;";
+            $table = self::table;
+
+            $fhbs = self::field_has_been_send;
+            $fid = self::field_identity;
+
+            $sql = "UPDATE {$table} SET {$fhbs} = ? WHERE {$fid} = ?;";
 
             $stmt_has_been_send = null;
             $stmt_identity = null;
@@ -571,7 +608,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -579,11 +616,11 @@
          * @return int
          * @throws Exception
          */
-        final public function length(): int
+        public final function length(): int
         {
             $retVal = CONSTANT_ZERO;
 
-            $table_name = self::getTableName();
+            $table_name = self::table;
             $sql = "SELECT count( * ) AS number_of_rows FROM {$table_name};";
 
             // Opens a connection to the database
@@ -614,7 +651,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
@@ -622,9 +659,10 @@
          * @param array $filter
          * @return mixed|void
          */
-        public final function lengthCalculatedWithFilter(array $filter)
+        public final function lengthCalculatedWithFilter(array $filter): ?int
         {
             // TODO: Implement length_calculate_with_filter() method.
+            return null;
         }
 
 

@@ -496,6 +496,7 @@
             return intval( $retVal );
         }
 
+
         /**
          * @param array $filter
          * @return mixed|void
