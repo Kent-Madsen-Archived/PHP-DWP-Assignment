@@ -1,3 +1,4 @@
+use dwp_assignment;
 
 -- Triggers
 CREATE OR REPLACE TRIGGER person_name_insert_nomalise

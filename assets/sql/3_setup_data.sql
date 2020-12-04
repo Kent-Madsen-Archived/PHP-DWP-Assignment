@@ -1,3 +1,5 @@
+use dwp_assignment;
+
 insert into image_type( content ) 
     values ( 'ukendt' );
 

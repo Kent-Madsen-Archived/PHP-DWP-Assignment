@@ -1,3 +1,5 @@
+use dwp_assignment;
+
 -- Setup references
 alter table profile
 	add constraint p_profiletype_id_fk
@@ -57,16 +59,10 @@ alter table product_invoice
 	add constraint pi__personaddress_id_fk
 		foreign key ( address_id ) references person_address ( identity ),
     add constraint pi__personname_id_fk
-		foreign key ( owner_name_id ) references person_name ( identity );
+		foreign key ( owner_name_id ) references person_name ( identity ),
 	add constraint product_invoice_profile_identity_fk
 		foreign key (profile_id) references profile (identity);
 
 alter table product_used_images
 	add constraint product_used_images_product_identity_fk
 		foreign key (product_id) references product (identity);
-
-
-alter table security
-	add constraint security_security_key_identity_fk
-		foreign key (key_id) references security_key (identity);
-

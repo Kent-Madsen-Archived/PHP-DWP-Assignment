@@ -1,3 +1,5 @@
+use dwp_assignment;
+
 -- incase a table with similar name already exist, drop it
 DROP TABLE IF EXISTS
     product_attribute CASCADE;
