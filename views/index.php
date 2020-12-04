@@ -7,6 +7,7 @@
      */
 
     PageTitleController::getSingletonController()->append( ' - Homepage' );
+
 ?>
 
 <!DOCTYPE html>

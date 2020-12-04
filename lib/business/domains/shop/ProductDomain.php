@@ -223,7 +223,7 @@
          * @return ProductFactory|null
          * @throws Exception
          */
-        protected final function getProductFactory(): ?ProductFactory
+        public final function getProductFactory(): ?ProductFactory
         {
             return GroupProduct::getProductFactory();
         }
@@ -233,7 +233,7 @@
          * @return ProductEntityFactory|null
          * @throws Exception
          */
-        protected final function getProductEntityFactory(): ?ProductEntityFactory
+        public final function getProductEntityFactory(): ?ProductEntityFactory
         {
             return GroupProduct::getProductEntityFactory();
         }
@@ -243,7 +243,7 @@
          * @return AssociatedCategoryFactory|null
          * @throws Exception
          */
-        protected final function getProductAssociatedCategoryFactory(): ?AssociatedCategoryFactory
+        public final function getProductAssociatedCategoryFactory(): ?AssociatedCategoryFactory
         {
             return GroupProduct::getProductAssociatedCategoryFactory();
         }
@@ -253,7 +253,7 @@
          * @return ProductAttributeFactory|null
          * @throws Exception
          */
-        protected final function getProductAttributeFactory(): ?ProductAttributeFactory
+        public final function getProductAttributeFactory(): ?ProductAttributeFactory
         {
             return GroupProduct::getProductAttributeFactory();
         }
@@ -263,7 +263,7 @@
          * @return ProductCategoryFactory|null
          * @throws Exception
          */
-        protected final function getProductCategoryFactory(): ?ProductCategoryFactory
+        public final function getProductCategoryFactory(): ?ProductCategoryFactory
         {
             return GroupProduct::getProductCategoryFactory();
         }
@@ -273,7 +273,7 @@
          * @return ProductUsedImageFactory|null
          * @throws Exception
          */
-        protected final function getProductUsedImagesFactory(): ?ProductUsedImageFactory
+        public final function getProductUsedImagesFactory(): ?ProductUsedImageFactory
         {
             return GroupProduct::getProductUsedImagesFactory();
         }

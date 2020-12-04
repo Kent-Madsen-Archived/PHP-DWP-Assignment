@@ -243,7 +243,7 @@
 
         /**
          * @param $model
-         * @return mixed
+         * @return bool
          * @throws Exception
          */
         public final function create( &$model ): bool
@@ -258,13 +258,15 @@
 
             // SQL Query
             $table = self::table;
-            $fsn = self::field_street_name;
-            $fsan = self::field_street_address_number;
+            $f_street_address_name = self::field_street_name;
+            $f_street_address_number = self::field_street_address_number;
+
             $fzc = self::field_zip_code;
             $fc = self::field_country;
-            $fsaf = self::field_street_address_floor;
 
-            $sql = "INSERT INTO {$table}( {$fsn}, {$fsan}, {$fzc}, {$fc}, {$fsaf} ) VALUES( ?, ?, ?, ?, ? );";
+            $f_street_address_floor = self::field_street_address_floor;
+
+            $sql = "INSERT INTO {$table}( {$f_street_address_name}, {$f_street_address_number}, {$fzc}, {$fc}, {$f_street_address_floor} ) VALUES( ?, ?, ?, ?, ? );";
 
             // Prepared Statement Variables
             $stmt_name = null;
@@ -288,15 +290,13 @@
                                     $stmt_country,
                                     $stmt_street_floor );
 
-                $model = $this->createModel();
-
                 //
                 $stmt_name                  =  $model->getStreetAddressName();
                 $stmt_street_address_number =  $model->getStreetAddressNumber();
+                $stmt_street_floor          =  $model->getStreetAddressFloor();
+
                 $stmt_zip_code              =  $model->getZipCode();
                 $stmt_country               =  $model->getCountry();
-
-                $stmt_street_floor          =  $model->getStreetAddressFloor();
 
                 // Executes the query
                 $stmt->execute();
@@ -309,14 +309,14 @@
             {
                 // Rolls back, the changes
                 $this->getWrapper()->undoState();
-                throw new Exception( 'Error:' . $ex );
+                echo $ex;
             }
             finally
             {
                 $this->getWrapper()->disconnect();
             }
             
-            return boolval( $retVal );
+            return $retVal;
         }
 
 

@@ -205,7 +205,7 @@
         /**
          * @param string|null $var
          */
-        public final function setCountry( ?string $var ):void
+        public final function setCountry( ?string $var ): void
         {
             $this->country = $var;
         }
@@ -227,6 +227,7 @@
         {
             $this->street_address_number = $var;
         }
+
 
             // State accessors
         /**

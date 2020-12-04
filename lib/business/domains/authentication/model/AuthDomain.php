@@ -164,7 +164,7 @@
          * @throws Exception
          */
         private final function createPersonAddressModel( string $streetAddressName_var,
-                                                         int $streetNumber_var = 0,
+                                                         int $streetNumber_var,
                                                          string $country_var,
                                                          string $street_floor_var,
                                                          string $zip_code_var ): ?PersonAddressModel
@@ -368,50 +368,50 @@
 
 
         /**
-         * @return PersonEmailFactory|null
+         * @return PersonEmailFactory
          * @throws Exception
          */
-        protected final function getPersonEmailFactory(): ?PersonEmailFactory
+        protected final function getPersonEmailFactory(): PersonEmailFactory
         {
             return GroupAuthentication::getPersonEmailFactory();
         }
 
 
         /**
-         * @return PersonAddressFactory|null
+         * @return PersonAddressFactory
          * @throws Exception
          */
-        protected final function getPersonAddressFactory(): ?PersonAddressFactory
+        protected final function getPersonAddressFactory(): PersonAddressFactory
         {
             return GroupAuthentication::getPersonAddressFactory();
         }
 
 
         /**
-         * @return PersonNameFactory|null
+         * @return PersonNameFactory
          * @throws Exception
          */
-        protected final function getPersonNameFactory(): ?PersonNameFactory
+        protected final function getPersonNameFactory(): PersonNameFactory
         {
             return GroupAuthentication::getPersonNameFactory();
         }
 
 
         /**
-         * @return ProfileFactory|null
+         * @return ProfileFactory
          * @throws Exception
          */
-        protected final function getProfileFactory(): ?ProfileFactory
+        protected final function getProfileFactory(): ProfileFactory
         {
             return GroupAuthentication::getProfileFactory();
         }
 
 
         /**
-         * @return ProfileInformationFactory|null
+         * @return ProfileInformationFactory
          * @throws Exception
          */
-        protected final function getProfileInformationFactory(): ?ProfileInformationFactory
+        protected final function getProfileInformationFactory(): ProfileInformationFactory
         {
             return GroupAuthentication::getProfileInformationFactory();
         }

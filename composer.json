@@ -17,7 +17,8 @@
         "stripe/stripe-php": "^7.61",
       "ext-mysqli": "*",
       "ext-json": "*",
-      "ext-mbstring": "*"
+      "ext-mbstring": "*",
+      "ext-iconv": "*"
     },
     "autoload": {
         "classmap": ["/lib"]

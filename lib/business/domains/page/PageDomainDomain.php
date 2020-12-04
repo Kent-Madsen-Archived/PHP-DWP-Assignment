@@ -24,7 +24,12 @@
         }
 
 
-        public function retrievePageElementById( int $idx )
+        /**
+         * @param int $idx
+         * @return PageElementModel
+         * @throws Exception
+         */
+        public final function retrievePageElementById( int $idx )
         {
             $factory = $this->getPageElementFactory();
             $model = $factory->createModel();
@@ -40,7 +45,7 @@
          * @return PageElementFactory
          * @throws Exception
          */
-        protected final function getPageElementFactory(): PageElementFactory
+        public final function getPageElementFactory(): PageElementFactory
         {
             return GroupElements::getPageElementFactory();
         }

@@ -20,12 +20,22 @@
         }
 
 
+        public final function retrieveInvoiceByIdentity( $idx ): ProductInvoiceModel
+        {
+            $factory = $this->getProductInvoiceFactory();
+            $invoice_model = $factory->createModel();
+            $invoice_model->setIdentity( $idx );
+            $factory->readModel($invoice_model);
+
+            return $invoice_model;
+        }
+
         /**
          * @param int $prof_idx
          * @return array
          * @throws Exception
          */
-        public final function retrieveInvoicesByProfileIdentity(int $prof_idx ): array
+        public final function retrieveInvoicesByProfileIdentity( int $prof_idx ): array
         {
             $factory = $this->getProductInvoiceFactory();
             $factory->setFilter( array( ProductInvoiceFactory::filter_by_profile_id => $prof_idx ) );
@@ -76,7 +86,7 @@
          * @return ProductInvoiceFactory|null
          * @throws Exception
          */
-        protected final function getProductInvoiceFactory(): ?ProductInvoiceFactory
+        public final function getProductInvoiceFactory(): ?ProductInvoiceFactory
         {
             return GroupProduct::getProductInvoiceFactory();
         }
@@ -86,7 +96,7 @@
          * @return ProductEntityFactory|null
          * @throws Exception
          */
-        protected final function getProductEntityFactory(): ?ProductEntityFactory
+        public final function getProductEntityFactory(): ?ProductEntityFactory
         {
             return GroupProduct::getProductEntityFactory();
         }
@@ -96,7 +106,7 @@
          * @return ProfileFactory|null
          * @throws Exception
          */
-        protected final function getProfileFactory(): ?ProfileFactory
+        public final function getProfileFactory(): ?ProfileFactory
         {
             return GroupAuthentication::getProfileFactory();
         }
@@ -106,7 +116,7 @@
          * @return ProductFactory|null
          * @throws Exception
          */
-        protected final function getProductFactory(): ?ProductFactory
+        public final function getProductFactory(): ?ProductFactory
         {
             return GroupProduct::getProductFactory();
         }
@@ -116,7 +126,7 @@
          * @return BroughtFactory|null
          * @throws Exception
          */
-        protected final function getBroughtFactory(): ?BroughtFactory
+        public final function getBroughtFactory(): ?BroughtFactory
         {
             return GroupProduct::getBroughtProductFactory();
         }

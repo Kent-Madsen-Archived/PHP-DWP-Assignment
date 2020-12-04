@@ -88,7 +88,7 @@
          * @return ProfileFactory|null
          * @throws Exception
          */
-        protected final function getProfileFactory(): ?ProfileFactory
+        public final function getProfileFactory(): ?ProfileFactory
         {
             return GroupAuthentication::getProfileFactory();
         }

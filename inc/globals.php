@@ -38,4 +38,5 @@
         throw new Exception('couldn\'t find the database.php file' );
     }
 
+    mb_internal_encoding("UTF-8");
 ?>

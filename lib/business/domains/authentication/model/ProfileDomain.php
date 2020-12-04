@@ -183,7 +183,7 @@
          * @return ProfileFactory|null
          * @throws Exception
          */
-        protected final function getProfileFactory(): ?ProfileFactory
+        public final function getProfileFactory(): ?ProfileFactory
         {
             return GroupAuthentication::getProfileFactory();
         }
@@ -193,7 +193,7 @@
          * @return PersonAddressFactory|null
          * @throws Exception
          */
-        protected final function getAddressFactory(): ?PersonAddressFactory
+        public final function getAddressFactory(): ?PersonAddressFactory
         {
             return GroupAuthentication::getPersonAddressFactory();
         }
@@ -203,7 +203,7 @@
          * @return PersonEmailFactory|null
          * @throws Exception
          */
-        protected final function getEmailFactory(): ?PersonEmailFactory
+        public final function getEmailFactory(): ?PersonEmailFactory
         {
             return GroupAuthentication::getPersonEmailFactory();
         }
@@ -213,7 +213,7 @@
          * @return PersonNameFactory|null
          * @throws Exception
          */
-        protected final function getNameFactory(): ?PersonNameFactory
+        public final function getNameFactory(): ?PersonNameFactory
         {
             return GroupAuthentication::getPersonNameFactory();
         }
@@ -223,7 +223,7 @@
          * @return ProfileInformationFactory|null
          * @throws Exception
          */
-        protected final function getProfileInformationFactory(): ?ProfileInformationFactory
+        public final function getProfileInformationFactory(): ?ProfileInformationFactory
         {
             return GroupAuthentication::getProfileInformationFactory();
         }
@@ -233,7 +233,7 @@
          * @return ProfileTypeFactory|null
          * @throws Exception
          */
-        protected final function getProfileTypeFactory(): ?ProfileTypeFactory
+        public final function getProfileTypeFactory(): ?ProfileTypeFactory
         {
             return GroupAuthentication::getProfileTypeFactory();
         }

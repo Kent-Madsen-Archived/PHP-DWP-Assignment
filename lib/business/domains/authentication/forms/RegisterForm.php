@@ -14,7 +14,7 @@
         /**
          * @return bool
          */
-        final public static function validateIsSubmitted(): bool
+        public final static function validateIsSubmitted(): bool
         {
             $retVal = false;
 
@@ -23,7 +23,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -31,7 +31,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostUsername(): string
+        public final static function getPostUsername(): string
         {
             if( !isset( $_POST[ 'form_register_username' ] ) )
             {
@@ -45,9 +45,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -55,7 +54,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostPassword(): string
+        public final static function getPostPassword(): string
         {
             if( !isset( $_POST[ 'form_register_password' ] ) )
             {
@@ -69,8 +68,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -78,7 +77,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostPersonMail(): string
+        public final static function getPostPersonMail(): string
         {
             if( !isset( $_POST[ 'form_register_email' ] ) )
             {
@@ -92,13 +91,14 @@
                 throw new Exception('Register email is empty');
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_EMAIL );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_EMAIL, FILTER_NULL_ON_FAILURE );
+
             if( !filter_var( $sanitizedValue, FILTER_VALIDATE_EMAIL ) )
             {
                 throw new Exception('email is not valid');
             }
 
-            return strval( htmlentities( $sanitizedValue ) );
+            return $sanitizedValue;
         }
 
 
@@ -106,7 +106,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostFirstname(): string
+        public final static function getPostFirstname(): string
         {
             // Makes sure the field is set
             if( !isset( $_POST[ 'form_register_firstname' ] ) )
@@ -124,8 +124,8 @@
             }
 
             // Filter
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -133,7 +133,7 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getPostLastname(): ?string
+        public final static function getPostLastname(): ?string
         {
             if( !isset( $_POST[ 'form_register_lastname' ] ) )
             {
@@ -147,8 +147,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -156,7 +156,7 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getPostMiddlename(): ?string
+        public final static function getPostMiddlename(): ?string
         {
             if( !isset( $_POST[ 'form_register_middlename' ] ) )
             {
@@ -170,8 +170,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -179,7 +179,7 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getPostStreetAddressFloor(): ?string
+        public final static function getPostStreetAddressFloor(): ?string
         {
             if( !isset( $_POST[ 'form_register_street_floor' ] ) )
             {
@@ -193,8 +193,8 @@
                 return '';
             }
 
-            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
         }
 
 
@@ -202,7 +202,7 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getPostPhone(): ?string
+        public final static function getPostPhone(): ?string
         {
             if( !isset( $_POST[ 'form_register_phone_number' ] ) )
             {
@@ -216,8 +216,8 @@
                 throw new Exception('' );
             }
 
-            $sanitizedPhone = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedPhone ) );
+            $sanitizedPhone = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedPhone;
         }
 
 
@@ -225,7 +225,7 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getPostBirthday(): ?string
+        public final static function getPostBirthday(): ?string
         {
             if( !isset( $_POST[ 'form_register_birthday' ] ) )
             {
@@ -239,8 +239,8 @@
                 throw new Exception('' );
             }
 
-            $sanitizedBirthday = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedBirthday ) );
+            $sanitizedBirthday = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedBirthday;
         }
 
 
@@ -248,7 +248,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostStreetname(): string
+        public final static function getPostStreetname(): string
         {
             if( !isset( $_POST[ 'form_register_street_name' ] ) )
             {
@@ -262,8 +262,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedBirthday = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedBirthday ) );
+            $sanitizedBirthday = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedBirthday;
         }
 
 
@@ -271,7 +271,7 @@
          * @return int
          * @throws Exception
          */
-        final public static function getPostStreetAddressNumber(): int
+        public final static function getPostStreetAddressNumber(): int
         {
             if( !isset( $_POST[ 'form_register_street_address_number' ] ) )
             {
@@ -285,15 +285,15 @@
                 throw new Exception('');
             }
 
-            $sanitizedStreetAddressNumber = filter_var( $value, FILTER_SANITIZE_NUMBER_INT );
-            $validated = filter_var( $sanitizedStreetAddressNumber, FILTER_VALIDATE_INT );
+            $sanitizedStreetAddressNumber = filter_var( $value, FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+            $validated = filter_var( $sanitizedStreetAddressNumber, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE );
 
             if( $validated === false || is_null( $validated ) )
             {
                 throw new Exception('' );
             }
 
-            return intval( $validated );
+            return $validated;
         }
 
 
@@ -301,7 +301,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostZipCode(): string
+        public final static function getPostZipCode(): string
         {
             if( !isset( $_POST[ 'form_register_street_zip_code' ] ) )
             {
@@ -315,8 +315,8 @@
                 throw new Exception('');
             }
 
-            $sanitizedZipCode = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedZipCode ) );
+            $sanitizedZipCode = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedZipCode;
         }
 
 
@@ -324,7 +324,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostCountry(): string
+        public final static function getPostCountry(): string
         {
             if( !isset( $_POST[ 'form_register_country' ] ) )
             {
@@ -338,9 +338,9 @@
                 throw new Exception('');
             }
 
-            $sanitizedCountry = filter_var( $value, FILTER_SANITIZE_STRING );
+            $sanitizedCountry = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
 
-            return strval( htmlentities( $sanitizedCountry ) );
+            return $sanitizedCountry;
         }
 
 
