@@ -5,6 +5,7 @@
      *  Type: PHP Script, view
      *  Project: DWP-Assignment
      */
+
     // Backup: Temperarrily save necesarry data
     
 
@@ -19,5 +20,5 @@
 
 
     // Redirect the browser
-    redirect_to_local_page( 'homepage' );
+    redirect_to_local_page( '/homepage' );
 ?>

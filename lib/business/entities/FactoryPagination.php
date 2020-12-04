@@ -27,9 +27,15 @@ class FactoryPagination
         $limit_value = $this->getFactory()->getLimitValue();
 
         $size = floatval( floatval( $this->getFactory()->length() ) / floatval( $limit_value ) );
-        $floor_size = floor($size) + 1;
 
-        return (floatval($projected) > floatval($floor_size));
+        $div = $this->getFactory()->length() % $this->getFactory()->getLimitValue();
+
+        if( !( $div == 0 ) )
+        {
+            $size = $size + 1;
+        }
+
+        return (floatval($projected) > floatval($size));
     }
 
 

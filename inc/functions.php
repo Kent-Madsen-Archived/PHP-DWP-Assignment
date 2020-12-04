@@ -123,7 +123,7 @@
      */
     function encodingStandardHTML(): string
     {
-        $var = '"' . htmlentities( getEncodingStandard() ) . '"';
+        $var = '"' . htmlentities( getEncodingStandard(), null, 'UTF-8' ) . '"';
         return "<meta charset={$var}>";
     }
 ?>

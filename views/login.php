@@ -25,6 +25,8 @@
             $session = new UserSession( $args_session );
             UserSessionSingleton::setInstance( $session );
         }
+
+        redirect_to_local_page('/homepage');
     }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
