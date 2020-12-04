@@ -19,7 +19,7 @@
 
 <?php if( $operation_value == 'buy' ):?>
     <?php require 'views/product/page_view_buy.php' ?>
-<?php elseif($operation_value=='clear_basket'):?>
+<?php elseif($operation_value=='clear'):?>
     <?php require 'views/product/page_view_clear.php';?>
 <?php endif;?>
 

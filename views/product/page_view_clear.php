@@ -1,6 +1,6 @@
 <?php
-if( SessionBasketForm::existBasketValues() )
-{
-    SessionBasketForm::clearBasketValues();
-}
+    if( SessionBasketForm::existBasketValues() )
+    {
+        SessionBasketForm::clearBasketValues();
+    }
 ?>
