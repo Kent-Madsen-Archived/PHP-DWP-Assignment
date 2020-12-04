@@ -27,7 +27,6 @@
     }
 
     $factory->setPaginationIndexValue( ($pagination - 1) );
-    var_dump($factory->getPaginationIndexValue());
 ?>
 
 <h3>

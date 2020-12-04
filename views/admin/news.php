@@ -102,7 +102,9 @@
         </li>
 
         <li>
-            <?php echo $pag->viewCurrentPagination();?>
+            <a class="button disabled">
+                <?php echo $pag->viewCurrentPagination();?>
+            </a>
         </li>
 
         <li>
