@@ -1,4 +1,10 @@
--- functions
+use dwp_assignment;
+
+DROP FUNCTION IF EXISTS exists_email;
+DROP FUNCTION IF EXISTS is_admin;
+
+DELIMITER //
+
 CREATE FUNCTION exists_email( mail VARCHAR( 1024 ) ) RETURNS INT
 BEGIN
     DECLARE mail_content VARCHAR( 1024 ) DEFAULT NULL;
@@ -34,8 +40,14 @@ BEGIN
     CLOSE cursor_for_person_emails;
 
     RETURN found;
-END;
+END 
 
+//
+
+DELIMITER ;
+
+
+DELIMITER //
 
 CREATE FUNCTION is_admin( value int ) RETURNS INT
 BEGIN
@@ -70,4 +82,8 @@ BEGIN
     CLOSE cursor_for_profile_type;
 
     RETURN found;
-END;
+END 
+
+//
+
+DELIMITER ;

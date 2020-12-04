@@ -21,7 +21,8 @@ header nav
 
 main 
 {
-
+    padding-top: 32px;
+    padding-bottom: 32px;
 }
 
 footer 
@@ -93,6 +94,56 @@ footer
 .button 
 {
     @extend .btn;
+}
+
+.invoice
+{
+    margin-top: 64px;
+    margin-bottom: 64px;
+}
+
+.invoice_overview
+{
+
+}
+
+.invoice_section
+{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.invoice_products {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.invoice_product
+{
+    display: grid;
+    grid-gap: 0px;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto;
+    width: 90%;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.invoice_body
+{
+    display: grid;
+    grid-gap: 8px;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+    border-top: 1px solid black;
+
 }
 
 @media only screen and (max-width: 1024px) 

@@ -1,3 +1,5 @@
+use dwp_assignment;
+
 -- Views
 DROP VIEW IF EXISTS profile_model_view;
 

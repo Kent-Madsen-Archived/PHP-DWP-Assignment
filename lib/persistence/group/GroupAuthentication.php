@@ -14,28 +14,14 @@
 
 
         /**
-         * @return MySQLConnectorWrapper|null
+         * @return ProfileTypeFactory
          * @throws Exception
          */
-        public static function getMysqlWrapper(): ?MySQLConnectorWrapper
-        {
-            if( is_null( self::$mysql_wrapper ) )
-            {
-                self::setMysqlWrapper( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) );
-            }
-
-            return self::$mysql_wrapper;
-        }
-
-        /**
-         * @return ProfileTypeFactory|null
-         * @throws Exception
-         */
-        public static final function getProfileTypeFactory(): ?ProfileTypeFactory
+        public static final function getProfileTypeFactory(): ProfileTypeFactory
         {
             if( is_null( self::$profileTypeFactory ) )
             {
-                self::setProfileTypeFactory( new ProfileTypeFactory( self::getMysqlWrapper() ) );
+                self::setProfileTypeFactory( new ProfileTypeFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() )) );
             }
 
             return self::$profileTypeFactory;
@@ -43,14 +29,14 @@
 
 
         /**
-         * @return ProfileInformationFactory|null
+         * @return ProfileInformationFactory
          * @throws Exception
          */
-        public static final function getProfileInformationFactory(): ?ProfileInformationFactory
+        public static final function getProfileInformationFactory(): ProfileInformationFactory
         {
             if( is_null( self::$profileInformationFactory ) )
             {
-                self::setProfileInformationFactory( new ProfileInformationFactory( self::getMysqlWrapper() ) );
+                self::setProfileInformationFactory( new ProfileInformationFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
             return self::$profileInformationFactory;
@@ -58,14 +44,14 @@
 
 
         /**
-         * @return ProfileFactory|null
+         * @return ProfileFactory
          * @throws Exception
          */
-        public static final function getProfileFactory(): ?ProfileFactory
+        public static final function getProfileFactory(): ProfileFactory
         {
             if( is_null( self::$profileFactory ) )
             {
-                self::setProfileFactory( new ProfileFactory( self::getMysqlWrapper() ) );
+                self::setProfileFactory( new ProfileFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
             return self::$profileFactory;
@@ -73,14 +59,14 @@
 
 
         /**
-         * @return PersonEmailFactory|null
+         * @return PersonEmailFactory
          * @throws Exception
          */
-        public static final function getPersonEmailFactory(): ?PersonEmailFactory
+        public static final function getPersonEmailFactory(): PersonEmailFactory
         {
             if( is_null( self::$personEmailFactory ) )
             {
-                self::setPersonEmailFactory( new PersonEmailFactory( self::getMysqlWrapper() ) );
+                self::setPersonEmailFactory( new PersonEmailFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
             return self::$personEmailFactory;
@@ -88,14 +74,14 @@
 
 
         /**
-         * @return PersonAddressFactory|null
+         * @return PersonAddressFactory
          * @throws Exception
          */
-        public static final function getPersonAddressFactory(): ?PersonAddressFactory
+        public static final function getPersonAddressFactory(): PersonAddressFactory
         {
             if( is_null( self::$personAddressFactory ) )
             {
-                self::setPersonAddressFactory( new PersonAddressFactory( self::getMysqlWrapper() ) );
+                self::setPersonAddressFactory( new PersonAddressFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
             return self::$personAddressFactory;
@@ -103,14 +89,14 @@
 
 
         /**
-         * @return PersonNameFactory|null
+         * @return PersonNameFactory
          * @throws Exception
          */
-        public static final function getPersonNameFactory(): ?PersonNameFactory
+        public static final function getPersonNameFactory(): PersonNameFactory
         {
             if( is_null( self::$personNameFactory ) )
             {
-                self::setPersonNameFactory( new PersonNameFactory( self::getMysqlWrapper() ) );
+                self::setPersonNameFactory( new PersonNameFactory( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
             return self::$personNameFactory;

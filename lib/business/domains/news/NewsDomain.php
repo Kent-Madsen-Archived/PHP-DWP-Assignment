@@ -18,23 +18,6 @@
          */
         public const class_name = 'NewsDomain';
 
-        private $article_factory = null;
-
-        /**
-         * @return null
-         */
-        public function getArticleFactory(): ?ArticleFactory
-        {
-            return $this->article_factory;
-        }
-
-        /**
-         * @param ArticleFactory|null $article_factory
-         */
-        public function setArticleFactory(?ArticleFactory $article_factory): void
-        {
-            $this->article_factory = $article_factory;
-        }
 
         /**
          * NewsDomain constructor.
@@ -44,7 +27,16 @@
         {
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
-            $this->setArticleFactory(new ArticleFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton())));
+        }
+
+
+        /**
+         * @return ArticleFactory|null
+         * @throws Exception
+         */
+        protected final function getArticleFactory(): ?ArticleFactory
+        {
+            return GroupNews::getArticleFactory();
         }
 
 
@@ -53,7 +45,7 @@
          * @return ArticleModel
          * @throws Exception
          */
-        final public function retrieveArticleById( $idx )
+        public final function retrieveArticleById( $idx )
         {
             $factory = $this->getArticleFactory();
 
@@ -67,12 +59,12 @@
 
 
         /**
-         * @param $pagination
-         * @param $limit
+         * @param int $pagination
+         * @param int $limit
          * @return array|null
          * @throws Exception
          */
-        final public function retrieveArticlesAt( int $pagination = 0, int $limit = 5 ): ?array
+        public final function retrieveArticlesAt( int $pagination = 0, int $limit = 5 ): ?array
         {
             $factory = $this->getArticleFactory();
 
@@ -82,11 +74,12 @@
             return $factory->read();
         }
 
+
         /**
          * @return array|null
          * @throws Exception
          */
-        final public function retrieveArticles(): ?array
+        public final function retrieveArticles(): ?array
         {
             $factory = $this->getArticleFactory();
             return $factory->read();

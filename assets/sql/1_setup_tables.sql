@@ -1,3 +1,5 @@
+use dwp_assignment;
+
 -- incase a table with similar name already exist, drop it
 DROP TABLE IF EXISTS
     product_attribute CASCADE;
@@ -544,21 +546,3 @@ ALTER TABLE product_used_images COMMENT 'represents an instance of a image, used
 
 -- Indicate to software it's done
 SELECT 'product_used_images' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-drop table if exists security CASCADE;
-
-create table security(
-    identity int not null auto_increment,
-    key_id int not null,
-    value varchar(256) not null,
-    primary key (identity)
-);
-
-drop table if exists security_key CASCADE;
-
-create table security_key(
-    identity int not null auto_increment,
-    content varchar(256) not null unique,
-    primary key (identity)
-);

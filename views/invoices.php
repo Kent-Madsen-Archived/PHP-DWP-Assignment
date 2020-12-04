@@ -6,13 +6,12 @@
      *  Project: DWP-Assignment
      */
 
-    $domain = new InvoiceDomain();
-
-    
     PageTitleController::getSingletonController()->append( ' - Invoices' );
 
+    $router = RouterSingleton::getInstance()->getCurrentRoute();
 
-    $arr = $domain->retrieveInvoicesBy(SessionUserProfile::getSessionUserProfileIdentity());
+    $operation_value = $router->getValidationTree()[1]->getValue();
+    $id_value = $router->getValidationTree()[2]->getValue();
 ?>
 
 <!DOCTYPE html>
@@ -36,68 +35,15 @@
                 Invoices
             </h4>
 
-            <div>
-                <?php foreach ( $arr as $value ): ?>
-                    <?php if( $value instanceof ProductInvoiceModel ): ?>
-                        <div>
-                            <?php
-                                $arrBrought = $domain->retrieveBroughtProductBy( $value->getIdentity() );
-                            ?>
+            <?php if( !isset( $operation_value ) ): ?>
+                <?php require 'views/invoice/invoice_frontpage.php'; ?>
 
-                            <h5>Invoice Id: <?php echo $value->getIdentity(); ?></h5>
-                            <p>Total Price: <?php echo $value->getTotalPrice();?></p>
-                            <div>
-                                <p>
-                                    profile_id: <?php echo $value->getProfileId();?>
-                                </p>
-                            </div>
+            <?php elseif( $operation_value == 'identity' ): ?>
+                <?php if( isset( $id_value ) ): ?>
+                    <?php require 'views/invoice/invoice_page.php';?>
+                <?php endif; ?>
 
-                            <ul>
-                                <li class="product">
-                                    <table>
-                                        <tr>
-                                            <th>
-                                                Product Identity & Title
-                                            </th>
-                                            <th>
-                                                Number of:
-                                            </th>
-                                            <th>
-                                                Price
-                                            </th>
-                                        </tr>
-
-                                <?php foreach ($arrBrought as $brougthvalue): ?>
-
-                                    <?php if( $brougthvalue instanceof BroughtProductModel ): ?>
-
-                                        <?php $product = $domain->retrieveProductByIndex( $brougthvalue->getProductId() ); ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo "{$product->getIdentity()}, {$product->getTitle()}"; ?>
-                                                    </td>
-
-                                                    <td>
-                                                        <?php echo $brougthvalue->getNumberOfProducts(); ?>
-                                                    </td>
-
-                                                    <td>
-                                                        <?php echo $brougthvalue->getPrice();?>
-                                                    </td>
-                                                </tr>
-
-                                    <?php endif;?>
-                                <?php endforeach;?>
-
-                                    </table>
-                                    </li>
-
-                            </ul>
-
-                        </div>
-                    <?php endif;?>
-                <?php endforeach; ?>
-            </div>
+            <?php endif; ?>
         </main>
         
         <?php getFooter(); ?>

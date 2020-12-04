@@ -17,22 +17,25 @@
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
 
-            $this->setProductFactory(new ProductFactory(new MySQLConnectorWrapper($this->getInformation())));
-            $this->setProductEntityFactory(new ProductEntityFactory(new MySQLConnectorWrapper($this->getInformation())));
-
-            $this->setProductInvoiceFactory(new ProductInvoiceFactory(new MySQLConnectorWrapper($this->getInformation())));
-
-            $this->setProfileFactory(new ProfileFactory(new MySQLConnectorWrapper($this->getInformation())));
-            $this->setBroughtFactory(new BroughtFactory(new MySQLConnectorWrapper($this->getInformation())));
         }
 
+
+        public final function retrieveInvoiceByIdentity( $idx ): ProductInvoiceModel
+        {
+            $factory = $this->getProductInvoiceFactory();
+            $invoice_model = $factory->createModel();
+            $invoice_model->setIdentity( $idx );
+            $factory->readModel($invoice_model);
+
+            return $invoice_model;
+        }
 
         /**
          * @param int $prof_idx
          * @return array
          * @throws Exception
          */
-        public final function retrieveInvoicesBy( int $prof_idx ): array
+        public final function retrieveInvoicesByProfileIdentity( int $prof_idx ): array
         {
             $factory = $this->getProductInvoiceFactory();
             $factory->setFilter( array( ProductInvoiceFactory::filter_by_profile_id => $prof_idx ) );
@@ -78,104 +81,55 @@
         }
 
 
-
-        // Variables
-        private $product_factory = null;
-
-        private $product_invoice_factory = null;
-        private $product_entity_factory = null;
-        private $brought_factory = null;
-
-        private $profile_factory = null;
-
         // Accessor
         /**
          * @return ProductInvoiceFactory|null
+         * @throws Exception
          */
-        public function getProductInvoiceFactory():?ProductInvoiceFactory
+        public final function getProductInvoiceFactory(): ?ProductInvoiceFactory
         {
-            return $this->product_invoice_factory;
+            return GroupProduct::getProductInvoiceFactory();
         }
 
-        /**
-         * @param ProductInvoiceFactory|null $product_invoice_factory
-         */
-        public function setProductInvoiceFactory( ?ProductInvoiceFactory $product_invoice_factory ): void
-        {
-            $this->product_invoice_factory = $product_invoice_factory;
-        }
 
         /**
          * @return ProductEntityFactory|null
+         * @throws Exception
          */
         public final function getProductEntityFactory(): ?ProductEntityFactory
         {
-            return $this->product_entity_factory;
+            return GroupProduct::getProductEntityFactory();
         }
 
 
         /**
          * @return ProfileFactory|null
+         * @throws Exception
          */
         public final function getProfileFactory(): ?ProfileFactory
         {
-            return $this->profile_factory;
+            return GroupAuthentication::getProfileFactory();
         }
 
 
         /**
          * @return ProductFactory|null
+         * @throws Exception
          */
         public final function getProductFactory(): ?ProductFactory
         {
-            return $this->product_factory;
+            return GroupProduct::getProductFactory();
         }
 
 
         /**
          * @return BroughtFactory|null
+         * @throws Exception
          */
         public final function getBroughtFactory(): ?BroughtFactory
         {
-            return $this->brought_factory;
+            return GroupProduct::getBroughtProductFactory();
         }
-
-
-        /**
-         * @param ProfileFactory|null $profile_factory
-         */
-        public final function setProfileFactory( ?ProfileFactory $profile_factory ): void
-        {
-            $this->profile_factory = $profile_factory;
-        }
-
-
-        /**
-         * @param ProductFactory|null $product_factory
-         */
-        public final function setProductFactory( ?ProductFactory $product_factory ): void
-        {
-            $this->product_factory = $product_factory;
-        }
-
-
-        /**
-         * @param BroughtFactory|null $brought_factory
-         */
-        public final function setBroughtFactory( ?BroughtFactory $brought_factory ): void
-        {
-            $this->brought_factory = $brought_factory;
-        }
-
-
-        /**
-         * @param ProductEntityFactory|null $product_entity_factory
-         */
-        public final function setProductEntityFactory( ?ProductEntityFactory $product_entity_factory ): void
-        {
-            $this->product_entity_factory = $product_entity_factory;
-        }
-
 
     }
 

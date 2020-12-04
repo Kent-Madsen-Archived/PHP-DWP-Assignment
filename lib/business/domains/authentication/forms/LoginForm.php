@@ -11,7 +11,7 @@
      */
     abstract class LoginForm
     {
-        public static final function validateIsSubmitted(): bool
+        public final static function validateIsSubmitted(): bool
         {
             $retval = false;
 
@@ -28,7 +28,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostUsername(): string
+        public final static function getPostUsername(): string
         {
             if( !isset( $_POST[ 'form_login_username' ] ) )
             {
@@ -43,8 +43,7 @@
             }
 
             $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-
-            return strval( htmlentities( $sanitizedValue ) );
+            return $sanitizedValue;
         }
 
 
@@ -52,7 +51,7 @@
          * @return string
          * @throws Exception
          */
-        final public static function getPostPassword(): string
+        public final static function getPostPassword(): string
         {
             if( !isset( $_POST[ 'form_login_password' ] ) )
             {
@@ -67,7 +66,7 @@
             }
 
             $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING );
-            return strval( htmlentities( $sanitizedValue ) );
+            return $sanitizedValue;
         }
 
     }

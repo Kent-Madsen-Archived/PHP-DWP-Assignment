@@ -100,12 +100,18 @@
             return $this->getModel()->getDescription();
         }
 
+
+        /**
+         * @return string
+         * @throws Exception
+         */
         final public function printAreaIdentity(): string
         {
             $id= $this->viewIdentity();
             $message= "value='{$id}'";
             return $message;
         }
+
 
         /**
          * @return string
@@ -149,6 +155,7 @@
 
             return htmlentities("description: {$value}");
         }
+
 
         /**
          * @return string|null

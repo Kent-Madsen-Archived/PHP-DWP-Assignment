@@ -1,4 +1,8 @@
 <?php
+    $factory = GroupProduct::getProductFactory();
+    $pag = new FactoryPagination( $factory );
+
+    // Current Position
     if( isset( $_POST[ 'admin_product_pagination_current' ] ) )
     {
         $filtered_pagination_value = filter_var( $_POST[ 'admin_product_pagination_current' ], FILTER_VALIDATE_INT );
@@ -6,27 +10,29 @@
     }
     else
     {
-        $pagination = 0;
+        $pagination = $pag->viewCurrentPagination();
     }
 
+    $factory->setPaginationIndexValue( $pagination );
+
+    // Apply operation
     if( isset( $_POST[ 'admin_product_pagination_previous' ] ) )
     {
-        if( !( $pagination < 1 ) )
-        {
-            $pagination = $pagination - 1;
-        }
+        $pagination = $pag->viewPreviousPagination();
     }
 
     if( isset( $_POST[ 'admin_product_pagination_next' ] ) )
     {
-        $pagination = $pagination + 1;
+        $pagination = ($pag->viewNextPagination() );
     }
+
+    $factory->setPaginationIndexValue( ($pagination - 1) );
 ?>
 
 <h3>
     Products
 </h3>
-<a href="/admin/product/create" hreflang="en" class="btn"> Create </a>
+<a href="/admin/product/create" hreflang="en" class="button"> Create Product </a>
 
 <?php
     if( isset( $operation_value ) )
@@ -47,55 +53,49 @@
         }
     }
 
-    $factory = new ProductFactory(
-            new MySQLConnectorWrapper(
-                    MySQLInformationSingleton::getSingleton()
-            )
-    );
 
-    $factory->setPaginationIndexValue($pagination);
 
     $products = $factory->read();
 ?>
 <?php if ( !isset( $operation_value ) ): ?>
     <ul>
-        <?php if(!is_null( $products )): ?>
+        <?php if( !is_null( $products ) ): ?>
             <?php foreach ( $products as $product ): ?>
+            <?php $current_view = new ProductView($product); ?>
                 <li>
                     <?php
                         $pId = $product->getIdentity();
 
-                        $pTitle = $product->getTitle();
-                        $pPrice = $product->getPrice();
                         $pDescription = $product->getDescription();
 
                         $updateLink = "/admin/product/update/{$pId}";
                         $deleteLink = "/admin/product/delete/{$pId}";
                     ?>
 
-                    <?php echo "<p>Title: {$pTitle}</p>"?>
-                    <?php echo "<p>price: {$pPrice}</p>"; ?>
-                    <?php echo "<p>description: {$pDescription}</p>"; ?>
+                    <?php echo "<h4>{$current_view->printAreaTitle()}</h4>"?>
+                    <?php echo "<p>{$current_view->printAreaPrice()}</p>"; ?>
+                    <?php echo "<p> {$current_view->printSummaryOfDescription()}</p>"; ?>
 
-                    <?php echo "<a class='btn' href=\"{$updateLink}\" hreflang='en'> Update </a>"; ?>
-                    <?php echo "<a class='btn' href=\"{$deleteLink}\" hreflang='en'> Delete </a>"; ?>
+                    <a <?php echo $current_view->printAreaHrefLink(); echo $current_view->printAreaHrefLang();?> class="button">View Product</a>
+                    <?php echo "<a class='button' href=\"{$updateLink}\" hreflang='en'> Update Product</a>"; ?>
+                    <?php echo "<a class='button' href=\"{$deleteLink}\" hreflang='en'> Delete Product</a>"; ?>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>
     </ul>
 
     <form class="pagination" method="post" action="/admin/product">
-        <input type="hidden" value="<?php echo $factory->getPaginationIndexValue(); ?>" name="admin_product_pagination_current">
+        <input type="hidden" value="<?php echo $pag->getPaginationIndex(); ?>" name="admin_product_pagination_current">
 
         <li>
-            <?php if( !$factory->isPaginationIndexAtMinimumBoundary() ): ?>
-                <button type="submit" value="previous" class="btn" name="admin_product_pagination_previous">
+            <?php if( !$pag->isPreviousMinimum() ): ?>
+                <button type="submit" value="previous" class="button" name="admin_product_pagination_previous">
                     <span class="material-icons">
                         navigate_before
                     </span>
                 </button>
             <?php else: ?>
-                <button type="submit" value="previous" class="btn disabled">
+                <button type="submit" value="previous" class="button disabled">
                     <span class="material-icons">
                         navigate_before
                     </span>
@@ -104,18 +104,20 @@
         </li>
 
         <li>
-            <?php echo ( $factory->getPaginationIndexValue() + 1 );?>
+            <a class="button disabled">
+                <?php echo $pag->viewCurrentPagination();?>
+            </a>
         </li>
 
         <li>
-            <?php if( !$factory->isPaginationIndexAtMaximumBoundary() ): ?>
-                <button type="submit" class="btn" name="admin_product_pagination_next">
+            <?php if( !$pag->isNextMax() ): ?>
+                <button type="submit" class="button" name="admin_product_pagination_next">
                     <span class="material-icons">
                         navigate_next
                     </span>
                 </button>
             <?php else: ?>
-                <button type="submit" class="btn disabled">
+                <button type="submit" class="button disabled">
                     <span class="material-icons">
                         navigate_next
                     </span>

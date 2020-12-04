@@ -13,7 +13,7 @@
         public const class_name = "PageDomain";
 
         /**
-         * PageDomain constructor.
+         * PageDomainDomain constructor.
          * @throws Exception
          */
         public function __construct()
@@ -21,13 +21,15 @@
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
 
-            $this->setPageElementFactory(new PageElementFactory(new MySQLConnectorWrapper($this->getInformation())));
-
         }
 
-        private $pageElementFactory = null;
 
-        public function retrievePageElementById( int $idx )
+        /**
+         * @param int $idx
+         * @return PageElementModel
+         * @throws Exception
+         */
+        public final function retrievePageElementById( int $idx )
         {
             $factory = $this->getPageElementFactory();
             $model = $factory->createModel();
@@ -38,21 +40,16 @@
             return $model;
         }
 
-        /**
-         * @return PageElementFactory
-         */
-        public function getPageElementFactory(): PageElementFactory
-        {
-            return $this->pageElementFactory;
-        }
 
         /**
-         * @param PageElementFactory $pageElementFactory
+         * @return PageElementFactory
+         * @throws Exception
          */
-        public function setPageElementFactory( PageElementFactory $pageElementFactory ): void
+        public final function getPageElementFactory(): PageElementFactory
         {
-            $this->pageElementFactory = $pageElementFactory;
+            return GroupElements::getPageElementFactory();
         }
+
     }
 
 ?>

@@ -119,7 +119,7 @@
                 }
                 else
                 {
-                    $name = 'No Street address Name has been found';
+                    $name = 'no Street address Name has been found';
                 }
             }
             else
@@ -127,12 +127,13 @@
                 $name = $m->getStreetAddressName();
             }
 
-            if($this->isToCapitaliseWords())
+            if( $this->isToCapitaliseWords() )
             {
                 $name = ucfirst( $name );
             }
 
-            return htmlentities("{$name}");
+            $retVal = htmlentities( $name, null, 'UTF-8' );
+            return $retVal;
         }
 
 
@@ -160,7 +161,8 @@
                 $number_to_printed = strval( $m->getStreetAddressNumber() );
             }
 
-            return htmlentities("{$number_to_printed}");
+            $retVal = $number_to_printed;
+            return htmlentities($retVal, null, 'UTF-8');
         }
 
 
@@ -193,7 +195,7 @@
                 }
             }
 
-            return htmlentities("{$floor}");;
+            return htmlentities("{$floor}", null, "UTF-8");
         }
 
 
@@ -222,7 +224,8 @@
                 $zip_code_value = $m->getZipCode();
             }
 
-            return htmlentities("{$zip_code_value}");
+            $retVal = "{$zip_code_value}";
+            return htmlentities($retVal, null, 'UTF-8');
         }
 
 

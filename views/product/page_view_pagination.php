@@ -4,7 +4,10 @@
 
     $domain = new ProductDomain();
 
-    $pf = $domain->getProductFactory();
+    $pf = GroupProduct::getProductFactory();
+
+    $pag = new FactoryPagination($pf);
+    $pag->setBase('/product/pagination/');
 
 
     if( is_null( $id_value ) )
@@ -16,7 +19,7 @@
         $pagination = $id_value - 1;
     }
 
-    $products = $domain->retrieveProductsAt( ( $pagination ), 5);
+    $products = $domain->retrieveProductsAt( $pagination, 5);
 ?>
 
 <div>
@@ -44,10 +47,10 @@
 
 <ul class="pagination">
     <li>
-        <?php $previous_pagination = urlencode( $pf->getPaginationIndexCounter()->getCurrent()); ?>
+        <?php $previous_pagination = $pag->viewPreviousPagination() ?>
 
-        <?php if( !$pf->isPaginationIndexAtMinimumBoundary() ): ?>
-            <a class="btn" href='<?php echo "/product/pagination/{$previous_pagination}";?>'>
+        <?php if( !$pag->isPreviousMinimum() ): ?>
+            <a class="btn" href='<?php echo $pag->generateLink($previous_pagination);?>'>
                 Previous
             </a>
         <?php else:?>
@@ -58,13 +61,16 @@
     </li>
 
     <li>
-        <?php echo strval( $pf->getPaginationIndexCounter()->projectIncrease(1 ) ); ?>
+        <a class="button disabled">
+            <?php echo $pag->viewCurrentPagination();?>
+        </a>
     </li>
 
     <li>
-        <?php $next_pagination = urlencode($pf->getPaginationIndexCounter()->projectIncrease(2 )); ?>
-        <?php if( !$pf->isPaginationIndexAtMaximumBoundary() ): ?>
-            <a href="<?php echo "/product/pagination/{$next_pagination}";?>" class="btn">
+        <?php $next_pagination = $pag->viewNextPagination(); ?>
+
+        <?php if( !$pag->isNextMax() ): ?>
+            <a href="<?php echo $pag->generateLink($next_pagination)?>" class="btn">
                 Next
             </a>
         <?php else:?>

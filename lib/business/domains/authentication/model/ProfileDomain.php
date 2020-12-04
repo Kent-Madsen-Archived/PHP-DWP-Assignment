@@ -29,14 +29,6 @@
         {
             $this->setName(self::class_name);
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
-
-            $this->setAddressFactory( new PersonAddressFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
-            $this->setEmailFactory( new PersonEmailFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
-            $this->setNameFactory( new PersonNameFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
-
-            $this->setProfileFactory( new ProfileFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
-            $this->setProfileInformationFactory( new ProfileInformationFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
-            $this->setProfileTypeFactory( new ProfileTypeFactory( new MySQLConnectorWrapper($this->getInformation()) ) );
         }
 
 
@@ -185,125 +177,66 @@
         }
 
 
-        private $addressFactory = null;
-        private $emailFactory = null;
-        private $nameFactory = null;
-        
-        private $profileFactory = null;
-        private $profileInformationFactory = null;
-        private $profileTypeFactory = null;
-
 
         // Accessor
         /**
          * @return ProfileFactory|null
+         * @throws Exception
          */
         public final function getProfileFactory(): ?ProfileFactory
         {
-            return $this->profileFactory;
+            return GroupAuthentication::getProfileFactory();
         }
 
 
         /**
          * @return PersonAddressFactory|null
+         * @throws Exception
          */
         public final function getAddressFactory(): ?PersonAddressFactory
         {
-            return $this->addressFactory;
+            return GroupAuthentication::getPersonAddressFactory();
         }
 
 
         /**
          * @return PersonEmailFactory|null
+         * @throws Exception
          */
         public final function getEmailFactory(): ?PersonEmailFactory
         {
-            return $this->emailFactory;
+            return GroupAuthentication::getPersonEmailFactory();
         }
 
 
         /**
          * @return PersonNameFactory|null
+         * @throws Exception
          */
         public final function getNameFactory(): ?PersonNameFactory
         {
-            return $this->nameFactory;
+            return GroupAuthentication::getPersonNameFactory();
         }
 
 
         /**
          * @return ProfileInformationFactory|null
+         * @throws Exception
          */
         public final function getProfileInformationFactory(): ?ProfileInformationFactory
         {
-            return $this->profileInformationFactory;
+            return GroupAuthentication::getProfileInformationFactory();
         }
 
 
         /**
          * @return ProfileTypeFactory|null
+         * @throws Exception
          */
         public final function getProfileTypeFactory(): ?ProfileTypeFactory
         {
-            return $this->profileTypeFactory;
+            return GroupAuthentication::getProfileTypeFactory();
         }
-
-
-        /**
-         * @param PersonAddressFactory|null $addressFactory
-         */
-        public final function setAddressFactory( ?PersonAddressFactory $addressFactory ): void
-        {
-            $this->addressFactory = $addressFactory;
-        }
-
-
-        /**
-         * @param PersonEmailFactory|null $emailFactory
-         */
-        public final function setEmailFactory( ?PersonEmailFactory $emailFactory ): void
-        {
-            $this->emailFactory = $emailFactory;
-        }
-
-
-        /**
-         * @param PersonNameFactory|null $nameFactory
-         */
-        public final function setNameFactory(?PersonNameFactory $nameFactory): void
-        {
-            $this->nameFactory = $nameFactory;
-        }
-
-
-        /**
-         * @param ProfileFactory|null $profileFactory
-         */
-        public final function setProfileFactory( ?ProfileFactory $profileFactory ): void
-        {
-            $this->profileFactory = $profileFactory;
-        }
-
-
-        /**
-         * @param ProfileInformationFactory|null $profileInformationFactory
-         */
-        public final function setProfileInformationFactory( ?ProfileInformationFactory $profileInformationFactory ): void
-        {
-            $this->profileInformationFactory = $profileInformationFactory;
-        }
-
-
-        /**
-         * @param ProfileTypeFactory|null $profileTypeFactory
-         */
-        public final function setProfileTypeFactory( ?ProfileTypeFactory $profileTypeFactory ): void
-        {
-            $this->profileTypeFactory = $profileTypeFactory;
-        }
-
-
-
 
 
     }

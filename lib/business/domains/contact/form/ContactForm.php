@@ -10,7 +10,7 @@
          * @return bool|null
          * @throws Exception
          */
-        final protected static function validateIsMail( $mail ): ?bool
+        protected final static function validateIsMail( $mail ): ?bool
         {
             $value = false;
 
@@ -23,14 +23,14 @@
                 throw new Exception('');
             }
 
-            return boolval( $value );
+            return $value;
         }
 
 
         /**
          * @return bool
          */
-        final public static function validateIsSubmitted(): bool
+        public final static function validateIsSubmitted(): bool
         {
             $retVal = false;
 
@@ -39,7 +39,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -47,7 +47,7 @@
          * @return bool
          * @throws Exception
          */
-        final public static function validateSecurityCaptcha(): bool
+        public final static function validateSecurityCaptcha(): bool
         {
             $retVal = false;
 
@@ -58,7 +58,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -66,7 +66,7 @@
          * @return bool
          * @throws Exception
          */
-        final public static function validateSecuritySpoof(): bool
+        public final static function validateSecuritySpoof(): bool
         {
             $retVal = false;
 
@@ -81,7 +81,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -89,7 +89,7 @@
          * @return bool
          * @throws Exception
          */
-        final public static function validateSecurityFSS(): bool
+        public final static function validateSecurityFSS(): bool
         {
             $retVal = false;
 
@@ -107,7 +107,7 @@
                 }
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -115,11 +115,11 @@
         /**
          * @return string|null
          */
-        final static public function getFormSubject(): ?string
+        public final static function getFormSubject(): ?string
         {
             $value = $_POST[ 'form_contact_subject' ];
 
-            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
+            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
 
             return $sanitized_value;
         }
@@ -128,13 +128,13 @@
         /**
          * @return string|null
          */
-        final static public function getFormMessage(): ?string
+        public final static function getFormMessage(): ?string
         {
             $value = $_POST[ 'form_contact_message' ];
 
-            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING );
+            $sanitized_value = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
 
-            return strval( $sanitized_value );
+            return $sanitized_value;
         }
 
 
@@ -142,14 +142,14 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getFormFromMail(): ?string
+        public final static function getFormFromMail(): ?string
         {
             $fromMail = $_POST[ 'form_contact_from' ];
-            $sanitizedFromMail = filter_var( $fromMail, FILTER_SANITIZE_EMAIL );
+            $sanitizedFromMail = filter_var( $fromMail, FILTER_SANITIZE_EMAIL, FILTER_NULL_ON_FAILURE );
 
             if( self::validateIsMail( $sanitizedFromMail ) )
             {
-                return strval( $sanitizedFromMail );
+                return $sanitizedFromMail;
             }
 
             return null;
@@ -160,14 +160,14 @@
          * @return string|null
          * @throws Exception
          */
-        final public static function getFormToMail(): ?string
+        public final static function getFormToMail(): ?string
         {
             $toMailFromForm = WEBPAGE_DEFAULT_MAILTO;
-            $sanitizedToMail = filter_var( $toMailFromForm, FILTER_SANITIZE_EMAIL );
+            $sanitizedToMail = filter_var( $toMailFromForm, FILTER_SANITIZE_EMAIL, FILTER_NULL_ON_FAILURE );
 
             if( self::validateIsMail( $sanitizedToMail ) )
             {
-                return strval( $sanitizedToMail );
+                return $sanitizedToMail;
             }
 
             return null;

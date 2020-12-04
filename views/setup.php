@@ -7,8 +7,15 @@
      */
 
     PageTitleController::getSingletonController()->append( ' - Setup' );
-?>
-<?php
+
+    const sql_base = 'assets/sql/installation_script.sql';
+    const sql_tables = 'assets/sql/1_setup_tables.sql';
+    const sql_references = 'assets/sql/2_setup_references.sql';
+    const sql_data = 'assets/sql/3_setup_data.sql';
+    const sql_functions = 'assets/sql/4_setup_functions.sql';
+    const sql_triggers = 'assets/sql/5_setup_triggers.sql';
+    const sql_views = 'assets/sql/6_setup_views.sql';
+
 
     /**
      * Class SetupView
@@ -26,7 +33,7 @@
                 self::setSetup( new SetupInstallation( new MySQLConnectorWrapper( MySQLInformationSingleton::getSingleton() ) ) );
             }
 
-            return self::setup;
+            return self::$setup;
         }
 
         /**
@@ -73,11 +80,6 @@
             <?php
                 if( isset( $value ) )
                 {
-                    if( $value == 'create' )
-                    {
-                        include 'views/setup/create.php';
-                    }
-
                     if( $value == 'status' )
                     {
                         include 'views/setup/status.php';

@@ -127,6 +127,15 @@
 
     $invoice = new Route( 'invoice', 'views/invoices.php' );
     $invoice->appendValidationObject( $router_validate_root );
+    $router_invoice_operation = new RouterValidateStringArgument();
+    $router_invoice_operation->setLevel(1);
+
+    $router_invoice_id = new RouterValidateIntArgument();
+    $router_invoice_id->setLevel(2);
+
+    $invoice->appendValidationObject( $router_invoice_operation );
+    $invoice->appendValidationObject( $router_invoice_id );
+
     $router->appendToRoutes( $invoice );
 
 

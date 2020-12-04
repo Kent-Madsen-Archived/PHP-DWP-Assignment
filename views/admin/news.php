@@ -1,26 +1,30 @@
 <?php
+    $factory = GroupNews::getArticleFactory();
+    $pag = new FactoryPagination( $factory );
+
     if( isset( $_POST[ 'admin_product_pagination_current' ] ) )
     {
-        $filtered_pagination_value = filter_var( $_POST[ 'admin_product_pagination_current' ], FILTER_VALIDATE_INT );
+        $filtered_pagination_value = filter_var( $_POST[ 'admin_product_pagination_current' ], FILTER_VALIDATE_INT  );
         $pagination = $filtered_pagination_value;
     }
     else
     {
-        $pagination = 0;
+        $pagination = $pag->viewCurrentPagination();
     }
+
+    $factory->setPaginationIndexValue( $pagination );
 
     if( isset( $_POST[ 'admin_product_pagination_previous' ] ) )
     {
-        if( !( $pagination < 1 ) )
-        {
-            $pagination = $pagination - 1;
-        }
+        $pagination = $pag->viewPreviousPagination();
     }
 
     if( isset( $_POST[ 'admin_product_pagination_next' ] ) )
     {
-        $pagination = $pagination + 1;
+        $pagination = $pag->viewNextPagination();
     }
+
+    $factory->setPaginationIndexValue( ($pagination - 1) );
 ?>
 
 <h3>
@@ -48,13 +52,6 @@
         }
     }
 
-    $factory = new ArticleFactory(
-        new MySQLConnectorWrapper(
-            MySQLInformationSingleton::getSingleton()
-        )
-    );
-
-    $factory->setPaginationIndexValue($pagination);
     $articles = $factory->read();
 ?>
 <?php if ( !isset( $operation_value ) ): ?>
@@ -67,7 +64,7 @@
                         $pTitle = $article->getTitle();
                         $pContent = $article->getContent();
 
-                        echo "<p>{$pTitle}</p>";
+                        echo "<h4>{$pTitle}</h4>";
                         echo "<p>{$pContent}</p>";
 
                         $updateLink = "/admin/news/update/{$pId}";
@@ -86,10 +83,10 @@
           method="post"
           action="/admin/news">
 
-        <input type="hidden" value="<?php echo $factory->getPaginationIndexValue(); ?>" name="admin_product_pagination_current">
+        <input type="hidden" value="<?php echo $pag->getPaginationIndex(); ?>" name="admin_product_pagination_current">
 
         <li>
-            <?php if( !$factory->isPaginationIndexAtMinimumBoundary() ): ?>
+            <?php if( !$pag->isPreviousMinimum() ): ?>
                 <button type="submit" value="previous" class="btn" name="admin_product_pagination_previous">
                     <span class="material-icons">
                         navigate_before
@@ -105,11 +102,13 @@
         </li>
 
         <li>
-            <?php echo ( $factory->getPaginationIndexValue() + 1 );?>
+            <a class="button disabled">
+                <?php echo $pag->viewCurrentPagination();?>
+            </a>
         </li>
 
         <li>
-            <?php if( !$factory->isPaginationIndexAtMaximumBoundary() ): ?>
+            <?php if( !$pag->isNextMax() ): ?>
                 <button type="submit" class="btn" name="admin_product_pagination_next">
                     <span class="material-icons">
                         navigate_next

@@ -43,18 +43,15 @@
                 return boolval( $retVal );
             }
 
-            //
-            $connection = new MySQLConnectorWrapper( $this->getInformation() );
-
             // Factories prepared
-            $peFactory = new ContactFactory( $connection );
+            $peFactory = $this->getContactFactory();
             $contact_model = $peFactory->createModel();
 
             $contact_model->setSubject( ContactForm::getFormSubject() );
             $contact_model->setMessage( ContactForm::getFormMessage() );
 
-            $peModelFrom = $this->getMailOrCreateModel( $connection, ContactForm::getFormFromMail() );
-            $peModelTo   = $this->getMailOrCreateModel( $connection, ContactForm::getFormToMail() );
+            $peModelFrom = $this->getMailOrCreateModel( ContactForm::getFormFromMail() );
+            $peModelTo   = $this->getMailOrCreateModel( ContactForm::getFormToMail() );
 
             $contact_model->setFromMail( $peModelFrom->getIdentity() );
             $contact_model->setToMail( $peModelTo->getIdentity() );
@@ -77,19 +74,14 @@
          * @return PersonEmailModel|null
          * @throws Exception
          */
-        final protected function getMailOrCreateModel( $wrapper, $mail_content ): ?PersonEmailModel
+        final protected function getMailOrCreateModel( $mail_content ): ?PersonEmailModel
         {
-            if(!( $wrapper instanceof MySQLConnectorWrapper) )
-            {
-                throw new Exception('wrapper is only allowed to be of the instance MySQLConnectorWrapper');
-            }
-
             if( !is_string( $mail_content ) )
             {
                 throw new Exception('getMailOrCreateModel - $mail_content is not a string');
             }
 
-            $factory = new PersonEmailFactory( $wrapper );
+            $factory = $this->getPersonEmailFactory();
 
             $mailModel = $factory->createModel();
             $mailModel->setContent( $mail_content );
@@ -128,6 +120,26 @@
             }
 
             return boolval( $retVal );
+        }
+
+
+        /**
+         * @return ContactFactory
+         * @throws Exception
+         */
+        protected function getContactFactory(): ContactFactory
+        {
+            return GroupContact::getContactFactory();
+        }
+
+
+        /**
+         * @return PersonEmailFactory
+         * @throws Exception
+         */
+        protected function getPersonEmailFactory(): PersonEmailFactory
+        {
+            return GroupAuthentication::getPersonEmailFactory();
         }
 
     }

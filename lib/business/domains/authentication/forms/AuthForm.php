@@ -4,34 +4,9 @@
     {
         /**
          * @return bool
-         */
-        public final function validate(): bool
-        {
-            $retVal = false;
-
-            try
-            {
-                $this::validateSecuritySpoof();
-                $this::validateSecurityFSS();
-                $this::validateSecurityCaptcha();
-                $retVal = true;
-            }
-            catch ( Exception $ex )
-            {
-                echo $ex;
-            }
-
-            return boolval( $retVal );
-        }
-
-
-
-
-        /**
-         * @return bool
          * @throws Exception
          */
-        final public static function validateSecurityCaptcha(): bool
+        public final static function validateSecurityCaptcha(): bool
         {
             $retVal = false;
 
@@ -42,7 +17,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -50,7 +25,7 @@
          * @return bool
          * @throws Exception
          */
-        final public static function validateSecuritySpoof(): bool
+        public final static function validateSecuritySpoof(): bool
         {
             $retVal = false;
 
@@ -65,7 +40,7 @@
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
 
@@ -73,7 +48,7 @@
          * @return bool
          * @throws Exception
          */
-        final public static function validateSecurityFSS(): bool
+        public final static function validateSecurityFSS(): bool
         {
             $retVal = false;
 
@@ -91,7 +66,7 @@
                 }
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
     }

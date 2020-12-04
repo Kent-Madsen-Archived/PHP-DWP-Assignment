@@ -140,6 +140,7 @@
                     )
                 );
             }
+
             return self::$product_factory;
         }
 

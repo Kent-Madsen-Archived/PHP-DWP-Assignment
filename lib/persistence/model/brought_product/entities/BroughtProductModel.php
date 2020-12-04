@@ -69,47 +69,32 @@
          */
         final public function getProductId(): ?int
         {
-            if( is_null( $this->product_id ) )
-            {
-                return null;
-            }
-
-            return intval( $this->product_id, BASE_10 );
+            return $this->product_id;
         }
 
 
         /**
          * @return float|null
          */
-        final public function getPrice(): ?float
+        public final function getPrice(): ?float
         {
-            if( is_null( $this->price ) )
-            {
-                return null;
-            }
-
-            return doubleval( $this->price );
+            return $this->price;
         }
 
 
         /**
          * @return int|null
          */
-        final public function getNumberOfProducts(): ?int
+        public final function getNumberOfProducts(): ?int
         {
-            if( is_null( $this->number_of_products ) )
-            {
-                return null;
-            }
-
-            return intval( $this->number_of_products, BASE_10 );
+            return $this->number_of_products;
         }
 
 
         /**
-         * @return |null
+         * @return string|null
          */
-        final public function getRegistered()
+        public final function getRegistered(): ?string
         {
             return $this->registered;
         }
@@ -118,116 +103,55 @@
         /**
          * @return int|null
          */
-        final public function getInvoiceId(): ?int
+        public final function getInvoiceId(): ?int
         {
-            if( is_null( $this->invoice_id ) )
-            {
-                return null;
-            }
-
-            return intval( $this->invoice_id, BASE_10 );
+            return $this->invoice_id;
         }
 
 
             // Setters
         /**
-         * @param $var
-         * @return int|null
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setNumberOfProducts( $var ): ?int
+        public final function setNumberOfProducts( ?int $var ): void
         {
-            if( is_null( $var ) )
-            {
-                $this->number_of_products = null;
-                return $this->number_of_products;
-            }
-
-            if( !is_int( $var ) )
-            {
-                throw new Exception( 'BroughtProductModel - setNumberOfProducts: null or numeric number is allowed' );
-            }
-
-            $this->number_of_products = intval( $var, BASE_10 );
-            return $this->number_of_products;
+            $this->number_of_products = $var;
         }
 
 
         /**
-         * @param $var
-         * @return int|null
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setInvoiceId( $var ): ?int
+        public final function setInvoiceId( ?int $var ): void
         {
-            if( is_null( $var ) )
-            {
-                $this->invoice_id = null;
-                return $this->invoice_id;
-            }
-
-            if( !is_int( $var ) )
-            {
-                throw new Exception( 'BroughtProductModel - setInvoiceId: null or numeric number is allowed' );
-            }
-
-            $this->invoice_id = intval( $var, BASE_10 );
-            return $this->invoice_id;
+            $this->invoice_id = $var;
         }
 
 
         /**
-         * @param $var
+         * @param string|null $var
          */
-        final public function setRegistered( $var )
+        public final function setRegistered( ?string $var ): void
         {
             $this->registered = $var;
         }
 
 
         /**
-         * @param $var
-         * @return int|null
-         * @throws Exception
+         * @param int|null $var
          */
-        final public function setProductId( $var ): ?int
+        public final function setProductId( ?int $var ): void
         {
-            if( is_null( $var ) )
-            {
-                $this->product_id = null;
-                return $this->product_id;
-            }
-
-            if( !is_int( $var ) )
-            {
-                throw new Exception( 'BroughtProductModel - setProductId: null or numeric number is allowed' );
-            }
-
-            $this->product_id = intval( $var, BASE_10 );
-            return $this->product_id;
+            $this->product_id = $var;
         }
 
 
         /**
-         * @param $var
-         * @return float|null
-         * @throws Exception
+         * @param float|null $var
          */
-        final public function setPrice( $var ): ?float
+        public final function setPrice( ?float $var ): void
         {
-            if( is_null( $var ) )
-            {
-                $this->price = null;
-                return $this->price;
-            }
-
-            if( !is_double( $var ) )
-            {
-                throw new Exception( 'BroughtProductModel - setPrice: null or numeric number is allowed' );
-            }
-
-            $this->price = doubleval( $var );
-            return $this->price;
+            $this->price = $var;
         }
 
     }
