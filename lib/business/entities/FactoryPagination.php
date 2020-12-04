@@ -27,9 +27,9 @@ class FactoryPagination
         $limit_value = $this->getFactory()->getLimitValue();
 
         $size = floatval( floatval( $this->getFactory()->length() ) / floatval( $limit_value ) );
-        $floor_size = floor($size);
+        $floor_size = ceil($size);
 
-        return (intval($projected) > intval($floor_size));
+        return (floatval($projected) > floatval($floor_size));
     }
 
 
@@ -38,15 +38,14 @@ class FactoryPagination
         return utf8_encode("{$this->getBase()}{$pagination}");
     }
 
+    public function viewPreviousPagination(): int
+    {
+        return $this->getFactory()->getPaginationIndexValue();
+    }
 
     public function viewCurrentPagination(): int
     {
         return $this->getFactory()->getPaginationIndexCounter()->projectIncrease(1);
-    }
-
-    public function viewPreviousPagination(): int
-    {
-        return $this->getFactory()->getPaginationIndexValue();
     }
 
     public function viewNextPagination(): int
