@@ -123,8 +123,6 @@
 
     $router->appendToRoutes( $news );
 
-
-
     $invoice = new Route( 'invoice', 'views/invoices.php' );
     $invoice->appendValidationObject( $router_validate_root );
     $router_invoice_operation = new RouterValidateStringArgument();
@@ -137,8 +135,6 @@
     $invoice->appendValidationObject( $router_invoice_id );
 
     $router->appendToRoutes( $invoice );
-
-
 
     $admin = new Route( 'admin', 'views/admin.php' );
     

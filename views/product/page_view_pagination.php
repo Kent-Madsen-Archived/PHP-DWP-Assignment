@@ -12,7 +12,7 @@
 
     if( is_null( $id_value ) )
     {
-        redirect_to_local_page('/product/pagination/1');
+        redirect_to_local_page($pag->generateLink(1));
     }
     else
     {
@@ -50,11 +50,11 @@
         <?php $previous_pagination = $pag->viewPreviousPagination() ?>
 
         <?php if( !$pag->isPreviousMinimum() ): ?>
-            <a class="btn" href='<?php echo $pag->generateLink($previous_pagination);?>'>
+            <a class="button" href='<?php echo $pag->generateLink($previous_pagination);?>'>
                 Previous
             </a>
         <?php else:?>
-            <a class="btn disabled">
+            <a class="button disabled">
                 Previous
             </a>
         <?php endif; ?>
@@ -70,11 +70,11 @@
         <?php $next_pagination = $pag->viewNextPagination(); ?>
 
         <?php if( !$pag->isNextMax() ): ?>
-            <a href="<?php echo $pag->generateLink($next_pagination)?>" class="btn">
+            <a href="<?php echo $pag->generateLink($next_pagination)?>" class="button">
                 Next
             </a>
         <?php else:?>
-            <a class="btn disabled">
+            <a class="button disabled">
                 Next
             </a>
         <?php endif; ?>
