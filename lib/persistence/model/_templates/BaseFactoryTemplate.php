@@ -49,6 +49,7 @@
          */
         public abstract function appendices(): string;
 
+
         /**
          * @param array $filters
          * @return bool
@@ -62,7 +63,7 @@
          * @param $var
          * @return bool
          */
-        final protected function validateAsValidConnector( $var ): bool
+        protected final function validateAsValidConnector( $var ): bool
         {
             $retVal = false;
 
@@ -90,7 +91,7 @@
          * @param mysqli $value
          * @return string
          */
-        final protected function escape( mysqli $value ): string
+        protected final function escape( mysqli $value ): string
         {
             $connector = $this->getWrapper()->getConnector();
 
@@ -99,47 +100,35 @@
 
 
         /**
-         * @param int $value
-         * @return int
-         */
-        final public static function Int10( int $value ): int
-        {
-            return intval($value, 10);
-        }
-
-
-        /**
          * @return int
          * @throws Exception
          */
-        final public function CalculateOffset(): int
+        public final function CalculateOffset(): int
         {
             if( $this->getLimitCounter()->isCurrentNull() && $this->getPaginationIndexCounter()->isCurrentNull() )
             {
                 throw new Exception( 'can\'t calculate offset, as either limit or pagination index is null' );
             }
 
-            return self::Int10( ( $this->getLimitValue() * $this->getPaginationIndexValue() ));
+            return ( $this->getLimitValue() * $this->getPaginationIndexValue() );
         }
 
 
         /**
-         * @return int|null
-         * @throws Exception
+         *
          */
-        final public function next(): ?int
+        public final function next(): void
         {
-            return $this->getPaginationIndexCounter()->increment();
+            $this->getPaginationIndexCounter()->increment();
         }
 
 
         /**
-         * @return int|null
-         * @throws Exception
+         *
          */
-        final public function previous(): ?int
+        public final function previous(): void
         {
-            return $this->getPaginationIndexCounter()->decrement();
+            $this->getPaginationIndexCounter()->decrement();
         }
 
 
@@ -148,7 +137,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function nextJump( ?int $value=0 ): ?int
+        public final function nextJump( ?int $value=0 ): ?int
         {
             if( is_null( $value ) )
             {
@@ -171,7 +160,7 @@
          * @return int|null
          * @throws Exception
          */
-        final public function previousJump( ?int $value=0 ): ?int
+        public final function previousJump( ?int $value=0 ): ?int
         {
             if( is_null( $value ) )
             {
@@ -235,7 +224,7 @@
         /**
          * @return int|null
          */
-        final public function getLimitValue(): ?int
+        public final function getLimitValue(): ?int
         {
             if( is_null( $this->getLimitCounter()->isCurrentNull() ) )
             {
@@ -243,122 +232,6 @@
             }
 
             return $this->getLimitCounter()->getCurrent();
-        }
-
-
-            // Setters
-        /**
-         * @param $var
-         * @return MySQLConnectorWrapper|null
-         * @throws Exception
-         */
-        final public function setWrapper( $var ): ?MySQLConnectorWrapper
-        {
-            if( is_null( $var ) )
-            {
-                $this->connector = null;
-                return $this->connector;
-            }
-
-            if( !$this->validateAsValidConnector( $var ) )
-            {
-                throw new Exception( "Factory - setConnector: Only the class MySQLConnectorWrapper or null is allowed" );
-            }
-
-            $this->connector = $var;
-
-            return $this->connector;
-        }
-
-
-        /**
-         * @param int|null $idx
-         * @return int|null
-         */
-        final public function setPaginationIndexValue( ?int $idx ): ?int
-        {
-            $this->getPaginationIndexCounter()->setCurrent( $idx );
-            return $this->getPaginationIndexValue();
-        }
-
-
-        /**
-         * @param int|null $var
-         * @return int|null
-         */
-        final public function setLimitValue( ?int $var ): ?int
-        {
-            $counter = $this->getLimitCounter();
-            $counter->setCurrent( $var );
-
-            return intval( $this->getLimitValue() );
-        }
-
-
-        /**
-         * @return bool
-         */
-        final public function isPaginationIndexAtMinimumBoundary(): bool
-        {
-            $counter = $this->getPaginationIndexCounter();
-
-            if( is_null( $counter->getCurrent() ) )
-            {
-                return boolval( false );
-            }
-
-            return self::isEqualsToOrBelow( $counter->getCurrent(), CONSTANT_ZERO );
-        }
-
-
-        /**
-         * @return bool
-         * @throws Exception
-         */
-        final public function isPaginationIndexAtMaximumBoundary(): bool
-        {
-            $pagination_counter = $this->getPaginationIndexCounter();
-            $limit_counter = $this->getLimitCounter();
-
-            if( $limit_counter->isCurrentNull() || ( $pagination_counter->isCurrentNull() ) )
-            {
-                throw new Exception('No boundary');
-            }
-
-            $size = floatval( floatval( $this->length() ) / floatval( $limit_counter->getCurrent() ) );
-
-            // round down.
-            $r_size = self::Int10( floor( floatval( $size ) ) );
-
-            // Return true, if index is above or equals to rSize
-            return self::isEqualToOrAbove( $pagination_counter->getCurrent(), $r_size );
-        }
-
-
-        /**
-         * @param int $position
-         * @param int $boundary
-         * @return bool
-         */
-        public final static function isEqualsToOrBelow( int $position=0, int $boundary=0 ): bool
-        {
-            $equals = ($position == $boundary);
-            $below = ($boundary > $position);
-
-            return ($equals || $below);
-        }
-
-        /**
-         * @param int $position
-         * @param int $boundary
-         * @return bool
-         */
-        public final static function isEqualToOrAbove( int $position=0, int $boundary=0 ): bool
-        {
-            $equals = ($position == $boundary);
-            $isAbove = ($position > $boundary);
-
-            return ( $equals || $isAbove );
         }
 
 
@@ -372,9 +245,49 @@
 
 
         /**
+         * @return CounterObject|null
+         */
+        public final function getLimitCounter(): ?CounterObject
+        {
+            return $this->limit_counter;
+        }
+
+
+            // Setters
+        /**
+         * @param MySQLConnectorWrapper|null $var
+         * @throws Exception
+         */
+        public final function setWrapper( MySQLConnectorWrapper $var ): void
+        {
+            $this->connector = $var;
+        }
+
+
+        /**
+         * @param int|null $idx
+         */
+        public final function setPaginationIndexValue( ?int $idx ): void
+        {
+            $counter = $this->getPaginationIndexCounter();
+            $counter->setCurrent( $idx );
+        }
+
+
+        /**
+         * @param int|null $var
+         */
+        public final function setLimitValue( ?int $var ): void
+        {
+            $counter = $this->getLimitCounter();
+            $counter->setCurrent( $var );
+        }
+
+
+        /**
          * @param CounterObject|null $pagination_index_counter
          */
-        public final function setPaginationIndexCounter( ?CounterObject $pagination_index_counter): void
+        public final function setPaginationIndexCounter( ?CounterObject $pagination_index_counter ): void
         {
             $this->pagination_index_counter = $pagination_index_counter;
         }
@@ -389,26 +302,7 @@
         }
 
 
-        /**
-         * @return CounterObject|null
-         */
-        public final function getLimitCounter(): ?CounterObject
-        {
-            return $this->limit_counter;
-        }
 
-
-        /**
-         *
-         */
-        public final function dumpCounterStatus()
-        {
-            $pag = print_r( $this->getPaginationIndexCounter(), true );
-            $limit = print_r($this->getLimitCounter(), true);
-
-            echo htmlentities("Pagination Counter : {$pag}"). '</br>' .
-                 htmlentities("Limit Counter : {$limit}");
-        }
 
     }
 

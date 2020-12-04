@@ -5,7 +5,7 @@ $router = RouterSingleton::getInstance()->getCurrentRoute();
 $operation_value = $router->getValidationTree()[1]->getValue();
 $id_value = $router->getValidationTree()[2]->getValue();
 
-if (is_null($id_value) )
+if (!isset($id_value) )
 {
     $pagination = 0;
 }
@@ -15,8 +15,12 @@ else
 }
 
 $domain = new NewsDomain();
-
 $articles = $domain->retrieveArticlesAt($pagination, 5);
+
+$af = GroupNews::getArticleFactory();
+$pag = new FactoryPagination( $af );
+$pag->setBase('/news/pagination/');
+
 ?>
 
 <h4>All Article</h4>
@@ -33,15 +37,12 @@ $articles = $domain->retrieveArticlesAt($pagination, 5);
     endforeach;
 ?>
 
-<?php
-$af = $domain->getArticleFactory();
-?>
 <ul class="pagination">
     <li>
-        <?php $previous_pagination = urlencode( $af->getPaginationIndexCounter()->getCurrent()); ?>
+        <?php $previous_pagination = $pag->viewPreviousPagination(); ?>
 
-        <?php if( !$af->isPaginationIndexAtMinimumBoundary() ): ?>
-            <a class="btn" href='<?php echo "/news/pagination/{$previous_pagination}";?>'>
+        <?php if( !$pag->isPreviousMinimum() ): ?>
+            <a class="button" href='<?php echo $pag->generateLink($previous_pagination);?>'>
                 Previous
             </a>
         <?php else:?>
@@ -52,17 +53,18 @@ $af = $domain->getArticleFactory();
     </li>
 
     <li>
-        <a class="btn disabled"><?php echo strval( $af->getPaginationIndexCounter()->projectIncrease(1 ) ); ?> </a>
+        <a class="btn disabled"><?php echo $pag->viewCurrentPagination(); ?> </a>
     </li>
 
     <li>
-        <?php $next_pagination = urlencode($af->getPaginationIndexCounter()->projectIncrease(2 )); ?>
-        <?php if( !$af->isPaginationIndexAtMaximumBoundary() ): ?>
-            <a href="<?php echo "/news/pagination/{$next_pagination}";?>" class="btn">
+        <?php $next_pagination = $pag->viewNextPagination(); ?>
+
+        <?php if( !$pag->isNextMax() ): ?>
+            <a href="<?php echo $pag->generateLink($next_pagination);?>" class="button">
                 Next
             </a>
         <?php else:?>
-            <a class="btn disabled">
+            <a class="button disabled">
                 Next
             </a>
         <?php endif; ?>
