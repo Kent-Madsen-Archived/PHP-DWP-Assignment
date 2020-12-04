@@ -25,7 +25,7 @@
          * @return array
          * @throws Exception
          */
-        public final function retrieveInvoicesBy( int $prof_idx ): array
+        public final function retrieveInvoicesByProfileIdentity(int $prof_idx ): array
         {
             $factory = $this->getProductInvoiceFactory();
             $factory->setFilter( array( ProductInvoiceFactory::filter_by_profile_id => $prof_idx ) );

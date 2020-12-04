@@ -15,7 +15,7 @@
          * @param $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __construct( $model )
         {
             $this->setModel( $model );
         }
@@ -25,7 +25,7 @@
          * @param $model
          * @return bool
          */
-        final public function validateModel( $model ): bool
+        public final function validateModel( $model ): bool
         {
             $retval = false;
 
@@ -37,33 +37,126 @@
             return boolval( $retval );
         }
 
+
         /**
-         * @return int|mixed|null
+         * @return int|null
+         * @throws Exception
          */
-        final public function viewIdentity()
+        public final function viewIdentity(): ?int
         {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model');
+            }
+
             if( $this->viewIsIdentityNull() )
             {
                 return null;
             }
 
-            return $this->getIdentity();
+            return $this->getModel()->getIdentity();
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
+         * @throws Exception
          */
-        final public function viewIsIdentityNull()
+        public final function viewIsIdentityNull(): bool
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) )
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model');
+            }
+
+            if( is_null( $this->getModel()->getIdentity() ) )
             {
                 $retVal = true;
             }
 
             return $retVal;
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewInvoiceId(): ?int
+        {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model');
+            }
+
+            $m = $this->getModel();
+            return $m->getInvoiceId();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewProductId(): ?int
+        {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model');
+            }
+
+            $m = $this->getModel();
+            return $m->getProductId();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewNumberOfProducts(): ?int
+        {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model' );
+            }
+
+            $m = $this->getModel();
+            return $m->getNumberOfProducts();
+        }
+
+
+        /**
+         * @return float|null
+         * @throws Exception
+         */
+        public final function viewProductPrice(): ?float
+        {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model' );
+            }
+
+            $m = $this->getModel();
+            return $m->getPrice();
+        }
+
+
+        /**
+         * @return string|null
+         * @throws Exception
+         */
+        public final function viewRegistered(): ?string
+        {
+            if( is_null( $this->getModel() ) )
+            {
+                throw new Exception('no instance of a model' );
+            }
+
+            $m = $this->getModel();
+            return $m->getRegistered();
         }
 
 

@@ -15,7 +15,7 @@
          * @param $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __construct( $model )
         {
             $this->setModel( $model );
         }
@@ -25,7 +25,7 @@
          * @param $model
          * @return bool
          */
-        final public function validateModel( $model ): bool
+        public final function validateModel( $model ): bool
         {
             $retval = false;
  
@@ -39,28 +39,105 @@
 
 
         /**
-         * @return int|mixed|null
+         * @return int|null
+         * @throws Exception
          */
-        final public function viewIdentity()
+        public final function viewIdentity(): ?int
         {
-            return $this->getIdentity();
+            return $this->getModel()->getIdentity();
         }
 
 
         /**
-         * @return bool|mixed
+         * @return bool
+         * @throws Exception
          */
-        final public function viewIsIdentityNull()
+        public final function viewIsIdentityNull(): bool
         {
             $retVal = false;
 
-            if( is_null( $this->identity ) == true )
+            if( is_null( $this->getModel()->getIdentity() ) == true )
             {
                 $retVal = true;
             }
 
-            return boolval( $retVal );
+            return $retVal;
         }
 
+
+        /**
+         * @return float|null
+         * @throws Exception
+         */
+        public final function viewTotalPrice(): ?float
+        {
+            $m = $this->transform();
+            return $m->getTotalPrice();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewAddressId(): ?int
+        {
+            $m = $this->transform();
+            return $m->getAddressId();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewMailId(): ?int
+        {
+            $m = $this->transform();
+            return $m->getMailId();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewOwnerNameId(): ?int
+        {
+            $m = $this->transform();
+            return $m->getOwnerNameId();
+        }
+
+
+        /**
+         * @return string|null
+         * @throws Exception
+         */
+        public final function viewInvoiceRegistered(): ?string
+        {
+            $m = $this->transform();
+            return $m->getRegistered();
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function viewProfileId(): ?int
+        {
+            $m = $this->transform();
+            return $m->getProfileId();
+        }
+
+
+        /**
+         * @return ProductInvoiceModel|null
+         * @throws Exception
+         */
+        private final function transform(): ?ProductInvoiceModel
+        {
+            return $this->getModel();
+        }
     }
 ?>
