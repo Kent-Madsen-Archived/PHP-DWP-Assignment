@@ -444,6 +444,13 @@
             return false;
         }
 
+        /**
+         *
+         */
+        public final function clearOptions(): void
+        {
+            // TODO: Implement clearOptions() method.
+        }
 
     }
 

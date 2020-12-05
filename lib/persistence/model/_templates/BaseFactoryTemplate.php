@@ -56,6 +56,11 @@
          */
         public abstract function insertOptions( array $filters ): bool;
 
+        /**
+         *
+         */
+        public abstract function clearOptions(): void;
+
 
 
         // Validation of objects

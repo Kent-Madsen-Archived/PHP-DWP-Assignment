@@ -2,13 +2,21 @@
 
 class FactoryPagination
 {
+    /**
+     * FactoryPagination constructor.
+     * @param BaseFactoryTemplate|null $factory
+     */
     public function __construct( ?BaseFactoryTemplate $factory )
     {
         $this->setFactory( $factory );
 
     }
 
-    public function isPreviousMinimum(): bool
+
+    /**
+     * @return bool
+     */
+    public final function isPreviousMinimum(): bool
     {
         $projected = $this->getFactory()->getPaginationIndexCounter()->getCurrent();
 
@@ -20,7 +28,11 @@ class FactoryPagination
         return false;
     }
 
-    public function isNextMax(): bool
+
+    /**
+     * @return bool
+     */
+    public final function isNextMax(): bool
     {
         $projected = $this->getFactory()->getPaginationIndexCounter()->projectIncrease(2);
 
@@ -39,28 +51,47 @@ class FactoryPagination
     }
 
 
-    public function generateLink( $pagination ): string
+    /**
+     * @param $pagination
+     * @return string
+     */
+    public final function generateLink( $pagination ): string
     {
         return utf8_encode("{$this->getBase()}{$pagination}");
     }
 
-    public function viewPreviousPagination(): int
+
+    /**
+     * @return int
+     */
+    public final function viewPreviousPagination(): int
     {
         return $this->getFactory()->getPaginationIndexValue();
     }
 
-    public function viewCurrentPagination(): int
+
+    /**
+     * @return int
+     */
+    public final function viewCurrentPagination(): int
     {
         return $this->getFactory()->getPaginationIndexCounter()->projectIncrease(1);
     }
 
-    public function viewNextPagination(): int
+
+    /**
+     * @return int
+     */
+    public final function viewNextPagination(): int
     {
         return $this->getFactory()->getPaginationIndexCounter()->projectIncrease(2);
     }
 
 
-    public function getPaginationIndex(): int
+    /**
+     * @return int
+     */
+    public final function getPaginationIndex(): int
     {
         return $this->getFactory()->getPaginationIndexValue();
     }
@@ -73,18 +104,20 @@ class FactoryPagination
     /**
      * @return null
      */
-    public function getFactory(): ?BaseFactoryTemplate
+    public final function getFactory(): ?BaseFactoryTemplate
     {
         return $this->factory;
     }
 
+
     /**
      * @param BaseFactoryTemplate|null $factory
      */
-    public function setFactory( ?BaseFactoryTemplate $factory ): void
+    public final function setFactory( ?BaseFactoryTemplate $factory ): void
     {
         $this->factory = $factory;
     }
+
 
     /**
      * @return string

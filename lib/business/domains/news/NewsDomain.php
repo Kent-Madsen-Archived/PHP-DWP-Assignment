@@ -74,6 +74,22 @@
             return $factory->read();
         }
 
+        /**
+         * @param int $pagination
+         * @param int $limit
+         * @return array|null
+         * @throws Exception
+         */
+        public final function retrieveArticlesOrderedByCreationAt( int $pagination = 0, int $limit = 5 ): ?array
+        {
+            $factory = $this->getArticleFactory();
+
+            $factory->setPaginationIndexValue($pagination);
+            $factory->setLimitValue($limit);
+
+            return $factory->readOrderedByCreationDate();
+        }
+
 
         /**
          * @return array|null

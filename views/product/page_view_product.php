@@ -3,6 +3,8 @@
     $id_value = $router->getValidationTree()[2]->getValue();
 
     $domain = new ProductDomain();
+
+    $privileges = new AccessPrivilegesDomain();
     $product = $domain->readSingularProduct( $id_value );
 
     $view = new ProductView( $product );
@@ -21,18 +23,20 @@
         <?php echo $view->printFieldTypePrice();?>
     </p>
 
-    <form method="post"
-          action="/product/buy">
+    <?php if($privileges->is_logged_in()): ?>
+        <form method="post"
+              action="/product/buy">
 
-        <input type="hidden" <?php echo $view->printAreaIdentity(); ?> name="product_basket_product_identity">
+            <input type="hidden" <?php echo $view->printAreaIdentity(); ?> name="product_basket_product_identity">
 
-        <input type="number" value="1" placeholder="quantity" name="product_basket_number_of_products">
+            <input type="number" value="1" placeholder="quantity" name="product_basket_number_of_products">
 
-        <input type="hidden" value="<?php echo $view->printFieldTypePrice(); ?>" name="product_basket_price">
+            <input type="hidden" value="<?php echo $view->printFieldTypePrice(); ?>" name="product_basket_price">
 
-        <button class="waves-effect waves-light btn-small" name="product_basket_submit" value="1">
-            insert into Basket
-        </button>
-    </form>
+            <button class="waves-effect waves-light btn-small" name="product_basket_submit" value="1">
+                insert into Basket
+            </button>
+        </form>
+    <?php endif; ?>
 
 <?php endif; ?>

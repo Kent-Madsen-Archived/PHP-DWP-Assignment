@@ -687,6 +687,15 @@
         }
 
 
+        /**
+         *
+         */
+        public function clearOptions(): void
+        {
+            // TODO: Implement clearOptions() method.
+        }
+
+
     }
 
 ?>
