@@ -1,9 +1,5 @@
 <?php
-    $factory = new ArticleFactory(
-                    new MySQLConnectorWrapper(
-                            MySQLInformationSingleton::getSingleton()
-                    )
-    );
+    $factory = GroupNews::getArticleFactory();
 
     if( isset( $_POST[ 'admin_news_create_submit' ] ) )
     {

@@ -103,7 +103,7 @@
             </section>
 
             <section>
-                <?php $page_domain = new PageDomainDomain(); ?>
+                <?php $page_domain = new PageDomain(); ?>
                 <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
                 <div>

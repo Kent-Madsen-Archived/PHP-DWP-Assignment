@@ -8,7 +8,7 @@
 <footer> 
     <div class="information-container">
         <div class="row">
-            <?php $domain = new PageDomainDomain();
+            <?php $domain = new PageDomain();
                 $footer = $domain->retrievePageElementByAreaKey('footer_about');?>
               <div class="col l6 s12">
                 <h4 class="white-text"><?php echo $footer->getTitle();?></h4>
