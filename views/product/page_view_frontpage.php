@@ -10,17 +10,15 @@
             $view = new ProductView( $current );
             ?>
             <div>
-                <a <?php echo $view->printAreaHrefLink();?> <?php echo $view->printAreaHrefLang();?>>
-                    <p>
+                    <h4>
                         <?php echo $view->printAreaTitle(); ?>
-                    </p>
+                    </h4>
                     <p>
                         <?php echo $view->printAreaDescription(); ?>
                     </p>
                     <p>
                         <?php echo $view->printAreaPrice(); ?>
                     </p>
-                </a>
 
                 <?php if($privileges->is_logged_in()): ?>
                     <form method="post"
@@ -35,6 +33,11 @@
                         </button>
                     </form>
                 <?php endif; ?>
+
+                <a class="button" <?php echo $view->printAreaHrefLink();?> <?php echo $view->printAreaHrefLang();?>>
+                    view Product
+                </a>
+
             </div>
     <?php endforeach; ?>
 <?php endif; ?>

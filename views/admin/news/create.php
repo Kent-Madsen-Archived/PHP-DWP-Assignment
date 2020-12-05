@@ -35,7 +35,7 @@
 
     <label>Content</label>
 
-    <input class="btn"
+    <input class="button"
            type="submit"
            name="admin_news_create_submit"
            value="Create Article">

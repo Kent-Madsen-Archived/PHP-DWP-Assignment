@@ -29,7 +29,6 @@ $privileges = new AccessPrivilegesDomain();
         <?php
             $view = new ProductView($product);
         ?>
-        <a <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang(); ?>>
             <h5><?php echo $view->printAreaTitle();?></h5>
             <p> <?php echo $view->printSummaryOfDescription(); ?></p>
             <?php if($privileges->is_logged_in()): ?>
@@ -44,7 +43,10 @@ $privileges = new AccessPrivilegesDomain();
                     </button>
                 </form>
             <?php endif; ?>
-        </a>
+
+            <a class="button" <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang(); ?>>
+                View Product
+            </a>
     <?php endforeach; ?>
 </div>
 
