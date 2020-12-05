@@ -103,8 +103,8 @@
             </section>
 
             <section>
-                <?php $page_domain = new PageDomainDomain(); ?>
-                <?php $element = $page_domain->retrievePageElementById(1); ?>
+                <?php $page_domain = new PageDomain(); ?>
+                <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
                 <div>
                     <h3>

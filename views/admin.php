@@ -46,6 +46,16 @@
                             Product
                         </a>
                     </li>
+                    <li>
+                        <a href="/admin/elements">
+                            Elements
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/contact">
+                            Contacts
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -65,6 +75,11 @@
                 if( $view == 'news' )
                 {
                     include 'views/admin/news.php';
+                }
+
+                if( $view == 'elements' )
+                {
+                    include 'views/admin/elements.php';
                 }
 
                 if( $view == 'product' )

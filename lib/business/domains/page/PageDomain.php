@@ -3,7 +3,7 @@
     /**
      * Class PageDomain
      */
-    class PageDomainDomain
+    class PageDomain
         extends Domain
             implements PageDomainInteraction
     {
@@ -13,14 +13,24 @@
         public const class_name = "PageDomain";
 
         /**
-         * PageDomainDomain constructor.
+         * PageDomain constructor.
          * @throws Exception
          */
         public function __construct()
         {
             $this->setName(self::class_name );
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
+        }
 
+        public final function retrievePageElements(): array
+        {
+            $factory = $this->getPageElementFactory();
+
+            $factory->setPaginationIndexValue(0);
+            $factory->setLimitValue(10);
+
+            $m = $factory->read();
+            return $m;
         }
 
 
@@ -35,6 +45,23 @@
             $model = $factory->createModel();
             $model->setIdentity( $idx );
 
+            $factory->readModel($model);
+
+            return $model;
+        }
+
+
+        /**
+         * @param string $idx
+         * @return PageElementModel
+         * @throws Exception
+         */
+        public final function retrievePageElementByAreaKey( string $idx )
+        {
+            $factory = $this->getPageElementFactory();
+            $model = $factory->createModel();
+
+            $model->setAreaKey( $idx );
             $factory->readModel($model);
 
             return $model;

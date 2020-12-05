@@ -31,7 +31,7 @@
     News
 </h3>
 
-<a href="/admin/news/create" hreflang="en" class="btn"> Create </a>
+<a href="/admin/news/create" hreflang="en" class="button"> Create Article </a>
 
 <?php
     if( isset( $operation_value ) )
@@ -53,8 +53,8 @@
     }
 
     $articles = $factory->read();
-?>
-<?php if ( !isset( $operation_value ) ): ?>
+
+    if ( !isset( $operation_value ) ): ?>
     <ul>
         <?php if(!is_null( $articles )): ?>
             <?php foreach ( $articles as $article ): ?>
@@ -71,9 +71,8 @@
                         $deleteLink = "/admin/news/delete/{$pId}";
                     ?>
 
-
-                    <?php echo "<a class='btn' href=\"{$updateLink}\" hreflang='en'> Update </a>"; ?>
-                    <?php echo "<a class='btn' href=\"{$deleteLink}\" hreflang='en'> Delete </a>"; ?>
+                    <?php echo "<a class='button' href=\"{$updateLink}\" hreflang='en'> Update Article </a>"; ?>
+                    <?php echo "<a class='button' href=\"{$deleteLink}\" hreflang='en'> Delete Article </a>"; ?>
                 </li>
             <?php endforeach; ?>
         <?php endif; ?>

@@ -5,22 +5,23 @@ $router = RouterSingleton::getInstance()->getCurrentRoute();
 $operation_value = $router->getValidationTree()[1]->getValue();
 $id_value = $router->getValidationTree()[2]->getValue();
 
-if (!isset($id_value) )
-{
-    $pagination = 0;
-}
-else
-{
-    $pagination = $id_value - 1;
-}
+    $domain = new NewsDomain();
 
-$domain = new NewsDomain();
-$articles = $domain->retrieveArticlesAt($pagination, 5);
+    $af = GroupNews::getArticleFactory();
+    $pag = new FactoryPagination( $af );
+    $pag->setBase('/news/pagination/');
 
-$af = GroupNews::getArticleFactory();
-$pag = new FactoryPagination( $af );
-$pag->setBase('/news/pagination/');
 
+    if ( is_null($id_value))
+    {
+        redirect_to_local_page( $pag->generateLink(1) );
+    }
+    else
+    {
+        $pagination = $id_value - 1;
+    }
+
+    $articles = $domain->retrieveArticlesAt($pagination, $af->getLimitValue());
 ?>
 
 <h4>All Article</h4>
@@ -31,7 +32,7 @@ $pag->setBase('/news/pagination/');
     <div>
         <h5> <?php echo $article->getTitle(); ?></h5>
         <p> <?php echo $article->getContent();?></p>
-        <a class="btn" href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
+        <a class="button" href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
     </div>
 <?php
     endforeach;
@@ -46,14 +47,14 @@ $pag->setBase('/news/pagination/');
                 Previous
             </a>
         <?php else:?>
-            <a class="btn disabled">
+            <a class="button disabled">
                 Previous
             </a>
         <?php endif; ?>
     </li>
 
     <li>
-        <a class="btn disabled"><?php echo $pag->viewCurrentPagination(); ?> </a>
+        <a class="button disabled"><?php echo $pag->viewCurrentPagination(); ?> </a>
     </li>
 
     <li>

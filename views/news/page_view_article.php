@@ -8,11 +8,6 @@ $id_value = $router->getValidationTree()[2]->getValue();
 $domain = new NewsDomain();
 
 $article = $domain->retrieveArticleById( $id_value );
-
-if( !is_null( $article->getIdentity() ) )
-{
-
-}
 ?>
 
 <h4>Article</h4>

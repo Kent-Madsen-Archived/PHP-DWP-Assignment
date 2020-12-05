@@ -24,9 +24,9 @@
     </head>
     <body>
         <?php getHeader(); ?>
-        <?php $page_domain = new PageDomainDomain(); ?>
+        <?php $page_domain = new PageDomain(); ?>
 
-        <?php $element = $page_domain->retrievePageElementById(1); ?>
+        <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
         <main>
             <div>

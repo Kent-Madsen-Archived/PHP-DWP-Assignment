@@ -239,7 +239,8 @@
             $tn = $this->getFactoryTableName();
             $f_co = self::field_created_on;
 
-            $sql = "SELECT * FROM {$tn} ORDER BY {$f_co} DESC LIMIT ? OFFSET ?;";
+            $pagination_str = "LIMIT ? OFFSET ?";
+            $sql = "SELECT * FROM {$tn} ORDER BY {$f_co} DESC {$pagination_str};";
 
             // prepare statement variables
             $stmt_limit  = null;
@@ -556,6 +557,15 @@
         {
             // TODO: Implement insertOptions() method.
             return false;
+        }
+
+
+        /**
+         *
+         */
+        public final function clearOptions(): void
+        {
+            // TODO: Implement clearOptions() method.
         }
 
 

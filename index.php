@@ -87,6 +87,9 @@
 
     $profile = new Route( 'profile', 'views/profile.php' );
     $profile->appendValidationObject( $router_validate_root );
+    $router_profile_view = new RouterValidateStringArgument();
+    $router_profile_view->setLevel(1);
+    $profile->appendValidationObject($router_profile_view);
     $router->appendToRoutes( $profile );
 
 

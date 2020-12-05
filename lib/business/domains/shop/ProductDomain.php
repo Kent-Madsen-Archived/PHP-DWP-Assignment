@@ -36,7 +36,6 @@
 
             $retVal = $arr;
 
-
             return $retVal;
         }
 

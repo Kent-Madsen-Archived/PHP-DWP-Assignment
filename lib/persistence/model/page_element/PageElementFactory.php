@@ -179,16 +179,41 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            if( $model instanceof PageElementModel )
+            {
+                if(!is_null($model->getIdentity()))
+                {
+                    $retVal = $this->readModelById($model);
+                }
+
+                if(!is_null($model->getAreaKey()))
+                {
+                    $retVal = $this->readModelByAreakey($model);
+                }
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        private final function readModelById( &$model ): bool
+        {
             // return array
             $retVal = false;
 
             // sql, that the prepared statement uses
             $table = self::table;
             $fid = self::field_identity;
+
             $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
 
             // prepare statement variables
-            $stmt_identity = null;
+            $stmt_comparator = null;
 
             // opens a connection the mysql server
             $local_connection = $this->getWrapper()->connect();
@@ -198,9 +223,9 @@
                 $stmt = $local_connection->prepare( $sql );
 
                 $stmt->bind_param( "i",
-                    $stmt_identity );
+                    $stmt_comparator );
 
-                $stmt_identity     = $model->getIdentity();
+                $stmt_comparator     = $model->getIdentity();
 
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -236,6 +261,72 @@
 
             return $retVal;
         }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        private final function readModelByAreakey( &$model ): bool
+        {
+            // return array
+            $retVal = false;
+
+            // sql, that the prepared statement uses
+            $table = self::table;
+            $f_ak = self::field_area_key;
+
+            $sql_ak = "SELECT * FROM {$table} WHERE {$f_ak} = ?;";
+
+            // prepare statement variables
+            $stmt_comparator = null;
+
+            // opens a connection the mysql server
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql_ak );
+
+                $stmt->bind_param( "s",
+                    $stmt_comparator );
+
+                $stmt_comparator     = $model->getAreaKey();
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ self::field_identity ] );
+
+                        $model->setAreaKey( $row[ self::field_area_key ] );
+
+                        $model->setTitle( $row[ self::field_title ] );
+                        $model->setContent( $row[ self::field_content ]  );
+
+                        $model->setCreatedOn( $row[ self::field_created_on ] );
+                        $model->setLastUpdated( $row[ self::field_last_updated ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
 
 
         /**
@@ -507,6 +598,15 @@
         {
             // TODO: Implement insertOptions() method.
             return false;
+        }
+
+
+        /**
+         *
+         */
+        public final function clearOptions(): void
+        {
+            // TODO: Implement clearOptions() method.
         }
 
 
