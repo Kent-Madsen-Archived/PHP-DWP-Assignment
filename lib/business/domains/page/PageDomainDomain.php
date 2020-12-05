@@ -42,6 +42,23 @@
 
 
         /**
+         * @param string $idx
+         * @return PageElementModel
+         * @throws Exception
+         */
+        public final function retrievePageElementByAreaKey( string $idx )
+        {
+            $factory = $this->getPageElementFactory();
+            $model = $factory->createModel();
+
+            $model->setAreaKey( $idx );
+            $factory->readModel($model);
+
+            return $model;
+        }
+
+
+        /**
          * @return PageElementFactory
          * @throws Exception
          */

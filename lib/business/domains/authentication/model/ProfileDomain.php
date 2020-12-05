@@ -70,7 +70,7 @@
          * @return PersonEmailModel|null
          * @throws Exception
          */
-        public final  function retrieveProfileMailAt($idx): ?PersonEmailModel
+        public final function retrieveProfileMailAt($idx): ?PersonEmailModel
         {
             $factory = $this->getEmailFactory();
 

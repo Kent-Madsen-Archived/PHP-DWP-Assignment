@@ -104,7 +104,7 @@
 
             <section>
                 <?php $page_domain = new PageDomainDomain(); ?>
-                <?php $element = $page_domain->retrievePageElementById(1); ?>
+                <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
                 <div>
                     <h3>
