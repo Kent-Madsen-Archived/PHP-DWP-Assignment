@@ -201,7 +201,7 @@
          * @return bool
          * @throws Exception
          */
-        private final function readModelById( &$model ): bool
+        private function readModelById( &$model ): bool
         {
             // return array
             $retVal = false;
@@ -268,7 +268,7 @@
          * @return bool
          * @throws Exception
          */
-        private final function readModelByAreakey( &$model ): bool
+        private function readModelByAreakey( &$model ): bool
         {
             // return array
             $retVal = false;
