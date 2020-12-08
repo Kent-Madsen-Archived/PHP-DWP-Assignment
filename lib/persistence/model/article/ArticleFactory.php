@@ -228,10 +228,10 @@
 
 
         /**
-         * @return array
+         * @return array|null
          * @throws Exception
          */
-        public final function readOrderedByCreationDate(): array
+        public final function readOrderedByCreationDate(): ?array
         {
             $connection = $this->getWrapper()->connect();
 

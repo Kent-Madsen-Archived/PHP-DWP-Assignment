@@ -120,7 +120,7 @@
         /**
          * @return bool
          */
-        private final static function validateFSS(): bool
+        private static function validateFSS(): bool
         {
             $retVal = false;
 

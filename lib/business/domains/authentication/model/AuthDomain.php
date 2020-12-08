@@ -59,7 +59,7 @@
          * @return PersonEmailModel|null
          * @throws Exception
          */
-        private final function retrieveOrCreateEmail( string $email_value ): ?PersonEmailModel
+        private function retrieveOrCreateEmail( string $email_value ): ?PersonEmailModel
         {
             $email_factory = $this->getPersonEmailFactory();
 
@@ -85,7 +85,7 @@
          * @return bool
          * @throws Exception
          */
-        private final function validateExistenceOfProfile( string $username_var ): bool
+        private function validateExistenceOfProfile( string $username_var ): bool
         {
             $profile_factory = $this->getProfileFactory();
             $retval = false;
@@ -106,7 +106,7 @@
          * @return ProfileModel|null
          * @throws Exception
          */
-        private final function createProfile( string $username_var,
+        private function createProfile( string $username_var,
                                               string $password_var,
                                               int $profile_type_id_var ): ?ProfileModel
         {
@@ -137,9 +137,9 @@
          * @return PersonNameModel|null
          * @throws Exception
          */
-        private final function createPersonNameModel( string $firstname_var,
-                                                      ?string $lastname_var,
-                                                      string $middle_name_var ): ?PersonNameModel
+        private function createPersonNameModel( string $firstname_var,
+                                                ?string $lastname_var,
+                                                string $middle_name_var ): ?PersonNameModel
         {
             $factory = $this->getPersonNameFactory();
             $nm = $factory->createModel();
@@ -163,11 +163,11 @@
          * @return PersonAddressModel|null
          * @throws Exception
          */
-        private final function createPersonAddressModel( string $streetAddressName_var,
-                                                         int $streetNumber_var,
-                                                         string $country_var,
-                                                         string $street_floor_var,
-                                                         string $zip_code_var ): ?PersonAddressModel
+        private function createPersonAddressModel( string $streetAddressName_var,
+                                                   int $streetNumber_var,
+                                                   string $country_var,
+                                                   string $street_floor_var,
+                                                   string $zip_code_var ): ?PersonAddressModel
         {
             $factory = $this->getPersonAddressFactory();
             $am = $factory->createModel();
@@ -195,12 +195,12 @@
          * @return ProfileInformationModel|null
          * @throws Exception
          */
-        private final function createProfileInformationModel( ?string $birthday_var,
-                                                              ?string $personPhoneNumber_var,
-                                                              int $person_addr_id_var,
-                                                              int $person_name_id_var,
-                                                              int $person_email_id_var,
-                                                              int $profile_id_var ): ?ProfileInformationModel
+        private function createProfileInformationModel( ?string $birthday_var,
+                                                        ?string $personPhoneNumber_var,
+                                                        int $person_addr_id_var,
+                                                        int $person_name_id_var,
+                                                        int $person_email_id_var,
+                                                        int $profile_id_var ): ?ProfileInformationModel
         {
             $pi_factory = $this->getProfileInformationFactory();
             $pim = $pi_factory->createModel();
@@ -225,7 +225,7 @@
          * @return ProfileTypeModel|null
          * @throws Exception
          */
-        private final function retrieveProfileTypeByName( string $content ): ?ProfileTypeModel
+        private function retrieveProfileTypeByName( string $content ): ?ProfileTypeModel
         {
             $factory = $this->getProfileTypeFactory();
 
