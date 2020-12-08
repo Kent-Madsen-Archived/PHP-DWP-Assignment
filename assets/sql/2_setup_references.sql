@@ -88,3 +88,9 @@ alter table related_person_name
         foreign key (profile_id) references profile (identity),
     add constraint related_person_name_person_name_identity_fk
         foreign key (person_name_id) references person_name (identity);
+
+alter table product_variation
+    add constraint product_variation_product_identity_fk
+        foreign key (product_main_id) references product (identity),
+    add constraint product_variation_product_identity_fk_2
+        foreign key (product_variant_of_id) references product (identity);

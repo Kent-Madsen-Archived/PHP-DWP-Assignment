@@ -569,3 +569,8 @@ create table related_person_name(
                                     person_name_id int not null,
                                     registered datetime default now() not null
 );
+
+create table product_variation(
+                                  product_main_id int not null,
+                                  product_variant_of_id int not null
+);
