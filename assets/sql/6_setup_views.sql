@@ -156,3 +156,14 @@ from delta_invoice_soi_and_vat as dv;
 create or replace view delta_view_profile_information as
 select dv.profile_id as profile_id, dv.person_address_id, dv.person_email_id, dv.person_name_id
 from profile_information as dv;
+
+
+create view discount_view as
+select p.identity as product_id,
+       p.description,
+       p.price,
+       timed_discount.discount_percentage,
+       (p.price/100)*timed_discount.discount_percentage as discount_amount,
+       p.price - (p.price/100)*timed_discount.discount_percentage as actual_price
+from timed_discount
+    left join product p on timed_discount.product_id = p.identity;

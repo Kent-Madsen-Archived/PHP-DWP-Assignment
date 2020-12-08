@@ -94,3 +94,7 @@ alter table product_variation
         foreign key (product_main_id) references product (identity),
     add constraint product_variation_product_identity_fk_2
         foreign key (product_variant_of_id) references product (identity);
+
+alter table timed_discount
+    add constraint timed_discount_product_identity_fk
+        foreign key (product_id) references product (identity);
