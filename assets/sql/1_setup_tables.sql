@@ -574,3 +574,12 @@ create table product_variation(
                                   product_main_id int not null,
                                   product_variant_of_id int not null
 );
+
+create table timed_discount(
+                               identity int not null auto_increment,
+                               product_id int not null,
+                               discount_begin date default now(),
+                               discount_end date default now(),
+                               discount_percentage int default 10 not null,
+                               primary key (identity)
+);
