@@ -82,16 +82,20 @@ CREATE TABLE person_address
     street_address_floor VARCHAR( 10 ) DEFAULT NULL,
 
     zip_code INT DEFAULT 0 NOT NULL,
+    
     country VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
+    city varchar(256) default 'none' not null,
 
     INDEX( street_name, 
            street_address_number, 
            street_address_floor, 
            zip_code, 
-           country ),
+           country,
+           city ),
 
     PRIMARY KEY( identity )
 );
+
 
 -- Adding commentary to the table
 ALTER TABLE person_address COMMENT 'An object that represents an address for a given person. Are used for personal information and invoices, etc.';

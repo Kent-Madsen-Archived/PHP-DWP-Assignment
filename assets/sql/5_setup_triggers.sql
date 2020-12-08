@@ -240,8 +240,6 @@ end if;
 end;
 
 
-
-
 create trigger relate_person_name_from_profile_info_on_insert
     after insert on profile_information
     for each row
@@ -264,4 +262,36 @@ create trigger relate_person_email_from_profile_info_on_insert
 begin
     insert into related_person_email(profile_id, person_email_id)
     values (NEW.profile_id, NEW.person_email_id);
+end;
+
+
+
+create or replace trigger relate_person_name_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_name_id = OLD.person_name_id)) then
+        insert into related_person_name(profile_id, person_name_id)
+        values (NEW.profile_id, NEW.person_name_id);
+    end if;
+end;
+
+create or replace trigger relate_person_addr_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_address_id = OLD.person_address_id)) then
+        insert into related_person_address(profile_id, person_addr_id)
+        values (NEW.profile_id, NEW.person_address_id);
+    end if;
+end;
+
+create or replace trigger relate_person_email_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_email_id = OLD.person_email_id)) then
+        insert into related_person_email(profile_id, person_email_id)
+        values (NEW.profile_id, NEW.person_email_id);
+    end if;
 end;
