@@ -27,8 +27,7 @@
 
 
         // Variables
-        private $options = [ 'cost'=>15,
-                             'salt'=>WEBPAGE_DEFAULT_SALT ];
+        private $options = [ 'cost'=>15 ];
 
         // Forgot my password
         /**
