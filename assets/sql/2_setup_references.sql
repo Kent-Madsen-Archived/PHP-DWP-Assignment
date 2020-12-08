@@ -66,3 +66,25 @@ alter table product_invoice
 alter table product_used_images
 	add constraint product_used_images_product_identity_fk
 		foreign key (product_id) references product (identity);
+
+
+
+alter table related_person_address
+    add constraint related_person_address_profile_identity_fk
+        foreign key (profile_id) references profile (identity),
+    add constraint related_person_address_person_address_identity_fk
+        foreign key (person_addr_id) references person_address (identity);
+
+
+alter table related_person_email
+    add constraint related_person_email_profile_identity_fk
+        foreign key (profile_id) references profile (identity),
+    add constraint related_person_email_person_email_identity_fk
+        foreign key (person_email_id) references person_email (identity);
+
+
+alter table related_person_name
+    add constraint related_person_name_profile_identity_fk
+        foreign key (profile_id) references profile (identity),
+    add constraint related_person_name_person_name_identity_fk
+        foreign key (person_name_id) references person_name (identity);

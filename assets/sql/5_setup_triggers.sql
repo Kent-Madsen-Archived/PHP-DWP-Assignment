@@ -132,3 +132,136 @@ ON person_address
         NEW.street_name           = lower( NEW.street_name ),
         NEW.country               = lower( NEW.country ),
         NEW.street_address_floor  = lower( NEW.street_address_floor );
+
+
+create trigger insert_product_price_zero_not_allowed
+    before insert
+    on product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = null;
+end if;
+end;
+
+create trigger update_product_price_zero_not_allowed
+    before update
+    on product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = null;
+end if;
+end;
+
+
+create trigger standard_update_brought_product
+    before update
+    on brought_product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = retrieve_product_price(NEW.product_id);
+end if;
+end;
+
+
+create trigger standard_insert_brought_product
+    before insert
+    on brought_product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = retrieve_product_price(NEW.product_id);
+end if;
+end;
+
+
+
+create or replace trigger insert_brought_calculate_total_price
+                    after insert
+                    on
+                    brought_product for each row
+begin
+update product_invoice set product_invoice.total_price=retrieve_invoice_final_price(NEW.invoice_id),
+                           product_invoice.vat=retrieve_invoice_vat(NEW.invoice_id)
+where
+        product_invoice.identity = NEW.invoice_id;
+end;
+
+
+create or replace trigger update_brought_calculate_total_price
+    after update
+    on
+        brought_product for each row
+begin
+    update product_invoice set product_invoice.total_price=retrieve_invoice_final_price(NEW.invoice_id),
+                               product_invoice.vat=retrieve_invoice_vat(NEW.invoice_id)
+    where
+          product_invoice.identity = NEW.invoice_id;
+end;
+
+
+--
+create trigger standard_insert_product_invoice
+    before insert
+    on product_invoice
+    for each row
+begin
+    if(NEW.address_id = 0) then
+            set NEW.address_id = retrieve_profile_address(NEW.profile_id);
+end if;
+
+if(NEW.mail_id = 0) then
+            set NEW.mail_id = retrieve_profile_email(NEW.profile_id);
+end if;
+
+        if(NEW.owner_name_id = 0) then
+            set NEW.owner_name_id = retrieve_profile_name(NEW.profile_id);
+end if;
+end;
+
+create trigger standard_update_product_invoice
+    before update
+    on product_invoice
+    for each row
+begin
+    if(NEW.address_id = 0) then
+            set NEW.address_id = retrieve_profile_address(NEW.profile_id);
+end if;
+
+if(NEW.mail_id = 0) then
+            set NEW.mail_id = retrieve_profile_email(NEW.profile_id);
+end if;
+
+        if(NEW.owner_name_id = 0) then
+            set NEW.owner_name_id = retrieve_profile_name(NEW.profile_id);
+end if;
+end;
+
+
+
+
+create trigger relate_person_name_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_name(profile_id, person_name_id)
+    values (NEW.profile_id, NEW.person_name_id);
+end;
+
+create trigger relate_person_addr_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_address(profile_id, person_addr_id)
+    values (NEW.profile_id, NEW.person_address_id);
+end;
+
+create trigger relate_person_email_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_email(profile_id, person_email_id)
+    values (NEW.profile_id, NEW.person_email_id);
+end;

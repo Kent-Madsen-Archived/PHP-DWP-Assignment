@@ -22,7 +22,7 @@
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 
-        public final function retrievePageElements(): array
+        public final function retrievePageElements(): ?array
         {
             $factory = $this->getPageElementFactory();
 

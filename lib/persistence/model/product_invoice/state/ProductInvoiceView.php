@@ -135,7 +135,7 @@
          * @return ProductInvoiceModel|null
          * @throws Exception
          */
-        private final function transform(): ?ProductInvoiceModel
+        private function transform(): ?ProductInvoiceModel
         {
             return $this->getModel();
         }

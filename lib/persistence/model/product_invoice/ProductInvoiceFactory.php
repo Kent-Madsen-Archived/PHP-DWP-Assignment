@@ -125,7 +125,7 @@
          * @return array
          * @throws Exception
          */
-        public final function read(): array
+        public final function read(): ?array
         {
             $arr = null;
 
@@ -146,7 +146,7 @@
          * @return array
          * @throws Exception
          */
-        private final function readGlobal(): array
+        private function readGlobal(): ?array
         {
             $retVal = null;
 
@@ -214,7 +214,7 @@
          * @return array
          * @throws Exception
          */
-        private final function readWithFilter(): array
+        private function readWithFilter(): ?array
         {
             $retVal = null;
 

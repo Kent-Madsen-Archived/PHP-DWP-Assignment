@@ -116,3 +116,43 @@ SELECT product.identity,
 FROM product
 LEFT JOIN product_entity pe ON product.identity = pe.product_id
 GROUP BY product_id;
+
+
+
+-- views, which are used for internal purpose only. (ie. used by triggers or functions with a specific purpose in mind)
+-- (not public usage).
+-- like. calculating a tables total price, and etc.
+create view delta_brought_product_view as
+select identity,
+        invoice_id,
+        product_id,
+        (price * number_of_products) as total_price_of_product_type,
+        registered
+        from brought_product;
+
+
+create or replace view delta_invoice_current_sum_of_invoices as
+select pi.identity as product_invoice_id,
+       sum(delta_view.total_price_of_product_type) as total_price_of_all_wares
+from delta_brought_product_view as delta_view
+         left join product_invoice pi on delta_view.invoice_id = pi.identity
+group by product_invoice_id;
+
+
+create view delta_invoice_soi_and_vat as
+select  dv.product_invoice_id,
+        dv.total_price_of_all_wares,
+        (dv.total_price_of_all_wares * 0.25) as vat
+from delta_invoice_current_sum_of_invoices as dv;
+
+
+create or replace view delta_invoice_soi_vat_and_final_price as
+select  dv.product_invoice_id,
+        dv.total_price_of_all_wares,
+        dv.vat,
+        (dv.total_price_of_all_wares + dv.vat) as final_price
+from delta_invoice_soi_and_vat as dv;
+
+create or replace view delta_view_profile_information as
+select dv.profile_id as profile_id, dv.person_address_id, dv.person_email_id, dv.person_name_id
+from profile_information as dv;

@@ -404,13 +404,16 @@ CREATE TABLE product_invoice
 
     registered  DATETIME DEFAULT now() NOT NULL,
 
-    address_id    INT NOT NULL,
-    mail_id       INT NOT NULL,
-    owner_name_id INT NOT NULL,
+    address_id    INT NOT NULL default 0,
+    mail_id       INT NOT NULL default 0,
+    owner_name_id INT NOT NULL default 0,
+
+    vat double default 0.0 not null;
 
     INDEX( address_id, 
            mail_id, 
            owner_name_id ),
+
     PRIMARY KEY( identity )
 );
 
@@ -546,3 +549,23 @@ ALTER TABLE product_used_images COMMENT 'represents an instance of a image, used
 
 -- Indicate to software it's done
 SELECT 'product_used_images' AS table_name, now() AS time_of_day , 'Created' AS state ;
+
+create table related_person_address(
+                                       profile_id int not null,
+                                       person_addr_id int not null,
+                                       registered datetime default now() not null
+);
+
+
+create table related_person_email(
+                                     profile_id int not null,
+                                     person_email_id int not null,
+                                     registered datetime default now() not null
+);
+
+
+create table related_person_name(
+                                    profile_id int not null,
+                                    person_name_id int not null,
+                                    registered datetime default now() not null
+);
