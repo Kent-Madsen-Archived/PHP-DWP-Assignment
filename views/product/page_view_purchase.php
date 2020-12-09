@@ -1,7 +1,6 @@
 <?php
     $domain = new CheckoutDomain();
-
-    $arr = $domain->purchase();
+    $invoice_id = $domain->purchase();
 
     if( SessionBasketForm::existBasketValues() )
     {
@@ -9,4 +8,7 @@
     }
 
     bounce_link();
+
+    $goto = "/invoice/identity/{$invoice_id}";
+    redirect_to_local_page($goto);
 ?>

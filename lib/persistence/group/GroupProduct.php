@@ -15,6 +15,7 @@
         private static $product_category_factory               = null;
 
         private static $product_used_images_factory = null;
+        private static $product_timed_discount_factory = null;
 
 
         /**
@@ -182,6 +183,23 @@
 
 
         /**
+         * @return null
+         * @throws Exception
+         */
+        public static function getProductTimedDiscountFactory()
+        {
+            if( is_null( self::$product_timed_discount_factory ) )
+            {
+                self::setProductTimedDiscountFactory(
+                    new TimedDiscountFactory(
+                        self::getMysqlWrapper() ) );
+            }
+
+            return self::$product_timed_discount_factory;
+        }
+
+
+        /**
          * @param ProductCategoryFactory|null $product_category_factory
          */
         public static final function setProductCategoryFactory( ?ProductCategoryFactory $product_category_factory ): void
@@ -250,6 +268,15 @@
         public static final function setProductUsedImagesFactory( ?ProductUsedImageFactory $product_used_images_factory ): void
         {
             self::$product_used_images_factory = $product_used_images_factory;
+        }
+
+
+        /**
+         * @param TimedDiscountFactory|null $product_timed_discount_factory
+         */
+        public static final function setProductTimedDiscountFactory( ?TimedDiscountFactory $product_timed_discount_factory ): void
+        {
+            self::$product_timed_discount_factory = $product_timed_discount_factory;
         }
 
 

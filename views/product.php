@@ -50,7 +50,7 @@
         <?php getHeader(); ?>
 
         <main>
-            <h2> Products </h2>
+            <h3> Products </h3>
             <?php if( !isset( $operation_value ) ): ?>
                 <?php require 'views/product/page_view_frontpage.php';?>
             <?php elseif( $operation_value == 'identity' ): ?>

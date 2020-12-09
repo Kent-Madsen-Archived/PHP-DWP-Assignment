@@ -60,9 +60,9 @@
             </div>
         </nav>
         <main>
-            <h2>
+            <h3>
                 Admin
-            </h2>
+            </h3>
 
             <?php
             if( isset( $view ) )

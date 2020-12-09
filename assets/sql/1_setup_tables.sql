@@ -344,17 +344,18 @@ CREATE TABLE product
 (
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    title VARCHAR( 256 ) NOT NULL ,
+    title VARCHAR( 256 ) NOT NULL,
 
     description TEXT NOT NULL ,
     price DOUBLE NOT NULL DEFAULT 0.0,
+    is_discounted bool not null default false,
 
     INDEX( title ),
     PRIMARY KEY( identity )
 );
 
 -- Adding commentary to the table
-ALTER TABLE product COMMENT 'represents a profuct, that the consumer can buy';
+ALTER TABLE product COMMENT 'represents a product, that the consumer can buy';
 
 -- Indicate to software it's done
 SELECT 'product' AS table_name, now() AS time_of_day , 'Created' AS state ;

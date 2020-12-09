@@ -1,7 +1,7 @@
 <div>
-    <h2>
+    <h3>
         My Profile
-    </h2>
+    </h3>
 
     <h4> Welcome, <?php echo $profile->getUsername(); ?> </h4>
 

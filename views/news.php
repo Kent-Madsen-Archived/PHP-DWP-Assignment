@@ -31,9 +31,9 @@
         <?php getHeader(); ?>
 
         <main>
-            <h2>
+            <h3>
                 News
-            </h2>
+            </h3>
 
             <?php if(!isset($operation_value)): ?>
                 <?php require 'views/news/page_frontpage.php'; ?>

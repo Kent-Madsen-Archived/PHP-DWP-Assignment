@@ -160,7 +160,7 @@
                                           placeholder="Street name"
                                           id="form_register_street_name_id">
 
-                                   <label> Street name </label>
+                                   <label> Street Address name </label>
                                    
                                    <input type="number" 
                                           name="form_register_street_address_number" 
@@ -168,7 +168,7 @@
                                           id="form_register_street_address_number_id"
                                           value="0">
 
-                                   <label> Street address number </label>
+                                   <label> Street Address number </label>
 
                                    <input type="number" 
                                           name="form_register_street_zip_code" 
@@ -176,6 +176,12 @@
                                           id="form_register_street_zip_code_id">
 
                                    <label> Zip code </label>
+
+                                    <input type="text"
+                                           name="form_register_city"
+                                           placeholder="city"
+                                           id="form_register_city">
+                                    <label> City </label>
 
                                    <input type="text" 
                                           name="form_register_street_floor" 

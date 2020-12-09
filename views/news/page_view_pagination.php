@@ -24,48 +24,61 @@ $id_value = $router->getValidationTree()[2]->getValue();
     $articles = $domain->retrieveArticlesAt($pagination, $af->getLimitValue());
 ?>
 
-<h4>All Article</h4>
+<h3>
+    All Article
+</h3>
 
-<?php
-    foreach ( $articles as $article ):
-?>
-    <div>
-        <h5> <?php echo $article->getTitle(); ?></h5>
-        <p> <?php echo $article->getContent();?></p>
-        <a class="button" href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
-    </div>
-<?php
-    endforeach;
-?>
+<?php if( !is_null( $articles ) ): ?>
+<div class="article-view">
+    <?php
+        foreach ( $articles as $article ):
+    ?>
+        <div class="article">
+            <h5 class="flow-text">
+                <?php echo $article->getTitle(); ?>
+            </h5>
+            <p>
+                <?php echo $article->getContent();?>
+            </p>
 
-<ul class="pagination">
+            <div class="more">
+                <a class="button" href="<?php echo "/news/identity/{$article->getIdentity()}";?>">Read more</a>
+            </div>
+        </div>
+    <?php
+        endforeach;
+    ?>
+</div>
+<?php endif;?>
+
+<ul class="pagination-area">
     <li>
         <?php $previous_pagination = $pag->viewPreviousPagination(); ?>
 
         <?php if( !$pag->isPreviousMinimum() ): ?>
-            <a class="button" href='<?php echo $pag->generateLink($previous_pagination);?>'>
+            <a class="button-pagination" href='<?php echo $pag->generateLink($previous_pagination);?>'>
                 Previous
             </a>
         <?php else:?>
-            <a class="button disabled">
+            <a class="button-pagination disabled">
                 Previous
             </a>
         <?php endif; ?>
     </li>
 
     <li>
-        <a class="button disabled"><?php echo $pag->viewCurrentPagination(); ?> </a>
+        <a class="button-pagination disabled"><?php echo $pag->viewCurrentPagination(); ?> </a>
     </li>
 
     <li>
         <?php $next_pagination = $pag->viewNextPagination(); ?>
 
         <?php if( !$pag->isNextMax() ): ?>
-            <a href="<?php echo $pag->generateLink($next_pagination);?>" class="button">
+            <a href="<?php echo $pag->generateLink($next_pagination);?>" class="button-pagination">
                 Next
             </a>
         <?php else:?>
-            <a class="button disabled">
+            <a class="button-pagination disabled">
                 Next
             </a>
         <?php endif; ?>

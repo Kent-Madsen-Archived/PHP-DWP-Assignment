@@ -26,20 +26,16 @@
     <body>
         <?php getHeader(); ?>
         <main>
-            <h1>
-                DWP - Assignment
-            </h1>
-
             <h2>
-                Homepage
+                DWP - Assignment, Homepage
             </h2>
 
-            <section>
+            <section class="home-product-view">
                 <h3>
                     Products
                 </h3>
 
-                <div>
+                <div class="home-product-container">
                     <?php
                         $pd = new ProductDomain();
                         $products = $pd->retrieveProductsAt(0, 4);
@@ -47,10 +43,10 @@
                         foreach ( $products as $product ):
                             $view = new ProductView( $product );
                     ?>
-                        <div>
-                            <h4>
+                        <div class="product">
+                            <h5>
                                 <?php echo $view->printAreaTitle(); ?>
-                            </h4>
+                            </h5>
 
                             <p>
                                 <?php echo $view->printSummaryOfDescription();?>
@@ -60,65 +56,73 @@
                                 <?php echo $view->printFieldTypePrice() . " dkr.";?>
                             </p>
 
-                            <a <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang();?> class="btn"> View Product </a>
+                            <div class="actions">
+                                <a <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang();?> class="button"> View Product </a>
+                            </div>
                         </div>
 
                     <?php endforeach; ?>
                 </div>
 
-                <a href="/product/pagination/1" class="btn">
-                    View More Products
-                </a>
+                <div class="more">
+                    <a href="/product/pagination/1" class="btn">
+                        View More Products
+                    </a>
+                </div>
             </section>
 
-            <section>
+            <section class="home-articles-view">
                 <h3>
                     Articles
                 </h3>
 
-                <div>
+                <div class="home-article-container">
                     <?php
                     $news_domain = new NewsDomain();
-
                     $articles = $news_domain->retrieveArticlesAt(0, 3);
 
-                    foreach ($articles as $article):?>
-                        <div>
-                            <h4><?php echo $article->getTitle();?></h4>
-                            <p>
+                    foreach ( $articles as $article ):?>
+                        <div class="article">
+                            <h4 class="title">
+                                <?php echo $article->getTitle();?>
+                            </h4>
+
+                            <p class="content">
                                 <?php echo $article->getContent();?>
                             </p>
 
-                            <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>" class="btn">
+                            <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>" class="button">
                                 View Article
                             </a>
-
                         </div>
                     <?php endforeach; ?>
                 </div>
 
-                <a href="/news/pagination/1" class="btn">
-                    View More Articles
-                </a>
+                <div class="more">
+                    <a href="/news/pagination/1" class="button">
+                        View More Articles
+                    </a>
+                </div>
             </section>
 
-            <section>
+            <section class="home-about-us">
                 <?php $page_domain = new PageDomain(); ?>
                 <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
-                <div>
-                    <h3>
+                <div class="area">
+                    <h3 class="title">
                         <?php echo $element->getTitle();?>
                     </h3>
-
-                    <p>
+                    <p class="content">
                         <?php echo $element->getContent();?>
                     </p>
                 </div>
 
-                <a class="btn" href="/about">
-                    read more
-                </a>
+                <div class="more">
+                    <a class="button" href="/about">
+                        read more
+                    </a>
+                </div>
             </section>
 
         </main>
