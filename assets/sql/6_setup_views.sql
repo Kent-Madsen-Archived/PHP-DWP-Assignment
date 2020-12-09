@@ -167,3 +167,8 @@ select p.identity as product_id,
        p.price - (p.price/100)*timed_discount.discount_percentage as actual_price
 from timed_discount
     left join product p on timed_discount.product_id = p.identity;
+
+create view discounts_today as
+select *
+from timed_discount
+where ( discount_begin <= curdate() ) and ( discount_end >= curdate() );
