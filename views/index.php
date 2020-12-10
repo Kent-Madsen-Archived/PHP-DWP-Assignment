@@ -26,14 +26,17 @@
     <body>
         <?php getHeader(); ?>
         <main>
-            <h2>
-                DWP - Assignment, Homepage
-            </h2>
+            <div class="frontpage">
+                <a href="/homepage">
+                    <div class="content">
+                    </div>
+                </a>
+            </div>
 
             <section class="home-product-view">
-                <h3>
+                <h4>
                     Products
-                </h3>
+                </h4>
 
                 <div class="home-product-container">
                     <?php

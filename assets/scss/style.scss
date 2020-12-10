@@ -217,6 +217,42 @@ h3
 
 }
 
+.frontpage
+{
+    width: 100%;
+    height: 400px;
+
+    position: relative;
+}
+
+.frontpage .content 
+{
+    position: absolute;
+    top: -32px;
+    width: 100%;
+    height: 400px;
+    background-color: lighten($color: #34495e, $amount: 8);
+}
+
+.pay
+{
+    max-width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action 
+{
+    @extend .section;
+}
+
+.pay-button
+{
+    @extend .button;
+    @extend .waves-effect;
+    @extend .waves-light; 
+}
+
 .product-page
 {
     @extend .row;

@@ -18,7 +18,9 @@
       "ext-mysqli": "*",
       "ext-json": "*",
       "ext-mbstring": "*",
-      "ext-iconv": "*"
+      "ext-iconv": "*",
+        "slim/slim": "4.*",
+        "vlucas/phpdotenv": "^5.2"
     },
     "autoload": {
         "classmap": ["/lib"]
