@@ -7,7 +7,7 @@
     */
     require 'inc/bootstrap.php';
 
-    $port_smtp_is_open = false;
+    $port_smtp_is_open = false; 
     $mysql_available = true;
 
     $connection_stmp = @fsockopen('localhost', 25);

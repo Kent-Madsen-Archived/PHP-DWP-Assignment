@@ -31,9 +31,8 @@ LEFT JOIN person_email pe_to   ON pe_to.identity = contact.to_id;
 
 DROP VIEW IF EXISTS profile_information_model_view;
 
-CREATE VIEW profile_information_model_view AS
+CREATE or replace VIEW profile_information_model_view AS
 SELECT profile_information.identity     AS profile_information_identity,
-
        profile_information.profile_id   AS profile_id,
        person_name.first_name           AS person_name_firstname,
        person_name.last_name            AS person_name_lastname,
@@ -42,13 +41,18 @@ SELECT profile_information.identity     AS profile_information_identity,
        person_address.country               AS person_address_country,
        person_address.street_name           AS person_address_street_name,
        person_address.street_address_number AS person_address_number,
+       person_address.street_address_floor  AS person_address_floor,
+       person_address.city                  as person_address_city,
        person_address.zip_code              AS person_address_zip_code,
 
-       person_email.content                 AS person_email
+       person_email.content                 AS person_email,
+       profile_information.birthday as person_birthday,
+       profile_information.person_phone as person_phone
 FROM profile_information
-LEFT JOIN person_name       ON profile_information.person_name_id = person_name.identity
-LEFT JOIN person_address    ON person_address.identity = profile_information.person_address_id
-LEFT JOIN person_email      ON person_email.identity = profile_information.person_email_id;
+         LEFT JOIN person_name       ON profile_information.person_name_id = person_name.identity
+         LEFT JOIN person_address    ON person_address.identity = profile_information.person_address_id
+         LEFT JOIN person_email      ON person_email.identity = profile_information.person_email_id;
+
 
 
 

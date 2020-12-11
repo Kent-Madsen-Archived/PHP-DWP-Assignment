@@ -7,34 +7,33 @@
 
     <ul>
         <li>
-            <p>Profile Type: <?php echo $profileType->getContent(); ?></p>
+            <p>Profile Type: <?php echo "{$type_m->getContent()}" ?></p>
         </li>
 
         <li>
             <p>
                 Address:
-                <?php $viewAddress = new PersonAddressView($person_addr); ?>
-                <?php echo  $viewAddress->printDenmarkFormatForHomeAddress(); ?>
-
+                <?php echo "{$form_info->getAddressStreetName()} {$form_info->getAddressNumber()} {$form_info->getAddressStreetFloor()},";?>
+                <?php echo "{$form_info->getAddressZipCode()} {$form_info->getAddressCity()} {$form_info->getAddressCountry()}"; ?>
             </p>
         </li>
 
         <li>
             <p>
-                Name: <?php echo "{$person_name->getFirstName()}, {$person_name->getLastName()} {$person_name->getMiddleName()}"; ?>
+                Name: <?php echo "{$form_info->getFirstname()}, {$form_info->getLastname()} {$form_info->getMiddlename()}"; ?>
             </p>
         </li>
 
         <li>
-            <p>Mail: <?php echo $mail_view->printInteractiveEmail(); ?></p>
+            <p>Mail: <?php echo "{$form_info->getEmail()}"; ?></p>
         </li>
 
         <li>
-            <p>Phone: <?php echo "{$profinfo->getPersonPhone()}"; ?></p>
+            <p>Phone: <?php echo "{$form_info->getPersonPhone()}"; ?></p>
         </li>
 
         <li>
-            <p>Birthday: <?php echo "{$profinfo->getBirthday()}"; ?></p>
+            <p>Birthday: <?php echo "{$form_info->getPersonBirthday()}"; ?></p>
         </li>
     </ul>
 </div>
