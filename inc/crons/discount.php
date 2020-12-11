@@ -8,16 +8,16 @@
     // Technally 9
     $is_within_size = $size <= 8;
 
-    $small_than_ids_array = array();
-    $bigger_than_ids_array = array();
-
-    $index_is_a_real_product = false;
-
     $id_array_is_not_null = !is_null( $ids );
     $is_id_array_not_empty = $id_array_is_not_null && !( sizeof( $ids ) == 0 );
 
     if( $is_id_array_not_empty && $is_within_size )
     {
+        $small_than_ids_array = array();
+        $bigger_than_ids_array = array();
+
+        $index_is_a_real_product = false;
+
         $states = $product_factory->readMaxAndMin();
 
         $r_idx = rand( $states['min'],
@@ -56,7 +56,7 @@
             $calculated_closeness = $states['max'];
             $closest_index = 0;
 
-            if(!( count( $small_than_ids_array ) == 0 ) )
+            if(! ( count( $small_than_ids_array ) == 0 ) )
             {
                 foreach ( $small_than_ids_array as $small_idx )
                 {
