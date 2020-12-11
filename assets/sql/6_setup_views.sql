@@ -172,3 +172,20 @@ create view discounts_today as
 select *
 from timed_discount
 where ( discount_begin <= curdate() ) and ( discount_end >= curdate() );
+
+create or replace view delta_timed_discount_for_today as
+select *
+from timed_discount
+where discount_begin <= CURDATE() and discount_end >= CURDATE();
+
+create or replace view delta_all_product_ids as
+select identity, discount_tag from product order by identity;
+
+create or replace view delta_product_max_and_min as
+select max(identity) as maximum, min(identity) as minimum from product;
+
+create or replace view delta_all_with_no_discount_product_ids as
+select identity, discount_tag
+from product
+where discount_tag is null
+order by identity;

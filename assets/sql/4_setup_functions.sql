@@ -301,3 +301,64 @@ end loop;
 close fetch_profile;
 return retVal;
 end;
+
+
+create or replace function is_product_on_discount_today( product_id_var int ) returns int
+begin
+    declare finished int default 0;
+    declare retVal int default 0;
+
+    declare discount_product_id int default 0;
+
+    declare cursor_for_discount cursor for
+        select product_id from delta_timed_discount_for_today;
+
+    declare continue handler for not found set finished=1;
+
+    open cursor_for_discount;
+
+    discount_loop: loop
+        fetch cursor_for_discount into discount_product_id;
+
+        if(discount_product_id=product_id_var) then
+            set retVal = 1;
+        end if;
+
+        if(finished=1) then
+            leave discount_loop;
+        end if;
+    end loop;
+
+    close cursor_for_discount;
+    return retVal;
+end;
+
+
+create or replace function retrieve_todays_discount_size() returns int
+begin
+
+    declare finished int default 0;
+    declare retVal int default 0;
+    declare size int default 0;
+
+    declare cursor_for_n_discount cursor for
+        select count(*) as number_of_discounts from delta_timed_discount_for_today;
+    declare continue handler for not found set finished=1;
+
+    open cursor_for_n_discount;
+
+    number_loop: loop
+        fetch cursor_for_n_discount into size;
+
+        set retVal = size;
+
+        if(finished) then
+            leave number_loop;
+        end if;
+    end loop;
+
+    close cursor_for_n_discount;
+    return retVal;
+end;
+
+

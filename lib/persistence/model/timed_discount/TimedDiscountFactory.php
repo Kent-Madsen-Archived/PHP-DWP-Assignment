@@ -23,7 +23,6 @@
         public const field_discount_percentage = 'discount_percentage';
 
 
-
         /**
          * ProfileTypeFactory constructor.
          * @param $mysql_connector
@@ -145,10 +144,110 @@
 
                         $model->setProductId( $row[ self::field_product_id ] );
                         $model->setDiscountBegin( $row[ self::field_discount_begin ] );
+
                         $model->setDiscountEnd( $row[ self::field_discount_end ] );
                         $model->setDiscountPercentage( $row[ self::field_discount_percentage ] );
 
                         array_push( $retVal, $model );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @return int|null
+         * @throws Exception
+         */
+        public final function readTodaysDiscountSize(): ?int
+        {
+            //
+            $sql = "SELECT retrieve_todays_discount_size() as number_of_discounts_for_today;";
+
+            // Return Value
+            $retVal = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $retVal = $row['number_of_discounts_for_today'];
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @param int $intVal
+         * @return bool|null
+         * @throws Exception
+         */
+        public final function isProductOnDiscount( int $intVal ): ?bool
+        {
+            //
+            $sql = "SELECT is_product_on_discount_today(?) as product_state;";
+
+            // Return Value
+            $retVal = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_product_id );
+
+                $stmt_product_id = $intVal;
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                $retVal = false;
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        if( $row[ 'product_state' ] == 1 )
+                        {
+                            $retVal = true;
+                        }
                     }
                 }
             }
@@ -336,9 +435,25 @@
 
                 //
                 $stmt_product_id = $model->getProductId();
-                $stmt_discount_begin = $model->getDiscountBegin();
-                $stmt_discount_end = $model->getDiscountEnd();
                 $stmt_discount_percentage = $model->getDiscountPercentage();
+
+                if( is_null( $model->getDiscountBegin() ) )
+                {
+                    $stmt_discount_begin = 'DEFAULT';
+                }
+                else
+                {
+                    $stmt_discount_begin = $model->getDiscountBegin();
+                }
+
+                if( is_null( $model->getDiscountEnd() ) )
+                {
+                    $stmt_discount_end = 'DEFAULT';
+                }
+                else
+                {
+                    $stmt_discount_end = $model->getDiscountEnd();
+                }
 
                 // Executes the query
                 $stmt->execute();
@@ -358,6 +473,67 @@
                 $this->getWrapper()->disconnect();
             }
             
+            return $retVal;
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        public final function createWithNoDates( &$model ): bool
+        {
+            if( !$this->validateAsValidModel( $model ) )
+            {
+                throw new Exception( 'Not accepted model' );
+            }
+
+            $table = self::table;
+
+            $sql = "INSERT INTO {$table}( product_id, discount_percentage ) VALUES( ?, ? );";
+
+            // Statement Variables
+            $stmt_product_id = null;
+            $stmt_discount_percentage = null;
+
+            // Return Value
+            $retVal = false;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                //
+                $stmt->bind_param( "ii",
+                    $stmt_product_id,
+                    $stmt_discount_percentage );
+
+                //
+                $stmt_product_id = $model->getProductId();
+                $stmt_discount_percentage = $model->getDiscountPercentage();
+
+                // Executes the query
+                $stmt->execute();
+
+                // commits the statement
+                $model->setIdentity( $this->getWrapper()->finishCommitAndRetrieveInsertId( $stmt ) );
+                $retVal = true;
+            }
+            catch( Exception $ex )
+            {
+                // Rolls back, the changes
+                $this->getWrapper()->undoState();
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
             return $retVal;
         }
 

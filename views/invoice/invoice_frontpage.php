@@ -30,36 +30,38 @@
 
                         <?php $counter = 0; ?>
                         <ul class="invoice_products">
-                            <?php foreach ( $brougth_products as $current_brougth_product ): ?>
-                                <li class="">
-                                    <?php
-                                    $counter = $counter + 1;
-                                    ?>
-                                    <?php $current_bpview = new BroughtProductView( $current_brougth_product ); ?>
-                                    <?php $print_bv = new BroughtProductPrint( $current_bpview );?>
-                                    <?php $product = $domain->retrieveProductByIndex( $current_brougth_product->getProductId() ); ?>
-                                    <div class="invoice_product">
-                                        <?php $view_product = new ProductView( $product ); ?>
-                                        <div class="invoice_header">
-                                            <h6>
-                                                <a <?php echo $view_product->printAreaHrefLink(); echo $view_product->printAreaHrefLang();  ?> >
-                                                    <?php echo "{$counter}: ";?>
-                                                    <?php echo $view_product->printAreaTitle(); ?>
-                                                </a>
-                                            </h6>
+                            <?php if( !is_null( $brougth_products ) ): ?>
+                                <?php foreach ( $brougth_products as $current_brougth_product ): ?>
+                                    <li class="">
+                                        <?php
+                                        $counter = $counter + 1;
+                                        ?>
+                                        <?php $current_bpview = new BroughtProductView( $current_brougth_product ); ?>
+                                        <?php $print_bv = new BroughtProductPrint( $current_bpview );?>
+                                        <?php $product = $domain->retrieveProductByIndex( $current_brougth_product->getProductId() ); ?>
+                                        <div class="invoice_product">
+                                            <?php $view_product = new ProductView( $product ); ?>
+                                            <div class="invoice_header">
+                                                <h6>
+                                                    <a <?php echo $view_product->printAreaHrefLink(); echo $view_product->printAreaHrefLang();  ?> >
+                                                        <?php echo "{$counter}: ";?>
+                                                        <?php echo $view_product->printAreaTitle(); ?>
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div class="invoice_body">
+                                                <p>
+                                                    <?php echo $print_bv->printAreaPrice(); ?>
+                                                </p>
+                                                <p>
+                                                    Quantity:
+                                                    <?php echo $print_bv->printQuantity(); ?>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="invoice_body">
-                                            <p>
-                                                <?php echo $print_bv->printAreaPrice(); ?>
-                                            </p>
-                                            <p>
-                                                Quantity:
-                                                <?php echo $print_bv->printQuantity(); ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php endforeach;?>
+                                    </li>
+                                <?php endforeach;?>
+                            <?php endif; ?>
                         </ul>
                     </div>
 

@@ -7,37 +7,24 @@
     */
     require 'inc/bootstrap.php';
 
-    $cred   = new UserCredential( WEBPAGE_DATABASE_USERNAME, WEBPAGE_DATABASE_PASSWORD );
-    $net    = new NetworkAccess( WEBPAGE_DATABASE_HOSTNAME, WEBPAGE_DATABASE_PORT );
-    $info   = new MySQLInformation( $net, $cred, WEBPAGE_DATABASE_NAME );
+    $port_smtp_is_open = false;
+    $mysql_available = true;
 
-    $connector = new MySQLConnectorWrapper( $info );
+    $connection_stmp = @fsockopen('localhost', 25);
 
-    $t = new ContactFactory( $connector );
-
-    $contacts = $t->readFormsNotSended();
-
-    foreach( $contacts as $contact_mail )
+    if( is_resource( $connection_stmp ) )
     {
-        $header = null;
+        $port_smtp_is_open = true;
+        fclose( $connection_stmp );
+    }
 
-        $header = "From:{$contact_mail->getFromEmail()} \r\n";
+    if( $port_smtp_is_open )
+    {
+        require 'inc/crons/contacts.php';
+    }
 
-        $header .= "CC: \r\n";
-        $header .= "MIME-Version: 1.0 \r\n";
-        $header .= "Content-type: text/html \r\n";
-
-        $retVal = mail( $contact_mail->getToEmail(), $contact_mail->getTitle(), wordwrap( $contact_mail->getMessage(), 70, "\r\n" ), $header );
-
-        //
-        if( $retVal == true )
-        {
-            // Successfull
-            $t->updateIsFinished( $contact_mail->getIdentity() );
-        }
-        else
-        {
-            echo "Error";
-        }
+    if($mysql_available)
+    {
+        require 'inc/crons/discount.php';
     }
 ?>

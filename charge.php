@@ -22,9 +22,7 @@
 
     require 'vendor/autoload.php';
 
-   $is_submitted = $_POST['pay_is_submitted'];
-
-   if( isset( $is_submitted ) )
+   if( isset( $_POST['pay_is_submitted'] ) )
    {
        \Stripe\Stripe::setApiKey('sk_test_51HwmmbHfiP2HcRWA5fy2AjFSt7eMfZzkAMOn3bjEXtrLCFt39d9RMAGJywXwxKSgTG8lOL3pHqirPGMTmJxRSc6G00Gil5vqlq');
 

@@ -186,7 +186,7 @@
          * @return null
          * @throws Exception
          */
-        public static function getProductTimedDiscountFactory()
+        public static function getProductTimedDiscountFactory(): TimedDiscountFactory
         {
             if( is_null( self::$product_timed_discount_factory ) )
             {

@@ -30,6 +30,7 @@
             return $invoice_model;
         }
 
+
         /**
          * @param int $prof_idx
          * @return array
@@ -49,7 +50,7 @@
          * @return array
          * @throws Exception
          */
-        public final function retrieveBroughtProductBy( int $invoice_idx ): array
+        public final function retrieveBroughtProductBy( int $invoice_idx ): ?array
         {
             $retVal = array();
 

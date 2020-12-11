@@ -295,3 +295,17 @@ begin
         values (NEW.profile_id, NEW.person_email_id);
     end if;
 end;
+
+
+
+create or replace trigger insert_timed_discount_update_product_discount
+    after insert
+    on timed_discount
+    for each row
+    update product set discount_tag = NEW.identity where product.identity = NEW.product_id and NEW.discount_begin <= CURDATE() and NEW.discount_end >= CURDATE();
+
+create or replace trigger update_timed_discount_update_product_discount
+    after update
+    on timed_discount
+    for each row
+    update product set discount_tag = NEW.identity where product.identity = NEW.product_id and NEW.discount_begin <= CURDATE() and NEW.discount_end >= CURDATE();

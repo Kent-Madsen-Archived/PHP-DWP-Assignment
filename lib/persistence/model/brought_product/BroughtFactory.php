@@ -209,7 +209,7 @@
          * @return array
          * @throws Exception
          */
-        private function readFilter(): array
+        private function readFilter(): ?array
         {
             $table = self::table;
             $fiid = self::field_invoice_id;
