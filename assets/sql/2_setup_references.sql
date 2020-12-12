@@ -67,6 +67,9 @@ alter table product_used_images
 	add constraint product_used_images_product_identity_fk
 		foreign key (product_id) references product (identity);
 
+alter table product
+    add constraint product_timed_discount_identity_fk
+        foreign key (discount_tag) references timed_discount (identity);
 
 
 alter table related_person_address
@@ -98,3 +101,11 @@ alter table product_variation
 alter table timed_discount
     add constraint timed_discount_product_identity_fk
         foreign key (product_id) references product (identity);
+
+alter table response_invoice_charged
+    add constraint response_invoice_charged_product_invoice_identity_fk
+        foreign key (invoice_id) references product_invoice (identity);
+
+alter table product_invoice
+    add constraint product_invoice_product_invoice_status_identity_fk
+        foreign key (status_id) references product_invoice_status (identity);

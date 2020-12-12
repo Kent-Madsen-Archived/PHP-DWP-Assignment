@@ -9,20 +9,13 @@
     PageTitleController::getSingletonController()->append( ' - Profile' );
     $domain = new ProfileDomain();
 
-    $profile = $domain->retrieveProfileAt( SessionUserProfile::getSessionUserProfileIdentity() );
-
-    $type_factory = GroupAuthentication::getProfileTypeFactory();
-    $type_m = $type_factory->createModel();
-    $type_m->setIdentity($profile->getProfileType());
-    $type_factory->readModel($type_m);
+    $profile = $domain->retrieveProfileFormAt( SessionUserProfile::getSessionUserProfileIdentity() );
 
     $profinfo_factory = GroupAuthentication::getProfileInformationFactory();
-    $form_info = $profinfo_factory->readModelForm(SessionUserProfile::getSessionUserProfileIdentity());
+    $form_info = $profinfo_factory->readModelForm( SessionUserProfile::getSessionUserProfileIdentity() );
 
 
-
-
-$router = RouterSingleton::getInstance()->getCurrentRoute();
+    $router = RouterSingleton::getInstance()->getCurrentRoute();
     $operation_value = $router->getValidationTree()[1]->getValue();
 ?>
 

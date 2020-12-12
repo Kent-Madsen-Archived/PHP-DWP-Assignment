@@ -109,6 +109,17 @@
             return $retVal;
         }
 
+        public final function createAssociatedCategory( string $key, string $value ): ?AssociatedCategoryModel
+        {
+            $assoccatfac = GroupProduct::getProductAssociatedCategoryFactory();
+            $product_cat_fac = GroupProduct::getProductCategoryFactory();
+            $product_attr_fac = GroupProduct::getProductAttributeFactory();
+
+
+
+            return null;
+        }
+
 
         /**
          * @param array $values

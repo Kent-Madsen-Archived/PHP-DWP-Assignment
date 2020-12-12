@@ -6,7 +6,7 @@
     $size = $timed_discount_factory->readTodaysDiscountSize();
 
     // Technally 9
-    $is_within_size = $size <= 8;
+    $is_within_size = $size <= 3;
 
     $id_array_is_not_null = !is_null( $ids );
     $is_id_array_not_empty = $id_array_is_not_null && !( sizeof( $ids ) == 0 );

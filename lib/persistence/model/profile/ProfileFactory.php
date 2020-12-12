@@ -83,6 +83,17 @@
 
 
         /**
+         * @return ProfileModelForm
+         * @throws Exception
+         */
+        public final function createModelForm(): ProfileModelForm
+        {
+            $model = new ProfileModelForm();
+            return $model;
+        }
+
+
+        /**
          * @param $var
          * @return bool
          */
@@ -223,6 +234,64 @@
             }
 
             return boolval( $retVal );
+        }
+
+
+        /**
+         * @param int $index
+         * @return ProfileModelForm
+         * @throws Exception
+         */
+        public final function readModelFormByIndex( int $index ): ?ProfileModelForm
+        {
+            $retVal = null;
+
+            $sql = "SELECT * FROM profile_model_view WHERE identity = ?;";
+            $stmt_identity = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_identity );
+
+                $stmt_identity = $index;
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModelForm();
+
+                        $model->setIdentity( $row[ self::field_identity ] );
+
+                        $model->setUsername( $row[ self::field_username ] );
+                        $model->setPassword( $row[ self::field_password ] );
+
+                        $model->setProfileType( $row[ 'profile_type' ] );
+
+                        $model->isDone();
+
+                        $retVal = $model;
+                    }
+                }
+            }
+            catch ( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
         }
 
 

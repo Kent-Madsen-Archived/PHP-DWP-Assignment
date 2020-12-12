@@ -362,3 +362,29 @@ begin
 end;
 
 
+create or replace procedure clear_old_discounts()
+begin
+    declare is_done int default 0;
+
+    declare prod_id int default null;
+    declare prod_dis_end date default null;
+
+    declare discount_cursor cursor for select * from delta_discount;
+    declare continue handler for not found set is_done = 1;
+
+    open discount_cursor;
+
+    product_loop: loop
+        fetch discount_cursor into prod_id, prod_dis_end;
+
+        if(curdate() > prod_dis_end) then
+            update product set discount_tag = null where product.identity = prod_id;
+        end if;
+
+        if(is_done=1) then
+            leave product_loop;
+        end if;
+    end loop;
+
+    close discount_cursor;
+end;

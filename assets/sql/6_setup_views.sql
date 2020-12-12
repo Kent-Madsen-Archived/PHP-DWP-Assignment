@@ -71,10 +71,11 @@ LEFT JOIN product_attribute pa  ON associated_category.product_attribute_id = pa
 
 DROP VIEW IF EXISTS product_invoice_view;
 
-CREATE VIEW product_invoice_view AS
+CREATE OR REPLACE VIEW product_invoice_view AS
 SELECT product_invoice.identity     AS invoice_identity,
        product_invoice.total_price  AS invoice_total_price,
        product_invoice.registered   AS invoice_registered,
+       pis.content as invoice_status,
 
        pa.country               AS invoice_address_country,
        pa.street_name           AS invoice_address_street_name,
@@ -87,9 +88,10 @@ SELECT product_invoice.identity     AS invoice_identity,
        pn.last_name     AS invoice_owner_lastname,
        pn.middle_name   AS invoice_owner_middle_name
 FROM product_invoice
-LEFT JOIN person_address pa ON product_invoice.address_id = pa.identity
-LEFT JOIN person_email pe   ON product_invoice.mail_id = pe.identity
-LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
+         LEFT JOIN person_address pa ON product_invoice.address_id = pa.identity
+         LEFT JOIN person_email pe   ON product_invoice.mail_id = pe.identity
+         LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity
+         LEFT JOIN product_invoice_status pis on product_invoice.status_id = pis.identity;
 
 
 
@@ -192,4 +194,11 @@ create or replace view delta_all_with_no_discount_product_ids as
 select identity, discount_tag
 from product
 where discount_tag is null
+order by identity;
+
+create or replace view delta_discount as
+select product.identity, td.discount_end
+from product
+         left join timed_discount td on product.discount_tag = td.identity
+where not (discount_tag is null)
 order by identity;

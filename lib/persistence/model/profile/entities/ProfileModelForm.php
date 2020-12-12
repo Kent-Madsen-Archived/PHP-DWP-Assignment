@@ -9,6 +9,9 @@
     class ProfileModelForm
         extends DatabaseFormEntity
     {
+        /**
+         * ProfileModelForm constructor.
+         */
         public function __construct()
         {
             $this->setIsSet( false );
@@ -24,78 +27,100 @@
         private $profile_type = null;
 
 
+        /**
+         *
+         */
+        public final function isDone(): void
+        {
+            $this->setIsSet(true );
+        }
+
+
         // Accessors
             // Getters
         /**
-         * @return null
+         * @return int|null
          */
-        final public function getIdentity()
+        final public function getIdentity(): ?int
         {
             return $this->identity;
         }
 
 
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getPassword()
+        public final function getPassword(): ?string
         {
             return $this->password;
         }
 
 
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getUsername()
+        public final function getUsername(): ?string
         {
             return $this->username;
         }
 
 
         /**
-         * @return null
+         * @return string|null
          */
-        final public function getProfileType()
+        public final function getProfileType(): ?string
         {
             return $this->profile_type;
         }
 
 
             // Setters
+
         /**
-         * @param null $identity
+         * @param int|null $identity
          */
-        final public function setIdentity( $identity ): void
+        public final function setIdentity( ?int $identity ): void
         {
-            $this->identity = $identity;
+            if( !$this->getIsSet() )
+            {
+                $this->identity = $identity;
+            }
         }
 
 
         /**
-         * @param null $password
+         * @param string|null $password
          */
-        final public function setPassword( $password ): void
+        public final function setPassword( ?string $password ): void
         {
-            $this->password = $password;
+            if( !$this->getIsSet() )
+            {
+                $this->password = $password;
+            }
         }
 
 
         /**
-         * @param null $profile_type
+         * @param string|null $profile_type
          */
-        final public function setProfileType( $profile_type ): void
+        public final function setProfileType( ?string $profile_type ): void
         {
-            $this->profile_type = $profile_type;
+            if( !$this->getIsSet() )
+            {
+                $this->profile_type = $profile_type;
+            }
         }
 
 
         /**
-         * @param null $username
+         * @param string|null $username
          */
-        final public function setUsername( $username ): void
+        public final function setUsername( ?string $username ): void
         {
-            $this->username = $username;
+            if( !$this->getIsSet() )
+            {
+                $this->username = $username;
+            }
         }
 
     }

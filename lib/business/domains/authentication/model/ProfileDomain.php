@@ -108,7 +108,7 @@
          * @return ProfileModel|null
          * @throws Exception
          */
-        public final  function retrieveProfileAt( int $idx ): ?ProfileModel
+        public final function retrieveProfileAt( int $idx ): ?ProfileModel
         {
             $factory = $this->getProfileFactory();
 
@@ -118,6 +118,19 @@
             $factory->readModel($model);
 
             $retVal = $model;
+            return $retVal;
+        }
+
+
+        /**
+         * @param int $idx
+         * @return ProfileModelForm|null
+         * @throws Exception
+         */
+        public final function retrieveProfileFormAt( int $idx ): ?ProfileModelForm
+        {
+            $factory = $this->getProfileFactory();
+            $retVal = $factory->readModelFormByIndex( $idx );
             return $retVal;
         }
 

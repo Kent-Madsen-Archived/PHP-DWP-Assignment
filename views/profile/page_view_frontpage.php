@@ -7,7 +7,7 @@
 
     <ul>
         <li>
-            <p>Profile Type: <?php echo "{$type_m->getContent()}" ?></p>
+            <p>Profile Type: <?php echo "{$profile->getProfileType()}" ?></p>
         </li>
 
         <li>
