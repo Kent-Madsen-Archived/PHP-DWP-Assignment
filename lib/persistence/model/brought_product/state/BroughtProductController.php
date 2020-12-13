@@ -9,7 +9,6 @@
      * Class BroughtProductController
      */
     class BroughtProductController
-        extends BaseMVCController
     {
         /**
          * @param BroughtProductModel|null $model
