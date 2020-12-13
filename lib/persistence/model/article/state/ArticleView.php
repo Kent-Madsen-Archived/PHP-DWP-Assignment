@@ -9,22 +9,18 @@
      * Class ArticleView
      */
     class ArticleView
-        extends BaseMVCView
     {
         /**
          * ArticleView constructor.
-         * @param $model
-         * @throws Exception
+         * @param ArticleController $controller
          */
-        public function __construct( &$model )
+        public function __construct( ArticleController $controller )
         {
-            $this->setModel( $model );
-
-            if( $model->isViewNull() )
-            {
-                $model->setView( $this );
-            }
+            $this->setController( $controller );
         }
+
+        //
+        private $controller = null;
 
 
         /**
@@ -71,6 +67,22 @@
             }
 
             return boolval( $retVal );
+        }
+
+        /**
+         * @return ArticleController|null
+         */
+        public final function getController(): ?ArticleController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param null $controller
+         */
+        public final function setController( ?ArticleController $controller ): void
+        {
+            $this->controller = $controller;
         }
 
 

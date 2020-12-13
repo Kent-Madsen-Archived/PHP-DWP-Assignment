@@ -39,5 +39,10 @@
         {
 
         }
+
+        public function getContent()
+        {
+
+        }
     }
 ?>

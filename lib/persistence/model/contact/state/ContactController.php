@@ -84,5 +84,35 @@
         {
 
         }
+
+        public function getSubject()
+        {
+
+        }
+
+        public function getMessage()
+        {
+
+        }
+
+        public function getHasBeenSend()
+        {
+
+        }
+
+        public function getToMail()
+        {
+
+        }
+
+        public function getFrom()
+        {
+
+        }
+
+        public function getCreatedOn()
+        {
+
+        }
     }
 ?>

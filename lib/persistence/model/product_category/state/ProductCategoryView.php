@@ -12,12 +12,29 @@
         extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param ProductCategoryController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProductCategoryController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller = null;
+
+        /**
+         * @return null
+         */
+        public function getController(): ?ProductCategoryController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param ProductCategoryController|null $controller
+         */
+        public function setController( ?ProductCategoryController $controller ): void
+        {
+            $this->controller = $controller;
         }
 
         /**

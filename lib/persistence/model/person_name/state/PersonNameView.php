@@ -9,15 +9,32 @@
      * Class PersonNameView
      */
     class PersonNameView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param PersonNameController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?PersonNameController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        //
+        private $controller = null;
+
+        /**
+         * @return PersonNameController|null
+         */
+        public final function getController(): ?PersonNameController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param PersonNameController|null $controller
+         */
+        public final function setController( ?PersonNameController $controller ): void
+        {
+            $this->controller = $controller;
         }
 
 

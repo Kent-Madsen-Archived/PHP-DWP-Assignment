@@ -75,5 +75,50 @@
         {
 
         }
+
+
+        /**
+         *
+         */
+        public function getInvoice()
+        {
+
+        }
+
+
+        /**
+         *
+         */
+        public function getNumberOfProducts()
+        {
+
+        }
+
+
+        /**
+         *
+         */
+        public function getPrice()
+        {
+
+        }
+
+
+        /**
+         *
+         */
+        public function getProduct()
+        {
+
+        }
+
+
+        /**
+         *
+         */
+        public function getRegistered()
+        {
+
+        }
     }
 ?>

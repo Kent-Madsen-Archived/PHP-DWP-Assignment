@@ -9,15 +9,31 @@
      * Class ProductAttributeView
      */
     class ProductAttributeView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param ProductAttributeController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProductAttributeController $controller )
         {
-            $this->setModel( $model );
+
+        }
+
+        private $controller = null;
+
+        /**
+         * @return ProductAttributeController|null
+         */
+        public function getController():?ProductAttributeController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param ProductAttributeController|null $controller
+         */
+        public function setController( ?ProductAttributeController $controller ): void
+        {
+            $this->controller = $controller;
         }
 
         /**

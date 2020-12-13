@@ -10,15 +10,31 @@
      * Class ProfileTypeView
      */
     class TimedDiscountView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param TimedDiscountController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?TimedDiscountController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller =null;
+
+        /**
+         * @param TimedDiscountController|null $controller
+         */
+        public function setController( ?TimedDiscountController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return TimedDiscountController|null
+         */
+        public function getController(): ?TimedDiscountController
+        {
+            return $this->controller;
         }
 
 

@@ -133,14 +133,35 @@
         }
 
 
-        /**
-         * @return PersonAddressView
-         * @throws Exception
-         */
-        public final function getView(): PersonAddressView
+        public function getStreetAddressName()
         {
-            $m = $this->transformModel();
-            return new PersonAddressView( $m );
+
         }
+
+        public function getStreetAddressNumber()
+        {
+
+        }
+
+        public function getStreetAddressFloor()
+        {
+
+        }
+
+        public function getZipCode()
+        {
+
+        }
+
+        public function getCity()
+        {
+
+        }
+
+        public function getCountry()
+        {
+
+        }
+
     }
 ?>

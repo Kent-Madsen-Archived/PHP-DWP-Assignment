@@ -9,15 +9,31 @@
      * Class ProfileView
      */
     class ProfileView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param ProfileController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProfileController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller = null;
+
+        /**
+         * @param ProfileController|null $controller
+         */
+        public final function setController( ?ProfileController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public final function getController(): ?ProfileController
+        {
+            return $this->controller;
         }
 
 

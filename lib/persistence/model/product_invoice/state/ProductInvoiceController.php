@@ -75,5 +75,30 @@
         {
 
         }
+
+        public function getTotalPrice()
+        {
+
+        }
+
+        public function getRegistered()
+        {
+
+        }
+
+        public function getAddress()
+        {
+
+        }
+
+        public function getMail()
+        {
+
+        }
+
+        public function getOwnerName()
+        {
+
+        }
     }
 ?>

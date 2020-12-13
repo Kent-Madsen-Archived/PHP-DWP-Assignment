@@ -9,15 +9,32 @@
      * Class ProductUsedImageView
      */
     class ProductUsedImageView
-        extends BaseMVCView
     {
         /**
-         * @param $model
+         * @param $controller
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProductUsedImageController $controller )
         {
-            $this->setModel( $model );
+            $this->setController($controller);
+        }
+
+        private $controller = null;
+
+        /**
+         * @param ProductUsedImageController|null $controller
+         */
+        public function setController( ?ProductUsedImageController $controller): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return ProductUsedImageController|null
+         */
+        public function getController():?ProductUsedImageController
+        {
+            return $this->controller;
         }
 
 

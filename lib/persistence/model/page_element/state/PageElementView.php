@@ -9,17 +9,32 @@
      * Class PageElementView
      */
     class PageElementView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param PageElementController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?PageElementController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
         }
 
+        private $controller = null;
+
+        /**
+         * @param PageElementController|null $controller
+         */
+        public function setController( ?PageElementController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public function getController():?PageElementController
+        {
+            return $this->controller;
+        }
 
         /**
          * @param $model

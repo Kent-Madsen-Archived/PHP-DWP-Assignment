@@ -9,17 +9,32 @@
      * Class ImageView
      */
     class ImageView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param ImageController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?ImageController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
         }
 
+        private $controller = null;
+
+        /**
+         * @param ImageController|null $controller
+         */
+        public function setController( ?ImageController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return ImageController|null
+         */
+        public function getController(): ?ImageController
+        {
+            return $this->controller;
+        }
 
         /**
          * @param $model

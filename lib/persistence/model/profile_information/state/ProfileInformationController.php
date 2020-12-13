@@ -93,5 +93,40 @@
         {
 
         }
+
+        public function getProfile()
+        {
+
+        }
+
+        public function getPersonName()
+        {
+
+        }
+
+        public function getPersonAddress()
+        {
+
+        }
+
+        public function getPersonEmail()
+        {
+
+        }
+
+        public function getPersonPhone()
+        {
+
+        }
+
+        public function getBirthday()
+        {
+
+        }
+
+        public function getRegistered()
+        {
+
+        }
     }
 ?>

@@ -76,5 +76,30 @@
 
         }
 
+        public function getAreaKey()
+        {
+
+        }
+
+        public function getTitle()
+        {
+
+        }
+
+        public function getContent()
+        {
+
+        }
+
+        public function getCreatedOn()
+        {
+
+        }
+
+        public function getLastUpdated()
+        {
+
+        }
+
     }
 ?>

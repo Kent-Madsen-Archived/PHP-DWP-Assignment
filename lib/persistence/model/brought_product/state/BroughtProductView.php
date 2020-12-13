@@ -9,17 +9,18 @@
      * Class BroughtProductView
      */
     class BroughtProductView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * BroughtProductView constructor.
+         * @param BroughtProductController|null $controller
          */
-        public function __construct( $model )
+        public function __construct( ?BroughtProductController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
         }
 
+        //
+        private $controller = null;
 
         /**
          * @param $model
@@ -159,6 +160,21 @@
             return $m->getRegistered();
         }
 
+        /**
+         * @return BroughtProductController|null
+         */
+        public function getController(): ?BroughtProductController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param BroughtProductController|null $controller
+         */
+        public function setController( ?BroughtProductController $controller ): void
+        {
+            $this->controller = $controller;
+        }
 
     }
 ?>

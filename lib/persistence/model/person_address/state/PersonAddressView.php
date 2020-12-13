@@ -9,24 +9,36 @@
      * Class PersonAddressView
      */
     class PersonAddressView
-        extends BaseMVCView
     {
         /**
          * PersonAddressView constructor.
-         * @param PersonAddressModel $model
-         * @throws Exception
+         * @param PersonAddressController|null $controller
          */
-        public function __construct( PersonAddressModel $model )
+        public function __construct( ?PersonAddressController $controller )
         {
-            $this->setModel( $model );
-
-            $m = $this->getModel();
-
-            if( $m->isViewNull() )
-            {
-                $m->setView( $this );
-            }
+            $this->setController( $controller );
         }
+
+        private $controller = null;
+
+        /**
+         * @param PersonAddressController|null $controller
+         */
+        public function setController( ?PersonAddressController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public final function getController(): ?PersonAddressController
+        {
+            return $this->controller;
+        }
+
+
+
 
         /**
          * @return PersonAddressModel|null
@@ -505,17 +517,6 @@
         {
             $message="{$this->viewFieldCountry()}";
             return htmlentities($message);
-        }
-
-
-        /**
-         * @return PersonAddressController
-         * @throws Exception
-         */
-        public final function getController(): PersonAddressController
-        {
-            $m = $this->transformModel();
-            return new PersonAddressController( $m );
         }
         
     }

@@ -95,5 +95,40 @@
 
         }
 
+        public function getImageSrc()
+        {
+
+        }
+
+        public function getImageType()
+        {
+
+        }
+
+        public function getTitle()
+        {
+
+        }
+
+        public function getAlt()
+        {
+
+        }
+
+        public function getParent()
+        {
+
+        }
+
+        public function getRegistered()
+        {
+
+        }
+
+        public function getLastUpdated()
+        {
+
+        }
+
     }
 ?>
