@@ -29,7 +29,7 @@ $privileges = new AccessPrivilegesDomain();
         <?php foreach ( $products as $product ): ?>
             <div class="product">
                 <?php
-                    $view = new ProductView( $product );
+                    $view = new ProductView( new ProductController( $product ) );
                 ?>
                     <h5><?php echo $view->printAreaTitle();?></h5>
                     <p> <?php echo $view->printSummaryOfDescription(); ?></p>

@@ -24,15 +24,15 @@
         /**
          * @param ProductController|null $controller
          */
-        public function setController( ?ProductController $controller ): void
+        public final function setController( ?ProductController $controller ): void
         {
             $this->controller = $controller;
         }
 
         /**
-         * @return null
+         * @return ProductController|null
          */
-        public function getController(): ?ProductController
+        public final function getController(): ?ProductController
         {
             return $this->controller;
         }
@@ -43,7 +43,7 @@
          * @return bool
          * @throws Exception
          */
-        final public function validateModel( $model ): bool
+        public final function validateModel( $model ): bool
         {
              $retval = false;
  
@@ -64,10 +64,9 @@
          * @return int|null
          * @throws Exception
          */
-        final public function viewIdentity(): ?int
+        public final function viewIdentity(): ?int
         {
-            $value = $this->getModel()->getIdentity();
-            return $value;
+            return $this->getController()->getModel()->getIdentity();
         }
 
 
@@ -75,11 +74,11 @@
          * @return bool
          * @throws Exception
          */
-        final public function viewIsIdentityNull(): bool
+        public final function viewIsIdentityNull(): bool
         {
             $retVal = false;
 
-            if( $this->getModel() )
+            if( is_null( $this->getController()->getModel()->getIdentity() ) )
             {
                 $retVal = true;
             }
@@ -89,32 +88,29 @@
 
 
         /**
-         * @throws Exception
+         * @return string|null
          */
-        final public function viewTitle(): ?string
+        public final function viewTitle(): ?string
         {
-            return $this->getModel()->getTitle();
+            return $this->getController()->getTitle();
         }
-
 
 
         /**
          * @return float|null
-         * @throws Exception
          */
-        final public function viewPrice(): ?float
+        public final function viewPrice(): ?float
         {
-            return $this->getModel()->getPrice();
+            return $this->getController()->getPrice();
         }
 
 
         /**
          * @return string|null
-         * @throws Exception
          */
-        final public function viewDescription(): ?string
+        public final function viewDescription(): ?string
         {
-            return $this->getModel()->getDescription();
+            return $this->getController()->getDescription();
         }
 
 
@@ -122,7 +118,7 @@
          * @return string
          * @throws Exception
          */
-        final public function printAreaIdentity(): string
+        public final function printAreaIdentity(): string
         {
             $id= $this->viewIdentity();
             $message= "value='{$id}'";
@@ -132,33 +128,30 @@
 
         /**
          * @return string
-         * @throws Exception
          */
-        final public function printAreaTitle(): string
+        public final function printAreaTitle(): string
         {
-            $str = strval( $this->viewTitle() );
+            $str = strval( $this->getController()->getTitle() );
             return htmlentities( "{$str}." );
         }
 
 
         /**
-         * @return string|null
-         * @throws Exception
+         * @return string
          */
-        final public function printAreaDescription(): string
+        public final function printAreaDescription(): string
         {
-            $str = strval( $this->viewDescription() );
+            $str = strval( $this->getController()->getDescription() );
             return htmlentities("description: {$str}.");
         }
 
 
         /**
          * @return string
-         * @throws Exception
          */
-        final public function printSummaryOfDescription():string
+        public final function printSummaryOfDescription():string
         {
-            $str = strval( $this->viewDescription() );
+            $str = strval( $this->getController()->getDescription() );
             $value = null;
 
             if(strlen($str) > 250)
@@ -175,12 +168,11 @@
 
 
         /**
-         * @return string|null
-         * @throws Exception
+         * @return string
          */
-        final public function printAreaPrice(): string
+        public final function printAreaPrice(): string
         {
-            $str = strval( $this->viewPrice() );
+            $str = strval( $this->getController()->getPrice() );
 
             return htmlentities(strtoupper("{$str} dkk."));
         }
@@ -190,9 +182,9 @@
          * @return string
          * @throws Exception
          */
-        final public function printFieldTypePrice(): string
+        public final function printFieldTypePrice(): string
         {
-            $str = strval($this->viewPrice());
+            $str = strval( $this->getController()->getPrice() );
             return htmlentities("{$str}");
         }
 
@@ -201,7 +193,7 @@
          * @return string
          * @throws Exception
          */
-        final public function printAreaHrefLink(): string
+        public final function printAreaHrefLink(): string
         {
             $id = strval( urlencode( $this->viewIdentity() ) );
             $str = "href='/product/identity/{$id}'";
@@ -212,7 +204,7 @@
         /**
          * @return string
          */
-        final public function printAreaHrefLang(): string
+        public final function printAreaHrefLang(): string
         {
             $value = htmlentities( 'en' );
             return "hreflang='{$value}'";
@@ -220,10 +212,10 @@
 
 
         /**
-         * @param $value
+         * @param int|null $value
          * @return string
          */
-        final public function printHTMLAreaId( $value ): string
+        public final function printHTMLAreaId( ?int $value ): string
         {
             $fvalue = htmlentities($value);
             return "id='{$fvalue}'";
@@ -234,7 +226,7 @@
          * @param array $array
          * @return string
          */
-       final public function printHTMLAreaClasses( array $array ): string
+       public final function printHTMLAreaClasses( array $array ): string
        {
            $concatClass = implode( $array, ',' );
            $concatClass = htmlentities( $concatClass );

@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param ImageTypeModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?ImageTypeModel $model )
         {
             $this->setModel( $model );
         }

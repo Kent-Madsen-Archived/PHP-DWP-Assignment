@@ -7,7 +7,7 @@
 <?php if ( !is_null( $products ) ): ?>
     <?php foreach ( $products as $current ):?>
             <?php
-            $view = new ProductView( $current );
+            $view = new ProductView( new ProductController( $current ) );
             ?>
             <div>
                     <h4>

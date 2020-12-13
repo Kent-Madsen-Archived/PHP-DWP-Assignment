@@ -12,9 +12,9 @@
     {
         /**
          * PersonAddressController constructor.
-         * @param PersonAddressModel $model
+         * @param PersonAddressModel|null $model
          */
-        public function __construct( PersonAddressModel $model )
+        public function __construct( ?PersonAddressModel $model )
         {
             $this->setModel( $model );
 

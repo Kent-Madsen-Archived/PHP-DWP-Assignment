@@ -44,7 +44,7 @@
                         $products = $pd->retrieveProductsAt(0, 4);
 
                         foreach ( $products as $product ):
-                            $view = new ProductView( $product );
+                            $view = new ProductView( new ProductController( $product ) );
                     ?>
                         <div class="product">
                             <h5>

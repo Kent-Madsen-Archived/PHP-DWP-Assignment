@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param PersonEmailModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?PersonEmailModel $model )
         {
             $this->setModel( $model );
         }
