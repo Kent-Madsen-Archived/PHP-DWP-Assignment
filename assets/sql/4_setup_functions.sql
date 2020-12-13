@@ -615,9 +615,13 @@ end;
 //
 DELIMITER ;
 
+DELIMITER //
 create procedure insert_product_variation(in product_a_id int, in product_b_id int )
 begin
     insert into product_variation(product_main_id, product_variant_of_id)
     values (product_a_id, product_b_id),
            (product_b_id, product_a_id);
-end;
+end
+
+//
+DELIMITER ;

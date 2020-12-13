@@ -10,7 +10,7 @@
                 <div class="invoice">
                     <?php
                     $brougth_products = $domain->retrieveBroughtProductBy( $current_invoice->getIdentity() );
-                    $current_invoice_view = new ProductInvoiceView( $current_invoice );
+                    $current_invoice_view = new ProductInvoiceView( new ProductInvoiceController($current_invoice) );
 
                     $print_invoice = new ProductInvoicePrint( $current_invoice_view );
                     ?>
