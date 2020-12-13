@@ -24,9 +24,9 @@
             $args_session = array( 'person_data_profile'=>$profile );
             $session = new UserSession( $args_session );
             UserSessionSingleton::setInstance( $session );
-        }
 
-        redirect_to_local_page('/homepage');
+            redirect_to_local_page('profile');
+        }
     }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
@@ -35,7 +35,6 @@
 
     $fss->generate();
     $fss->applyToSession();
-
     
     PageTitleController::getSingletonController()->append( ' - Login' );
 ?>

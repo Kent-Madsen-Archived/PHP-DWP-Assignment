@@ -15,7 +15,16 @@
 
     //
     $domain = new AuthDomain();
-    $domain->register();
+    $new_user = $domain->register();
+
+    if( !is_null( $new_user ) )
+    {
+        $args_session = array( 'person_data_profile'=>$new_user );
+        $session = new UserSession( $args_session );
+        UserSessionSingleton::setInstance( $session );
+
+        redirect_to_local_page('profile');
+    }
 
     /**
      * 

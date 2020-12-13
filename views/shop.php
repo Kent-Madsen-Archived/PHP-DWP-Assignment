@@ -48,7 +48,7 @@
                 <div class="shop-section-container">
                     <?php if($product_array_1): ?>
                         <?php foreach ($product_array_1 as $product):?>
-                            <?php $view = new ProductView($product); ?>
+                            <?php $view = new ProductView( new ProductController( $product ) ); ?>
                             <div class="product">
                                 <h5><?php echo $view->printAreaTitle();?></h5>
 
@@ -82,7 +82,7 @@
                 <?php if(!is_null($product_2)): ?>
                     <div class="shop-section-container">
                         <?php foreach ($product_2 as $product):?>
-                            <?php $view = new ProductView($product); ?>
+                            <?php $view = new ProductView( new ProductController( $product ) ); ?>
                             <div class="product">
                                 <h5><?php echo $view->printAreaTitle();?></h5>
 
@@ -117,7 +117,7 @@
                 <?php if(!is_null($product_3)): ?>
                     <div class="shop-section-container">
                         <?php foreach ($product_3 as $product):?>
-                            <?php $view = new ProductView($product); ?>
+                            <?php $view = new ProductView( new ProductController( $product ) ); ?>
                             <div class="product">
                                 <h5><?php echo $view->printAreaTitle();?></h5>
 
@@ -151,7 +151,7 @@
                 <?php if(!is_null($product_4)): ?>
                 <div class="shop-section-container">
                     <?php foreach ($product_4 as $product):?>
-                        <?php $view = new ProductView($product); ?>
+                        <?php $view = new ProductView( new ProductController( $product ) ); ?>
                         <div class="product">
                             <h5><?php echo $view->printAreaTitle();?></h5>
 

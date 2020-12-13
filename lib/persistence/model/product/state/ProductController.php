@@ -15,7 +15,7 @@
          * @param ProductModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductModel $model )
+        public function __construct( ?ProductModel $model )
         {
             $this->setModel( $model );
         }
@@ -25,9 +25,13 @@
          * @param $model
          * @return bool
          */
-        public function validateModel( $model ): bool
+        public final function validateModel( $model ): bool
         {
-            // TODO: Implement validateModel() method.
+            if($model instanceof ProductModel)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -58,19 +62,34 @@
 
         }
 
-        public function getTitle()
-        {
 
+        /**
+         * @return string|null
+         * @throws Exception
+         */
+        public final function getTitle(): ?string
+        {
+            return $this->getModel()->getTitle();
         }
 
-        public function getDescription()
-        {
 
+        /**
+         * @return string
+         * @throws Exception
+         */
+        public final function getDescription(): ?string
+        {
+            return $this->getModel()->getDescription();
         }
 
-        public function getPrice()
-        {
 
+        /**
+         * @return float|null
+         * @throws Exception
+         */
+        public final function getPrice(): ?float
+        {
+            return $this->getModel()->getPrice();
         }
     }
 

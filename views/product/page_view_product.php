@@ -7,7 +7,7 @@
     $privileges = new AccessPrivilegesDomain();
     $product = $domain->readSingularProduct( $id_value );
 
-    $view = new ProductView( $product );
+    $view = new ProductView( new ProductController( $product ) );
 ?>
 
 <?php if( !is_null( $product->getTitle() ) ): ?>
