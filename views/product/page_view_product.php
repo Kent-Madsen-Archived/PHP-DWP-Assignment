@@ -38,5 +38,33 @@
             </button>
         </form>
     <?php endif; ?>
+    <?php
+    $recommended_fac = new ProductInvoiceRelationFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton()));
+    $recommended = $recommended_fac->recommendation_by_product_id($id_value);
+
+    $product_fac = GroupProduct::getProductFactory();
+    ?>
+<div>
+    <h4>recommendation area</h4>
+    <div>
+        <?php if(!is_null($recommended)): ?>
+        <!-- Recommended -->
+            <?php foreach ($recommended as $product_rec): ?>
+                <?php
+                    $product_rec_ent = $product_fac->createModel();
+                    $product_rec_ent->setIdentity($product_rec['product_id']);
+                    $product_fac->readModel($product_rec_ent);
+                ?>
+            <div>
+                <h5><?php echo $product_rec_ent->getTitle(); ?></h5>
+                <p><?php echo $product_rec_ent->getDescription();?></p>
+                <a class="button" href="/product/identity/<?php echo $product_rec_ent->getIdentity();?>">View Product</a>
+            </div>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+    </div>
+</div>
 
 <?php endif; ?>

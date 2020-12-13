@@ -186,3 +186,11 @@ create or replace view store_view as
 select store.identity, sk.content stored_key, store.stored_value
 from store
          left join store_key sk on store.key_id = sk.identity;
+
+create view delta_invoice_show_products as
+select distinct pi.identity as product_invoice_line_id, brought_product.product_id as product_id
+from brought_product
+left join product_invoice pi on brought_product.invoice_id = pi.identity;
+
+create view product_invoice_relations_ordered_by_relation as
+select * from product_invoice_relations order by content desc;
