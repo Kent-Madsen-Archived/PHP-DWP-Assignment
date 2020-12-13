@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param ProfileInformationModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProfileInformationModel $model )
         {
             $this->setModel( $model );
         }

@@ -9,7 +9,7 @@
         // constructors
         /**
          * ProfileTypeModel constructor.
-         * @param ProfileTypeFactory $factory
+         * @param ProfileTypeFactory|null $factory
          * @throws Exception
          */
         public function __construct( ?ProfileTypeFactory $factory )

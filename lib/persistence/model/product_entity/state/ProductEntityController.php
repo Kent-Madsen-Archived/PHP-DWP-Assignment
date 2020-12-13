@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param ProductEntityModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProductEntityModel $model )
         {
             $this->setModel( $model );
         }
