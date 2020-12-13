@@ -61,7 +61,7 @@
     <ul>
         <?php if( !is_null( $products ) ): ?>
             <?php foreach ( $products as $product ): ?>
-            <?php $current_view = new ProductView($product); ?>
+            <?php $current_view = new ProductView( new ProductController( $product ) ); ?>
                 <li>
                     <?php
                         $pId = $product->getIdentity();

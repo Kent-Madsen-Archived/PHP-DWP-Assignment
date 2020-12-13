@@ -53,7 +53,7 @@
                                 <p> Quantity: <?php echo $entry_view->printAreaProductQuantity();?></p>
                                 <p> Total Price: <?php echo $entry_view->printAreaProductTotalPrice();?></p>
                             <?php elseif( $key == 'model' ):?>
-                                <?php $current_view = new ProductView( $value ); ?>
+                                <?php $current_view = new ProductView( new ProductController( $value ) ); ?>
                                     <a <?php echo $current_view->printAreaHrefLink(); ?> <?php echo $current_view->printAreaHrefLang();?>>
                                         <h4> <?php echo $current_view->printAreaTitle();?></h4>
                                         <p> <?php echo $current_view->printSummaryOfDescription();?></p>
