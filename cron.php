@@ -26,5 +26,6 @@
     if($mysql_available)
     {
         require 'inc/crons/discount.php';
+        require 'inc/crons/relation.php';
     }
 ?>

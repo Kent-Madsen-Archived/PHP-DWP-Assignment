@@ -202,3 +202,8 @@ from product
          left join timed_discount td on product.discount_tag = td.identity
 where not (discount_tag is null)
 order by identity;
+
+create view store_view as
+select store.identity, sk.content stored_key, store.stored_value
+from store
+         left join store_key sk on store.key_id = sk.identity;

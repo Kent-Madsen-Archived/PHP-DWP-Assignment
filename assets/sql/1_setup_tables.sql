@@ -446,9 +446,104 @@ create table response_invoice_charged(
                                          primary key (identity)
 );
 
-create table product_invoice_status(
+create table product_invoice_relations(
+                                  identity int not null auto_increment,
+
+                                  product_a_id int not null,
+                                  product_b_id int not null,
+
+                                  content double not null default 0.0,
+
+                                  primary key (identity)
+);
+
+
+create table invoice_seller_name(
+                                    identity int not null auto_increment,
+                                    content varchar(256) unique not null,
+                                    index (content),
+                                    primary key (identity)
+);
+
+
+create table invoice
+(
+    identity int not null auto_increment,
+    invoice_identifier varchar(256),
+
+    -- Profile
+    customer_profile_id int not null,
+    customer_email_id int,
+    customer_address_id int,
+
+    -- Product Order Invoice. Contains the products that have been brougth.
+    product_invoice_id int not null,
+
+    -- Price together with Processing fees
+    charged_price double not null default 0.0,
+
+    -- Response from payment service
+    invoice_charge_response_id int,
+    invoice_status_id int not null,
+
+    -- Buyer Information
+    contact_invoice_seller_name_id int,
+    contact_address_id int,
+    contact_email_id int,
+    contact_cvr_id int,
+
+    contact_company_logo_id int,
+
+    --
+    invoice_is_due date default curtime() not null,
+    invoice_was_send date default curdate() not null,
+
+    -- Misc
+    footer text not null default '',
+
+    parent_invoice_id int,
+
+    primary key (identity)
+);
+
+create table invoice_cvr(
+                            identity int not null auto_increment,
+                            content varchar(256) not null,
+                            index(content),
+                            primary key (identity)
+);
+
+
+create table invoice_status(
+                               identity int not null auto_increment,
+                               content varchar(256) unique not null,
+                               index(content),
+                               primary key (identity)
+);
+
+create table invoice_charge_service(
                                        identity int not null auto_increment,
-                                       content varchar(256) not null,
-                                       index(content),
+                                       content varchar(256) unique not null,
+                                       index (content),
                                        primary key (identity)
+);
+
+create table invoice_charge_response(
+                                        identity int not null auto_increment,
+                                        service_id int not null,
+                                        response text not null,
+                                        primary key (identity)
+);
+
+create table store(
+                      identity int not null auto_increment,
+                      key_id int not null,
+                      stored_value int not null default 0,
+                      primary key (identity)
+);
+
+create table store_key(
+                          identity int not null auto_increment,
+                          content varchar(256) unique not null,
+                          primary key (identity)
 );

@@ -388,3 +388,129 @@ begin
 
     close discount_cursor;
 end;
+
+create or replace function retrieve_default_contact_email()
+    returns int
+begin
+    declare is_done int default 0;
+    declare retval int default 0;
+
+    declare store_cursor cursor for select stored_value from store_view where stored_key = 'contact_email_id';
+    declare continue handler for not found set is_done =1;
+
+    open store_cursor;
+
+    store_loop: loop
+        fetch store_cursor into retval;
+
+        if(is_done=1) then
+            leave store_loop;
+        end if;
+    end loop;
+
+    close store_cursor;
+    return retval;
+end;
+
+
+create or replace function retrieve_default_contact_cvr()
+    returns int
+begin
+    declare is_done int default 0;
+    declare retval int default 0;
+
+    declare store_cursor cursor for select stored_value from store_view where stored_key = 'contact_cvr_id';
+    declare continue handler for not found set is_done =1;
+
+    open store_cursor;
+
+    store_loop: loop
+        fetch store_cursor into retval;
+
+        if(is_done=1) then
+            leave store_loop;
+        end if;
+    end loop;
+
+    close store_cursor;
+    return retval;
+end;
+
+create or replace function retrieve_default_contact_address()
+    returns int
+begin
+    declare is_done int default 0;
+    declare retval int default 0;
+
+    declare store_cursor cursor for select stored_value from store_view where stored_key = 'contact_address_id';
+    declare continue handler for not found set is_done =1;
+
+    open store_cursor;
+
+    store_loop: loop
+        fetch store_cursor into retval;
+
+        if(is_done=1) then
+            leave store_loop;
+        end if;
+    end loop;
+
+    close store_cursor;
+    return retval;
+end;
+
+create or replace function retrieve_default_contact_seller_name()
+    returns int
+begin
+    declare is_done int default 0;
+    declare retval int default 0;
+
+    declare store_cursor cursor for select stored_value from store_view where stored_key = 'contact_invoice_seller_name_id';
+    declare continue handler for not found set is_done =1;
+
+    open store_cursor;
+
+    store_loop: loop
+        fetch store_cursor into retval;
+
+        if(is_done=1) then
+            leave store_loop;
+        end if;
+    end loop;
+
+    close store_cursor;
+    return retval;
+end;
+
+
+create procedure insert_charge_stripe_response(in response text)
+begin
+    insert into invoice_charge_response(service_id, response)
+    values (retrieve_charge_service('stripe'), response);
+end;
+
+create or replace function retrieve_charge_service( service_name varchar(256) )
+    returns int
+begin
+    declare retVal int default null;
+
+    declare is_finished int default 0;
+
+    declare fetch_invoice_charge_service cursor for
+        select identity from invoice_charge_service where lower(content) = lower(service_name);
+
+    declare continue handler for not found set is_finished = 1;
+
+    open fetch_invoice_charge_service;
+
+    getService: loop
+        fetch fetch_invoice_charge_service into retVal;
+
+        if(is_finished=1) then
+            leave getService;
+        end if;
+    end loop;
+
+    close fetch_invoice_charge_service;
+    return retVal;
+end;
