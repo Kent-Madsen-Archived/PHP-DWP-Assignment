@@ -1,9 +1,7 @@
 use dwp_assignment;
 
--- Views
-DROP VIEW IF EXISTS profile_model_view;
 
-CREATE VIEW profile_model_view AS
+CREATE or replace VIEW profile_model_view AS
 SELECT profile.identity,
        profile.username,
        profile.password,
@@ -13,9 +11,8 @@ LEFT JOIN profile_type ON profile.profile_type = profile_type.identity;
 
 
 
-DROP VIEW IF EXISTS contact_model_view;
 
-CREATE VIEW contact_model_view AS
+CREATE or replace VIEW contact_model_view AS
 SELECT contact.identity,
        contact.title,
        contact.message,
@@ -27,9 +24,6 @@ FROM contact
 LEFT JOIN person_email pe_from ON pe_from.identity = contact.from_id
 LEFT JOIN person_email pe_to   ON pe_to.identity = contact.to_id;
 
-
-
-DROP VIEW IF EXISTS profile_information_model_view;
 
 CREATE or replace VIEW profile_information_model_view AS
 SELECT profile_information.identity     AS profile_information_identity,
@@ -56,9 +50,8 @@ FROM profile_information
 
 
 
-DROP VIEW IF EXISTS product_associated_category_view;
 
-CREATE VIEW product_associated_category_view AS
+CREATE or replace VIEW product_associated_category_view AS
 SELECT associated_category.identity     AS associated_category_identity,
        pc.content                       AS product_category,
        pa.content                       AS product_attribute,
@@ -68,14 +61,10 @@ LEFT JOIN product_category pc   ON associated_category.product_category_id = pc.
 LEFT JOIN product_attribute pa  ON associated_category.product_attribute_id = pa.identity;
 
 
-
-DROP VIEW IF EXISTS product_invoice_view;
-
 CREATE OR REPLACE VIEW product_invoice_view AS
 SELECT product_invoice.identity     AS invoice_identity,
        product_invoice.total_price  AS invoice_total_price,
        product_invoice.registered   AS invoice_registered,
-       pis.content as invoice_status,
 
        pa.country               AS invoice_address_country,
        pa.street_name           AS invoice_address_street_name,
@@ -90,14 +79,11 @@ SELECT product_invoice.identity     AS invoice_identity,
 FROM product_invoice
          LEFT JOIN person_address pa ON product_invoice.address_id = pa.identity
          LEFT JOIN person_email pe   ON product_invoice.mail_id = pe.identity
-         LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity
-         LEFT JOIN product_invoice_status pis on product_invoice.status_id = pis.identity;
+         LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
 
 
 
-DROP VIEW IF EXISTS product_invoice_view_short;
-
-CREATE VIEW product_invoice_view_short  AS
+CREATE or replace VIEW product_invoice_view_short  AS
 SELECT product_invoice.identity         AS invoice_id,
        product_invoice.total_price,
        product_invoice.registered,
@@ -110,10 +96,7 @@ LEFT JOIN person_email pe   ON product_invoice.mail_id = pe.identity
 LEFT JOIN person_name pn    ON product_invoice.owner_name_id = pn.identity;
 
 
-
-DROP VIEW IF EXISTS product_available_units;
-
-CREATE VIEW product_available_units AS
+CREATE or replace VIEW product_available_units AS
 SELECT product.identity,
        product.title,
        product.description,
@@ -124,11 +107,7 @@ LEFT JOIN product_entity pe ON product.identity = pe.product_id
 GROUP BY product_id;
 
 
-
--- views, which are used for internal purpose only. (ie. used by triggers or functions with a specific purpose in mind)
--- (not public usage).
--- like. calculating a tables total price, and etc.
-create view delta_brought_product_view as
+create or replace view delta_brought_product_view as
 select identity,
         invoice_id,
         product_id,
@@ -145,7 +124,7 @@ from delta_brought_product_view as delta_view
 group by product_invoice_id;
 
 
-create view delta_invoice_soi_and_vat as
+create or replace view delta_invoice_soi_and_vat as
 select  dv.product_invoice_id,
         dv.total_price_of_all_wares,
         (dv.total_price_of_all_wares * 0.25) as vat
@@ -164,7 +143,7 @@ select dv.profile_id as profile_id, dv.person_address_id, dv.person_email_id, dv
 from profile_information as dv;
 
 
-create view discount_view as
+create or replace view discount_view as
 select p.identity as product_id,
        p.description,
        p.price,
@@ -174,7 +153,7 @@ select p.identity as product_id,
 from timed_discount
     left join product p on timed_discount.product_id = p.identity;
 
-create view discounts_today as
+create or replace view discounts_today as
 select *
 from timed_discount
 where ( discount_begin <= curdate() ) and ( discount_end >= curdate() );
@@ -203,7 +182,7 @@ from product
 where not (discount_tag is null)
 order by identity;
 
-create view store_view as
+create or replace view store_view as
 select store.identity, sk.content stored_key, store.stored_value
 from store
          left join store_key sk on store.key_id = sk.identity;

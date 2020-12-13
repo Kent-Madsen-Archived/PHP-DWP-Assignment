@@ -1,3 +1,6 @@
+drop database dwp_assignment;
+create database dwp_assignment;
+
 use dwp_assignment;
 
 
@@ -51,18 +54,17 @@ CREATE TABLE person_address
 (
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
 
-    street_name VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
+    street_name VARCHAR( 128 ) DEFAULT 'none' NOT NULL,
     street_address_number INT DEFAULT 0 NOT NULL,
 
     street_address_floor VARCHAR( 10 ) DEFAULT NULL,
 
     zip_code INT DEFAULT 0 NOT NULL,
     
-    country VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
-    city varchar(256) default 'none' not null,
+    country VARCHAR( 128 ) DEFAULT 'none' NOT NULL,
+    city varchar(128) default 'none' not null,
 
-    INDEX( street_name, 
-           street_address_number, 
+    INDEX( street_name,  
            street_address_floor, 
            zip_code, 
            country,
@@ -250,7 +252,8 @@ CREATE TABLE product
 
     description TEXT NOT NULL ,
     price DOUBLE NOT NULL DEFAULT 0.0,
-    is_discounted bool not null default false,
+    discount_tag int default null,
+    
 
     INDEX( title ),
     PRIMARY KEY( identity )
