@@ -12,12 +12,15 @@ class ProductInvoiceRelationFactory
         $products = $this->retrieve_products_ids();
         $product_calc = array();
 
-        for( $idx = 0;
-             $idx < count( $products );
-             $idx++ )
+        if(!is_null($products))
         {
-            $current_product_id = $products[$idx];
-            $this->calculate_relations_for_product( $current_product_id, $product_calc );
+            for( $idx = 0;
+                 $idx < count( $products );
+                 $idx++ )
+            {
+                $current_product_id = $products[$idx];
+                $this->calculate_relations_for_product( $current_product_id, $product_calc );
+            }
         }
 
         return $product_calc;
