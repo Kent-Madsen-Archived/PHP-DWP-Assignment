@@ -55,7 +55,7 @@
                 return null;
             }
 
-            return $this->getModel()->getIdentity();
+            return $this->getController()->getModel()->getIdentity();
         }
 
 
@@ -119,7 +119,7 @@
          */
         public final function viewNumberOfProducts(): ?int
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController() ) )
             {
                 throw new Exception('no instance of a model' );
             }
@@ -135,7 +135,7 @@
          */
         public final function viewProductPrice(): ?float
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController() ) )
             {
                 throw new Exception('no instance of a model' );
             }
@@ -151,7 +151,7 @@
          */
         public final function viewRegistered(): ?string
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController() ) )
             {
                 throw new Exception('no instance of a model' );
             }
