@@ -166,8 +166,13 @@ create or replace trigger standard_update_brought_product
     for each row
 begin
     if(NEW.price = 0) then
+        if(isnull((retrieve_product_is_on_discount(NEW.product_id))) )
+        then
             set NEW.price = retrieve_product_price(NEW.product_id);
-end if;
+        else
+            set NEW.price = retrieve_product_discount_price(NEW.product_id);
+        end if;
+    end if;
 end
 //
 DELIMITER ;
@@ -179,8 +184,13 @@ create or replace trigger standard_insert_brought_product
     for each row
 begin
     if(NEW.price = 0) then
+        if(isnull((retrieve_product_is_on_discount(NEW.product_id))))
+        then
             set NEW.price = retrieve_product_price(NEW.product_id);
-end if;
+        else
+            set NEW.price = retrieve_product_discount_price(NEW.product_id);
+        end if;
+    end if;
 end
 //
 DELIMITER ;

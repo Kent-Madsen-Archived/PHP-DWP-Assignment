@@ -143,6 +143,7 @@ select dv.profile_id as profile_id, dv.person_address_id, dv.person_email_id, dv
 from profile_information as dv;
 
 
+
 create or replace view discount_view as
 select p.identity as product_id,
        p.description,
@@ -151,7 +152,9 @@ select p.identity as product_id,
        (p.price/100)*timed_discount.discount_percentage as discount_amount,
        p.price - (p.price/100)*timed_discount.discount_percentage as actual_price
 from timed_discount
-    left join product p on timed_discount.product_id = p.identity;
+         left join product p on timed_discount.product_id = p.identity
+where p.discount_tag is not null and timed_discount.discount_begin <= curdate() and timed_discount.discount_end >= curdate();
+
 
 create or replace view discounts_today as
 select *

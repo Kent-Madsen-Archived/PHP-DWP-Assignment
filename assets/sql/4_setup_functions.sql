@@ -549,3 +549,64 @@ begin
 end
 //
 DELIMITER ;
+
+
+create or replace function retrieve_product_is_on_discount( product_id int )
+    returns int
+begin
+    declare retVal int default null;
+    declare discount_tag_var int default null;
+
+    declare is_finished int default 0;
+
+    declare fetch_product cursor for
+        select discount_tag from product where product.identity=product_id;
+
+    declare continue handler for not found set is_finished = 1;
+
+    open fetch_product;
+
+    getService: loop
+        fetch fetch_product into discount_tag_var;
+
+        set retVal = discount_tag_var;
+
+        if(is_finished=1) then
+            leave getService;
+        end if;
+    end loop;
+
+    close fetch_product;
+    return retVal;
+end;
+
+
+create or replace function retrieve_product_discount_price( product_id_var int )
+    returns double
+begin
+    declare product_price double default null;
+
+    declare retVal double default null;
+
+    declare is_finished int default 0;
+
+    declare fetch_products cursor for
+        select discount_view.actual_price from discount_view where discount_view.product_id = product_id_var;
+
+    declare continue handler for not found set is_finished = 1;
+
+    open fetch_products;
+
+    getCalc: loop
+        fetch fetch_products into product_price;
+
+        set retVal = product_price;
+
+        if(is_finished = 1) then
+            leave getCalc;
+        end if;
+    end loop;
+
+    close fetch_products;
+    return retVal;
+end;
