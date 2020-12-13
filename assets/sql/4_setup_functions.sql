@@ -1,11 +1,8 @@
 use dwp_assignment;
 
-DROP FUNCTION IF EXISTS exists_email;
-DROP FUNCTION IF EXISTS is_admin;
-
 DELIMITER //
 
-CREATE FUNCTION exists_email( mail VARCHAR( 1024 ) ) RETURNS INT
+CREATE OR REPLACE FUNCTION exists_email( mail VARCHAR( 1024 ) ) RETURNS INT
 BEGIN
     DECLARE mail_content VARCHAR( 1024 ) DEFAULT NULL;
     DECLARE mail_id INT DEFAULT 0;
@@ -49,7 +46,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE FUNCTION is_admin( value int ) RETURNS INT
+CREATE OR REPLACE FUNCTION is_admin( value int ) RETURNS INT
 BEGIN
     DECLARE profile_type_id INT DEFAULT 0;
 
@@ -89,6 +86,7 @@ END
 DELIMITER ;
 
 
+DELIMITER //
 
 create or replace function retrieve_invoice_vat( id int )
     returns double
@@ -124,9 +122,13 @@ create or replace function retrieve_invoice_vat( id int )
 
         close fetch_calculations;
     return retVal;
-end;
+end
 
+//
 
+DELIMITER ;
+
+DELIMITER //
 create or replace function retrieve_invoice_final_price( id int )
     returns double
     begin
@@ -161,9 +163,11 @@ create or replace function retrieve_invoice_final_price( id int )
 
         close fetch_calculations;
         return retVal;
-    end;
+    end
+    //
+DELIMITER ;
 
-
+DELIMITER //
 create or replace function retrieve_product_price( product_id_var int )
     returns double
 begin
@@ -195,9 +199,11 @@ end loop;
 
 close fetch_products;
 return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 --
 create or replace function retrieve_profile_name( profile_id_var int )
     returns int
@@ -230,9 +236,11 @@ end loop;
 
 close fetch_profile;
 return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 --
 create or replace function retrieve_profile_address( profile_id_var int )
     returns int
@@ -265,9 +273,11 @@ end loop;
 
 close fetch_profile;
 return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 --
 create or replace function retrieve_profile_email( profile_id_var int )
     returns int
@@ -300,9 +310,11 @@ end loop;
 
 close fetch_profile;
 return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 create or replace function is_product_on_discount_today( product_id_var int ) returns int
 begin
     declare finished int default 0;
@@ -331,9 +343,11 @@ begin
 
     close cursor_for_discount;
     return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 create or replace function retrieve_todays_discount_size() returns int
 begin
 
@@ -359,9 +373,11 @@ begin
 
     close cursor_for_n_discount;
     return retVal;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 create or replace procedure clear_old_discounts()
 begin
     declare is_done int default 0;
@@ -387,8 +403,12 @@ begin
     end loop;
 
     close discount_cursor;
-end;
+end
+//
+DELIMITER ;
 
+
+DELIMITER //
 create or replace function retrieve_default_contact_email()
     returns int
 begin
@@ -410,9 +430,11 @@ begin
 
     close store_cursor;
     return retval;
-end;
+end
+//
+DELIMITER ;
 
-
+DELIMITER //
 create or replace function retrieve_default_contact_cvr()
     returns int
 begin
@@ -434,8 +456,11 @@ begin
 
     close store_cursor;
     return retval;
-end;
+end
+//
+DELIMITER ;
 
+DELIMITER //
 create or replace function retrieve_default_contact_address()
     returns int
 begin
@@ -457,8 +482,11 @@ begin
 
     close store_cursor;
     return retval;
-end;
+end
+//
+DELIMITER ;
 
+DELIMITER //
 create or replace function retrieve_default_contact_seller_name()
     returns int
 begin
@@ -480,15 +508,20 @@ begin
 
     close store_cursor;
     return retval;
-end;
+end
+//
+DELIMITER ;
 
-
-create procedure insert_charge_stripe_response(in response text)
+DELIMITER //
+create or replace procedure insert_charge_stripe_response(in response text)
 begin
     insert into invoice_charge_response(service_id, response)
     values (retrieve_charge_service('stripe'), response);
-end;
+end
+//
+DELIMITER ;
 
+DELIMITER //
 create or replace function retrieve_charge_service( service_name varchar(256) )
     returns int
 begin
@@ -513,4 +546,78 @@ begin
 
     close fetch_invoice_charge_service;
     return retVal;
+end
+//
+DELIMITER ;
+
+DELIMITER //
+create or replace function retrieve_product_is_on_discount( product_id int )
+    returns int
+begin
+    declare retVal int default null;
+    declare discount_tag_var int default null;
+
+    declare is_finished int default 0;
+
+    declare fetch_product cursor for
+        select discount_tag from product where product.identity=product_id;
+
+    declare continue handler for not found set is_finished = 1;
+
+    open fetch_product;
+
+    getService: loop
+        fetch fetch_product into discount_tag_var;
+
+        set retVal = discount_tag_var;
+
+        if(is_finished=1) then
+            leave getService;
+        end if;
+    end loop;
+
+    close fetch_product;
+    return retVal;
+end;
+//
+DELIMITER ;
+
+DELIMITER //
+create or replace function retrieve_product_discount_price( product_id_var int )
+    returns double
+begin
+    declare product_price double default null;
+
+    declare retVal double default null;
+
+    declare is_finished int default 0;
+
+    declare fetch_products cursor for
+        select discount_view.actual_price from discount_view where discount_view.product_id = product_id_var;
+
+    declare continue handler for not found set is_finished = 1;
+
+    open fetch_products;
+
+    getCalc: loop
+        fetch fetch_products into product_price;
+
+        set retVal = product_price;
+
+        if(is_finished = 1) then
+            leave getCalc;
+        end if;
+    end loop;
+
+    close fetch_products;
+    return retVal;
+end;
+//
+DELIMITER ;
+
+create procedure insert_product_variation(in product_a_id int, in product_b_id int )
+begin
+    insert into product_variation(product_main_id, product_variant_of_id)
+    values (product_a_id, product_b_id),
+           (product_b_id, product_a_id);
 end;

@@ -40,7 +40,7 @@
 
         <main>
             <h3>
-                Checkout
+                Shopping Cart
             </h3>
 
             <?php if( !is_null( $overview ) ): ?>

@@ -104,12 +104,11 @@
                 if( $entry instanceof BasketEntry )
                 {
                     $product_id = $entry->getProductIdentity();
-                    $price      = $entry->getProductPrice();
                     $quantity   = $entry->getProductQuantity();
 
                     $broughtModel = $broughtFactory->createModel();
 
-                    $broughtModel->setPrice( $price );
+                    $broughtModel->setPrice( 0.0 );
                     $broughtModel->setNumberOfProducts( $quantity );
 
                     $broughtModel->setInvoiceId( $modelInvoice->getIdentity() );

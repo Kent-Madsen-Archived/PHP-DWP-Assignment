@@ -7,17 +7,61 @@ class ProductInvoiceRelationFactory
         $this->setWrapper($mysql_connector);
     }
 
+    public function recommendation_by_product_id( int $product_id ): ?array
+    {
+        $retVal = array();
+
+        $sql = "select product_b_id, content from product_invoice_relations_ordered_by_relation where product_a_id=? limit 4";
+
+        $retVal = null;
+        $connection = $this->getWrapper()->connect();
+
+        try
+        {
+            $stmt = $connection->prepare($sql);
+            $stmt->bind_param('i', $stmt_comparator);
+            $stmt_comparator = $product_id;
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            if( $result->num_rows > CONSTANT_ZERO )
+            {
+                $retVal = array();
+
+                while( $row = $result->fetch_assoc() )
+                {
+                    $arr = array( 'product_id' => $row['product_b_id'], 'relation' => $row['content'] );
+                    array_push($retVal, $arr);
+                }
+            }
+        }
+        catch (Exception $ex)
+        {
+            echo $ex;
+        }
+        finally
+        {
+            $this->getWrapper()->disconnect();
+        }
+
+        return $retVal;
+    }
+
     public function calculate_relations(): ?array
     {
         $products = $this->retrieve_products_ids();
         $product_calc = array();
 
-        for( $idx = 0;
-             $idx < count( $products );
-             $idx++ )
+        if(!is_null($products))
         {
-            $current_product_id = $products[$idx];
-            $this->calculate_relations_for_product( $current_product_id, $product_calc );
+            for( $idx = 0;
+                 $idx < count( $products );
+                 $idx++ )
+            {
+                $current_product_id = $products[$idx];
+                $this->calculate_relations_for_product( $current_product_id, $product_calc );
+            }
         }
 
         return $product_calc;

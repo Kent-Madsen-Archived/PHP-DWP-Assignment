@@ -106,10 +106,6 @@ alter table response_invoice_charged
     add constraint response_invoice_charged_product_invoice_identity_fk
         foreign key (invoice_id) references product_invoice (identity);
 
-alter table product_invoice
-    add constraint product_invoice_product_invoice_status_identity_fk
-        foreign key (status_id) references product_invoice_status (identity);
-
 
 alter table product_invoice_relations
     add constraint product_relations_product_identity_fk
