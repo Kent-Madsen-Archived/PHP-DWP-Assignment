@@ -45,7 +45,7 @@
          */
         public final function viewIdentity(): ?int
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController()->getModel()->getIdentity() ) )
             {
                 throw new Exception('no instance of a model');
             }
@@ -67,12 +67,12 @@
         {
             $retVal = false;
 
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController()->getModel() ) )
             {
                 throw new Exception('no instance of a model');
             }
 
-            if( is_null( $this->getModel()->getIdentity() ) )
+            if( is_null( $this->getController()->getModel()->getIdentity()) )
             {
                 $retVal = true;
             }
@@ -87,13 +87,13 @@
          */
         public final function viewInvoiceId(): ?int
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController() ) )
             {
                 throw new Exception('no instance of a model');
             }
 
-            $m = $this->getModel();
-            return $m->getInvoiceId();
+            $m = $this->getController()->getInvoice();
+            return $m;
         }
 
 
@@ -103,13 +103,13 @@
          */
         public final function viewProductId(): ?int
         {
-            if( is_null( $this->getModel() ) )
+            if( is_null( $this->getController() ) )
             {
                 throw new Exception('no instance of a model');
             }
 
-            $m = $this->getModel();
-            return $m->getProductId();
+            $m = $this->getController()->getProduct();
+            return $m;
         }
 
 
@@ -124,8 +124,8 @@
                 throw new Exception('no instance of a model' );
             }
 
-            $m = $this->getModel();
-            return $m->getNumberOfProducts();
+            $m = $this->getController()->getNumberOfProducts();
+            return $m;
         }
 
 
@@ -140,7 +140,7 @@
                 throw new Exception('no instance of a model' );
             }
 
-            $m = $this->getModel();
+            $m = $this->getController();
             return $m->getPrice();
         }
 
@@ -156,7 +156,7 @@
                 throw new Exception('no instance of a model' );
             }
 
-            $m = $this->getModel();
+            $m = $this->getController();
             return $m->getRegistered();
         }
 
