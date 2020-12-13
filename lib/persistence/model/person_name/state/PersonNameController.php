@@ -57,6 +57,21 @@
         {
 
         }
+
+        public function getFirstname()
+        {
+
+        }
+
+        public function getLastname()
+        {
+
+        }
+
+        public function getMiddlename()
+        {
+
+        }
     }
 
 ?>

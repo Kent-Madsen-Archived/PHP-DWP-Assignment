@@ -67,5 +67,25 @@
 
         }
 
+        public function getArrived()
+        {
+
+        }
+
+        public function getEntityCode()
+        {
+
+        }
+
+        public function getProduct()
+        {
+
+        }
+
+        public function getBrougth()
+        {
+
+        }
+
     }
 ?>
