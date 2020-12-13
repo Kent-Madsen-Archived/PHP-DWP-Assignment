@@ -8,7 +8,7 @@
     /**
      * Class BroughtProductController
      */
-    class BroughtProductController
+    class BroughtProductController extends BaseMVCController
     {
         /**
          * @param BroughtProductModel|null $model
@@ -26,7 +26,10 @@
          */
         public function validateModel( $model ): bool
         {
-            // TODO: Implement validateModel() method.
+            if($model instanceof BroughtProductModel)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -79,36 +82,36 @@
         /**
          *
          */
-        public function getInvoice()
+        public function getInvoice(): ?int
         {
-
+            return $this->getModel()->getInvoiceId();
         }
 
 
         /**
          *
          */
-        public function getNumberOfProducts()
+        public function getNumberOfProducts(): ?int
         {
-
+            return $this->getModel()->getNumberOfProducts();
         }
 
 
         /**
          *
          */
-        public function getPrice()
+        public function getPrice(): ?float
         {
-
+            return $this->getModel()->getPrice();
         }
 
 
         /**
          *
          */
-        public function getProduct()
+        public function getProduct(): ?int
         {
-
+            return $this->getModel()->getProductId();
         }
 
 
@@ -117,7 +120,7 @@
          */
         public function getRegistered()
         {
-
+            return $this->getModel()->getRegistered();
         }
     }
 ?>

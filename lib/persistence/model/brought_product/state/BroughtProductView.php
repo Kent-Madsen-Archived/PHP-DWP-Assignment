@@ -30,7 +30,7 @@
         {
             $retval = false;
 
-            if( $model instanceof BroughtProductModel )
+            if( $model instanceof BroughtProductController )
             {
                 $retval = true;
             }
