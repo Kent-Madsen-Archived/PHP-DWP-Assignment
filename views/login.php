@@ -58,9 +58,9 @@
         <?php getHeader(); ?>
 
         <main>
-            <h2>
+            <h3>
                 Login
-            </h2>
+            </h3>
 
             <div id="login_form_boundary"> 
                 
@@ -73,7 +73,7 @@
                            name="security_token"
                            <?php FormSpoofSecurity::printSessionFSSToken(); ?> >
 
-                    <div> 
+                    <div class="section">
                         <input type="text" 
                                id="form_login_username_id" 
                                name="form_login_username">
@@ -85,14 +85,14 @@
                         <label> Password </label>
                     </div>
                     
-                    <div> 
-                        <input class="btn" 
+                    <div class="section">
+                        <input class="button"
                                type="submit" 
                                value="Login" 
                                name="form_login_submit">
                     </div>
 
-                    <div class="split"> 
+                    <div class="split section">
                         <a href="./register"> Register new account </a>
                         <a href="./forgot-my-password"> Forgot my password </a>
                     </div>

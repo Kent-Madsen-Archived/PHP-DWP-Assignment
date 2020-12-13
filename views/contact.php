@@ -43,9 +43,9 @@
         <?php getHeader(); ?>
 
         <main>
-            <h2>
+            <h3>
                 Contact
-            </h2>
+            </h3>
 
             <div id="contact_form_boundary"> 
 

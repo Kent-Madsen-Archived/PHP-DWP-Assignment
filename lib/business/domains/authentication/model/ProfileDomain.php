@@ -31,13 +31,16 @@
             $this->setInformation( MySQLInformationSingleton::getSingleton() );
         }
 
+        //
+        private static $options = [ 'cost'=>15 ];
+
 
         /**
          * @param $profile_idx
          * @return ProfileInformationModel|null
          * @throws Exception
          */
-        public final function retrieveProfileInformationAt( $profile_idx ): ?ProfileInformationModel
+        public final function retrieveProfileInformationAt( int $profile_idx ): ?ProfileInformationModel
         {
             $factory = $this->getProfileInformationFactory();
 
@@ -54,7 +57,7 @@
          * @return ProfileTypeModel|null
          * @throws Exception
          */
-        public final function retrieveProfileTypeAt($idx): ?ProfileTypeModel
+        public final function retrieveProfileTypeAt( int $idx ): ?ProfileTypeModel
         {
             $factory = $this->getProfileTypeFactory();
             $model = $factory->createModel();
@@ -70,7 +73,7 @@
          * @return PersonEmailModel|null
          * @throws Exception
          */
-        public final function retrieveProfileMailAt($idx): ?PersonEmailModel
+        public final function retrieveProfileMailAt( int $idx ): ?PersonEmailModel
         {
             $factory = $this->getEmailFactory();
 
@@ -87,7 +90,7 @@
          * @return PersonAddressModel|null
          * @throws Exception
          */
-        public final function retrieveAddressAt($idx): ?PersonAddressModel
+        public final function retrieveAddressAt( int $idx ): ?PersonAddressModel
         {
             $retVal = null;
             $factory = $this->getAddressFactory();
@@ -105,7 +108,7 @@
          * @return ProfileModel|null
          * @throws Exception
          */
-        public final  function retrieveProfileAt($idx): ?ProfileModel
+        public final function retrieveProfileAt( int $idx ): ?ProfileModel
         {
             $factory = $this->getProfileFactory();
 
@@ -120,11 +123,24 @@
 
 
         /**
+         * @param int $idx
+         * @return ProfileModelForm|null
+         * @throws Exception
+         */
+        public final function retrieveProfileFormAt( int $idx ): ?ProfileModelForm
+        {
+            $factory = $this->getProfileFactory();
+            $retVal = $factory->readModelFormByIndex( $idx );
+            return $retVal;
+        }
+
+
+        /**
          * @param $idx
          * @return PersonNameFactory|null
          * @throws Exception
          */
-        public final function retrieveNameAt($idx ): ?PersonNameModel
+        public final function retrieveNameAt( int $idx ): ?PersonNameModel
         {
             $factory = $this->getNameFactory();
             $model = $factory->createModel();
@@ -174,6 +190,213 @@
                              self::model_profile_information => $profile_information_model );
 
             return $retVal;
+        }
+
+
+        /**
+         * @param String $mail_content
+         * @return PersonEmailModel|null
+         * @throws Exception
+         */
+        public final static function retrieveMailOrCreateModel( String $mail_content ): ?PersonEmailModel
+        {
+            $factory = GroupAuthentication::getPersonEmailFactory();
+
+            $mailModel = $factory->createModel();
+            $mailModel->setContent( $mail_content );
+
+            if( $factory->validateIfMailExist( $mailModel ) )
+            {
+                $factory->readModelByName( $mailModel );
+            }
+            else
+            {
+                $factory->create( $mailModel );
+            }
+
+            return $mailModel;
+        }
+
+
+        /**
+         * @param string|null $firstname_var
+         * @param string|null $lastname_var
+         * @param string|null $middle_name_var
+         * @return PersonNameModel|null
+         * @throws Exception
+         */
+        public static function createPersonNameModel( string $firstname_var,
+                                                      ?string $lastname_var,
+                                                      string $middle_name_var ): ?PersonNameModel
+        {
+            $factory = GroupAuthentication::getPersonNameFactory();
+            $nm = $factory->createModel();
+
+            $nm->setFirstName( $firstname_var );
+            $nm->setLastName( $lastname_var );
+            $nm->setMiddleName( $middle_name_var );
+
+            $factory->create( $nm );
+
+            return $nm;
+        }
+
+
+        /**
+         * @param string|null $streetAddressName_var
+         * @param int $streetNumber_var
+         * @param string|null $country_var
+         * @param string|null $street_floor_var
+         * @param string|null $zip_code_var
+         * @return PersonAddressModel|null
+         * @throws Exception
+         */
+        public static function createPersonAddressModel( string $streetAddressName_var,
+                                                         int $streetNumber_var,
+                                                         string $country_var,
+                                                         string $street_floor_var,
+                                                         string $zip_code_var,
+                                                         string $city ): ?PersonAddressModel
+        {
+            $factory = GroupAuthentication::getPersonAddressFactory();
+            $am = $factory->createModel();
+
+            $am->setStreetAddressName( $streetAddressName_var );
+            $am->setStreetAddressNumber( $streetNumber_var );
+            $am->setStreetAddressFloor( $street_floor_var );
+
+            $am->setCountry( $country_var );
+            $am->setZipCode( $zip_code_var );
+            $am->setCity( $city );
+
+            $factory->create( $am );
+
+            return $am;
+        }
+
+
+        /**
+         * @param string|null $birthday_var
+         * @param string|null $personPhoneNumber_var
+         * @param int $person_addr_id_var
+         * @param int $person_name_id_var
+         * @param int $person_email_id_var
+         * @param int $profile_id_var
+         * @return ProfileInformationModel|null
+         * @throws Exception
+         */
+        public static function createProfileInformationModel( ?string $birthday_var,
+                                                              ?string $personPhoneNumber_var,
+                                                              int $person_addr_id_var,
+                                                              int $person_name_id_var,
+                                                              int $person_email_id_var,
+                                                              int $profile_id_var ): ?ProfileInformationModel
+        {
+            $pi_factory = GroupAuthentication::getProfileInformationFactory();
+            $pim = $pi_factory->createModel();
+
+            $pim->setBirthday( $birthday_var );
+            $pim->setPersonPhone( $personPhoneNumber_var );
+
+            $pim->setPersonAddressId( $person_addr_id_var );
+
+            $pim->setPersonNameId( $person_name_id_var );
+            $pim->setPersonEmailId( $person_email_id_var );
+            $pim->setProfileId( $profile_id_var );
+
+            $pi_factory->create($pim );
+
+            return $pim;
+        }
+
+        /**
+         * @param string $username_var
+         * @param string $password_var
+         * @param int $profile_type_id_var
+         * @return ProfileModel|null
+         * @throws Exception
+         */
+        public static function createProfile( string $username_var,
+                                              string $password_var,
+                                              int $profile_type_id_var ): ?ProfileModel
+        {
+            $profile_factory = GroupAuthentication::getProfileFactory();
+
+            if( self::validateExistenceOfProfile( $username_var ) )
+            {
+                throw new Exception('Profile already exist');
+            }
+
+            $pmd = $profile_factory->createModel();
+
+            $pmd->setUsername( $username_var );
+            $pmd->setPassword( self::generatePassword( $password_var ) );
+
+            $pmd->setProfileType( $profile_type_id_var );
+
+            $profile_factory->create( $pmd );
+
+            return $pmd;
+        }
+
+
+        /**
+         * @param $input
+         * @return string|null
+         */
+        protected static final function generatePassword( $input ): ?string
+        {
+            return password_hash( $input, PASSWORD_BCRYPT, self::$options );
+        }
+
+        /**
+         * @param string $name
+         * @return ProfileModel|null
+         * @throws Exception
+         */
+        public static function retrieveProfileByName( string $name ): ?ProfileModel
+        {
+            $factory = GroupAuthentication::getProfileFactory();
+            $m = $factory->readByUsername( $name );
+
+            return $m;
+        }
+
+
+        /**
+         * @param string $content
+         * @return ProfileTypeModel|null
+         * @throws Exception
+         */
+        public static function retrieveProfileTypeByName( string $content ): ?ProfileTypeModel
+        {
+            $factory = GroupAuthentication::getProfileTypeFactory();
+
+            $model = $factory->createModel();
+            $model->setContent( $content );
+            $factory->readModel($model );
+
+            return $model;
+        }
+
+
+
+        /**
+         * @param string $username_var
+         * @return bool
+         * @throws Exception
+         */
+        protected static function validateExistenceOfProfile( string $username_var ): bool
+        {
+            $profile_factory = GroupAuthentication::getProfileFactory();
+            $retval = false;
+
+            if( !is_null( $profile_factory->readByUsername( $username_var ) ) )
+            {
+                $retval = true;
+            }
+
+            return $retval;
         }
 
 

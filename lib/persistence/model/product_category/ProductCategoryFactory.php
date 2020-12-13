@@ -167,6 +167,25 @@
 
             $retVal = false;
 
+            if(!is_null($model->getIdentity()))
+            {
+                $retVal = true;
+                $this->readByIdentity($model);
+            }
+
+            if(!is_null($model->getContent()))
+            {
+                $retVal = true;
+                $this->readByContent($model);
+            }
+
+            return $retVal;
+        }
+
+        protected function readByIdentity( &$model ): bool
+        {
+            $retVal = false;
+
             $table = self::table;
             $fid = self::field_identity;
 
@@ -184,6 +203,57 @@
                     $stmt_identity );
 
                 $stmt_identity  = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ self::field_identity ] );
+                        $model->setContent( $row[ self::field_content ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        protected function readByContent( &$model ): bool
+        {
+            $retVal = false;
+
+            $table = self::table;
+            $fc = self::field_content;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fc} = ?;";
+
+            $stmt_comparator  = null;
+
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "s",
+                    $stmt_comparator );
+
+                $stmt_comparator  = $model->getContent();
 
                 // Executes the query
                 $stmt->execute();

@@ -9,25 +9,14 @@
     PageTitleController::getSingletonController()->append( ' - Profile' );
     $domain = new ProfileDomain();
 
-    $profile = $domain->retrieveProfileAt( SessionUserProfile::getSessionUserProfileIdentity() );
-    $profinfo = $domain->retrieveProfileInformationAt( $profile->getIdentity() );
+    $profile = $domain->retrieveProfileFormAt( SessionUserProfile::getSessionUserProfileIdentity() );
 
-    $expPro = $domain->expandModelProfile($profile);
-    $expansion = $domain->expandProfileInformation($profinfo);
-
-    $profileType = $domain->retrieveProfileTypeAt(SessionUserProfile::getSessionUserProfileType());
-
-    $person_addr = $expansion['person_address_model'];
-    $person_name = $expansion['person_name_model'];
-    $person_mail = $expansion['person_mail_model'];
-
-    $mail_view = new PersonEmailView( $person_mail );
+    $profinfo_factory = GroupAuthentication::getProfileInformationFactory();
+    $form_info = $profinfo_factory->readModelForm( SessionUserProfile::getSessionUserProfileIdentity() );
 
 
     $router = RouterSingleton::getInstance()->getCurrentRoute();
     $operation_value = $router->getValidationTree()[1]->getValue();
-
-
 ?>
 
 <!DOCTYPE html>

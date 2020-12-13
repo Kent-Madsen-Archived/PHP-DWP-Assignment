@@ -1,8 +1,5 @@
 use dwp_assignment;
 
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product_attribute CASCADE;
 
 -- Creates a new Table
 CREATE TABLE product_attribute
@@ -15,14 +12,6 @@ CREATE TABLE product_attribute
 -- Adding commentary to the table
 ALTER TABLE product_attribute COMMENT 'An object that represents redundant attributes, that can be used on products, like color, weight, size';
 
--- Indicate to software it's done
-SELECT 'product_attribute' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    person_email CASCADE;
 
 -- Creates a new Table
 CREATE TABLE person_email
@@ -35,13 +24,6 @@ CREATE TABLE person_email
 -- Adding commentary to the table
 ALTER TABLE person_email COMMENT 'An object that represents redundant email addresses. as they can be used in multiple domains.';
 
--- Indicate to software it's done
-SELECT 'person_email' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    person_name CASCADE;
 
 -- Creates a new Table
 CREATE TABLE person_name
@@ -62,14 +44,7 @@ CREATE TABLE person_name
 -- Adding commentary to the table
 ALTER TABLE person_name COMMENT 'An object that represents a list of different person names. that are often used';
 
--- Indicate to software it's done
-SELECT 'person_name' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    person_address CASCADE;
 
 -- Creates a new Table
 CREATE TABLE person_address
@@ -82,28 +57,26 @@ CREATE TABLE person_address
     street_address_floor VARCHAR( 10 ) DEFAULT NULL,
 
     zip_code INT DEFAULT 0 NOT NULL,
+    
     country VARCHAR( 256 ) DEFAULT 'none' NOT NULL,
+    city varchar(256) default 'none' not null,
 
     INDEX( street_name, 
            street_address_number, 
            street_address_floor, 
            zip_code, 
-           country ),
+           country,
+           city ),
 
     PRIMARY KEY( identity )
 );
 
+
 -- Adding commentary to the table
 ALTER TABLE person_address COMMENT 'An object that represents an address for a given person. Are used for personal information and invoices, etc.';
 
--- Indicate to software it's done
-SELECT 'person_address' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product_category CASCADE;
 
 -- Creates a new Table
 CREATE TABLE product_category
@@ -118,15 +91,8 @@ CREATE TABLE product_category
 -- Adding commentary to the table
 ALTER TABLE product_category COMMENT 'An object that represents a specific category for a product, if attribute is color, the category can be blue, yellow, orange, etc.';
 
--- Indicate to software it's done
-SELECT 'product_category' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    image_type CASCADE;
 
 -- Creates a new Table
 CREATE TABLE image_type
@@ -141,14 +107,6 @@ CREATE TABLE image_type
 -- Adding commentary to the table
 ALTER TABLE image_type COMMENT 'Represents different images types, that can be used on the site, small, preview, large, etc. used by the system to identity the proper size';
 
--- Indicate to software it's done
-SELECT 'image_type' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    profile_type CASCADE;
 
 CREATE TABLE profile_type
 (
@@ -162,17 +120,6 @@ CREATE TABLE profile_type
 -- Adding commentary to the table
 ALTER TABLE profile_type COMMENT 'Represents what a given users privileges are. Admin, store clerk, etc.';
 
-
--- Indicate to software it's done
-SELECT 'profile_type' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    associated_category CASCADE;
 
 -- Creates a new Table
 CREATE TABLE associated_category
@@ -192,16 +139,6 @@ CREATE TABLE associated_category
 -- Adding commentary to the table
 ALTER TABLE associated_category COMMENT 'represents an Given category given to a product. with an chosen attribute. indicating what type of category its in. ie attribute is color and category is red';
 
-
------ Indicate to software it's done
-SELECT 'associated_category' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    profile_information CASCADE;
 
 -- Creates a new Table
 CREATE TABLE profile_information
@@ -231,14 +168,7 @@ CREATE TABLE profile_information
 ALTER TABLE profile_information COMMENT 'stores user information for a given user.';
 
 
--- Indicate to software it's done
-SELECT 'profile_information' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    article CASCADE;
 
 -- Creates a new Table
 CREATE TABLE article
@@ -261,15 +191,8 @@ CREATE TABLE article
 ALTER TABLE article COMMENT 'represents article news for the webshop';
 
 
--- Indicate to software it's done
-select 'article' AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    profile CASCADE;
 
 -- Creates a new Table
 CREATE TABLE profile
@@ -288,16 +211,7 @@ CREATE TABLE profile
 -- Adding commentary to the table
 ALTER TABLE profile COMMENT 'represents an official user in the system. it contains only the users username, password and their privileges';
 
--- Indicate to software it's done
-SELECT 'profile' AS table_name, now() AS time_of_day , 'Created' AS state;
 
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    contact CASCADE;
 
 -- Creates a new Table
 CREATE TABLE contact
@@ -324,42 +238,28 @@ CREATE TABLE contact
 ALTER TABLE contact COMMENT 'temperary storage, for sending messages to the owner';
 
 
--- Indicate to software it's done
-SELECT 'contact'  AS table_name, now() AS time_of_day , 'Created' AS state ;
 
 
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product CASCADE;
 
 -- Creates a new Table
 CREATE TABLE product
 (
     identity INT NOT NULL UNIQUE AUTO_INCREMENT,
     
-    title VARCHAR( 256 ) NOT NULL ,
+    title VARCHAR( 256 ) NOT NULL,
 
     description TEXT NOT NULL ,
     price DOUBLE NOT NULL DEFAULT 0.0,
+    is_discounted bool not null default false,
 
     INDEX( title ),
     PRIMARY KEY( identity )
 );
 
 -- Adding commentary to the table
-ALTER TABLE product COMMENT 'represents a profuct, that the consumer can buy';
-
--- Indicate to software it's done
-SELECT 'product' AS table_name, now() AS time_of_day , 'Created' AS state ;
+ALTER TABLE product COMMENT 'represents a product, that the consumer can buy';
 
 
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    page_element CASCADE;
 
 -- Creates a new Table
 CREATE TABLE page_element
@@ -384,15 +284,6 @@ CREATE TABLE page_element
 ALTER TABLE page_element COMMENT 'represents page elements that can be downloaded and shown when needed. used for footer, and information that needs to be shown in specific places';
 
 
--- Indicate to software it's done
-SELECT 'page_element' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product_invoice CASCADE;
 
 -- Creates a new Table
 CREATE TABLE product_invoice
@@ -404,27 +295,23 @@ CREATE TABLE product_invoice
 
     registered  DATETIME DEFAULT now() NOT NULL,
 
-    address_id    INT NOT NULL,
-    mail_id       INT NOT NULL,
-    owner_name_id INT NOT NULL,
+    address_id    INT NOT NULL default 0,
+    mail_id       INT NOT NULL default 0,
+    owner_name_id INT NOT NULL default 0,
+
+    vat double default 0.0 not null,
+    status_id int default 1 not null,
 
     INDEX( address_id, 
            mail_id, 
            owner_name_id ),
+
     PRIMARY KEY( identity )
 );
 
 -- Adding commentary to the table
 ALTER TABLE product_invoice COMMENT 'Invoice, for when you brought a product';
 
--- Indicate to software it's done
-SELECT 'product_invoice' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    brought_product CASCADE;
 
 -- Creates a new Table
 CREATE TABLE brought_product
@@ -449,15 +336,6 @@ CREATE TABLE brought_product
 ALTER TABLE brought_product COMMENT 'associatian for product and invoice. telling what a user brought';
 
 
--- Indicate to software it's done
-SELECT 'brought_product' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product_entity CASCADE;
-
 -- Creates a new Table
 CREATE TABLE product_entity
 (
@@ -477,16 +355,6 @@ CREATE TABLE product_entity
 -- Adding commentary to the table
 ALTER TABLE product_entity COMMENT 'represents an physical product in the house';
 
-
--- Indicate to software it's done
-SELECT 'product_entity' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    image CASCADE;
 
 -- Creates a new Table
 CREATE TABLE image
@@ -514,15 +382,6 @@ CREATE TABLE image
 ALTER TABLE image COMMENT 'represents an image, that can be shown. it will have a link to its src. it can have children incase it have been edited or made smaller';
 
 
--- Indicate to software it's done
-SELECT 'image' AS table_name, now() AS time_of_day , 'Created' AS state ;
-
-
-
-
--- incase a table with similar name already exist, drop it
-DROP TABLE IF EXISTS
-    product_used_images CASCADE;
 
 -- Creates a new Table
 CREATE TABLE product_used_images
@@ -544,5 +403,147 @@ CREATE TABLE product_used_images
 ALTER TABLE product_used_images COMMENT 'represents an instance of a image, used for a given product';
 
 
--- Indicate to software it's done
-SELECT 'product_used_images' AS table_name, now() AS time_of_day , 'Created' AS state ;
+create table related_person_address(
+                                       profile_id int not null,
+                                       person_addr_id int not null,
+                                       registered datetime default now() not null
+);
+
+
+create table related_person_email(
+                                     profile_id int not null,
+                                     person_email_id int not null,
+                                     registered datetime default now() not null
+);
+
+
+create table related_person_name(
+                                    profile_id int not null,
+                                    person_name_id int not null,
+                                    registered datetime default now() not null
+);
+
+create table product_variation(
+                                  product_main_id int not null,
+                                  product_variant_of_id int not null
+);
+
+create table timed_discount(
+                               identity int not null auto_increment,
+                               product_id int not null,
+                               discount_begin date default now(),
+                               discount_end date default now(),
+                               discount_percentage int default 10 not null,
+                               primary key (identity)
+);
+
+
+create table response_invoice_charged(
+                                         identity int not null auto_increment,
+                                         invoice_id int not null,
+                                         response text not null,
+                                         processing_fee double not null,
+                                         primary key (identity)
+);
+
+create table product_invoice_relations(
+                                  identity int not null auto_increment,
+
+                                  product_a_id int not null,
+                                  product_b_id int not null,
+
+                                  content double not null default 0.0,
+
+                                  primary key (identity)
+);
+
+
+create table invoice_seller_name(
+                                    identity int not null auto_increment,
+                                    content varchar(256) unique not null,
+                                    index (content),
+                                    primary key (identity)
+);
+
+
+create table invoice
+(
+    identity int not null auto_increment,
+    invoice_identifier varchar(256),
+
+    -- Profile
+    customer_profile_id int not null,
+    customer_email_id int,
+    customer_address_id int,
+
+    -- Product Order Invoice. Contains the products that have been brougth.
+    product_invoice_id int not null,
+
+    -- Price together with Processing fees
+    charged_price double not null default 0.0,
+
+    -- Response from payment service
+    invoice_charge_response_id int,
+    invoice_status_id int not null,
+
+    -- Buyer Information
+    contact_invoice_seller_name_id int,
+    contact_address_id int,
+    contact_email_id int,
+    contact_cvr_id int,
+
+    contact_company_logo_id int,
+
+    --
+    invoice_is_due date default curtime() not null,
+    invoice_was_send date default curdate() not null,
+
+    -- Misc
+    footer text not null default '',
+
+    parent_invoice_id int,
+
+    primary key (identity)
+);
+
+create table invoice_cvr(
+                            identity int not null auto_increment,
+                            content varchar(256) not null,
+                            index(content),
+                            primary key (identity)
+);
+
+
+create table invoice_status(
+                               identity int not null auto_increment,
+                               content varchar(256) unique not null,
+                               index(content),
+                               primary key (identity)
+);
+
+create table invoice_charge_service(
+                                       identity int not null auto_increment,
+                                       content varchar(256) unique not null,
+                                       index (content),
+                                       primary key (identity)
+);
+
+create table invoice_charge_response(
+                                        identity int not null auto_increment,
+                                        service_id int not null,
+                                        response text not null,
+                                        primary key (identity)
+);
+
+create table store(
+                      identity int not null auto_increment,
+                      key_id int not null,
+                      stored_value int not null default 0,
+                      primary key (identity)
+);
+
+create table store_key(
+                          identity int not null auto_increment,
+                          content varchar(256) unique not null,
+                          primary key (identity)
+);

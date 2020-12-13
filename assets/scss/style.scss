@@ -1,4 +1,7 @@
-body 
+$primary-color: lighten(#34495e, 2) !default;
+$secondary-color: lighten(#e74c3c, 1) !default;
+
+body
 {
 
 }
@@ -146,9 +149,175 @@ footer
 
 }
 
-@media only screen and (max-width: 1024px) 
+.home-product-container
 {
-    
+    @extend .row;
+}
+
+
+.home-product-container .product
+{
+    @extend .col;
+    @extend .s3;
+}
+
+.product .actions
+{
+    @extend .section;
+}
+
+.home-product-view .more
+{
+    @extend .section;
+    width: 100%;
+    text-align: center;
+}
+
+section
+{
+    @extend .section;
+}
+
+h3
+{
+    text-align: center;
+}
+
+.home-articles-view .more
+{
+    @extend .section;
+    text-align: center;
+}
+
+.home-article-container
+{
+    @extend .row;
+}
+
+.home-article-container .article
+{
+    @extend .col;
+    @extend .m4;
+}
+
+.article .title
+{
+    @extend .flow-text;
+
+}
+
+.home-about-us .more
+{
+    @extend .section;
+    text-align: center;
+}
+
+.home-about-us .area .content
+{
+
+}
+
+.frontpage
+{
+    width: 100%;
+    height: 400px;
+
+    position: relative;
+}
+
+.frontpage .content 
+{
+    position: absolute;
+    top: -32px;
+    width: 100%;
+    height: 400px;
+    background-color: lighten($color: #34495e, $amount: 8);
+}
+
+.pay
+{
+    max-width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action 
+{
+    @extend .section;
+}
+
+.pay-button
+{
+    @extend .button;
+    @extend .waves-effect;
+    @extend .waves-light; 
+}
+
+.product-page
+{
+    @extend .row;
+}
+
+.product-page .product
+{
+    @extend .col;
+    @extend .s3;
+}
+
+.product-page .product .title
+{
+    @extend .flow-text;
+}
+
+.product-page .product .more .buy
+{
+    @extend .section;
+}
+
+.product-page .product .more .view
+{
+    @extend .section;
+    text-align: left;
+}
+
+.pagination-area
+{
+    @extend .pagination;
+    @extend .section;
+
+    text-align: center;
+}
+
+.pagination-area .li .a
+{
+    color: white;
+}
+
+.button-pagination
+{
+    @extend .btn;
+    color:white !important;
+}
+
+.shop-section
+{
+
+}
+
+.shop-section .shop-section-container
+{
+    @extend .row;
+}
+
+.shop-section-container .product
+{
+    @extend .col;
+    @extend .m3;
+}
+.view
+{
+    @extend .section;
+    text-align: center;
 }
 
 @import './materialize.scss';

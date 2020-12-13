@@ -4,7 +4,9 @@
      *  Author:
      *  Type: PHP Script
      */
-     $access = new AccessPrivilegesDomain(); 
+     $access = new AccessPrivilegesDomain();
+
+     $b = BasketSessionSingleton::getBasket();
 ?>
 <header> 
     <nav> 
@@ -46,16 +48,20 @@
 
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="/checkout"> 
-                        Checkout 
+                    <a href="/profile"> 
+                        Profile 
                     </a>
                 </li>
             <?php endif; ?>
-            
+
             <?php if( $access->is_logged_in() ): ?>
                 <li> 
-                    <a href="/profile"> 
-                        Profile 
+                    <a href="/checkout"> 
+                        Checkout
+                        <?php if(!is_null($b)):  ?>
+                            <?php $v = $b->getSize(); ?>
+                            <?php echo "<span class='new badge' data-badge-caption='wares'>{$v}</span>";?>
+                        <?php endif;?>
                     </a>
                 </li>
             <?php endif; ?>

@@ -26,13 +26,16 @@
         <?php getHeader(); ?>
         <?php $page_domain = new PageDomain(); ?>
 
-        <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
+        <?php 
+            $element = $page_domain->retrievePageElementByAreaKey('page_about'); 
+            $opening_hours = $page_domain->retrievePageElementByAreaKey('opening_hours');
+        ?>
 
         <main>
             <div>
-                <h2>
+                <h3>
                     <?php echo $element->getTitle();?>
-                </h2>
+                </h3>
 
 
                 <div>
@@ -43,6 +46,11 @@
                 <p>
                     <?php echo $element->getContent();?>
                 </p>
+            </div>
+
+            <div>
+                <p> <?php echo $opening_hours->getTitle();?> </p>
+                <p> <?php echo $opening_hours->getContent();  ?> </p>
             </div>
 
         </main>

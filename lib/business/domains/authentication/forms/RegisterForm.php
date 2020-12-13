@@ -49,6 +49,29 @@
             return $sanitizedValue;
         }
 
+        /**
+         * @return string
+         * @throws Exception
+         */
+        public final static function getPostCity(): string
+        {
+            if( !isset( $_POST[ 'form_register_city' ] ) )
+            {
+                throw new Exception('field is not set');
+            }
+
+            $value =  trim( $_POST[ 'form_register_city' ] );
+
+            if( is_null( $value ) || empty( $value ) )
+            {
+                throw new Exception('');
+            }
+
+            $sanitizedValue = filter_var( $value, FILTER_SANITIZE_STRING, FILTER_NULL_ON_FAILURE );
+            return $sanitizedValue;
+        }
+
+
 
         /**
          * @return string

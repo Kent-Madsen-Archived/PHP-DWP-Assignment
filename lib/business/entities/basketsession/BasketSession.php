@@ -107,6 +107,11 @@
             $this->entries = $entries;
         }
 
+        public final function getSize()
+        {
+            return sizeof($this->getEntries());
+        }
+
         /**
          * @return array
          */

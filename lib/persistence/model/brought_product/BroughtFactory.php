@@ -139,7 +139,7 @@
          * @return array
          * @throws Exception
          */
-        private final function readGlobal(): array
+        private function readGlobal(): array
         {
 
             // sql, that the prepared statement uses
@@ -209,7 +209,7 @@
          * @return array
          * @throws Exception
          */
-        private final function readFilter(): array
+        private function readFilter(): ?array
         {
             $table = self::table;
             $fiid = self::field_invoice_id;

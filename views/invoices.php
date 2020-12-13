@@ -31,9 +31,9 @@
         <?php getHeader(); ?>
         
         <main>
-            <h4>
+            <h3>
                 Invoices
-            </h4>
+            </h3>
 
             <?php if( !isset( $operation_value ) ): ?>
                 <?php require 'views/invoice/invoice_frontpage.php'; ?>

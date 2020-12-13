@@ -271,12 +271,16 @@
             {
                 if( $this->isToHideEmptyFields() )
                 {
-                    $city_value_to_be_printed = strval('');
+                    $city_value_to_be_printed = strval(' ');
                 }
                 else
                 {
                     $city_value_to_be_printed = strval( 'No city data.' );
                 }
+            }
+            else
+            {
+                $city_value_to_be_printed = $this->getModel()->getCity();
             }
 
             if( $this->isToCapitaliseWords() )

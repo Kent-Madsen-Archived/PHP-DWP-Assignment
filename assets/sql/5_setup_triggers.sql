@@ -132,3 +132,385 @@ ON person_address
         NEW.street_name           = lower( NEW.street_name ),
         NEW.country               = lower( NEW.country ),
         NEW.street_address_floor  = lower( NEW.street_address_floor );
+
+
+create trigger insert_product_price_zero_not_allowed
+    before insert
+    on product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = null;
+end if;
+end;
+
+create trigger update_product_price_zero_not_allowed
+    before update
+    on product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = null;
+end if;
+end;
+
+
+create trigger standard_update_brought_product
+    before update
+    on brought_product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = retrieve_product_price(NEW.product_id);
+end if;
+end;
+
+
+create trigger standard_insert_brought_product
+    before insert
+    on brought_product
+    for each row
+begin
+    if(NEW.price = 0) then
+            set NEW.price = retrieve_product_price(NEW.product_id);
+end if;
+end;
+
+
+
+create or replace trigger insert_brought_calculate_total_price
+                    after insert
+                    on
+                    brought_product for each row
+begin
+update product_invoice set product_invoice.total_price=retrieve_invoice_final_price(NEW.invoice_id),
+                           product_invoice.vat=retrieve_invoice_vat(NEW.invoice_id)
+where
+        product_invoice.identity = NEW.invoice_id;
+end;
+
+
+create or replace trigger update_brought_calculate_total_price
+    after update
+    on
+        brought_product for each row
+begin
+    update product_invoice set product_invoice.total_price=retrieve_invoice_final_price(NEW.invoice_id),
+                               product_invoice.vat=retrieve_invoice_vat(NEW.invoice_id)
+    where
+          product_invoice.identity = NEW.invoice_id;
+end;
+
+
+--
+create trigger standard_insert_product_invoice
+    before insert
+    on product_invoice
+    for each row
+begin
+    if(NEW.address_id = 0) then
+            set NEW.address_id = retrieve_profile_address(NEW.profile_id);
+end if;
+
+if(NEW.mail_id = 0) then
+            set NEW.mail_id = retrieve_profile_email(NEW.profile_id);
+end if;
+
+        if(NEW.owner_name_id = 0) then
+            set NEW.owner_name_id = retrieve_profile_name(NEW.profile_id);
+end if;
+end;
+
+create trigger standard_update_product_invoice
+    before update
+    on product_invoice
+    for each row
+begin
+    if(NEW.address_id = 0) then
+            set NEW.address_id = retrieve_profile_address(NEW.profile_id);
+end if;
+
+if(NEW.mail_id = 0) then
+            set NEW.mail_id = retrieve_profile_email(NEW.profile_id);
+end if;
+
+        if(NEW.owner_name_id = 0) then
+            set NEW.owner_name_id = retrieve_profile_name(NEW.profile_id);
+end if;
+end;
+
+
+create trigger relate_person_name_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_name(profile_id, person_name_id)
+    values (NEW.profile_id, NEW.person_name_id);
+end;
+
+create trigger relate_person_addr_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_address(profile_id, person_addr_id)
+    values (NEW.profile_id, NEW.person_address_id);
+end;
+
+create trigger relate_person_email_from_profile_info_on_insert
+    after insert on profile_information
+    for each row
+begin
+    insert into related_person_email(profile_id, person_email_id)
+    values (NEW.profile_id, NEW.person_email_id);
+end;
+
+
+
+create or replace trigger relate_person_name_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_name_id = OLD.person_name_id)) then
+        insert into related_person_name(profile_id, person_name_id)
+        values (NEW.profile_id, NEW.person_name_id);
+    end if;
+end;
+
+create or replace trigger relate_person_addr_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_address_id = OLD.person_address_id)) then
+        insert into related_person_address(profile_id, person_addr_id)
+        values (NEW.profile_id, NEW.person_address_id);
+    end if;
+end;
+
+create or replace trigger relate_person_email_from_profile_info_on_update
+    after update on profile_information
+    for each row
+begin
+    if(not(NEW.person_email_id = OLD.person_email_id)) then
+        insert into related_person_email(profile_id, person_email_id)
+        values (NEW.profile_id, NEW.person_email_id);
+    end if;
+end;
+
+
+
+create or replace trigger insert_timed_discount_update_product_discount
+    after insert
+    on timed_discount
+    for each row
+    update product set discount_tag = NEW.identity where product.identity = NEW.product_id and NEW.discount_begin <= CURDATE() and NEW.discount_end >= CURDATE();
+
+create or replace trigger update_timed_discount_update_product_discount
+    after update
+    on timed_discount
+    for each row
+    update product set discount_tag = NEW.identity where product.identity = NEW.product_id and NEW.discount_begin <= CURDATE() and NEW.discount_end >= CURDATE();
+
+create or replace trigger on_insert_invoice_apply_identifier
+    before insert
+    on
+        invoice for each row
+begin
+    set NEW.invoice_identifier = CONCAT(CONVERT(DAY(CURRENT_DATE()), CHAR), CONVERT(MONTH(CURRENT_DATE()), CHAR), CONVERT(YEAR(CURRENT_DATE()), CHAR), CONVERT('-', CHAR), CONVERT(LAST_INSERT_ID()+1, CHAR));
+end;
+
+create or replace trigger on_insert_invoice_apply_customer_details
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.customer_email_id is null) then
+        set NEW.customer_email_id = retrieve_profile_email(NEW.customer_profile_id);
+    end if;
+
+    if(NEW.customer_address_id is null) then
+        set NEW.customer_address_id = retrieve_profile_address(NEW.customer_profile_id);
+    end if;
+
+end;
+
+create or replace trigger on_update_invoice_apply_customer_details
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.customer_email_id is null) then
+        set NEW.customer_email_id = retrieve_profile_email(NEW.customer_profile_id);
+    end if;
+
+    if(NEW.customer_address_id is null) then
+        set NEW.customer_address_id = retrieve_profile_address(NEW.customer_profile_id);
+    end if;
+end;
+
+
+create or replace trigger on_insert_invoice_apply_price
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.charged_price = 0.0) then
+        set NEW.charged_price = retrieve_invoice_final_price(NEW.product_invoice_id);
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_price
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.charged_price = 0.0) then
+        set NEW.charged_price = retrieve_invoice_final_price(NEW.product_invoice_id);
+    end if;
+end;
+
+create or replace trigger on_insert_invoice_apply_default_contact_email
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_email_id is null) then
+        set NEW.contact_email_id = retrieve_default_contact_email();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_seller_name
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_invoice_seller_name_id is null) then
+        set NEW.contact_invoice_seller_name_id = retrieve_default_contact_seller_name();
+    end if;
+end;
+
+
+
+create or replace trigger on_insert_invoice_apply_default_contact_cvr
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_cvr_id is null) then
+        set NEW.contact_cvr_id = retrieve_default_contact_cvr();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_cvr
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_cvr_id is null) then
+        set NEW.contact_cvr_id = retrieve_default_contact_cvr();
+    end if;
+end;
+
+
+
+create or replace trigger on_insert_invoice_apply_default_contact_address
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_address_id is null) then
+        set NEW.contact_address_id = retrieve_default_contact_address();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_address
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_address_id is null) then
+        set NEW.contact_address_id = retrieve_default_contact_address();
+    end if;
+end;
+
+
+
+create or replace trigger on_insert_invoice_apply_default_contact_seller_name
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_invoice_seller_name_id is null) then
+        set NEW.contact_invoice_seller_name_id = retrieve_default_contact_seller_name();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_seller_name
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_invoice_seller_name_id is null) then
+        set NEW.contact_invoice_seller_name_id = retrieve_default_contact_seller_name();
+    end if;
+end;
+
+create or replace trigger on_insert_invoice_apply_default_contact_email
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_email_id is null) then
+        set NEW.contact_email_id = retrieve_default_contact_email();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_email
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_email_id is null) then
+        set NEW.contact_email_id = retrieve_default_contact_email();
+    end if;
+end;
+
+create or replace trigger on_insert_invoice_apply_default_contact_cvr
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_cvr_id is null) then
+        set NEW.contact_cvr_id = retrieve_default_contact_cvr();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_cvr
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_cvr_id is null) then
+        set NEW.contact_cvr_id = retrieve_default_contact_cvr();
+    end if;
+end;
+
+create or replace trigger on_insert_invoice_apply_default_contact_address
+    before insert
+    on
+        invoice for each row
+begin
+    if(NEW.contact_address_id is null) then
+        set NEW.contact_address_id = retrieve_default_contact_address();
+    end if;
+end;
+
+create or replace trigger on_update_invoice_apply_default_contact_address
+    before update
+    on
+        invoice for each row
+begin
+    if(NEW.contact_address_id is null) then
+        set NEW.contact_address_id = retrieve_default_contact_address();
+    end if;
+end;
+

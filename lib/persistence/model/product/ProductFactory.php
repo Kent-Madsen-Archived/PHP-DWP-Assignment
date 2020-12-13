@@ -162,6 +162,98 @@
 
 
         /**
+         * @return array|null
+         * @throws Exception
+         */
+        public final function readAllIdentities(): ?array
+        {
+            // return array
+            $retVal = null;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT identity FROM delta_all_with_no_discount_product_ids;";
+
+            // prepare statement variables
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $id = $row[ self::field_identity ];
+
+                        array_push( $retVal, $id );
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+        public final function readMaxAndMin(): ?array
+        {
+            // return array
+            $retVal = null;
+
+            // sql, that the prepared statement uses
+            $sql = "SELECT * FROM delta_product_max_and_min;";
+
+            // prepare statement variables
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    $retVal = array();
+
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $max = $row[ 'maximum' ];
+                        $min = $row[ 'minimum' ];
+
+                        $retVal = array('max'=>$max, 'min'=>$min);
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error: ' . $ex );
+            }
+            finally
+            {
+                //
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
          * @param $model
          * @return bool
          * @throws Exception

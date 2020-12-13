@@ -20,6 +20,7 @@
         public const field_street_address_floor = 'street_address_floor';
         public const field_zip_code = 'zip_code';
         public const field_country = 'country';
+        public const field_city = 'city';
 
         /**
          * PersonAddressFactory constructor.
@@ -147,6 +148,7 @@
                         $personAddressModel->setCountry(  $row[ self::field_country ]  );
 
                         $personAddressModel->setStreetAddressFloor( $row[ self::field_street_address_floor ]  );
+                        $personAddressModel->setCity( $row[ self::field_city ] );
 
                         array_push( $retVal, $personAddressModel );
                     }
@@ -222,6 +224,7 @@
                         $model->setCountry(  $row[ self::field_country ]  );
 
                         $model->setStreetAddressFloor( $row[ self::field_street_address_floor ]  );
+                        $model->setCity( $row[ self::field_city ] );
 
                         $retVal = true;
                     }
@@ -265,8 +268,9 @@
             $fc = self::field_country;
 
             $f_street_address_floor = self::field_street_address_floor;
+            $fcity = self::field_city;
 
-            $sql = "INSERT INTO {$table}( {$f_street_address_name}, {$f_street_address_number}, {$fzc}, {$fc}, {$f_street_address_floor} ) VALUES( ?, ?, ?, ?, ? );";
+            $sql = "INSERT INTO {$table}( {$f_street_address_name}, {$f_street_address_number}, {$fzc}, {$fc}, {$f_street_address_floor}, {$fcity} ) VALUES( ?, ?, ?, ?, ?, ? );";
 
             // Prepared Statement Variables
             $stmt_name = null;
@@ -274,6 +278,7 @@
             $stmt_zip_code = null;
             $stmt_country = null;
             $stmt_street_floor = null;
+            $stmt_city = null;
 
             // Opens a connection to a MySQL database
             $local_connection = $this->getWrapper()->connect();
@@ -283,12 +288,13 @@
                 $stmt = $local_connection->prepare( $sql );
                 
                 //
-                $stmt->bind_param( "sisss",
+                $stmt->bind_param( "sissss",
                                     $stmt_name, 
                                     $stmt_street_address_number, 
                                     $stmt_zip_code, 
                                     $stmt_country,
-                                    $stmt_street_floor );
+                                    $stmt_street_floor,
+                                    $stmt_city );
 
                 //
                 $stmt_name                  =  $model->getStreetAddressName();
@@ -297,6 +303,7 @@
 
                 $stmt_zip_code              =  $model->getZipCode();
                 $stmt_country               =  $model->getCountry();
+                $stmt_city                  = $model->getCity();
 
                 // Executes the query
                 $stmt->execute();
@@ -342,10 +349,11 @@
             $fzc = self::field_zip_code;
             $fc = self::field_country;
             $fsaf = self::field_street_address_floor;
+            $fcity = self::field_city;
 
             $fid = self::field_identity;
 
-            $sql = "UPDATE {$table} SET {$fsn} = ?, {$fsan} = ?, {$fzc} = ?, {$fc} = ?, {$fsaf} = ? WHERE {$fid} = ?;";
+            $sql = "UPDATE {$table} SET {$fsn} = ?, {$fsan} = ?, {$fzc} = ?, {$fc} = ?, {$fsaf} = ?, {$fcity} = ? WHERE {$fid} = ?;";
 
             // prepared statement variables
             $stmt_street_address_name   = null;
@@ -354,6 +362,7 @@
 
             $stmt_zip_code              = null;
             $stmt_country               = null;
+            $stmt_city = null;
 
             $stmt_identity              = null;
 
@@ -365,12 +374,13 @@
                 $stmt = $local_connection->prepare( $sql );
                 
                 //
-                $stmt->bind_param( "sisssi",
+                $stmt->bind_param( "sissssi",
                                     $stmt_street_address_name,
                                     $stmt_street_address_number, 
                                     $stmt_zip_code, 
                                     $stmt_country,
                                     $stmt_address_floor,
+                                    $stmt_city,
                                     $stmt_identity );
 
                 //
@@ -380,6 +390,7 @@
 
                 $stmt_zip_code              = $model->getZipCode();
                 $stmt_country               = $model->getCountry();
+                $stmt_city                  = $model->getCity();
 
                 $stmt_identity              = $model->getIdentity();
 
@@ -505,7 +516,7 @@
                 $this->getWrapper()->disconnect();
             }
 
-            return intval( $retVal );
+            return $retVal;
         }
 
 
@@ -513,7 +524,7 @@
          * @param array $filter
          * @return mixed|void
          */
-        public final function lengthCalculatedWithFilter(array $filter)
+        public final function lengthCalculatedWithFilter( array $filter )
         {
             // TODO: Implement lengthCalculatedWithFilter() method.
         }

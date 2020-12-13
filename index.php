@@ -19,8 +19,6 @@
     // Setup session if it's not called by default
     // in php.ini set session.auto_start to 1
     session_start();
-?>
-<?php
 
     //
     $session_fixation = new SessionFixationSecurity();

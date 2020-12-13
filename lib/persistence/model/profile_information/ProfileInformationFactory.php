@@ -82,6 +82,17 @@
 
 
         /**
+         * @return mixed|ProfileInformationModel
+         * @throws Exception
+         */
+        public final function createModelForm(): ?ProfileInformationModelForm
+        {
+            $model = new ProfileInformationModelForm();
+            return $model;
+        }
+
+
+        /**
          * @param $var
          * @return bool
          */
@@ -223,6 +234,78 @@
                         $model->setRegistered( $row[ self::field_registered ] );
 
                         $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+        /**
+         * @param $index
+         * @return ProfileInformationModelForm|null
+         * @throws Exception
+         */
+        public final function readModelForm( $index ): ?ProfileInformationModelForm
+        {
+            //
+            $sql = "SELECT * FROM profile_information_model_view WHERE profile_id = ?;";
+
+            $stmt_id = null;
+
+            //
+            $connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_id );
+
+                $stmt_id = $index;
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model = $this->createModelForm();
+
+                        $model->setIdentity( $row[ 'profile_information_identity' ] );
+                        $model->setProfileId( $row[ self::field_profile_id ] );
+
+                        $model->setFirstname($row[ 'person_name_firstname' ]);
+                        $model->setLastname($row[ 'person_name_lastname' ]);
+                        $model->setMiddlename($row['person_name_middlename']);
+
+                        $model->setAddressCountry($row['person_address_country']);
+                        $model->setAddressStreetName($row['person_address_street_name']);
+                        $model->setAddressNumber($row['person_address_number']);
+                        $model->setAddressStreetFloor($row['person_address_floor']);
+                        $model->setAddressCity($row['person_address_city']);
+                        $model->setAddressZipCode($row['person_address_zip_code']);
+
+                        $model->setEmail($row['person_email']);
+
+                        $model->setPersonPhone(  $row[ 'person_phone' ] );
+                        $model->setPersonBirthday( $row[ 'person_birthday'] );
+
+                        $model->isDone();
+
+                        $retVal = $model;
                     }
                 }
             }

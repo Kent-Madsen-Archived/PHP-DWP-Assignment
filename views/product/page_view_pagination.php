@@ -24,49 +24,60 @@ $privileges = new AccessPrivilegesDomain();
     $products = $domain->retrieveProductsAt( $pagination, 5);
 ?>
 
-<div>
-    <?php foreach ($products as $product): ?>
-        <?php
-            $view = new ProductView($product);
-        ?>
-            <h5><?php echo $view->printAreaTitle();?></h5>
-            <p> <?php echo $view->printSummaryOfDescription(); ?></p>
-            <?php if($privileges->is_logged_in()): ?>
-                <form method="post"
-                      action="/product/buy">
-                    <input type="hidden" <?php echo $view->printAreaIdentity(); ?> name="product_basket_product_identity">
-                    <input type="hidden" value="1" placeholder="quantity" name="product_basket_number_of_products">
-                    <input type="hidden" value="<?php echo $view->printFieldTypePrice(); ?>" name="product_basket_price">
+<?php if( !is_null( $products ) ): ?>
+    <div class="product-page">
+        <?php foreach ( $products as $product ): ?>
+            <div class="product">
+                <?php
+                    $view = new ProductView( $product );
+                ?>
+                    <h5><?php echo $view->printAreaTitle();?></h5>
+                    <p> <?php echo $view->printSummaryOfDescription(); ?></p>
 
-                    <button class="waves-effect waves-light btn-small" name="product_basket_submit" value="1">
-                        insert into Basket
-                    </button>
-                </form>
-            <?php endif; ?>
+                <div class="more">
+                    <div class="buy">
+                        <?php if($privileges->is_logged_in()): ?>
+                            <form method="post"
+                                  action="/product/buy">
+                                <input type="hidden" <?php echo $view->printAreaIdentity(); ?> name="product_basket_product_identity">
+                                <input type="hidden" value="1" placeholder="quantity" name="product_basket_number_of_products">
+                                <input type="hidden" value="<?php echo $view->printFieldTypePrice(); ?>" name="product_basket_price">
 
-            <a class="button" <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang(); ?>>
-                View Product
-            </a>
-    <?php endforeach; ?>
-</div>
+                                <button class="button" name="product_basket_submit" value="1">
+                                    insert into Basket
+                                </button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
 
-<ul class="pagination">
+                    <div class="view">
+                        <a class="button" <?php echo $view->printAreaHrefLink(); echo $view->printAreaHrefLang(); ?>>
+                            View Product
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<ul class="pagination-area">
     <li>
         <?php $previous_pagination = $pag->viewPreviousPagination() ?>
 
         <?php if( !$pag->isPreviousMinimum() ): ?>
-            <a class="button" href='<?php echo $pag->generateLink($previous_pagination);?>'>
+            <a class="button-pagination" href='<?php echo $pag->generateLink($previous_pagination);?>'>
                 Previous
             </a>
         <?php else:?>
-            <a class="button disabled">
+            <a class="button-pagination disabled">
                 Previous
             </a>
         <?php endif; ?>
     </li>
 
     <li>
-        <a class="button disabled">
+        <a class="button-pagination disabled">
             <?php echo $pag->viewCurrentPagination();?>
         </a>
     </li>
@@ -75,11 +86,11 @@ $privileges = new AccessPrivilegesDomain();
         <?php $next_pagination = $pag->viewNextPagination(); ?>
 
         <?php if( !$pag->isNextMax() ): ?>
-            <a href="<?php echo $pag->generateLink($next_pagination)?>" class="button">
+            <a href="<?php echo $pag->generateLink($next_pagination)?>" class="button-pagination">
                 Next
             </a>
         <?php else:?>
-            <a class="button disabled">
+            <a class="button-pagination disabled">
                 Next
             </a>
         <?php endif; ?>

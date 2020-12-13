@@ -33,7 +33,7 @@
 
             <input type="hidden" value="<?php echo $view->printFieldTypePrice(); ?>" name="product_basket_price">
 
-            <button class="waves-effect waves-light btn-small" name="product_basket_submit" value="1">
+            <button class="button" name="product_basket_submit" value="1">
                 insert into Basket
             </button>
         </form>

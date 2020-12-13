@@ -21,6 +21,8 @@ $articles = $domain->retrieveArticlesOrderedByCreationAt(0, 8);
     ?>
 <?php endif; ?>
 
-<a class="button" href="/news/pagination">
-    More articles
-</a>
+<div class="view">
+    <a class="button" href="/news/pagination">
+        More articles
+    </a>
+</div>

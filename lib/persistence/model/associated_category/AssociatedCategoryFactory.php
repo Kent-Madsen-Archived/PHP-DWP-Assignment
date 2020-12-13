@@ -174,10 +174,35 @@
                 throw new Exception( 'Not accepted model' );
             }
 
+            $retVal = false;
+
+            if( !is_null( $model->getIdentity() ) )
+            {
+                $retVal = $this->readModelByIdentity($model );
+                return $retVal;
+            }
+
+            if( !is_null( $model->getProductId() ) )
+            {
+                $retVal = $this->readModelByProductId($model);
+            }
+
+
+            return $retVal;
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        protected final function readModelByIdentity( &$model ): bool
+        {
             $table = self::table;
             $fid = self::field_identity;
             $sql = "SELECT * FROM {$table} WHERE {$fid} = ?;";
-            
+
             $retVal = false;
 
             // Connection
@@ -191,6 +216,65 @@
                     $stmt_identity );
 
                 $stmt_identity  = $model->getIdentity();
+
+                // Executes the query
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if( $result->num_rows > CONSTANT_ZERO )
+                {
+                    while( $row = $result->fetch_assoc() )
+                    {
+                        $model->setIdentity( $row[ self::field_identity ] );
+
+                        $model->setProductAttributeId( $row[ self::field_product_attribute_id ] );
+                        $model->setProductCategoryId( $row[ self::field_product_category_id ] );
+
+                        $model->setProductId( $row[ self::field_product_id ] );
+
+                        $retVal = true;
+                    }
+                }
+            }
+            catch( Exception $ex )
+            {
+                throw new Exception( 'Error:' . $ex );
+            }
+            finally
+            {
+                $this->getWrapper()->disconnect();
+            }
+
+            return $retVal;
+        }
+
+
+        /**
+         * @param $model
+         * @return bool
+         * @throws Exception
+         */
+        protected final function readModelByProductId( &$model ): bool
+        {
+            $table = self::table;
+            $fpid = self::field_product_id;
+
+            $sql = "SELECT * FROM {$table} WHERE {$fpid} = ?;";
+
+            $retVal = false;
+
+            // Connection
+            $local_connection = $this->getWrapper()->connect();
+
+            try
+            {
+                $stmt = $local_connection->prepare( $sql );
+
+                $stmt->bind_param( "i",
+                    $stmt_product_id );
+
+                $stmt_product_id  = $model->getProductId();
 
                 // Executes the query
                 $stmt->execute();

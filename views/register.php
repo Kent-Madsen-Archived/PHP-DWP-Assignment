@@ -49,9 +49,9 @@
         <?php getHeader(); ?>
 
         <main>
-            <h2>
+            <h3>
                 Register
-            </h2>
+            </h3>
 
               <div id="register_form_boundary"> 
                      <form action="./register" 
@@ -67,10 +67,10 @@
                                    name="security_empty" 
                                    value="">
 
-                            <h3> Register new account </h3>
+                            <h4> Register new account </h4>
                             
-                            <div>           
-                                   <h4> User credentials </h4>
+                            <section class="section">
+                                   <h5> User credentials </h5>
 
                                    <input type="text" 
                                           name="form_register_username" 
@@ -92,10 +92,10 @@
                                           id="form_register_password_again_id">
 
                                    <label> Password Again </label>
-                            </div>
+                            </section>
 
-                            <div> 
-                                   <h4> Name </h4>
+                            <section class="section">
+                                   <h5> Name </h5>
 
                                    <input type="text" 
                                           name="form_register_firstname" 
@@ -117,10 +117,10 @@
                                           id="form_register_middlename_id">
                                    
                                    <label> Middle name </label>
-                            </div>
+                            </section>
 
-                            <div> 
-                                   <h4> Personal Information </h4>
+                            <section class="section">
+                                   <h5> Personal Information </h5>
 
                                    <input type="email" 
                                           name="form_register_email" 
@@ -142,56 +142,78 @@
                                           id="form_register_phone_number_id">
                                    
                                    <label> Phone number </label>
+                            </section>
+
+                            <section class="section">
+                                    <div class="row">
+                                      <h5> Address </h5>
+                                      <div class="col m10">
+                                          <input type="text"
+                                                 name="form_register_street_name"
+                                                 placeholder="Street name"
+                                                 id="form_register_street_name_id">
+
+                                          <label> Street Address name </label>
+                                      </div>
+                                       <div class="col m2">
+                                           <input type="number"
+                                                  name="form_register_street_address_number"
+                                                  placeholder="Number"
+                                                  id="form_register_street_address_number_id"
+                                                  value="0">
+
+                                           <label> Street Address number </label>
+                                       </div>
+                                        <div class="col m12">
+                                            <input type="text"
+                                                   name="form_register_street_floor"
+                                                   placeholder="floor"
+                                                   id="form_register_street_floor_id">
+
+                                            <label> Floor </label>
+                                        </div>
+                                    </div>
+
+                                <div class="row">
+                                    <div class="col m4">
+                                        <input type="text"
+                                               name="form_register_city"
+                                               placeholder="City"
+                                               id="form_register_city">
+
+                                        <label> City </label>
+                                    </div>
+
+                                    <div class="col m4">
+                                        <input type="number"
+                                               name="form_register_street_zip_code"
+                                               placeholder="Zip code"
+                                               id="form_register_street_zip_code_id">
+
+                                        <label> Zip code </label>
+                                    </div>
+
+                                    <div class="col l4">
+                                        <input type="text"
+                                               name="form_register_country"
+                                               placeholder="Country"
+                                               id="form_register_country_id">
+
+                                        <label> Country </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <div class="section">
+                                <div class="g-recaptcha"
+                                     data-sitekey="<?php ReCaptchaV2::PrintPublicKey(); ?>">
+                                </div>
                             </div>
 
-                            <div> 
-                                   
-                                   <h4> Address </h4>
-
-                                   <input type="text" 
-                                          name="form_register_country" 
-                                          placeholder="Country"
-                                          id="form_register_country_id">
-
-                                   <label> Country </label>
-
-                                   <input type="text" 
-                                          name="form_register_street_name" 
-                                          placeholder="Street name"
-                                          id="form_register_street_name_id">
-
-                                   <label> Street name </label>
-                                   
-                                   <input type="number" 
-                                          name="form_register_street_address_number" 
-                                          placeholder="Number"
-                                          id="form_register_street_address_number_id"
-                                          value="0">
-
-                                   <label> Street address number </label>
-
-                                   <input type="number" 
-                                          name="form_register_street_zip_code" 
-                                          placeholder="Zip code"
-                                          id="form_register_street_zip_code_id">
-
-                                   <label> Zip code </label>
-
-                                   <input type="text" 
-                                          name="form_register_street_floor" 
-                                          placeholder="floor"
-                                          id="form_register_street_floor_id">
-                                   <label> Floor </label>
-                            </div>
-
-                            <div class="g-recaptcha" 
-                                 data-sitekey="<?php ReCaptchaV2::PrintPublicKey(); ?>">
-                            </div>
-
-                            <div> 
+                            <div class="section view">
                                    <input type="submit" 
                                           value="send" 
-                                          class="btn"
+                                          class="button"
                                           name="form_register_submit">
                             </div>
 

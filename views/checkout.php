@@ -39,9 +39,9 @@
         ?>
 
         <main>
-            <h2>
+            <h3>
                 Checkout
-            </h2>
+            </h3>
 
             <?php if( !is_null( $overview ) ): ?>
                 <?php
