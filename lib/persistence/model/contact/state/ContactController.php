@@ -15,7 +15,7 @@
          * @param ContactModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ContactModel $model )
+        public function __construct( ?ContactModel $model )
         {
             $this->setModel( $model );
         }

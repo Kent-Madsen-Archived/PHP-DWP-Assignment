@@ -9,12 +9,11 @@
      * Class ProductCategoryView
      */
     class ProductCategoryView
-        extends BaseMVCView
     {
         /**
          * @param ProductCategoryController|null $controller
          */
-        public function __constructor( ?ProductCategoryController $controller )
+        public function __construct( ?ProductCategoryController $controller )
         {
             $this->setController( $controller );
         }

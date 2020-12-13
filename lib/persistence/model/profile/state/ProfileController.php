@@ -15,7 +15,7 @@
          * @param ProfileModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProfileModel $model )
+        public function __construct( ?ProfileModel $model )
         {
             $this->setModel( $model );
         }

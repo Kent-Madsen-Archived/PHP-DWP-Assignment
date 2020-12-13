@@ -14,7 +14,7 @@
         /**
          * @param TimedDiscountController|null $controller
          */
-        public function __constructor( ?TimedDiscountController $controller )
+        public function __construct( ?TimedDiscountController $controller )
         {
             $this->setController( $controller );
         }

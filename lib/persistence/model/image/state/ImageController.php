@@ -15,7 +15,7 @@
          * @param ImageModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ImageModel $model )
+        public function __construct( ?ImageModel $model )
         {
             $this->setModel( $model );
         }

@@ -15,7 +15,7 @@
          * @param ProductAttributeModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductAttributeModel $model )
+        public function __construct( ?ProductAttributeModel $model )
         {
             $this->setModel( $model );
         }

@@ -13,7 +13,7 @@
         /**
          * @param ProductAttributeController|null $controller
          */
-        public function __constructor( ?ProductAttributeController $controller )
+        public function __construct( ?ProductAttributeController $controller )
         {
 
         }

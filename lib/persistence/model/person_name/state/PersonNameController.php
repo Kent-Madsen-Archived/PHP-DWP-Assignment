@@ -15,7 +15,7 @@
          * @param PersonNameModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?PersonNameModel $model )
+        public function __construct( ?PersonNameModel $model )
         {
             $this->setModel( $model );
         }

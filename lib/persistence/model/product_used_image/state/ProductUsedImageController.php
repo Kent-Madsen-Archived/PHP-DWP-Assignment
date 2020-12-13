@@ -15,7 +15,7 @@
          * @param ProductUsedImageModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductUsedImageModel $model )
+        public function __construct( ?ProductUsedImageModel $model )
         {
             $this->setModel( $model );
         }

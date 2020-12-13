@@ -14,7 +14,7 @@
         /**
          * @param ProfileTypeController|null $controller
          */
-        public function __constructor( ?ProfileTypeController $controller )
+        public function __construct( ?ProfileTypeController $controller )
         {
             $this->setController( $controller );
         }

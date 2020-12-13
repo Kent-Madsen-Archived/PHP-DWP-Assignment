@@ -15,7 +15,7 @@
          * @param ArticleModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ArticleModel $model )
+        public function __construct( ?ArticleModel $model )
         {
             $this->setModel( $model );
 

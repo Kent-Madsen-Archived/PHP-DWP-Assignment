@@ -15,7 +15,7 @@
          * @param BroughtProductModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?BroughtProductModel $model )
+        public function __construct( ?BroughtProductModel $model )
         {
             $this->setModel( $model );
         }

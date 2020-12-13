@@ -14,7 +14,7 @@
          * @param $controller
          * @throws Exception
          */
-        public function __constructor( ?ProductUsedImageController $controller )
+        public function __construct( ?ProductUsedImageController $controller )
         {
             $this->setController($controller);
         }

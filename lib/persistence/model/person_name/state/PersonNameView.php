@@ -13,7 +13,7 @@
         /**
          * @param PersonNameController|null $controller
          */
-        public function __constructor( ?PersonNameController $controller )
+        public function __construct( ?PersonNameController $controller )
         {
             $this->setController( $controller );
         }

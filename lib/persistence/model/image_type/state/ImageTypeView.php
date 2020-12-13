@@ -13,7 +13,7 @@
         /**
          * @param ImageTypeController $controller
          */
-        public function __constructor( ImageTypeController $controller )
+        public function __construct( ImageTypeController $controller )
         {
             $this->setController( $controller );
         }

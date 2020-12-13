@@ -13,7 +13,7 @@
          /**
           * @param ContactController|null $controller
           */
-         public function __constructor( ?ContactController $controller )
+         public function __construct( ?ContactController $controller )
          {
              $this->setController( $controller );
          }

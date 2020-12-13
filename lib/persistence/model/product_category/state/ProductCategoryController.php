@@ -15,7 +15,7 @@
          * @param ProductCategoryModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductCategoryModel $model )
+        public function __construct( ?ProductCategoryModel $model )
         {
             $this->setModel( $model );
         }

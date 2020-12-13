@@ -15,7 +15,7 @@
          * @param PageElementModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?PageElementModel $model )
+        public function __construct( ?PageElementModel $model )
         {
             $this->setModel( $model );
         }

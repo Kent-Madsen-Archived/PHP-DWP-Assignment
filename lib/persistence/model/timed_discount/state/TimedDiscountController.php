@@ -15,7 +15,7 @@
          * @param TimedDiscountModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?TimedDiscountModel $model )
+        public function __construct( ?TimedDiscountModel $model )
         {
             $this->setModel( $model );
         }

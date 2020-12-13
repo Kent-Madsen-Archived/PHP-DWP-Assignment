@@ -13,7 +13,7 @@
         /**
          * @param ProductEntityController|null $controller
          */
-        public function __constructor( ?ProductEntityController $controller )
+        public function __construct( ?ProductEntityController $controller )
         {
             $this->setController( $controller );
         }
