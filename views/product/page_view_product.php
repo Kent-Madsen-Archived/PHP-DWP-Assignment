@@ -70,13 +70,13 @@
 <div>
     <h4>recommendation area</h4>
     <div>
-        <?php if(!is_null($recommended)): ?>
+        <?php if( !is_null( $recommended ) ): ?>
         <!-- Recommended -->
-            <?php foreach ($recommended as $product_rec): ?>
+            <?php foreach ( $recommended as $product_rec ): ?>
                 <?php
                     $product_rec_ent = $product_fac->createModel();
-                    $product_rec_ent->setIdentity($product_rec['product_id']);
-                    $product_fac->readModel($product_rec_ent);
+                    $product_rec_ent->setIdentity( $product_rec[ 'product_id' ] );
+                    $product_fac->readModel($product_rec_ent );
                 ?>
             <div>
                 <h5><?php echo $product_rec_ent->getTitle(); ?></h5>

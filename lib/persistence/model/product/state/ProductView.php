@@ -9,15 +9,32 @@
      * Class ProductView
      */
     class ProductView
-        extends BaseMVCView
     {
         /**
-         * @param ProductModel $model
-         * @throws Exception
+         * ProductView constructor.
+         * @param $controller
          */
-        public function __construct( ProductModel $model )
+        public function __construct( ?ProductController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller = null;
+
+        /**
+         * @param ProductController|null $controller
+         */
+        public function setController( ?ProductController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public function getController(): ?ProductController
+        {
+            return $this->controller;
         }
 
 

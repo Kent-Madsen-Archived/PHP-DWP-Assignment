@@ -10,15 +10,31 @@
      * Class ProfileTypeView
      */
     class ProfileTypeView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param ProfileTypeController|null $controller
          */
-        public function __constructor( $model )
+        public function __constructor( ?ProfileTypeController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller = null;
+
+        /**
+         * @param ProfileTypeController|null $controller
+         */
+        public function setController( ?ProfileTypeController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public function getController(): ?ProfileTypeController
+        {
+            return $this->controller;
         }
 
 

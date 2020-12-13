@@ -9,17 +9,33 @@
      * Class ProductInvoiceView
      */
     class ProductInvoiceView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * ProductInvoiceView constructor.
+         * @param ProductInvoiceController|null $controller
          */
-        public function __construct( $model )
+        public function __construct( ?ProductInvoiceController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
         }
 
+        private $controller = null;
+
+        /**
+         * @return ProductInvoiceController|null
+         */
+        public function getController(): ?ProductInvoiceController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param ProductInvoiceController|null $controller
+         */
+        public function setController( ?ProductInvoiceController $controller ): void
+        {
+            $this->controller = $controller;
+        }
 
         /**
          * @param $model

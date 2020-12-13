@@ -9,16 +9,16 @@
      * Class AssociatedCategoryView
      */
     class AssociatedCategoryView
-        extends BaseMVCView
     {
         /**
-         * @param $model
-         * @throws Exception
+         * @param AssociatedCategoryController $controller
          */
-        public function __constructor( $model )
+        public function __constructor( AssociatedCategoryController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
         }
+
+        private $controller = null;
 
 
         /**
@@ -65,6 +65,22 @@
             }
 
             return boolval( $retVal );
+        }
+
+        /**
+         * @return AssociatedCategoryController|null
+         */
+        public final function getController(): ?AssociatedCategoryController
+        {
+            return $this->controller;
+        }
+
+        /**
+         * @param AssociatedCategoryController|null $controller
+         */
+        public final function setController( ?AssociatedCategoryController $controller ): void
+        {
+            $this->controller = $controller;
         }
 
     }

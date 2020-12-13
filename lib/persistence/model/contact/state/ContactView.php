@@ -9,17 +9,32 @@
      * Class ContactView
      */
      class ContactView
-        extends BaseMVCView
      {
          /**
-          * @param $model
-          * @throws Exception
+          * @param ContactController|null $controller
           */
-         public function __constructor( $model )
+         public function __constructor( ?ContactController $controller )
          {
-            $this->setModel( $model );
+             $this->setController( $controller );
          }
 
+         private $controller = null;
+
+         /**
+          * @return ContactController|null
+          */
+         public function getController(): ?ContactController
+         {
+             return $this->controller;
+         }
+
+         /**
+          * @param ContactController|null $controller
+          */
+         public function setController( ?ContactController $controller ): void
+         {
+             $this->controller = $controller;
+         }
 
          /**
           * @param $model

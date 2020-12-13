@@ -10,15 +10,32 @@
      * Class PersonEmailView
      */
     class PersonEmailView
-        extends BaseMVCView
     {
         /**
-         * @param PersonEmailModel|null $model
-         * @throws Exception
+         * PersonEmailView constructor.
+         * @param PersonEmailController|null $controller
          */
-        public function __construct( ?PersonEmailModel $model )
+        public function __construct( ?PersonEmailController $controller )
         {
-            $this->setModel( $model );
+            $this->setController( $controller );
+        }
+
+        private $controller = null;
+
+        /**
+         * @param PersonEmailController|null $controller
+         */
+        public function setController( ?PersonEmailController $controller ): void
+        {
+            $this->controller = $controller;
+        }
+
+        /**
+         * @return null
+         */
+        public function getController(): ?PersonEmailController
+        {
+            return $this->controller;
         }
 
         /**
