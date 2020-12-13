@@ -31,30 +31,59 @@
             return false;
         }
 
+
         /**
-         * @param $var
+         * @param int $var
          */
-        public function controllerAttribute( $var ): void
+        public function controllerAttribute( int $var ): void
         {
 
         }
 
 
         /**
-         * @param $var
+         * @param int $var
          */
-        public function controllerCategory( $var ): void
+        public function controllerCategory( int $var ): void
         {
 
         }
 
 
         /**
-         * @param $var
+         * @param int $var
          */
-        public function controllerProduct( $var ): void
+        public function controllerProduct( int $var ): void
         {
 
+        }
+
+
+        /**
+         * @return int|null
+         */
+        public function getAttribute(): ?int
+        {
+
+            return 0;
+        }
+
+
+        /**
+         * @return int|null
+         */
+        public function getCategory(): ?int
+        {
+            return null;
+        }
+
+
+        /**
+         * @return int|null
+         */
+        public function getProduct(): ?int
+        {
+            return null;
         }
     }
 ?>
