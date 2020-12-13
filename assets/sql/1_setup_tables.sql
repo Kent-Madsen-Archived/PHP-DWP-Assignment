@@ -426,9 +426,12 @@ create table related_person_name(
                                     registered datetime default now() not null
 );
 
+
 create table product_variation(
+                                  identity int not null auto_increment,
                                   product_main_id int not null,
-                                  product_variant_of_id int not null
+                                  product_variant_of_id int not null,
+                                  primary key (identity)
 );
 
 create table timed_discount(

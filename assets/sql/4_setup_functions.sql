@@ -550,7 +550,7 @@ end
 //
 DELIMITER ;
 
-
+DELIMITER //
 create or replace function retrieve_product_is_on_discount( product_id int )
     returns int
 begin
@@ -579,8 +579,10 @@ begin
     close fetch_product;
     return retVal;
 end;
+//
+DELIMITER ;
 
-
+DELIMITER //
 create or replace function retrieve_product_discount_price( product_id_var int )
     returns double
 begin
@@ -609,4 +611,13 @@ begin
 
     close fetch_products;
     return retVal;
+end;
+//
+DELIMITER ;
+
+create procedure insert_product_variation(in product_a_id int, in product_b_id int )
+begin
+    insert into product_variation(product_main_id, product_variant_of_id)
+    values (product_a_id, product_b_id),
+           (product_b_id, product_a_id);
 end;

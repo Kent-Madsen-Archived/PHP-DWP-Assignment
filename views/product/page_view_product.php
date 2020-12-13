@@ -38,12 +38,35 @@
             </button>
         </form>
     <?php endif; ?>
+
+<?php $product_fac = GroupProduct::getProductFactory(); ?>
+<?php $variant_fac = new ProductVariationFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton())); ?>
+<?php $variant_models = $variant_fac->readVariationByProductId($id_value); ?>
+    <?php if(!is_null($variant_models)): ?>
+        <div>
+            <h4>Variants</h4>
+            <div>
+                <?php foreach ($variant_models as $vm): ?>
+                    <?php
+                        $model_ent = $product_fac->createModel();
+                        $model_ent->setIdentity($vm->getProductVariantOfId());
+                        $product_fac->readModel($model_ent);
+                    ?>
+                <h5><?php echo $model_ent->getTitle(); ?></h5>
+                <p><?php echo $model_ent->getPrice(); ?></p>
+
+                <a class="button" href="/product/identity/<?php echo $model_ent->getIdentity();?>">View Product</a>
+
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <?php
     $recommended_fac = new ProductInvoiceRelationFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton()));
     $recommended = $recommended_fac->recommendation_by_product_id($id_value);
-
-    $product_fac = GroupProduct::getProductFactory();
     ?>
+
 <div>
     <h4>recommendation area</h4>
     <div>
@@ -57,7 +80,7 @@
                 ?>
             <div>
                 <h5><?php echo $product_rec_ent->getTitle(); ?></h5>
-                <p><?php echo $product_rec_ent->getDescription();?></p>
+                <p><?php echo $product_rec_ent->getPrice();?></p>
                 <a class="button" href="/product/identity/<?php echo $product_rec_ent->getIdentity();?>">View Product</a>
             </div>
 
