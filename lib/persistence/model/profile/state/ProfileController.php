@@ -57,6 +57,21 @@
         {
 
         }
+
+        public function getUsername()
+        {
+
+        }
+
+        public function getPassword()
+        {
+
+        }
+
+        public function getProfileType()
+        {
+
+        }
         
     }
 
