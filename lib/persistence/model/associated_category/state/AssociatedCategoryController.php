@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param AssociatedCategoryModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?AssociatedCategoryModel $model )
         {
             $this->setModel( $model );
         }

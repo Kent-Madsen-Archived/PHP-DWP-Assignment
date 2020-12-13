@@ -12,10 +12,10 @@
         extends BaseMVCController
     {
         /**
-         * @param $model
+         * @param ContactModel|null $model
          * @throws Exception
          */
-        public function __constructor( $model )
+        public function __constructor( ?ContactModel $model )
         {
             $this->setModel( $model );
         }
