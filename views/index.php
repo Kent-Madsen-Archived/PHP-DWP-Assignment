@@ -74,40 +74,6 @@
                 </div>
             </section>
 
-            <section class="home-articles-view">
-                <h3>
-                    Articles
-                </h3>
-
-                <div class="home-article-container">
-                    <?php
-                    $news_domain = new NewsDomain();
-                    $articles = $news_domain->retrieveArticlesAt(0, 3);
-
-                    foreach ( $articles as $article ):?>
-                        <div class="article">
-                            <h4 class="title">
-                                <?php echo $article->getTitle();?>
-                            </h4>
-
-                            <p class="content">
-                                <?php echo $article->getContent();?>
-                            </p>
-
-                            <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>" class="button">
-                                View Article
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="more">
-                    <a href="/news/pagination/1" class="button">
-                        View More Articles
-                    </a>
-                </div>
-            </section>
-
             <?php
             $discount_factory = GroupProduct::getProductTimedDiscountFactory();
             $discount_factory->setLimitValue(4);
@@ -139,6 +105,40 @@
                             </a>
                         </div>
                     <?php endforeach;?>
+                </div>
+            </section>
+
+            <section class="home-articles-view">
+                <h3>
+                    Articles
+                </h3>
+
+                <div class="home-article-container">
+                    <?php
+                    $news_domain = new NewsDomain();
+                    $articles = $news_domain->retrieveArticlesAt(0, 3);
+
+                    foreach ( $articles as $article ):?>
+                        <div class="article">
+                            <h4 class="title">
+                                <?php echo $article->getTitle();?>
+                            </h4>
+
+                            <p class="content">
+                                <?php echo $article->getContent();?>
+                            </p>
+
+                            <a href="<?php echo "/news/identity/{$article->getIdentity()}";?>" class="button">
+                                View Article
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="more">
+                    <a href="/news/pagination/1" class="button">
+                        View More Articles
+                    </a>
                 </div>
             </section>
 
