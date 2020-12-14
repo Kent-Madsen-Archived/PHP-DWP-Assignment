@@ -108,26 +108,62 @@
                 </div>
             </section>
 
-            <section class="home-about-us">
-                <?php $page_domain = new PageDomain(); ?>
-                <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
+            <?php
+            $discount_factory = GroupProduct::getProductTimedDiscountFactory();
+            $discount_factory->setLimitValue(4);
+            $discounts = $discount_factory->read();
+            ?>
 
-                <div class="area">
-                    <h3 class="title">
-                        <?php echo $element->getTitle();?>
-                    </h3>
-                    <p class="content">
-                        <?php echo $element->getContent();?>
-                    </p>
-                </div>
-
-                <div class="more">
-                    <a class="button" href="/about">
-                        read more
-                    </a>
+            <section class="shop-section">
+                <h4> Discount </h4>
+                <div class="shop-section-container">
+                    <?php foreach ( $discounts as $discount ): ?>
+                        <?php $product_factory = GroupProduct::getProductFactory(); ?>
+                        <div class="product">
+                            <?php
+                            $discount_product = $product_factory->createModel();
+                            $discount_product->setIdentity($discount->getProductId());
+                            $product_factory->readModel($discount_product);
+                            ?>
+                            <h5>
+                                <?php echo $discount_product->getTitle(); ?>
+                            </h5>
+                            <p>
+                                <?php echo $discount_product->getPrice(); ?> dkk.
+                            </p>
+                            <p>
+                                <?php echo $discount->getDiscountPercentage() . '% off'; ?>
+                            </p>
+                            <a href="/product/identity/<?php echo $discount_product->getIdentity(); ?>" class="button">
+                                View Product
+                            </a>
+                        </div>
+                    <?php endforeach;?>
                 </div>
             </section>
 
+            <?php $page_domain = new PageDomain(); ?>
+            <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
+
+            <?php if(!is_null($element)): ?>
+                <section class="home-about-us">
+
+                    <div class="area">
+                        <h3 class="title">
+                            <?php echo $element->getTitle();?>
+                        </h3>
+                        <p class="content">
+                            <?php echo $element->getContent();?>
+                        </p>
+                    </div>
+
+                    <div class="more">
+                        <a class="button" href="/about">
+                            read more
+                        </a>
+                    </div>
+                </section>
+            <?php endif; ?>
         </main>
         
         <?php getFooter(); ?>
