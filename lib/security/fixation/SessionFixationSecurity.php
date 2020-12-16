@@ -11,7 +11,8 @@
          */
         public function __construct()
         {
-            $this->setTimespan(1440 );
+            // 60 * 60 * 24, about 1 day
+            $this->setTimespan(86400 );
             $this->setNow( time() );
         }
 

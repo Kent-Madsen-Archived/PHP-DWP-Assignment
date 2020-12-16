@@ -12,9 +12,14 @@
     $encode = htmlentities( getEncodingStandard() );
     header( "Content-Type: text/html; charset={$encode}" );
 
+    ini_set('session.cookie_httponly', 1);
+    ini_set( 'session.cookie_secure', 1 );
+    ini_set( 'session.cookie_samesite', "strict" );
+
     // Set"s it so, that sessions can only be used by cookies and disallows it in the url.
-    // It removes URL based attacks 
-    ini_set( 'session.use_only_cookies', true );
+    // It removes URL based attacks
+    ini_set( 'session.use_only_cookies', 1 );
+
 
     // Setup session if it's not called by default
     // in php.ini set session.auto_start to 1
