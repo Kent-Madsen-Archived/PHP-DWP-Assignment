@@ -83,7 +83,7 @@
             <section class="shop-section">
                 <h4> Discount </h4>
                 <div class="shop-section-container">
-                    <?php if(is_null($discounts)): ?>
+                    <?php if(!is_null($discounts)): ?>
                         <?php foreach ( $discounts as $discount ): ?>
                             <?php $product_factory = GroupProduct::getProductFactory(); ?>
                             <div class="product">
