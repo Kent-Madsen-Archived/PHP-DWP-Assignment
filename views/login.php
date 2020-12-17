@@ -23,6 +23,7 @@
             // Login Process
             $args_session = array( 'person_data_profile'=>$profile );
             $session = new UserSession( $args_session );
+
             UserSessionSingleton::setInstance( $session );
 
             redirect_to_local_page('profile');

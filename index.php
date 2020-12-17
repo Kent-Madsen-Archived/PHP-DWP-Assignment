@@ -10,20 +10,30 @@
     require 'inc/bootstrap.php';
 
     $encode = htmlentities( getEncodingStandard() );
+
     header( "Content-Type: text/html; charset={$encode}" );
 
-    ini_set('session.cookie_httponly', 1);
-    ini_set( 'session.cookie_secure', 1 );
-    ini_set( 'session.cookie_samesite', "strict" );
 
     // Set"s it so, that sessions can only be used by cookies and disallows it in the url.
     // It removes URL based attacks
     ini_set( 'session.use_only_cookies', 1 );
 
+    if( WEBPAGE_DEFAULT_DEBUGGING == false )
+    {
+        ini_set('session.cookie_httponly', 1);
+        ini_set( 'session.cookie_secure', 1 );
+
+        ini_set('session.cookie_lifetime', 0);
+        ini_set( 'session.cookie_samesite', "strict" );
+    }
+
 
     // Setup session if it's not called by default
     // in php.ini set session.auto_start to 1
-    session_start();
+    if( session_status() == PHP_SESSION_NONE )
+    {
+        session_start();
+    }
 
     //
     $session_fixation = new SessionFixationSecurity();
@@ -168,4 +178,6 @@
 
     //
     RouterSingleton::getInstance()->loadView();
+
+    session_write_close();
 ?>

@@ -10,6 +10,9 @@
     $port_smtp_is_open = false; 
     $mysql_available = true;
 
+
+    require 'inc/crons/system.php';
+
     $connection_stmp = @fsockopen('localhost', 25);
 
     if( is_resource( $connection_stmp ) )
