@@ -541,6 +541,7 @@ create table invoice_charge_response(
                                         primary key (identity)
 );
 
+
 create table store(
                       identity int not null auto_increment,
                       key_id int not null,
@@ -548,8 +549,19 @@ create table store(
                       primary key (identity)
 );
 
+
 create table store_key(
                           identity int not null auto_increment,
                           content varchar(256) unique not null,
                           primary key (identity)
 );
+
+
+create table profile_remember(
+                                 identity int not null,
+                                 profile_id int not null,
+                                 content varchar(256) not null,
+                                 registered datetime default now() not null,
+                                 primary key (identity)
+);
+

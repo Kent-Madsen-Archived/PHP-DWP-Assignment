@@ -150,3 +150,6 @@ alter table store
     add constraint store_store_key_identity_fk
         foreign key (key_id) references store_key (identity);
 
+alter table profile_remember
+	add constraint profile_remember_profile_identity_fk
+		foreign key (profile_id) references profile (identity);

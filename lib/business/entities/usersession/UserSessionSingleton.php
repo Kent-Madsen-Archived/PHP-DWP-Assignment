@@ -55,7 +55,7 @@
          * @param $value
          * @throws Exception
          */
-        private final static function throwCantFindClassError( $value )
+        private static function throwCantFindClassError( $value )
         {
             $message = "Can't find the class {$value}";
             throw new Exception( $message );
