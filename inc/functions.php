@@ -58,6 +58,7 @@
     function redirect_to_local_page( $url )
     {
         header( ( 'Location: ' . $url ), true, 302 );
+        // exit();
     }
 
 
@@ -77,6 +78,7 @@
     function redirect_to_external_page_insecure( $url )
     {
         redirect_to_external_page( 'http', $url );
+        //exit();
     }
 
 
@@ -86,6 +88,7 @@
     function redirect_to_external_page_secure( $url )
     {
         redirect_to_external_page( 'https', $url );
+        //exit();
     }
 
 

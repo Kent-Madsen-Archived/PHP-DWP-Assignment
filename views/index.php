@@ -77,7 +77,7 @@
             <?php
             $discount_factory = GroupProduct::getProductTimedDiscountFactory();
             $discount_factory->setLimitValue(4);
-            $discounts = $discount_factory->read();
+            $discounts = $discount_factory->readOrderedByDay();
             ?>
 
             <section class="shop-section">
