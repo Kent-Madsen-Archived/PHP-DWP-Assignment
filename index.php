@@ -6,8 +6,6 @@
      *  Project: DWP-Assignment
      */
 
-    var_dump($_SERVER['REMOTE_ADDR']);
-
     // Internal Libraries
     require 'inc/bootstrap.php';
 
