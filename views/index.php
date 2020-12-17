@@ -83,28 +83,30 @@
             <section class="shop-section">
                 <h4> Discount </h4>
                 <div class="shop-section-container">
-                    <?php foreach ( $discounts as $discount ): ?>
-                        <?php $product_factory = GroupProduct::getProductFactory(); ?>
-                        <div class="product">
-                            <?php
-                            $discount_product = $product_factory->createModel();
-                            $discount_product->setIdentity($discount->getProductId());
-                            $product_factory->readModel($discount_product);
-                            ?>
-                            <h5>
-                                <?php echo $discount_product->getTitle(); ?>
-                            </h5>
-                            <p>
-                                <?php echo $discount_product->getPrice(); ?> dkk.
-                            </p>
-                            <p>
-                                <?php echo $discount->getDiscountPercentage() . '% off'; ?>
-                            </p>
-                            <a href="/product/identity/<?php echo $discount_product->getIdentity(); ?>" class="button">
-                                View Product
-                            </a>
-                        </div>
-                    <?php endforeach;?>
+                    <?php if(is_null($discounts)): ?>
+                        <?php foreach ( $discounts as $discount ): ?>
+                            <?php $product_factory = GroupProduct::getProductFactory(); ?>
+                            <div class="product">
+                                <?php
+                                $discount_product = $product_factory->createModel();
+                                $discount_product->setIdentity($discount->getProductId());
+                                $product_factory->readModel($discount_product);
+                                ?>
+                                <h5>
+                                    <?php echo $discount_product->getTitle(); ?>
+                                </h5>
+                                <p>
+                                    <?php echo $discount_product->getPrice(); ?> dkk.
+                                </p>
+                                <p>
+                                    <?php echo $discount->getDiscountPercentage() . '% off'; ?>
+                                </p>
+                                <a href="/product/identity/<?php echo $discount_product->getIdentity(); ?>" class="button">
+                                    View Product
+                                </a>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endif; ?>
                 </div>
             </section>
 
