@@ -6,6 +6,8 @@
      *  Project: DWP-Assignment
      */
 
+    var_dump($_SERVER['REMOTE_ADDR']);
+
     // Internal Libraries
     require 'inc/bootstrap.php';
 
@@ -20,10 +22,10 @@
 
     if( WEBPAGE_DEFAULT_DEBUGGING == false )
     {
-        ini_set('session.cookie_httponly', 1);
+        ini_set('session.cookie_httponly', 1 );
         ini_set( 'session.cookie_secure', 1 );
 
-        ini_set('session.cookie_lifetime', 0);
+        ini_set('session.cookie_lifetime', 0 );
         ini_set( 'session.cookie_samesite', "strict" );
     }
 
@@ -34,6 +36,35 @@
     {
         session_start();
     }
+
+    if( isset( $_SESSION[ 'permitted_to_ip' ] ) )
+    {
+        if( !( $_SESSION[ 'permitted_to_ip' ] == $_SERVER['REMOTE_ADDR'] ) )
+        {
+            // Terminate Session, as a session is only to the given ip address.
+            terminate_session();
+        }
+    }
+
+
+    if( session_status() == PHP_SESSION_ACTIVE )
+    {
+        if( !isset( $_SESSION[ 'permitted_to_ip' ] ) )
+        {
+            $_SESSION['permitted_to_ip'] = $_SERVER['REMOTE_ADDR'];
+
+            // Incase the server is behind a proxy
+            if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
+            {
+                $_SESSION['permitted_forward_ip'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            }
+            else
+            {
+                $_SESSION['permitted_forward_ip'] = null;
+            }
+        }
+    }
+
 
     //
     $session_fixation = new SessionFixationSecurity();

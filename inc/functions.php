@@ -126,4 +126,22 @@
         $var = '"' . htmlentities( getEncodingStandard(), null, 'UTF-8' ) . '"';
         return "<meta charset={$var}>";
     }
+
+
+    // Deletes session data, destroys the session and removes the session cookie from the browser.
+    // Thereby creating a new session id.
+    function terminate_session()
+    {
+        // Empties the current session data
+        session_unset();
+
+        // Destroys the session
+        session_destroy();
+
+        // Removes the session cookie, in the browser
+        setcookie( session_name(), '', time() - 120 );
+
+        // Starts a new session
+        session_start();
+    }
 ?>
