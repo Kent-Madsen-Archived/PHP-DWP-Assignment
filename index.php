@@ -37,10 +37,21 @@
 
     if( isset( $_SESSION[ 'permitted_to_ip' ] ) )
     {
-        if( !( $_SESSION[ 'permitted_to_ip' ] == $_SERVER['REMOTE_ADDR'] ) )
+        if( !is_null( $_SESSION[ 'permitted_to_ip' ] )  )
         {
-            // Terminate Session, as a session is only to the given ip address.
-            terminate_session();
+            if( !( $_SESSION[ 'permitted_to_ip' ] == $_SERVER['REMOTE_ADDR'] ) )
+            {
+                // Terminate Session, as a session is only to the given ip address.
+                terminate_session();
+            }
+        }
+
+        if( !is_null( $_SESSION['permitted_forward_ip'] ) )
+        {
+            if( !( $_SESSION[ 'permitted_forward_ip' ] == $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )
+            {
+                terminate_session();
+            }
         }
     }
 
@@ -49,12 +60,22 @@
     {
         if( !isset( $_SESSION[ 'permitted_to_ip' ] ) )
         {
-            $_SESSION['permitted_to_ip'] = $_SERVER['REMOTE_ADDR'];
-
-            // Incase the server is behind a proxy
-            if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
+            if( isset( $_SERVER['REMOTE_ADDR'] ) )
             {
-                $_SESSION['permitted_forward_ip'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                $_SESSION['permitted_to_ip'] = $_SERVER['REMOTE_ADDR'];
+            }
+            else
+            {
+                $_SESSION['permitted_to_ip'] = null;
+            }
+        }
+
+        if( !isset( $_SESSION[ 'permitted_forward_ip' ] ) )
+        {
+            // Incase the server is behind a proxy
+            if( isset( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )
+            {
+                $_SESSION['permitted_forward_ip'] = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
             }
             else
             {
