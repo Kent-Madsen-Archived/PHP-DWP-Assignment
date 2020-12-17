@@ -144,4 +144,9 @@
         // Starts a new session
         session_start();
     }
+
+    function refresh_session()
+    {
+        session_regenerate_id();
+    }
 ?>

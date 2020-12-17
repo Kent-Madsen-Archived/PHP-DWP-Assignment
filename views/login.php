@@ -20,6 +20,8 @@
 
         if( !is_null( $profile ) )
         {
+            refresh_session();
+
             // Login Process
             $args_session = array( 'person_data_profile'=>$profile );
             $session = new UserSession( $args_session );

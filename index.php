@@ -35,9 +35,9 @@
         session_start();
     }
 
-    if( isset( $_SESSION[ 'permitted_to_ip' ] ) )
+    if( session_status() == PHP_SESSION_ACTIVE )
     {
-        if( !is_null( $_SESSION[ 'permitted_to_ip' ] )  )
+        if( isset( $_SESSION[ 'permitted_to_ip' ] ) && !is_null( $_SESSION[ 'permitted_to_ip' ] )  )
         {
             if( !( $_SESSION[ 'permitted_to_ip' ] == $_SERVER['REMOTE_ADDR'] ) )
             {
@@ -46,7 +46,7 @@
             }
         }
 
-        if( !is_null( $_SESSION['permitted_forward_ip'] ) )
+        if( isset( $_SESSION[ 'permitted_forward_ip' ] ) && !is_null( $_SESSION[ 'permitted_forward_ip' ] ) )
         {
             if( !( $_SESSION[ 'permitted_forward_ip' ] == $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )
             {
@@ -54,7 +54,6 @@
             }
         }
     }
-
 
     if( session_status() == PHP_SESSION_ACTIVE )
     {
@@ -84,8 +83,24 @@
         }
     }
 
+    if( WEBPAGE_DEFAULT_DEBUGGING == false )
+    {
+        if( !( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) )
+        {
+            $link = $_SERVER[ 'HTTP_HOST' ];
 
-    //
+            if(isset($_SERVER['REQUEST_URI']))
+            {
+                $link = $link . $_SERVER['REQUEST_URI'];
+            }
+
+            redirect_to_external_page_secure( $link );
+        }
+    }
+
+
+
+//
     $session_fixation = new SessionFixationSecurity();
     $session_fixation->update();
 
