@@ -15,7 +15,7 @@
          * @param ProductEntityModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductEntityModel $model )
+        public function __construct( ?ProductEntityModel $model )
         {
             $this->setModel( $model );
         }

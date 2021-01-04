@@ -13,7 +13,7 @@
         /**
          * @param AssociatedCategoryController $controller
          */
-        public function __constructor( AssociatedCategoryController $controller )
+        public function __construct( AssociatedCategoryController $controller )
         {
             $this->setController( $controller );
         }

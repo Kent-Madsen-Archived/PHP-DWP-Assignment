@@ -40,6 +40,12 @@
 
         $factory->update($model );
     }
+
+    if(isset($_POST['admin_product_update_variation']))
+    {
+        $var_fac = new ProductVariationFactory(new MySQLConnectorWrapper(MySQLInformationSingleton::getSingleton()));
+        $var_fac->makeVariation($_POST['admin_product_current'], $_POST['admin_product_is_variant_of']);
+    }
 ?>
 
 <h4>
@@ -48,7 +54,7 @@
 
 <form action="/admin/product/update" 
       method="post">
-    <?php $filtered_id = htmlentities($id); ?>
+    <?php $filtered_id = htmlentities($id_value); ?>
     <input type="hidden" name="admin_product_update_id" value="<?php echo "{$filtered_id}"; ?>">
 
     <p>
@@ -81,4 +87,12 @@
            name="admin_product_update_is_updated" 
            value="update product"
            class="btn">
+</form>
+
+<form method="post" action="/admin/product/update">
+    <input type="hidden" value="<?php echo $id_value;?>" name="admin_product_current">
+    <label>Product Variant</label>
+    <input type="text" value="" placeholder="product_id" name="admin_product_is_variant_of">
+
+    <input type="submit" class="btn" name="admin_product_update_variation" value="add variant">
 </form>

@@ -13,7 +13,7 @@
         /**
          * @param ProfileController|null $controller
          */
-        public function __constructor( ?ProfileController $controller )
+        public function __construct( ?ProfileController $controller )
         {
             $this->setController( $controller );
         }

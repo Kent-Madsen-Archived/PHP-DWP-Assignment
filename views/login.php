@@ -20,13 +20,25 @@
 
         if( !is_null( $profile ) )
         {
+            refresh_session();
+
             // Login Process
             $args_session = array( 'person_data_profile'=>$profile );
             $session = new UserSession( $args_session );
+
             UserSessionSingleton::setInstance( $session );
+
+            if( isset( $_POST[ 'login_remember_me' ] ) )
+            {
+                if( $_POST[ 'login_remember_me' ] == 'on' )
+                {
+
+                }
+            }
 
             redirect_to_local_page('profile');
         }
+
     }
 
     // Makes sure when the user press login, that it is intentionally, also forces the user to
@@ -89,6 +101,19 @@
                                type="submit" 
                                value="Login" 
                                name="form_login_submit">
+
+                        <div class="switch">
+                            <label>
+                                Off
+                                <input type="checkbox" name="login_remember_me">
+                                <span class="lever"></span>
+                                On
+                            </label>
+
+                            <label>
+                                Remember password
+                            </label>
+                        </div>
                     </div>
 
                     <div class="split section">

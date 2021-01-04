@@ -8,6 +8,7 @@
     // -----------------------------------------------------------------------------------------
     define( "WEBPAGE_DEFAULT_PAGE_TITLE", "PHP DWP Assignment" );
     define( "WEBPAGE_DEFAULT_MAILTO", "kent.vejrup.madsen@protonmail.com" );
+    define( "WEBPAGE_DEFAULT_DEBUGGING", false );
 
 
     // -----------------------------------------------------------------------------------------

@@ -15,7 +15,7 @@
          * @param AssociatedCategoryModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?AssociatedCategoryModel $model )
+        public function __construct( ?AssociatedCategoryModel $model )
         {
             $this->setModel( $model );
         }

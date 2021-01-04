@@ -15,7 +15,7 @@
          * @param ProductInvoiceModel|null $model
          * @throws Exception
          */
-        public function __constructor( ?ProductInvoiceModel $model )
+        public function __construct( ?ProductInvoiceModel $model )
         {
             $this->setModel( $model );
         }
@@ -27,7 +27,10 @@
          */
         public function validateModel( $model ): bool
         {
-            // TODO: Implement validateModel() method.
+            if($model instanceof ProductInvoiceModel)
+            {
+                return true;
+            }
             return false;
         }
 
@@ -76,29 +79,35 @@
 
         }
 
-        public function getTotalPrice()
+        public function getTotalPrice():?float
         {
-
+            return $this->getModel()->getTotalPrice();
         }
+
+        public function getProfileId():?float
+        {
+            return $this->getModel()->getProfileId();
+        }
+
 
         public function getRegistered()
         {
-
+            return $this->getModel()->getRegistered();
         }
 
-        public function getAddress()
+        public function getAddress(): ?int
         {
-
+            return $this->getModel()->getAddressId();
         }
 
-        public function getMail()
+        public function getMail(): ?int
         {
-
+            return $this->getModel()->getMailId();
         }
 
-        public function getOwnerName()
+        public function getOwnerName(): ?int
         {
-
+            return $this->getModel()->getOwnerNameId();
         }
     }
 ?>

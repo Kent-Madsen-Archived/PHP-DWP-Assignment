@@ -33,12 +33,6 @@
         <?php $product_3 =$productDomain->retrieveProductsAt(2, 4);?>
         <?php $product_4 =$productDomain->retrieveProductsAt(3, 4);?>
 
-        <?php
-            $discount_factory = GroupProduct::getProductTimedDiscountFactory();
-            $discount_factory->setLimitValue(4);
-            $discounts = $discount_factory->read();
-        ?>
-
         <main>
             <h3>
                 Shop
@@ -179,33 +173,6 @@
                     <?php endforeach;?>
                 </div>
                 <?php endif;?>
-            </section>
-
-        
-            <section class="shop-section">
-            <h4> Discount </h4>
-                <div class="shop-section-container">
-                    <?php foreach ( $discounts as $discount ): ?>
-                        <?php $product_factory = GroupProduct::getProductFactory(); ?>
-                        <div class="product">
-                            <?php
-                                $discount_product = $product_factory->createModel();
-                                $discount_product->setIdentity($discount->getProductId());
-                                $product_factory->readModel($discount_product);
-                            ?>
-                            <h5>
-                                <?php echo $discount_product->getTitle(); ?>
-                            </h5>
-
-                            <p>
-                                <?php echo $discount_product->getDescription(); ?>
-                            </p>
-                            <p>
-                                <?php echo $discount->getDiscountPercentage() . '% off'; ?>
-                            </p>
-                        </div>
-                    <?php endforeach;?>
-                </div>
             </section>
 
             <div class="view">

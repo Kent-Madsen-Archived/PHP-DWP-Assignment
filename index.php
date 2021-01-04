@@ -10,17 +10,97 @@
     require 'inc/bootstrap.php';
 
     $encode = htmlentities( getEncodingStandard() );
+
     header( "Content-Type: text/html; charset={$encode}" );
 
+
     // Set"s it so, that sessions can only be used by cookies and disallows it in the url.
-    // It removes URL based attacks 
-    ini_set( 'session.use_only_cookies', true );
+    // It removes URL based attacks
+    ini_set( 'session.use_only_cookies', 1 );
+
+    if( WEBPAGE_DEFAULT_DEBUGGING == false )
+    {
+        ini_set('session.cookie_httponly', 1 );
+        ini_set( 'session.cookie_secure', 1 );
+
+        ini_set('session.cookie_lifetime', 0 );
+        ini_set( 'session.cookie_samesite', "strict" );
+    }
+
 
     // Setup session if it's not called by default
     // in php.ini set session.auto_start to 1
-    session_start();
+    if( session_status() == PHP_SESSION_NONE )
+    {
+        session_start();
+    }
 
-    //
+    if( session_status() == PHP_SESSION_ACTIVE )
+    {
+        if( isset( $_SESSION[ 'permitted_to_ip' ] ) && !is_null( $_SESSION[ 'permitted_to_ip' ] )  )
+        {
+            if( !( $_SESSION[ 'permitted_to_ip' ] == $_SERVER['REMOTE_ADDR'] ) )
+            {
+                // Terminate Session, as a session is only to the given ip address.
+                terminate_session();
+            }
+        }
+
+        if( isset( $_SESSION[ 'permitted_forward_ip' ] ) && !is_null( $_SESSION[ 'permitted_forward_ip' ] ) )
+        {
+            if( !( $_SESSION[ 'permitted_forward_ip' ] == $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )
+            {
+                terminate_session();
+            }
+        }
+    }
+
+    if( session_status() == PHP_SESSION_ACTIVE )
+    {
+        if( !isset( $_SESSION[ 'permitted_to_ip' ] ) )
+        {
+            if( isset( $_SERVER['REMOTE_ADDR'] ) )
+            {
+                $_SESSION['permitted_to_ip'] = $_SERVER['REMOTE_ADDR'];
+            }
+            else
+            {
+                $_SESSION['permitted_to_ip'] = null;
+            }
+        }
+
+        if( !isset( $_SESSION[ 'permitted_forward_ip' ] ) )
+        {
+            // Incase the server is behind a proxy
+            if( isset( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) )
+            {
+                $_SESSION['permitted_forward_ip'] = $_SERVER[ 'HTTP_X_FORWARDED_FOR' ];
+            }
+            else
+            {
+                $_SESSION['permitted_forward_ip'] = null;
+            }
+        }
+    }
+
+    if( WEBPAGE_DEFAULT_DEBUGGING == false )
+    {
+        if( !( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) )
+        {
+            $link = $_SERVER[ 'HTTP_HOST' ];
+
+            if(isset($_SERVER['REQUEST_URI']))
+            {
+                $link = $link . $_SERVER['REQUEST_URI'];
+            }
+
+            redirect_to_external_page_secure( $link );
+        }
+    }
+
+
+
+//
     $session_fixation = new SessionFixationSecurity();
     $session_fixation->update();
 
@@ -163,4 +243,15 @@
 
     //
     RouterSingleton::getInstance()->loadView();
+
+    session_write_close();
 ?>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8P4W7K2PF3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-8P4W7K2PF3');
+</script>

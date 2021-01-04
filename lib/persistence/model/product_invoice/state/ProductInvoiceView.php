@@ -45,7 +45,7 @@
         {
             $retval = false;
  
-            if( $model instanceof ProductInvoiceModel )
+            if( $model instanceof ProductInvoiceController )
             {
                 $retval = true;
             }
@@ -60,7 +60,7 @@
          */
         public final function viewIdentity(): ?int
         {
-            return $this->getModel()->getIdentity();
+            return $this->getController()->getModel()->getIdentity();
         }
 
 
@@ -72,7 +72,7 @@
         {
             $retVal = false;
 
-            if( is_null( $this->getModel()->getIdentity() ) == true )
+            if( is_null( $this->getController()->getModel()->getIdentity() ) == true )
             {
                 $retVal = true;
             }
@@ -83,56 +83,46 @@
 
         /**
          * @return float|null
-         * @throws Exception
          */
         public final function viewTotalPrice(): ?float
         {
-            $m = $this->transform();
-            return $m->getTotalPrice();
+            return $this->getController()->getTotalPrice();
         }
 
 
         /**
          * @return int|null
-         * @throws Exception
          */
         public final function viewAddressId(): ?int
         {
-            $m = $this->transform();
-            return $m->getAddressId();
+            return $this->getController()->getAddress();
         }
 
 
         /**
          * @return int|null
-         * @throws Exception
          */
         public final function viewMailId(): ?int
         {
-            $m = $this->transform();
-            return $m->getMailId();
+            return $this->getController()->getMail();
         }
 
 
         /**
          * @return int|null
-         * @throws Exception
          */
         public final function viewOwnerNameId(): ?int
         {
-            $m = $this->transform();
-            return $m->getOwnerNameId();
+            return $this->getController()->getOwnerName();
         }
 
 
         /**
          * @return string|null
-         * @throws Exception
          */
         public final function viewInvoiceRegistered(): ?string
         {
-            $m = $this->transform();
-            return $m->getRegistered();
+            return $this->getController()->getRegistered();
         }
 
 
@@ -142,8 +132,7 @@
          */
         public final function viewProfileId(): ?int
         {
-            $m = $this->transform();
-            return $m->getProfileId();
+            return $this->getController()->getProfileId();
         }
 
 

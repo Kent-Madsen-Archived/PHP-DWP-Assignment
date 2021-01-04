@@ -1,7 +1,7 @@
 <?php
     $domain = new InvoiceDomain();
     $invoice_model = $domain->retrieveInvoiceByIdentity($id_value);
-    $invoiceView = new ProductInvoiceView($invoice_model);
+    $invoiceView = new ProductInvoiceView(new ProductInvoiceController($invoice_model));
     $invoicePrint = new ProductInvoicePrint($invoiceView);
 ?>
 

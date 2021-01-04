@@ -273,7 +273,7 @@
             //
             $table = self::table;
 
-            $sql = "SELECT * FROM {$table} order by discount_begin LIMIT ? OFFSET ?;";
+            $sql = "SELECT * FROM {$table} where discount_begin <= curdate() and discount_end >= curdate() order by discount_begin and discount_end LIMIT ? OFFSET ?;";
 
             $stmt_limit  = null;
             $stmt_offset = null;

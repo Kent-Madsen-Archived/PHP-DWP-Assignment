@@ -10,7 +10,7 @@
                 <div class="invoice">
                     <?php
                     $brougth_products = $domain->retrieveBroughtProductBy( $current_invoice->getIdentity() );
-                    $current_invoice_view = new ProductInvoiceView( $current_invoice );
+                    $current_invoice_view = new ProductInvoiceView( new ProductInvoiceController($current_invoice) );
 
                     $print_invoice = new ProductInvoicePrint( $current_invoice_view );
                     ?>
@@ -36,11 +36,11 @@
                                         <?php
                                         $counter = $counter + 1;
                                         ?>
-                                        <?php $current_bpview = new BroughtProductView( $current_brougth_product ); ?>
+                                        <?php $current_bpview = new BroughtProductView( new BroughtProductController( $current_brougth_product ) ); ?>
                                         <?php $print_bv = new BroughtProductPrint( $current_bpview );?>
                                         <?php $product = $domain->retrieveProductByIndex( $current_brougth_product->getProductId() ); ?>
                                         <div class="invoice_product">
-                                            <?php $view_product = new ProductView( $product ); ?>
+                                            <?php $view_product = new ProductView( new ProductController( $product ) ); ?>
                                             <div class="invoice_header">
                                                 <h6>
                                                     <a <?php echo $view_product->printAreaHrefLink(); echo $view_product->printAreaHrefLang();  ?> >

@@ -58,6 +58,7 @@
     function redirect_to_local_page( $url )
     {
         header( ( 'Location: ' . $url ), true, 302 );
+        // exit();
     }
 
 
@@ -77,6 +78,7 @@
     function redirect_to_external_page_insecure( $url )
     {
         redirect_to_external_page( 'http', $url );
+        //exit();
     }
 
 
@@ -86,6 +88,7 @@
     function redirect_to_external_page_secure( $url )
     {
         redirect_to_external_page( 'https', $url );
+        //exit();
     }
 
 
@@ -125,5 +128,28 @@
     {
         $var = '"' . htmlentities( getEncodingStandard(), null, 'UTF-8' ) . '"';
         return "<meta charset={$var}>";
+    }
+
+
+    // Deletes session data, destroys the session and removes the session cookie from the browser.
+    // Thereby creating a new session id.
+    function terminate_session()
+    {
+        // Empties the current session data
+        session_unset();
+
+        // Destroys the session
+        session_destroy();
+
+        // Removes the session cookie, in the browser
+        setcookie( session_name(), '', time() - 120 );
+
+        // Starts a new session
+        session_start();
+    }
+
+    function refresh_session()
+    {
+        session_regenerate_id();
     }
 ?>

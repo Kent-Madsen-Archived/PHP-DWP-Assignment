@@ -13,7 +13,7 @@
         /**
          * @param PageElementController|null $controller
          */
-        public function __constructor( ?PageElementController $controller )
+        public function __construct( ?PageElementController $controller )
         {
             $this->setController( $controller );
         }

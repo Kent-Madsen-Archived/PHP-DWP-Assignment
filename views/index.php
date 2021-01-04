@@ -74,6 +74,42 @@
                 </div>
             </section>
 
+            <?php
+            $discount_factory = GroupProduct::getProductTimedDiscountFactory();
+            $discount_factory->setLimitValue(4);
+            $discounts = $discount_factory->readOrderedByDay();
+            ?>
+
+            <section class="shop-section">
+                <h4> Discount </h4>
+                <div class="shop-section-container">
+                    <?php if(!is_null($discounts)): ?>
+                        <?php foreach ( $discounts as $discount ): ?>
+                            <?php $product_factory = GroupProduct::getProductFactory(); ?>
+                            <div class="product">
+                                <?php
+                                $discount_product = $product_factory->createModel();
+                                $discount_product->setIdentity($discount->getProductId());
+                                $product_factory->readModel($discount_product);
+                                ?>
+                                <h5>
+                                    <?php echo $discount_product->getTitle(); ?>
+                                </h5>
+                                <p>
+                                    <?php echo $discount_product->getPrice(); ?> dkk.
+                                </p>
+                                <p>
+                                    <?php echo $discount->getDiscountPercentage() . '% off'; ?>
+                                </p>
+                                <a href="/product/identity/<?php echo $discount_product->getIdentity(); ?>" class="button">
+                                    View Product
+                                </a>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endif; ?>
+                </div>
+            </section>
+
             <section class="home-articles-view">
                 <h3>
                     Articles
@@ -108,26 +144,28 @@
                 </div>
             </section>
 
-            <section class="home-about-us">
-                <?php $page_domain = new PageDomain(); ?>
-                <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
+            <?php $page_domain = new PageDomain(); ?>
+            <?php $element = $page_domain->retrievePageElementByAreaKey('page_about'); ?>
 
-                <div class="area">
-                    <h3 class="title">
-                        <?php echo $element->getTitle();?>
-                    </h3>
-                    <p class="content">
-                        <?php echo $element->getContent();?>
-                    </p>
-                </div>
+            <?php if(!is_null($element)): ?>
+                <section class="home-about-us">
 
-                <div class="more">
-                    <a class="button" href="/about">
-                        read more
-                    </a>
-                </div>
-            </section>
+                    <div class="area">
+                        <h3 class="title">
+                            <?php echo $element->getTitle();?>
+                        </h3>
+                        <p class="content">
+                            <?php echo $element->getContent();?>
+                        </p>
+                    </div>
 
+                    <div class="more">
+                        <a class="button" href="/about">
+                            read more
+                        </a>
+                    </div>
+                </section>
+            <?php endif; ?>
         </main>
         
         <?php getFooter(); ?>

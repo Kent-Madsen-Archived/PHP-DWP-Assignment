@@ -56,6 +56,11 @@
                             Contacts
                         </a>
                     </li>
+                    <li>
+                        <a href="/admin/image">
+                            Image
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
